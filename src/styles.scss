@@ -162,14 +162,15 @@ i {
 }
 
 .linea {
-    &-top{
+
+    &-top,
+    &-top-primario{
         border-top: 2px solid var(--escan-primario);
     }
 
-    &-bottom{
+    &-bottom-primario{
         border-bottom: 2px solid var(--escan-primario);
     }
-
 }
 
 input:disabled,
@@ -183,20 +184,29 @@ textarea:disabled {
 
 
 .card-escasan-header {
-    text-align: center;
+    
+
+    &-primario{
+        text-align: center;
     font-weight: bold;
     font-size: 1em;
     color: var(--escan-fondo);
-
-    &-primario{
         background-color: var(--escan-primario);
     }
 
     &-secundario{
+        text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+    color: var(--escan-fondo);
         background-color: var(--escan-secundario);
     }
 
     &-opcional{
+        text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+    color: var(--escan-fondo);
         background-color: var(--escan-opcional);
     }
 }
