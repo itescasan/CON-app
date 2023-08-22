@@ -183,28 +183,20 @@ textarea:disabled {
 
 
 .card-escasan-header {
-  
+    text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+    color: var(--escan-fondo);
+
     &-primario{
-        text-align: center;
-        font-weight: bold;
-        font-size: 1em;
-    
         background-color: var(--escan-primario);
     }
 
     &-secundario{
-        text-align: center;
-        font-weight: bold;
-        font-size: 1em;
-    
         background-color: var(--escan-secundario);
     }
 
     &-opcional{
-        text-align: center;
-        font-weight: bold;
-        font-size: 1em;
-    
         background-color: var(--escan-opcional);
     }
 }
