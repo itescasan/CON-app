@@ -14,11 +14,11 @@
     height: 100%;
   }
 
-  .app-loading .logo {
+  //.app-loading .logo {
     //width: 100px;
     //height: 100px;
     //background: url(./assets/logo.png) center center no-repeat; 
-  }
+ // }
 
   .app-loading .spinner {
     height: 500px;
@@ -42,8 +42,8 @@
   }
   
   img{
-    height: 500px;
-    width: 500px;
+    height: 375px;
+    width: 375px;
 
     @include Tamano_Menor(lg) {
       height: 250px;
