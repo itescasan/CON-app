@@ -162,7 +162,14 @@ i {
 }
 
 .linea {
-    border-bottom: 2px solid var(--escan-primario);
+    &-top{
+        border-top: 2px solid var(--escan-primario);
+    }
+
+    &-bottom{
+        border-bottom: 2px solid var(--escan-primario);
+    }
+
 }
 
 input:disabled,
@@ -176,19 +183,28 @@ textarea:disabled {
 
 
 .card-escasan-header {
-    text-align: center;
-    font-weight: bold;
-    font-size: 1em;
-
+  
     &-primario{
+        text-align: center;
+        font-weight: bold;
+        font-size: 1em;
+    
         background-color: var(--escan-primario);
     }
 
     &-secundario{
+        text-align: center;
+        font-weight: bold;
+        font-size: 1em;
+    
         background-color: var(--escan-secundario);
     }
 
     &-opcional{
+        text-align: center;
+        font-weight: bold;
+        font-size: 1em;
+    
         background-color: var(--escan-opcional);
     }
 }
