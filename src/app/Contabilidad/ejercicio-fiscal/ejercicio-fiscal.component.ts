@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./ejercicio-fiscal.component.scss']
 })
 export class EjercicioFiscalComponent {
-
-}
+  
+  }
