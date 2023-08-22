@@ -176,22 +176,20 @@ textarea:disabled {
 
 
 .card-escasan-header {
-    
+    text-align: center;
     font-weight: bold;
     font-size: 1em;
 
     &-primario{
         background-color: var(--escan-primario);
-        color: var(--escan-fondo);
     }
 
     &-secundario{
         background-color: var(--escan-secundario);
-        color: var(--escan-fondo);
     }
-    &-primario{
+
+    &-opcional{
         background-color: var(--escan-opcional);
-        color: var(--escan-fondo);
     }
 }
 
