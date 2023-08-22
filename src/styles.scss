@@ -176,10 +176,21 @@ textarea:disabled {
 
 
 .card-escasan-header {
-    background-color: var(--escan-secundario);
+    
     color: var(--escan-fondo);
     font-weight: bold;
     font-size: 1em;
+
+    &-primario{
+        background-color: var(--escan-primario);
+    }
+
+    &-secundario{
+        background-color: var(--escan-secundario);
+    }
+    &-primario{
+        background-color: var(--escan-opcional);
+    }
 }
 
 //████████████████████████████████████████████CHECBOX TOGGE████████████████████████████████████████████████████████████████
