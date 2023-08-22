@@ -189,34 +189,31 @@ textarea:disabled {
 
 //████████████████████████████████████████████CARD████████████████████████████████████████████████████████████████████████
 
+.card-escasan-header-primario,
+.card-escasan-header-primario,
+.card-escasan-header-opcional
+{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1em;
+    color: var(--escan-fondo);
+}
 
-
-.card-escasan-header {
-
+.card-escasan-header{
     &-primario {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1em;
-        color: var(--escan-fondo);
         background-color: var(--escan-primario);
     }
-
+    
     &-secundario {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1em;
-        color: var(--escan-fondo);
         background-color: var(--escan-secundario);
     }
-
+    
     &-opcional {
-        text-align: center;
-        font-weight: bold;
-        font-size: 1em;
-        color: var(--escan-fondo);
         background-color: var(--escan-opcional);
     }
+    
 }
+
 
 //████████████████████████████████████████████CHECBOX TOGGE████████████████████████████████████████████████████████████████
 
