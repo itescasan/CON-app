@@ -1,0 +1,23 @@
+
+
+@mixin Tamano_Menor($points) {
+  
+    @media screen and  (max-width: calc(map-get($breakpoints, $points) - 1px) ) {
+      @content;
+    }
+  }
+  
+  @mixin Tamano($points) {
+    @media screen and (min-width: map-get($breakpoints, $points)) {
+      @content;
+    }
+  }
+  
+  $breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px
+  );

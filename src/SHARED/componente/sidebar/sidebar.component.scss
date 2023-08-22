@@ -1,0 +1,47 @@
+@import '/src/assets/scss/media.scss';
+
+
+.contenedor{
+    position: relative;
+
+}
+
+
+img{
+    position: relative;
+    width:220px;
+    height:60px;
+    margin-left: 10px;
+    padding: 0;
+}
+
+.contenedor-boton{
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding-top: 0;
+    i{
+        color: var(--escan-primario);
+    }
+    
+    z-index: 2;
+}
+
+.DynamicFrom{
+    z-index: 0;
+}
+
+
+.side-width{
+
+
+       @include Tamano_Menor(lg) {
+        width: 50% !important;
+        }
+
+        @include Tamano(lg) {
+            width: 15% !important;
+            }
+     
+
+}

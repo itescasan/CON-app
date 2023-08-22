@@ -1,0 +1,50 @@
+<div id="frmlogin">
+    <div class=" form-signin">
+        <form [formGroup]="val.ValForm"   novalidate autocomplete="off">
+    
+            <div class="logo-login">
+                <span><img  src="../assets/images/ISOLOGO.png"  width="300px" height="240px"></span>
+                <span><p  class="h4 fw-normal">CONTABILIDAD</p></span>
+                
+            </div>
+            
+
+
+
+            <div class="row mb-1">
+                <div class="input-group">
+                    
+                    <div class="form-floating">
+                        <input type="text" id="txtUsuario" formControlName="txtUsuario" class="form-control"
+                            placeholder="Usuario" aria-label="Usuario">
+                        <label for="txtUsuario">Usuario.</label>
+
+                    </div>
+                    <span class="input-group-text"><i class="fa-solid fa-user-tie fa-lg"></i></span>
+                </div>
+            </div>
+
+            <div class="row mb-1">
+                <div class="input-group">
+                   
+                    <div class="form-floating">
+                        <input type="password" id="txtPass" formControlName="txtPass" class="form-control"
+                            placeholder="Contraseña" aria-label="Contraseña" autocomplete="off">
+                        <label for="txtPass">Contraseña.</label>
+
+                    </div>
+                    <span class="input-group-text"><i class="fa-solid fa-lock fa-lg"></i></span>
+                </div>
+            </div>
+    
+
+            <div>
+                <button type="button" class="w-100 btn btn-lg btn-primary" id="btnIniciar"
+                (click)="v_Iniciar()">
+                    <span> Iniciar</span>
+                </button>
+            </div>
+    
+        </form>
+    </div>
+</div>

@@ -1,0 +1,408 @@
+@use "igniteui-angular/theming" as *;
+// Uncomment the following lines if you want to add a custom palette:
+//$primary: #009d43 !default;
+//$secondary: #ff4500 !default;
+//$surface: white !default;
+//$search-separator-border-color: #1a5214;
+//$app-palette: palette($primary, $secondary, $surface, $search-separator-border-color);
+
+
+/* autoprefixer grid: on */
+
+@include core();
+@include typography($font-family: $material-typeface, $type-scale: $material-type-scale);
+@include theme($default-palette);
+// CSS Reset, comment out if not required or using a different module
+@import 'minireset.css/minireset';
+/* You can add global styles to this file, and also import other style files */
+
+$custom-combo-theme: combo-theme($search-separator-border-color: var(--escan-primario),
+
+    );
+
+$custom-checkbox-theme: checkbox-theme($border-radius: 10px,
+        $fill-color: var(--escan-primario),
+        $empty-color: var(--escan-primario),
+    );
+
+$custom-drop-down-theme: drop-down-theme($background-color: #d9f5d6,
+        $header-text-color: #1a5214,
+        $item-text-color: black,
+
+        $focused-item-background: #72da67,
+        $focused-item-text-color: #1a5214,
+        $hover-item-background: #a0e698,
+        $hover-item-text-color: #1a5214,
+
+        $selected-item-background: #a0e698,
+        $selected-item-text-color: #1a5214,
+        $selected-hover-item-background: #72da67,
+        $selected-hover-item-text-color: var(--escan-fondo),
+        $selected-focus-item-background: #72da67,
+        $selected-focus-item-text-color: var(--escan-fondo),
+
+    );
+
+
+
+@include css-vars($custom-combo-theme);
+@include css-vars($custom-drop-down-theme);
+@include css-vars($custom-checkbox-theme);
+
+
+[class^=igx-] {
+
+
+    --box-background: transparent;
+    --box-background-hover: transparent;
+    --box-background-focus: transparent;
+    --toggle-button-background: transparent;
+    --toggle-button-background-focus: transparent;
+
+
+    .igx-input-group {
+        --focused-secondary-color: var(--escan-secundario);
+        --success-secondary-color: var(--escan-secundario);
+        --error-secondary-color: var(--escan-primario);
+    }
+
+    .igx-input-group--disabled .igx-input-group__input {
+        font-weight: bold;
+        color: black !important;
+    }
+
+
+}
+
+/*
+.igx-input-group--box .igx-input-group__bundle,
+.igx-input-group--box .igx-input-group__bundle:hover,
+.igx-input-group--box .igx-input-group__bundle .igx-input-group--focused
+{
+  background-color: transparent;
+}
+
+.igx-input-group .igx-combo__toggle-button,
+.igx-input-group--box .igx-input-group--focused {
+   background: transparent; 
+ 
+}
+*/
+
+
+
+/* Importing Bootstrap SCSS file. */
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+/*
+m - for classes that set margin, like this :
+
+mt - for classes that set margin-top
+mb - for classes that set margin-bottom
+ml - for classes that set margin-left
+mr - for classes that set margin-right
+mx - for classes that set both margin-left and margin-right
+my - for classes that set both margin-top and margin-bottom
+Where size is one of margin :
+
+0 - for classes that eliminate the margin by setting it to 0, like mt-0
+1 - (by default) for classes that set the margin to $spacer * .25, like mt-1
+2 - (by default) for classes that set the margin to $spacer * .5, like mt-2
+3 - (by default) for classes that set the margin to $spacer, like mt-3
+4 - (by default) for classes that set the margin to $spacer * 1.5, like mt-4
+5 - (by default) for classes that set the margin to $spacer * 3, like mt-5
+auto - for classes that set the margin to auto, like mx-auto
+*/
+
+:root {
+    --escan-primario: #56a43b;
+    --escan-primario-sombra: rgba(86,164,59, 0.5);
+
+    --escan-secundario: #dc7322;
+    --escan-secundario-sombra: rgba(220,115,34, 0.5);
+
+    --escan-opcional: #4e4e4e;
+    --escan-opcional-sombra: rgba(78,78,78, 0.5);
+ 
+
+    --escan-fondo: white;
+    --escan-fondo-secundario: white;
+
+    --min-width: 300px;
+
+}
+
+
+
+
+html,
+body {
+    height: 100%;
+    min-width: var(--min-width);
+    background-image: url("../src/assets/images/foto-pattern-dark.png");
+    background-repeat: repeat, repeat;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: var(--escan-opcional) !important;
+    font-weight: bold;
+}
+
+
+i {
+    color: var(--escan-secundario);
+}
+
+.linea {
+    border-bottom: 2px solid var(--escan-primario);
+}
+
+input:disabled,
+textarea:disabled {
+    font-weight: bold;
+    color: var(--escan-opcional);
+}
+
+//████████████████████████████████████████████CARD████████████████████████████████████████████████████████████████████████
+
+
+
+.card-escasan-header {
+    background-color: var(--escan-secundario);
+    color: var(--escan-fondo);
+    font-weight: bold;
+    font-size: 1em;
+}
+
+//████████████████████████████████████████████CHECBOX TOGGE████████████████████████████████████████████████████████████████
+
+.check-escasan:checked {
+    background-color: var(--escan-primario);
+}
+
+.toggle-check-escasan:checked {
+    background-color: var(--escan-primario);
+    border-color: var(--escan-primario);
+}
+
+//TOGGLET BOTON
+
+.on {
+    background-color: var(--escan-primario);
+    color: var(--escan-fondo);
+}
+
+.off {
+    background-color: var(--escan-secundario);
+    color: var(--escan-fondo);
+}
+
+.on:hover {
+    background-color: var(--escan-primario);
+    color: var(--escan-fondo);
+}
+
+.off:hover {
+    background-color: var(--escan-secundario);
+    color: var(--escan-fondo);
+}
+
+.toggle {
+    span {
+        color: var(--escan-fondo);
+    }
+}
+
+//FIN TOGGLET BOTON
+
+//████████████████████████████████████████████TEXT████████████████████████████████████████████████████████████████████████
+
+textarea::-webkit-resizer {
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent var(--escan-primario) var(--escan-primario) transparent;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+    pointer-events: none
+}
+
+
+
+input[type=number] {
+
+    appearance: none;
+    -moz-appearance: textfield;
+
+}
+
+
+
+//████████████████████████████████████████████BOTONES██████████████████████████████████████████████████████████████████████
+
+button {
+    transition: all 0.2s ease;
+    ;
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+.btn-primario {
+    background-color: var(--escan-primario);
+    color: var(--escan-fondo);
+
+    i {
+        color: var(--escan-fondo);
+    }
+}
+
+.btn-primario:hover {
+    background-color: var(--escan-primario);
+    color: var(--escan-fondo);
+    box-shadow: 0px 5px 10px 0px var(--escan-primario-sombra);
+}
+
+.btn-secundario {
+    background-color: var(--escan-secundario);
+    color: var(--escan-fondo);
+
+    i {
+        color: var(--escan-fondo);
+    }
+
+}
+
+.btn-secundario:hover {
+    background-color: var(--escan-secundario);
+    color: var(--escan-fondo);
+    box-shadow: 0px 5px 10px 0px var(--escan-secundario-sombra);
+}
+
+
+//████████████████████████████████████████████DIALOG██████████████████████████████████████████████████████████████████████
+
+.escasan-dialog-full,
+.escasan-dialog-full-blur {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    min-width: var(--min-width);
+    width: 100%;
+    height: 100%;
+
+
+}
+
+
+.escasan-dialog-full-blur {
+    filter: blur(1px);
+    background-color: transparent;
+    opacity: 0.7 !important;
+}
+
+
+.escasan-dialog {
+    h1 {
+        text-align: center;
+    }
+
+    .custom-cerrar {
+        border: 0;
+        background-color: transparent;
+
+        .close-icon {
+            font-size: 1.8em;
+        }
+
+        .close-icon:hover {
+            font-size: 2em;
+        }
+    }
+
+    .btn-contenedor {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    .aling-number {
+        text-align: right;
+    }
+}
+
+//████████████████████████████████████████████FOOTER██████████████████████████████████████████████████████████████████████
+
+.escan-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 3;
+    /* @include Tamano(lg) {
+    position: initial;
+    text-align: right;
+  }*/
+
+    button {
+        width: 100%;
+        margin-right: 5px;
+        background-color: var(--escan-primario);
+
+        i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        /*@include Tamano(lg) {
+      position: relative;
+      //width: 200px;
+      border: 0;
+    }*/
+    }
+}
+
+
+
+//████████████████████████████████████████████DIALOG ERROR██████████████████████████████████████████████████████████████████████
+
+.error-etiqueta {
+    font-weight: bold;
+    color: black;
+}
+
+.error-mensaje {
+    font-weight: normal;
+
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+.error {
+    font-weight: normal;
+
+    text-align: justify;
+    text-justify: inter-word;
+    font-weight: bold;
+    color: black;
+}
