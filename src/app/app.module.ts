@@ -24,8 +24,8 @@ import { IgxIconModule } from 'igniteui-angular';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { WaitComponent } from '../SHARED/componente/wait/wait.component';
 import { AnularComponent } from '../SHARED/anular/anular.component';
-import { EjercicioFiscalComponent } from './CON/ejercicio-fiscal/ejercicio-fiscal.component';
-import { CatalogoCuentaComponent } from './CON/catalogo-cuenta/catalogo-cuenta.component';
+import { EjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/ejercicio-fiscal.component';
+import { CatalogoCuentaComponent } from './Contabilidad/catalogo-cuenta/catalogo-cuenta.component';
 
 @NgModule({
   declarations: [
