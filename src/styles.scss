@@ -117,14 +117,14 @@ auto - for classes that set the margin to auto, like mx-auto
 
 :root {
     --escan-primario: #56a43b;
-    --escan-primario-sombra: rgba(86,164,59, 0.5);
+    --escan-primario-sombra: rgba(86, 164, 59, 0.5);
 
     --escan-secundario: #dc7322;
-    --escan-secundario-sombra: rgba(220,115,34, 0.5);
+    --escan-secundario-sombra: rgba(220, 115, 34, 0.5);
 
     --escan-opcional: #4e4e4e;
-    --escan-opcional-sombra: rgba(78,78,78, 0.5);
- 
+    --escan-opcional-sombra: rgba(78, 78, 78, 0.5);
+
 
     --escan-fondo: white;
     --escan-fondo-secundario: white;
@@ -163,20 +163,20 @@ i {
 
 .linea {
 
-    &-top-primario{
+    &-top-primario {
         border-top: 2px solid var(--escan-primario);
     }
 
 
-    &-bottom-primario{
+    &-bottom-primario {
         border-bottom: 2px solid var(--escan-primario);
     }
 
-    &-top-secundario{
+    &-top-secundario {
         border-top: 2px solid var(--escan-secundario);
     }
 
-    &-bottom-secundario{
+    &-bottom-secundario {
         border-bottom: 2px solid var(--escan-secundario);
     }
 }
@@ -192,29 +192,28 @@ textarea:disabled {
 
 
 .card-escasan-header {
-    
 
-    &-primario{
+    &-primario {
         text-align: center;
-    font-weight: bold;
-    font-size: 1em;
-    color: var(--escan-fondo);
+        font-weight: bold;
+        font-size: 1em;
+        color: var(--escan-fondo);
         background-color: var(--escan-primario);
     }
 
-    &-secundario{
+    &-secundario {
         text-align: center;
-    font-weight: bold;
-    font-size: 1em;
-    color: var(--escan-fondo);
+        font-weight: bold;
+        font-size: 1em;
+        color: var(--escan-fondo);
         background-color: var(--escan-secundario);
     }
 
-    &-opcional{
+    &-opcional {
         text-align: center;
-    font-weight: bold;
-    font-size: 1em;
-    color: var(--escan-fondo);
+        font-weight: bold;
+        font-size: 1em;
+        color: var(--escan-fondo);
         background-color: var(--escan-opcional);
     }
 }
