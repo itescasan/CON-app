@@ -10,6 +10,8 @@ import { iDatos } from '../../interface/i-Datos';
 import { Funciones } from '../../class/cls_Funciones';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { WaitComponent } from '../wait/wait.component';
+import { EjercicioFiscalComponent } from 'src/app/CON/ejercicio-fiscal/ejercicio-fiscal.component';
+import { CatalogoCuentaComponent } from 'src/app/CON/catalogo-cuenta/catalogo-cuenta.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -149,12 +151,21 @@ export class SidebarComponent {
       return;
     }
     
-    if(id == "aNewFactura"){
+    if(id == "aNewEjercicio"){
       $("#btnMenu").trigger("click");
       this.DynamicFrom.viewContainerRef.clear();
 
-      //let Factura: ComponentRef<FacturaComponent> = this.DynamicFrom.viewContainerRef.createComponent(FacturaComponent);
-      //Factura.instance.TipoFactura = "Factura";
+      this.DynamicFrom.viewContainerRef.createComponent(EjercicioFiscalComponent);
+
+    }
+
+
+    if(id == "aNewCuenta"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let CatalogoCuenta: ComponentRef<CatalogoCuentaComponent> = this.DynamicFrom.viewContainerRef.createComponent(CatalogoCuentaComponent);
+
     }
 
 
