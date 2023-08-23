@@ -1,1 +1,160 @@
-<p>catalogo-cuenta works!</p>
+<div class="container">
+
+    <form autocomplete="off" [formGroup]="val.ValForm">
+        <div class="card">
+            <div class="card-header card-escasan-header primario">CATALOGO CUENTA</div>
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-12 col-md-12 col-lg-4 mb-3">
+                        <div class="bloqueada">
+
+                            <div class="contenedor">
+                                <label> Bloqueada</label>
+                                <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
+                                    data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
+                                    id="chkBloqueada" formControlName="chkBloqueada">
+                               
+                                
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                    
+                    <div class="col-12 col-md-12 col-lg-2 offset-lg-6 mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                            <div class="form-floating">
+                                <select class="form-select form-select-lg" aria-label="Nivel" id="cmbNivel"
+                                    formControlName="cmbNivel">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                </select>
+                                <label for="cmbNivel">Nivel</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="row">
+
+                  
+                    <div class="col-12 col-md-12 col-lg-4 mb-1">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fab fa-cuttlefish fa-lg"></i></span>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="Cuenta" mask="0000" prefix="441-"
+                                    [showMaskTyped]="true" id="txtCuenta" formControlName="txtCuenta">
+                                <label for="txtCuenta">Cuenta</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-8 mb-1">
+                        <div class="input-group">
+                            <div class="form-floating">
+                                <textarea type="textarea" class="form-control" placeholder="Descripción" id="txtDescripcion"
+                                    formControlName="txtDescripcion"></textarea>
+                                <label for="txtDescripcion">Descripción</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-12 col-md-12 col-lg-4">
+
+                        <div class="row mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-object-group fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupo"
+                                        formControlName="cmbGrupo">
+                                        <option value="0">Activo</option>
+                                        <option value="1">Pasivo</option>
+                                    </select>
+                                    <label for="cmbGrupo">Grupo</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Clase" id="cmbClase"
+                                        formControlName="cmbClase">
+                                        <option value="G">Grupo</option>
+                                        <option value="D">Detalle</option>
+                                    </select>
+                                    <label for="cmbClase">Clase</label>
+                                </div>
+                            </div>
+                        </div>
+
+                      
+                    </div>
+
+
+                    <div class="col-12 col-md-12 col-lg-6 offset-lg-2" >
+
+                        <div class="row">
+                            <div class="custom-group">
+                                <span class="input-group-text input-group-custom"><p>Cuenta Padre</p></span>
+                                <div>
+                                    <div class="form-floating mb-1">
+                                        <input type="text" class="form-control" placeholder="Cuenta"
+                                            id="txtCuentaPadre" formControlName="txtCuentaPadre">
+                                        <label for="txtCuentaPadre">Cuenta</label>
+                                    </div>
+                                    <div class="form-floating mb-1">
+                                        <textarea type="textarea" class="form-control" placeholder="Descripción"
+                                            id="txtDescripcionPadre"
+                                            formControlName="txtDescripcionPadre"></textarea>
+                                        <label for="txtDescripcionPadre">Descripción</label>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                 
+                    </div>
+
+                  
+                </div>
+
+                <div class="row">
+                    <div class="btn-contenedor">
+                        
+                        <span>
+                            <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
+                        </span>
+
+                        <span>
+                            <button type="button" class="btn btn-primario" id="btnGuardarCuenta"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
+                            <button type="button" class="btn btn-opcional" id="btnCanclarCuenta"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+                        </span>
+   
+                        
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+    </form>
+
+
+</div>

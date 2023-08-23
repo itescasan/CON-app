@@ -1,0 +1,78 @@
+@import "/src/assets/scss/media.scss";
+
+.cuenta-padre{
+    margin: 5px;
+}
+
+.bloqueada {
+
+    display: flex;
+    justify-content: left;
+    
+    
+    .contenedor{
+        text-align: center;
+
+        label{
+            font-weight: bold;
+            display: block;
+            margin-bottom: 2px;
+        }
+    }
+
+    
+  @include Tamano_Menor(lg) {
+    justify-content: right;
+  }
+   
+  }
+  
+
+ .custom-group{
+    display: flex;
+    justify-content: left;
+    height: 120px;
+   
+
+    .input-group-custom {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+  
+        p{
+            font-weight: bold;
+            color: var(--escan-secundario);
+            writing-mode:vertical-lr;
+            text-orientation: mixed;
+        }
+    }
+
+    div{
+        width: 100%;
+
+        input
+        {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        textarea
+        {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+ }
+
+
+ .btn-contenedor{
+    display: flex;
+    justify-content: space-between;
+
+
+    .btn-primario{
+        margin-right: 10px;
+    }
+
+   
+ }

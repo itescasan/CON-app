@@ -205,21 +205,25 @@ textarea:disabled {
 
     text-align: center;
     font-weight: bold;
-    font-size: 1em;
-    color: var(--escan-fondo);
+    font-size: 1.2em;
+    color: var(--escan-opcional);
 }
 
 .card-escasan-header.primario {
     background-color: var(--escan-primario);
+    color: var(--escan-fondo);
 }
 
 .card-escasan-header.secundario {
     background-color: var(--escan-secundario);
+    color: var(--escan-fondo);
 }
 
 .card-escasan-header.opcional {
     background-color: var(--escan-opcional);
+    color: var(--escan-fondo);
 }
+
 
 
 
