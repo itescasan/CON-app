@@ -26,7 +26,8 @@
                                 <label> Bloqueada</label>
                                 <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
                                     data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
-                                    id="chkBloqueada" formControlName="chkBloqueada">
+                                    id="chkBloqueada" formControlName="chkBloqueada"
+                                    (change)="v_Bloqueada($event)">
                                
                                 
                             </div>
@@ -39,8 +40,9 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                             <div class="form-floating">
-                                <select class="form-select form-select-lg" aria-label="Nivel" id="cmbNivel"
-                                    formControlName="cmbNivel">
+                                <select class="form-select form-select-lg" aria-label="Nivel"
+                                id="cmbNivel" formControlName="cmbNivel"
+                                (change)="v_Nivel();">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>

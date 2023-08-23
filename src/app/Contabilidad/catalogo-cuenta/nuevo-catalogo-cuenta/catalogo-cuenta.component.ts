@@ -39,8 +39,29 @@ private v_Iniciar(e : string) : void
     break;
 
     case "Limpiar":
+      this.val.Get("txtCuenta").setValue();
+      this.val.Get("cmbNivel").setValue("");
+      this.val.Get("txtDescripcion").setValue("");
+      this.val.Get("txtCuentaPadre").setValue("");
+      this.val.Get("txtDescripcionPadre").setValue("");
+      this.val.Get("cmbGrupo").setValue("");
+      this.val.Get("cmbClase").setValue("");
+      this.val.Get("chkBloqueada").setValue(false);
+
+      let chk: any = document.querySelector("#chkBloqueada");
+      if(chk != undefined)chk.bootstrapToggle("off");
+
     break;
   }
+}
+
+
+public v_Bloqueada(event : any) :void{
+  this.val.Get("chkBloqueada").setValue(event.target.checked);
+}
+
+public v_Nivel() : void{
+
 }
 
 ngOnInit() : void{
