@@ -10,6 +10,7 @@ import * as $ from 'jquery';
 export class CatalogoCuentaComponent {
 
   public val = new Validacion();
+  public esModal : boolean = false;
   
 
   constructor()
@@ -22,7 +23,25 @@ export class CatalogoCuentaComponent {
     this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
     this.val.add("cmbClase", "1", "LEN>", "0", "Clase", "Seleccione una clase.");
     this.val.add("chkBloqueada", "1", "LEN>", "0", "Bloqueada", "");
+
+    this.v_Iniciar("Iniciar");
   }
+
+
+
+
+private v_Iniciar(e : string) : void
+{
+  switch(e)
+  {
+    case "Iniciar":
+      this.esModal = false;
+    break;
+
+    case "Limpiar":
+    break;
+  }
+}
 
 ngOnInit() : void{
 

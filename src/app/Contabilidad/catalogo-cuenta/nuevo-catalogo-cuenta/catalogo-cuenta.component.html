@@ -1,5 +1,17 @@
+
+
 <div class="container contenedor-cuenta">
 
+
+    <div class="escasan-dialog" *ngIf="esModal">
+        <div class="btn-contenedor-custom" >
+            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+              <mat-icon class="close-icon" color="warn">close</mat-icon>
+            </button>
+          </div>
+    </div>
+    
+        
     <form autocomplete="off" [formGroup]="val.ValForm">
         <div class="card">
             <div class="card-header card-escasan-header primario">CATALOGO CUENTA</div>
@@ -136,22 +148,23 @@
                   
                 </div>
 
-                <div class="row mt-2">
-                    <div class="btn-contenedor">
-                        
-                        <span>
-                            <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
-                        </span>
+              
+                <div class="row mt-2 botones">
 
-                        <span>
+                    <div class="col-12 col-md-12 col-lg-6 mb-3">
+                        <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-6">
+                        <div class="btn-contenedor">
                             <button type="button" class="btn btn-primario" id="btnGuardarCuenta"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
-                            <button type="button" class="btn btn-opcional" id="btnCanclarCuenta"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
-                        </span>
-   
-                        
+                            <button type="button" class="btn btn-opcional" id="btnCanclarCuenta" *ngIf="!esModal"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+      
+                        </div>
                     </div>
                 </div>
-        
+                
+                
             </div>
         </div>
     </form>

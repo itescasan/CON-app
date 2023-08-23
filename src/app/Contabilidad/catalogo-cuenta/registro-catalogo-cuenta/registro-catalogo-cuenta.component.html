@@ -1,1 +1,58 @@
-<p>registro-catalogo-cuenta works!</p>
+<div >
+    <table class="table table-hover table-sm">
+        <thead>
+            <tr class="row linea-bottom-primario"><th>
+                <p>Cuentas Contables</p>
+                <div class="col-12 col-md-12 col-lg-4 offset-lg-8 mb-1">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+
+                        <div class="form-floating">
+                            <input type="text" id="txtBuscar" class="form-control" placeholder="Buscar"
+                                aria-label="Buscar" formControlName="txtBuscar"
+                               >
+                            <label for="txtBuscar">Buscar</label>
+
+                        </div>
+
+                    </div>
+                </div>
+            </th></tr>
+          </thead>
+        <tbody>
+   
+            <tr class="linea-bottom-secundario dashed">
+                <div class="row">
+
+                    <td class="col-12 col-md-12 col-lg-6">
+                        <span><b>Cuenta:</b>4441-1111</span>
+                        <span><b>Descripcion:</b>Caja general</span>
+                    </td>
+                    <td class="col-4 col-md-4 col-lg-2">
+                        <span> <b>Grupo:</b></span>
+                        <span> Otros Creditos</span>
+                      
+                    </td>
+    
+                    <td class="col-4 col-md-4 col-lg-2">
+                        <span><b>Clase:</b></span>
+                        <span>Detalle</span>
+    
+                    </td>
+                    <td class="col-4 col-md-4 col-lg-2">
+                        <span><b>Bloqueado:</b></span>
+                        <span>No</span>
+                    </td>
+    
+                    <td class="col-12">
+                        <div class="contenedor-edicion">
+                            <button type="button" class="btn" (click)="v_Editar('')"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
+                            </button>
+                        </div>
+                    </td>
+                </div>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

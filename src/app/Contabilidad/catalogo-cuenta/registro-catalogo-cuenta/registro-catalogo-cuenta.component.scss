@@ -1,0 +1,77 @@
+@import "/src/assets/scss/media.scss";
+
+thead{
+    position: relative;
+    width: 100%;
+}
+
+th{
+    position: fixed;
+    top: 0;
+    right: 0;
+    text-align: center;
+    z-index: 1;
+    
+   
+   p{
+   
+    font-weight: bold;
+    font-size: 1.2em;
+   }
+}
+
+tr
+{
+
+    background-color: var(--escan-fondo);
+
+    td:first-child{
+
+        span{
+            display: block;
+        }
+        
+        span:last-child{
+            margin-left: 30px;
+        }
+    
+    }
+    
+    b{
+        margin-right: 5px;
+    }
+
+    td:not(:first-child){
+
+        @include Tamano_Menor(lg) {
+            span{
+                display: block;
+            }
+            span:last-child{
+                margin-left: 15px;
+            }
+          }
+
+    }
+}
+
+tr:first-child{
+    margin-top: 75px;
+}
+
+
+.bottom-secundario{
+    border-style:dashed;
+}
+
+
+.contenedor-edicion{
+    display: flex;
+    justify-content: right;
+}
+
+
+.dashed{
+    border-style: dashed;
+}
+

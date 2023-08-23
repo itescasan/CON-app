@@ -71,14 +71,49 @@
  }
 
 
- .btn-contenedor{
-    display: flex;
-    justify-content: space-between;
+ .botones{
 
 
-    .btn-primario{
-        margin-right: 10px;
+    .btn-secundario{
+        @include Tamano_Menor(lg) {
+            width: 100%;
+          }
+        
     }
 
-   
+    .btn-contenedor{
+        display: flex;
+        justify-content:right;
+    
+        
+    
+        .btn-primario{
+            margin-right: 10px;
+        }
+
+        button{
+            @include Tamano_Menor(lg) {
+                width: 100%;
+              }
+        }
+
+      
+    
+     }
+
+    
+
  }
+
+ 
+
+
+
+
+ .btn-contenedor-custom {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+
