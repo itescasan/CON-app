@@ -1,47 +1,201 @@
-<div class="container">
-    
-  
-    <div class="card">
-        <div class="card-header card-escasan-header-opcional"> titulo</div>
-        <div class="card-body">
+<div>    
+    <form autocomplete="off" [formGroup]="val.ValForm">
+        <div class="card">
+            <div class="card-header card-escasan-header opcional"> Datos Ejercicio Fiscal..</div>
+            <div class="card-body">
 
-            <div class="row linea">
+                <div class="row">
+                    <div class="col-8 mb-1">
+                        <div  class="input-group">
+                            <span class="input-group-text"><i class="fa-regular fa-file fa-beat-fade"></i></span>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="Ejercicio Fiscal">
+                                <label for="floatingInput">Ejercicio Fiscal:</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-12 col-md-12 col-lg-4 mb-3">
+                        <div class="bloqueada">
 
-                <div class="col-12 col-md-12 col-lg-6 mb-1">
-                    <div  class="input-group">
-                        <span class="input-group-text"><i class="fa-solid fa-house fa-lg"></i></span>
-                        <div class="form-floating">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email address</label>
+                            <div class="contenedor">
+                                <label> Bloqueado</label>
+                                <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
+                                    data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
+                                    id="chkBloqueada" formControlName="chkBloqueada">  
+                            </div>
+                        
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="row">               
+                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                        <div  class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-beat-fade fa-lg"></i></span>
+                            <div class="form-floating">                               
+                                <input type="date" fromat="yyyy" class="form-control" id="floatingInput" placeholder="Fecha Inicio Ejercicio Fiscal" min="2020" max="2030">
+                                <label for="floatingInput">Fecha Inicio</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                        <div  class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-beat-fade fa-lg"></i></span>
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="floatingInput" placeholder="Fecha Final" >
+                                <label for="floatingInput">Fecha Final</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                        <div class="row mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-file-invoice fa-beat-fade fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupo"
+                                        formControlName="cmbGrupo">
+                                        <option value="0">Clase 1</option>
+                                        <option value="1">Clase 2</option>
+                                    </select>
+                                    <label for="cmbGrupo">Clase Periodo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                        <div class="row mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-list-ol fa-beat-fade fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="No Periodos">
+                                    <label for="floatingInput">N° Periodos:</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                        <div class="row mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-regular fa-newspaper fa-beat-fade fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupo"
+                                        formControlName="cmbGrupo">
+                                        <option value="0">Cta # 1115-01</option>
+                                        <option value="1">Cta # 1115-02</option>
+                                    </select>
+                                    <label for="cmbGrupo">Cta. Acumulada</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                        <div class="row mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-arrow-down-wide-short fa-beat-fade fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupo"
+                                        formControlName="cmbGrupo">
+                                        <option value="0">Cta # 1115-01</option>
+                                        <option value="1">Cta # 1115-02</option>
+                                    </select>
+                                    <label for="cmbGrupo">Cta. Periodo</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="btn-contenedor d-grid gap-2 d-md-flex justify-content-md-end">
+                            
+                            <span>
+                                <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i> Ver Periodos</button>
+                            </span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-12 col-lg-6 mb-1">
-                    <div  class="input-group">
-                        <span class="input-group-text"><i class="fa-solid fa-house fa-lg"></i></span>
-                        <div class="form-floating">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email address</label>
-                        </div>
-                    </div>
+                <div class="row mt-2">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>                         
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                            </tr>
+                            <tr>
+                            <th scope="row">3</th>
+                            <td colspan="2">Larry the Bird</td>
+                            <td>@twitter</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>@twitter</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="btn-contenedor">                        
+                        <span>
+                            <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
+                        </span>
 
-
-            <div class="row mb-1">
-
-                <div  class="input-group">
-                    <span class="input-group-text"><i class="fa-solid fa-house fa-lg"></i></span>
-                    <div class="form-floating">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Email address</label>
+                        <span>
+                            <button type="button" class="btn btn-primario" id="btnGuardarCuenta"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
+                            <button type="button" class="btn btn-opcional" id="btnCanclarCuenta"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+                        </span>
+   
+                        
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </form>
 </div>
 
 
@@ -51,75 +205,3 @@
 
 
 
-<div class="container">
-    <div class="ror">
-        <div class="card">
-            <div class="card-body">
-                <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Id Ejercicio</span>
-                    <input type="text" class="form-control" placeholder="Id Ejercicio" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Ejercicio Fiscal</span>
-                    <input type="text" class="form-control" placeholder="Id Ejercicio" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Fecha Inicial</span>
-                    <input type="date" class="form-control" placeholder="Id Ejercicio" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Fecha Final</span>
-                    <input type="date" class="form-control" placeholder="Id Ejercicio" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Clases Periodos</span>
-                    <input type="text" class="form-control" placeholder="Id Ejercicio" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">No. Periodos</span>
-                    <input type="text" class="form-control" placeholder="Id Ejercicio" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Cta. Acumulada</span>
-                    <input type="text" class="form-control" placeholder="Id Ejercicio" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="input-group mb-3">
-                    <span class="input-group-text" id="basic-addon1">Cta. Periodo</span>
-                    <input type="text" class="form-control" placeholder="Id Ejercicio" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                  <div class="d-grid gap-2 d-md-flex justify-content-md-end">                    
-                    <button class="btn btn-opcional" type="button">Ver periodos</button>
-                  </div>
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-          </div>
-    </div>
-</div>
