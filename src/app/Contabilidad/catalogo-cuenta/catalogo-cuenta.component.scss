@@ -1,5 +1,9 @@
 @import "/src/assets/scss/media.scss";
 
+.contenedor-cuenta{
+    margin-bottom: 50px;
+}
+
 .cuenta-padre{
     margin: 5px;
 }
@@ -31,7 +35,7 @@
  .custom-group{
     display: flex;
     justify-content: left;
-    height: 120px;
+    height: fit-content;
    
 
     .input-group-custom {
@@ -60,6 +64,8 @@
             border-top-left-radius: 0;
             border-top-right-radius: 0;
             border-bottom-left-radius: 0;
+            min-height: 100px;
+            height: 100px;
         }
     }
  }
