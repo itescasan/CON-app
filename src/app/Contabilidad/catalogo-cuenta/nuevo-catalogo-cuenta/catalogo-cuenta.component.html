@@ -1,6 +1,6 @@
 
 
-<div class="container contenedor-cuenta">
+<div class="container-lg contenedor-cuenta">
 
 
     <div class="escasan-dialog" *ngIf="esModal">
@@ -19,24 +19,8 @@
 
                 <div class="row">
 
-                    <div class="col-12 col-md-12 col-lg-4 mb-3">
-                        <div class="bloqueada">
-
-                            <div class="contenedor">
-                                <label> Bloqueada</label>
-                                <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
-                                    data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
-                                    id="chkBloqueada" formControlName="chkBloqueada"
-                                    (change)="v_Bloqueada($event)">
-                               
-                                
-                            </div>
-                           
-                        </div>
-                    </div>
-
-                    
-                    <div class="col-12 col-md-12 col-lg-2 offset-lg-6 mb-3">
+                       
+                    <div class="col-12 col-md-12 col-lg-3 offset-lg-5 mb-3">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                             <div class="form-floating">
@@ -55,6 +39,24 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-12 col-md-12 col-lg-4  mb-3">
+                          
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-object-group fa-lg"></i></span>
+                            <div class="form-floating">
+                                <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupo"
+                                    formControlName="cmbGrupo"
+                                    (change)="v_Grupo($event);">
+                                    <option *ngFor="let det of lstGrupos" value="{{det.IdGrupo}}">{{det.Nombre}}</option>
+
+                                </select>
+                                <label for="cmbGrupo">Grupo</label>
+                            </div>
+                        </div>
+                    </div>
+
+                 
 
 
                 </div>
@@ -89,55 +91,66 @@
 
                 <div class="row">
 
-                    <div class="col-12 col-md-12 col-lg-4">
+                    <div class="col-12 col-md-12 col-lg-4 mb-1">
 
-                        <div class="row mb-1">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-object-group fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupo"
-                                        formControlName="cmbGrupo">
-                                        <option *ngFor="let det of lstGrupos" value="{{det.IdGrupo}}">{{det.Nombre}}</option>
-  
-                                    </select>
-                                    <label for="cmbGrupo">Grupo</label>
+                        <div class="row">
+
+                            
+    
+                            <div class="col-12 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                    <div class="form-floating">
+                                        <select class="form-select form-select-lg" aria-label="Clase" id="cmbClase"
+                                            formControlName="cmbClase">
+                                            <option value="G">Grupo</option>
+                                            <option value="D">Detalle</option>
+                                        </select>
+                                        <label for="cmbClase">Clase</label>
+                                    </div>
                                 </div>
+                            </div>
+    
+                            <div class="col-12 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                    <div class="form-floating">
+                                        <select class="form-select form-select-lg" aria-label="Clase" id="cmbNaturaleza"
+                                            formControlName="cmbNaturaleza">
+                                            <option value="D">Debito</option>
+                                            <option value="C">Crédito</option>
+                                        </select>
+                                        <label for="cmbNaturaleza">Naturaleza Cuenta</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mb-1">
+
+                                <div class="bloqueada">
+
+                                    <div class="contenedor">
+                                        <label> Bloqueada</label>
+                                        <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
+                                            data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
+                                            id="chkBloqueada" formControlName="chkBloqueada"
+                                            (change)="v_Bloqueada($event)">
+                                       
+                                        
+                                    </div>
+                                   
+                                </div>
+                              
                             </div>
                         </div>
 
-                        <div class="row mb-1">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Clase" id="cmbClase"
-                                        formControlName="cmbClase">
-                                        <option value="G">Grupo</option>
-                                        <option value="D">Detalle</option>
-                                    </select>
-                                    <label for="cmbClase">Clase</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-1">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Clase" id="cmbNaturaleza"
-                                        formControlName="cmbNaturaleza">
-                                        <option value="D">Debito</option>
-                                        <option value="C">Crédito</option>
-                                    </select>
-                                    <label for="cmbNaturaleza">Naturaleza Cuenta</label>
-                                </div>
-                            </div>
-                        </div>
+                     
 
                       
                     </div>
 
 
-                    <div class="col-12 col-md-12 col-lg-6 offset-lg-2" >
+                    <div class="col-12 col-md-12 col-lg-8" >
 
                         <div class="row">
                             <div class="custom-group">
@@ -173,7 +186,7 @@
                 </div>
 
               
-                <div class="row mt-2 botones">
+                <div class="row mt-2 botones linea-top-secundario">
 
                     <div class="col-12 col-md-12 col-lg-6 mb-3">
                         <button type="button" class="btn btn-secundario" id="btnRefrescar-Cuenta" (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
