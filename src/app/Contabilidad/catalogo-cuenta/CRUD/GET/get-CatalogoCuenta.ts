@@ -1,13 +1,12 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
-import { Conexion } from "../class/Cadena_Conexion";
-
+import { Conexion } from "src/SHARED/class/Cadena_Conexion";
 
 @Injectable({
     providedIn: 'root',
   })
-export class getServidor{
+export class getCuentaContable{
     
     private _Cnx = new Conexion();
     private http: HttpClient;
@@ -20,10 +19,14 @@ export class getServidor{
 
     }
 
-    public FechaServidor() : Observable<any>{
-      return this.http.get<any>(this._Cnx.Url() + "Sistema/FechaServidor");
-   }
-    
  
+   public Datos() : Observable<string>{
+      return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Datos");
+   }
+
+   public Get() : Observable<string>{
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Get");
+ }
+   
 
 }
