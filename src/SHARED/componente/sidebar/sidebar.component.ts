@@ -98,13 +98,14 @@ export class SidebarComponent {
     
 
  
-    
+ 
     this.Conexion.FechaServidor().subscribe(
-      (s) => {
+      {
+        next : (data) => {
+          
+          dialogRef.close();
 
-        dialogRef.close();
-
-        let _json = JSON.parse(s);
+          let _json : any = data;
 
         if (_json["esError"] == 1) {
           this.dialog.open(DialogErrorComponent, {
@@ -119,9 +120,11 @@ export class SidebarComponent {
           $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
    
         }
-      },
-      (err) => {
 
+        },
+        error: (err) => {
+
+          
         this.ErrorServidor = true;
         dialogRef.close();
 
@@ -131,9 +134,11 @@ export class SidebarComponent {
 
         $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
    
+
+        },
+        complete : () => {}
       }
     );
-    
 
   }
 

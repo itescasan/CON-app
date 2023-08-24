@@ -42,7 +42,7 @@
                             <div class="form-floating">
                                 <select class="form-select form-select-lg" aria-label="Nivel"
                                 id="cmbNivel" formControlName="cmbNivel"
-                                (change)="v_Nivel();">
+                                (change)="v_Nivel($event);">
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -66,7 +66,7 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="fab fa-cuttlefish fa-lg"></i></span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Cuenta" mask="0000" prefix="441-"
+                                <input type="text" class="form-control" placeholder="Cuenta" mask="{{Mascara}}" prefix="{{CuentaPadre}}"
                                     [showMaskTyped]="true" id="txtCuenta" formControlName="txtCuenta">
                                 <label for="txtCuenta">Cuenta</label>
                             </div>
@@ -131,7 +131,8 @@
                                 <div>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Cuenta"
-                                            id="txtCuentaPadre" formControlName="txtCuentaPadre">
+                                            id="txtCuentaPadre" formControlName="txtCuentaPadre"
+                                            [matAutocomplete]="cmbPadre">
                                         <label for="txtCuentaPadre">Cuenta</label>
                                     </div>
                                     <div class="form-floating">
@@ -140,6 +141,13 @@
                                             formControlName="txtDescripcionPadre"></textarea>
                                         <label for="txtDescripcionPadre">Descripción</label>
                                     </div>
+                                    
+                                    <mat-autocomplete autoActiveFirstOption #cmbPadre="matAutocomplete"
+                                    (optionSelected)="v_Select_Cuenta($event)">
+                                    <mat-option *ngFor="let option of filteredCuentaPadre | async" [value]="option.CuentaContable">
+                                        {{option.Filtro}}
+                                    </mat-option>
+                                </mat-autocomplete>
                                 </div>
                             </div>
                            
@@ -154,7 +162,7 @@
                 <div class="row mt-2 botones">
 
                     <div class="col-12 col-md-12 col-lg-6 mb-3">
-                        <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
+                        <button type="button" class="btn btn-secundario" id="btnRefrescar-Cuenta"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
                     </div>
 
                     <div class="col-12 col-md-12 col-lg-6">
