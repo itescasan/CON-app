@@ -1,4 +1,5 @@
 <div>    
+
     <form autocomplete="off" [formGroup]="val.ValForm">
         <div class="card">
             <div class="card-header card-escasan-header opcional"> Datos Ejercicio Fiscal..</div>
@@ -34,7 +35,7 @@
                         <div  class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-beat-fade fa-lg"></i></span>
                             <div class="form-floating">                               
-                                <input type="text"  mask="0000"  [showMaskTyped]="true" class="form-control" id="floatingInput" placeholder="Fecha Inicio Ejercicio Fiscal" min="2020" max="2030">
+                                <input type="text"  mask="0000"  class="form-control" id="floatingInput" placeholder="Fecha Inicio Ejercicio Fiscal" min="2020" max="2030">
                                 <label for="floatingInput">Fecha Inicio</label>
                             </div>
                         </div>
@@ -43,7 +44,7 @@
                         <div  class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-beat-fade fa-lg"></i></span>
                             <div class="form-floating">
-                                <input type="date" class="form-control" id="floatingInput" placeholder="Fecha Final" >
+                                <input type="text" mask="0000" class="form-control" id="floatingInput" placeholder="Fecha Final" min="2020" max="2030">
                                 <label for="floatingInput">Fecha Final</label>
                             </div>
                         </div>
@@ -112,7 +113,7 @@
                         <div class="btn-contenedor d-grid gap-2 d-md-flex justify-content-md-end">
                             
                             <span>
-                                <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i> Ver Periodos</button>
+                                <button type="button" (click)="v_Editar('')"  class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i> Ver Periodos</button>
                             </span>
                         </div>
                     </div>

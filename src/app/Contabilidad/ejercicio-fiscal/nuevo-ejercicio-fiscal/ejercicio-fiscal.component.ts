@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Validacion } from 'src/SHARED/class/validacion';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { RegistroEjercicioFiscalComponent } from '../registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
+import { PeriodosFiscalComponent } from '../periodos-fiscal/periodos-fiscal.component';
 
 @Component({
   selector: 'app-ejercicio-fiscal',
@@ -7,9 +10,13 @@ import { Validacion } from 'src/SHARED/class/validacion';
   styleUrls: ['./ejercicio-fiscal.component.scss']
 })
 export class EjercicioFiscalComponent {
-  public val = new Validacion();
   
-  constructor()
+  public val = new Validacion();
+  public esModal : boolean = false;
+  
+  constructor(
+    private dialog: MatDialog,
+  )
   {
     this.val.add("txtCuenta", "1", "LEN>", "0", "Cuenta", "Ingrese un número de cuenta.");
     this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "Seleccione un nivel.");
@@ -18,7 +25,8 @@ export class EjercicioFiscalComponent {
     this.val.add("txtDescripcionPadre", "1", "LEN>=", "0", "Descripcion Cuenta Padre", "");
     this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
     this.val.add("cmbClase", "1", "LEN>", "0", "Clase", "Seleccione una clase.");
-    this.val.add("chkBloqueada", "1", "LEN>", "0", "Bloqueada","");
+    this.val.add("chkBloqueada", "1", "LEN>", "0", "Bloqueada","");    
+
   }
   
 
@@ -29,6 +37,25 @@ ngOnInit() : void{
       f.bootstrapToggle();
     });
  
-}
+  }
+
+ public v_Editar(e : any) : void{
+
+    let dialogRef: MatDialogRef<PeriodosFiscalComponent> = this.dialog.open(PeriodosFiscalComponent,
+      {
+        panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "",
+        height:  window.innerWidth < 992 ? "100%" : "80%",
+        width:  window.innerWidth < 992 ? "100%" : "60%",
+        disableClose: true
+      }
+    );
+    
+       
+    dialogRef.afterOpened().subscribe(s =>{
+      dialogRef.componentInstance.esModal = true;
+    });   
 
   }
+  
+
+}

@@ -24,10 +24,13 @@ import { IgxIconModule } from 'igniteui-angular';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { WaitComponent } from '../SHARED/componente/wait/wait.component';
 import { AnularComponent } from '../SHARED/anular/anular.component';
-import { EjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/ejercicio-fiscal.component';
+
 import { CatalogoCuentaComponent } from './Contabilidad/catalogo-cuenta/nuevo-catalogo-cuenta/catalogo-cuenta.component';
 import { IConfig, NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { RegistroCatalogoCuentaComponent } from './Contabilidad/catalogo-cuenta/registro-catalogo-cuenta/registro-catalogo-cuenta.component';
+import { EjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/nuevo-ejercicio-fiscal/ejercicio-fiscal.component';
+import { RegistroEjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
+import { PeriodosFiscalComponent } from './Contabilidad/ejercicio-fiscal/periodos-fiscal/periodos-fiscal.component';
 
 
 @NgModule({
@@ -42,6 +45,8 @@ import { RegistroCatalogoCuentaComponent } from './Contabilidad/catalogo-cuenta/
     EjercicioFiscalComponent,
     CatalogoCuentaComponent,
     RegistroCatalogoCuentaComponent,
+    RegistroEjercicioFiscalComponent,
+    PeriodosFiscalComponent,
   ],
   imports: [
     BrowserModule,
