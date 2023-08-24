@@ -21,15 +21,14 @@ export class EjercicioFiscalComponent {
     private dialog: MatDialog,
   )
   {
-    this.val.add("txtCuenta", "1", "LEN>", "0", "Cuenta", "Ingrese un número de cuenta.");
-    this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "Seleccione un nivel.");
-    this.val.add("txtDescripcion", "1", "LEN>", "0", "Descripción", "Ingrese la descripción de la cuenta.");
-    this.val.add("txtCuentaPadre", "1", "LEN>=", "0", "Cuenta Padre", "");
-    this.val.add("txtDescripcionPadre", "1", "LEN>=", "0", "Descripcion Cuenta Padre", "");
-    this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
-    this.val.add("cmbClase", "1", "LEN>", "0", "Clase", "Seleccione una clase.");
-    this.val.add("chkBloqueada", "1", "LEN>", "0", "Bloqueada","");    
-
+    this.val.add("idEjercicioFiscal", "1", "LEN>", "0", "Ejercio_Fiscal", "Ingrese un número de cuenta.");
+    this.val.add("idFechaIni", "1", "LEN>", "0", "Fecha", "Seleccione un nivel.");
+    this.val.add("idFechaFin", "1", "LEN>", "0", "Fecha", "Ingrese la descripción de la cuenta.");
+    this.val.add("cmbGrupoCP", "1", "LEN>=", "0", "Clase Periodo", "");
+    this.val.add("idNperiodos", "1", "LEN>=", "0", "N° Periodo", "");
+    this.val.add("cmbGrupoA", "1", "LEN>", "0", "Cuenta Acumulada", "Seleccione una Cuenta.");
+    this.val.add("cmbGrupoCtaP", "1", "LEN>", "0", "Cuenta Periodo","Seleccione una Cuenta.");
+    this.val.add("chkBloqueada", "1", "LEN>", "0", "Bloqueada", "");
   }
   
 
