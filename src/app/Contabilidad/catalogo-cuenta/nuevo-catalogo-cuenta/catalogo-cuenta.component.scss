@@ -1,8 +1,14 @@
 @import "/src/assets/scss/media.scss";
 
+
+
+
 .contenedor-cuenta{
     margin-bottom: 50px;
+
+    max-width: var(--min-width-md);
 }
+
 
 .cuenta-padre{
     margin: 5px;
@@ -11,7 +17,7 @@
 .bloqueada {
 
     display: flex;
-    justify-content: left;
+    justify-content: center;
     
     
     .contenedor{
@@ -73,7 +79,11 @@
 
  .botones{
 
+    
+    div:first-child{
+        margin-top: 5px;
 
+    }
     .btn-secundario{
         @include Tamano_Menor(lg) {
             width: 100%;

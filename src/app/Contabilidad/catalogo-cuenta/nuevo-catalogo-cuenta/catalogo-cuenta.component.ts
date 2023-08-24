@@ -32,12 +32,13 @@ export class CatalogoCuentaComponent {
 
 
   constructor(private DIALOG: MatDialog, private GET: getCuentaContable) {
-    this.val.add("txtCuenta", "1", "LEN>", "0", "Cuenta", "Ingrese un número de cuenta.");
+    
     this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "Seleccione un nivel.");
+    this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
+    this.val.add("txtCuenta", "1", "LEN>", "0", "Cuenta", "Ingrese un número de cuenta.");
     this.val.add("txtDescripcion", "1", "LEN>", "0", "Descripción", "Ingrese la descripción de la cuenta.");
     this.val.add("txtCuentaPadre", "1", "LEN>=", "0", "Cuenta Padre", "");
     this.val.add("txtDescripcionPadre", "1", "LEN>=", "0", "Descripcion Cuenta Padre", "");
-    this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
     this.val.add("cmbClase", "1", "LEN>", "0", "Clase", "Seleccione una clase.");
     this.val.add("cmbNaturaleza", "1", "LEN>", "0", "Naturaleza Cuenta", "Seleccione la naturaleza de la cuenta.");
     this.val.add("chkBloqueada", "1", "LEN>", "0", "Bloqueada", "");
@@ -61,15 +62,14 @@ export class CatalogoCuentaComponent {
 
         this.Mascara = "";
         this.lstCuentaPadre = [];
-        this.lstGrupos = [];
 
 
-        this.val.Get("cmbNivel").setValue("");
+        this.val.Get("cmbNivel").setValue("1");
+        this.val.Get("cmbGrupo").setValue(this.lstGrupos[0]?.IdGrupo);
         this.val.Get("txtCuenta").setValue();
         this.val.Get("txtDescripcion").setValue("");
         this.val.Get("txtCuentaPadre").setValue("");
         this.val.Get("txtDescripcionPadre").setValue("");
-        this.val.Get("cmbGrupo").setValue("");
         this.val.Get("cmbClase").setValue("");
         this.val.Get("cmbNaturaleza").setValue("");
         this.val.Get("chkBloqueada").setValue(false);
@@ -114,28 +114,14 @@ export class CatalogoCuentaComponent {
 
     let value: string = event.target.value;
 
-    this.lstCuentaPadre = [];
-
+    
     this.Prefix = "";
     this.val.Get("txtCuenta").setValue("");
     this.val.Get("txtDescripcion").setValue("");
     this.val.Get("txtCuentaPadre").setValue("");
     this.val.Get("txtDescripcionPadre").setValue("");
-
-
-    if (value != "1") {
-      let Reg: iCuenta[] = this.iDatos.find(f => f.Nombre == "CUENTAS")?.d;
-      this.lstCuentaPadre = Reg.filter(f => f.Nivel == (Number(value) - 1) && f.ClaseCuenta == "G");
-
-      this.val.Get("txtCuenta").disable();
-      this.val.Get("txtDescripcion").disable();
-      this.val.Get("txtCuentaPadre").enable();
-    }
-    else {
-      this.val.Get("txtCuenta").enable();
-      this.val.Get("txtDescripcion").enable();
-      this.val.Get("txtCuentaPadre").disable();
-    }
+    
+    this.v_Filtrar_Cuentas(value, this.val.Get("cmbGrupo").value);
 
 
     switch (value) {
@@ -169,6 +155,45 @@ export class CatalogoCuentaComponent {
         break;
     }
 
+  }
+
+
+  public v_Grupo(event : any) : void{
+
+   
+ 
+    this.v_Filtrar_Cuentas(this.val.Get("cmbNivel").value,  event.target.value);
+  }
+
+  private v_Filtrar_Cuentas(nivel : string, grupo : string){
+
+    this.lstCuentaPadre = [];
+    
+
+    
+    let Reg: iCuenta[] = this.iDatos.find(f => f.Nombre == "CUENTAS")?.d;
+    this.lstCuentaPadre = Reg.filter(f => f.Nivel == (Number(nivel) - 1) && f.ClaseCuenta == "G" && f.GrupoCuentas == grupo);
+
+
+    this.val.Get("txtCuenta").setValue("");
+    this.val.Get("txtDescripcion").setValue("");
+    this.val.Get("txtCuentaPadre").setValue("");
+    this.val.Get("txtDescripcionPadre").setValue("");
+
+    if (nivel != "1") {
+      this.val.Get("txtCuenta").disable();
+      this.val.Get("txtDescripcion").disable();
+      this.val.Get("txtCuentaPadre").enable();
+    }
+    else {
+      this.val.Get("txtCuenta").enable();
+      this.val.Get("txtDescripcion").enable();
+      this.val.Get("txtCuentaPadre").disable();
+    }
+
+
+
+   
   }
 
 
@@ -208,6 +233,10 @@ export class CatalogoCuentaComponent {
             this.iDatos = _json["d"];
             this.lstGrupos = this.iDatos.find(f => f.Nombre == "GRUPOS")?.d;
 
+         
+            if(this.val.Get("cmbGrupo").value == undefined) this.val.Get("cmbGrupo").setValue(this.lstGrupos[0]?.IdGrupo);
+
+
 
           }
 
@@ -236,11 +265,11 @@ export class CatalogoCuentaComponent {
 
 
      ///CAMBIO DE FOCO
-     this.val.addFocus("cmbNivel", "txtCuentaPadre", undefined);
+     this.val.addFocus("cmbNivel", "cmbClase", undefined);
+     this.val.addFocus("cmbClase", "txtCuentaPadre", undefined);
      this.val.addFocus("txtCuentaPadre", "txtCuenta", undefined);
      this.val.addFocus("txtCuenta", "txtDescripcion", undefined);
-     this.val.addFocus("txtDescripcion", "cmbGrupo", undefined);
-     this.val.addFocus("cmbGrupo", "cmbClase", undefined);
+     this.val.addFocus("txtDescripcion", "cmbClase", undefined);
      this.val.addFocus("cmbClase", "cmbNaturaleza", undefined);
      this.val.addFocus("cmbNaturaleza", "btnGuardarCuenta", "click");
 

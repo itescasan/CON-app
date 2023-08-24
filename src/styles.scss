@@ -131,9 +131,13 @@ auto - for classes that set the margin to auto, like mx-auto
 
     --min-width: 300px;
 
+    --min-width-sm: 576px;
+    --min-width-md: 768px;
+    --min-width-lg: 992px;
+    --min-width-xl: 1200px;
+    --min-width-xxl: 1200px;
+
 }
-
-
 
 
 html,
