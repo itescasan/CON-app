@@ -1,3 +1,4 @@
+
 <div>    
 
     <form autocomplete="off" [formGroup]="val.ValForm">
@@ -10,7 +11,7 @@
                         <div  class="input-group">
                             <span class="input-group-text"><i class="fa-regular fa-file fa-beat-fade"></i></span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="floatingInput" placeholder="Ejercicio Fiscal">
+                                <input type="text" class="form-control" id="floatingInput" placeholder="Ejercicio Fiscal" [(ngModel)] = "inputValue" [ngModelOptions]="{standalone: true}">
                                 <label for="floatingInput">Ejercicio Fiscal:</label>
                             </div>
                         </div>
@@ -71,7 +72,7 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fa-solid fa-list-ol fa-beat-fade fa-lg"></i></span>
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="floatingInput" placeholder="No Periodos">
+                                    <input type="text" class="form-control" id="floatingInput" placeholder="No Periodos" value="{{ inputValue }}">
                                     <label for="floatingInput">N° Periodos:</label>
                                 </div>
                             </div>

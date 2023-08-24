@@ -3,6 +3,7 @@ import { Validacion } from 'src/SHARED/class/validacion';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RegistroEjercicioFiscalComponent } from '../registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
 import { PeriodosFiscalComponent } from '../periodos-fiscal/periodos-fiscal.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-ejercicio-fiscal',
@@ -12,7 +13,9 @@ import { PeriodosFiscalComponent } from '../periodos-fiscal/periodos-fiscal.comp
 export class EjercicioFiscalComponent {
   
   public val = new Validacion();
-  
+  inputValue: string = "";
+  inputini: string = "";
+  imputfin: string = '';
   
   constructor(
     private dialog: MatDialog,
@@ -56,6 +59,6 @@ ngOnInit() : void{
     });   
 
   }
-  
 
+  
 }
