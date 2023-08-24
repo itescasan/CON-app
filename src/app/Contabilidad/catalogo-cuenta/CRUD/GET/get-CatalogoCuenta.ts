@@ -20,9 +20,13 @@ export class getCuentaContable{
     }
 
  
-   public Get() : Observable<string>{
-      return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Get");
+   public Datos() : Observable<string>{
+      return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Datos");
    }
+
+   public Get() : Observable<string>{
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Get");
+ }
    
 
 }
