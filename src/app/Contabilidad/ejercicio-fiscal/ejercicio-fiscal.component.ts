@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { Validacion } from 'src/SHARED/class/validacion';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { RegistroEjercicioFiscalComponent } from '../registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
-import { PeriodosFiscalComponent } from '../periodos-fiscal/periodos-fiscal.component';
 
 @Component({
   selector: 'app-ejercicio-fiscal',
@@ -12,7 +10,6 @@ import { PeriodosFiscalComponent } from '../periodos-fiscal/periodos-fiscal.comp
 export class EjercicioFiscalComponent {
   
   public val = new Validacion();
-  
   
   constructor(
     private dialog: MatDialog,
@@ -41,20 +38,18 @@ ngOnInit() : void{
 
  public v_Editar(e : any) : void{
 
-    let dialogRef: MatDialogRef<PeriodosFiscalComponent> = this.dialog.open(PeriodosFiscalComponent,
+    let dialogRef: MatDialogRef<MatDialog> = this.dialog.open(MatDialog,
       {
         panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "",
         height:  window.innerWidth < 992 ? "100%" : "80%",
         width:  window.innerWidth < 992 ? "100%" : "60%",
         disableClose: true
       }
-    );
-    
+    );    
        
     dialogRef.afterOpened().subscribe(s =>{
       dialogRef.componentInstance.esModal = true;
-    });   
-
+    });
   }
   
 
