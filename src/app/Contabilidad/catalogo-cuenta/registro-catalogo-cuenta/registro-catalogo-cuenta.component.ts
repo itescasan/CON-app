@@ -24,9 +24,9 @@ export class RegistroCatalogoCuentaComponent {
     let dialogRef: MatDialogRef<CatalogoCuentaComponent> = this.dialog.open(
       CatalogoCuentaComponent,
       {
-        panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "",
-        height:  window.innerWidth < 992 ? "100%" : "80%",
-        width:  window.innerWidth < 992 ? "100%" : "60%",
+        panelClass: window.innerWidth < 576 ? "escasan-dialog-full" : "",
+        //height:  window.innerWidth < 992 ? "100%" : "80%",
+        //width:  window.innerWidth < 992 ? "100%" : "60%",
         disableClose: true
       }
     );
