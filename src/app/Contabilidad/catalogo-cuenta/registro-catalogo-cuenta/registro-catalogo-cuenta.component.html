@@ -43,8 +43,9 @@
     <div class="mat-elevation-z8  table-container">
 
     
-        <table class="mat-elevation-z8" mat-table [dataSource]="lstCuenta" #tabla>
+        <table class="mat-elevation-z8" mat-table [dataSource]="lstCuenta">
     
+            
           
             <ng-container matColumnDef="col1">
                 <td class="col-12 col-md-12 col-lg-6" mat-cell *matCellDef="let det">
@@ -63,22 +64,22 @@
             <ng-container matColumnDef="col3">
                 <td class="col-4 col-md-4 col-lg-2" mat-cell *matCellDef="let det">
                     <span><b>Clase:</b></span>
-                    <span>{{det.ClaseCuenta}}</span>
+                    <span>{{det.ClaseCuenta == "G"? "Grupo" : "Detalle"}}</span>
                 </td>
             </ng-container>
     
     
             <ng-container matColumnDef="col4">
                 <td class="col-4 col-md-4 col-lg-2" mat-cell *matCellDef="let det">
-                    <span><b>Bloqueado:</b></span>
-                    <span>{{det.Bloqueada}}</span>
+                    <span><b>Estado:</b></span>
+                    <span><i [ngClass]="det.Bloqueada ? 'fas fa-lock fa-lg': 'fas fa-lock-open fa-lg abierto' "></i></span>
                 </td>
             </ng-container>
     
             <ng-container matColumnDef="col5">
                 <td class="col-12" mat-cell *matCellDef="let det">
                     <div class="contenedor-edicion">
-                        <button type="button" class="btn" (click)="v_Editar('')"><i
+                        <button type="button" class="btn" (click)="v_Editar(det)"><i
                                 class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
                         </button>
                     </div>
@@ -88,7 +89,7 @@
     
            <div class="row">
 
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed" if="filas"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
             
            </div> 
            

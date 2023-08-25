@@ -20,10 +20,11 @@ export class CatalogoCuentaComponent {
   public val = new Validacion();
   public esModal: boolean = false;
 
+
   public Mascara: string = "";
   public Prefix: string = "";
 
-  private iDatos: iDatos[] = [];
+  public iDatos: iDatos[] = [];
 
   lstCuentaPadre: iCuenta[] = [];
   filteredCuentaPadre: Observable<iCuenta[]> | undefined;
@@ -32,7 +33,7 @@ export class CatalogoCuentaComponent {
 
 
   constructor(private DIALOG: MatDialog, private GET: getCuentaContable) {
-    
+
     this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "Seleccione un nivel.");
     this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
     this.val.add("txtCuenta", "1", "LEN>", "0", "Cuenta", "Ingrese un número de cuenta.");
@@ -41,9 +42,9 @@ export class CatalogoCuentaComponent {
     this.val.add("txtDescripcionPadre", "1", "LEN>=", "0", "Descripcion Cuenta Padre", "");
     this.val.add("cmbClase", "1", "LEN>", "0", "Clase", "Seleccione una clase.");
     this.val.add("cmbNaturaleza", "1", "LEN>", "0", "Naturaleza Cuenta", "Seleccione la naturaleza de la cuenta.");
-    this.val.add("chkBloqueada", "1", "LEN>", "0", "Bloqueada", "");
+    this.val.add("chkCuentaBloqueada", "1", "LEN>", "0", "Bloqueada", "");
 
-    
+
     this.v_Evento("Iniciar");
   }
 
@@ -72,16 +73,16 @@ export class CatalogoCuentaComponent {
         this.val.Get("txtDescripcionPadre").setValue("");
         this.val.Get("cmbClase").setValue("");
         this.val.Get("cmbNaturaleza").setValue("");
-        this.val.Get("chkBloqueada").setValue(false);
+        this.val.Get("chkCuentaBloqueada").setValue(false);
 
-        
+
 
         this.val.Get("txtCuenta").disable();
         this.val.Get("txtDescripcion").disable();
         this.val.Get("txtCuentaPadre").disable();
         this.val.Get("txtDescripcionPadre").disable();
 
-        let chk: any = document.querySelector("#chkBloqueada");
+        let chk: any = document.querySelector("#chkCuentaBloqueada");
         if (chk != undefined) chk.bootstrapToggle("off");
 
         break;
@@ -94,7 +95,7 @@ export class CatalogoCuentaComponent {
 
     let i_Cuenta: iCuenta = this.lstCuentaPadre.find(f => f.CuentaContable == event.option.value)!;
 
-    this.Prefix = i_Cuenta.CuentaContable + (i_Cuenta.Nivel>= 5 ? "-" : "") ;
+    this.Prefix = i_Cuenta.CuentaContable + (i_Cuenta.Nivel >= 5 ? "-" : "");
     this.val.Get("txtDescripcionPadre").setValue(i_Cuenta.NombreCuenta);
 
     this.val.Get("txtCuenta").setValue("");
@@ -107,20 +108,20 @@ export class CatalogoCuentaComponent {
 
 
   public v_Bloqueada(event: any): void {
-    this.val.Get("chkBloqueada").setValue(event.target.checked);
+    this.val.Get("chkCuentaBloqueada").setValue(event.target.checked);
   }
 
   public v_Nivel(event: any): void {
 
     let value: string = event.target.value;
 
-    
+
     this.Prefix = "";
     this.val.Get("txtCuenta").setValue("");
     this.val.Get("txtDescripcion").setValue("");
     this.val.Get("txtCuentaPadre").setValue("");
     this.val.Get("txtDescripcionPadre").setValue("");
-    
+
     this.v_Filtrar_Cuentas(value, this.val.Get("cmbGrupo").value);
 
 
@@ -158,19 +159,19 @@ export class CatalogoCuentaComponent {
   }
 
 
-  public v_Grupo(event : any) : void{
+  public v_Grupo(event: any): void {
 
-   
- 
-    this.v_Filtrar_Cuentas(this.val.Get("cmbNivel").value,  event.target.value);
+
+
+    this.v_Filtrar_Cuentas(this.val.Get("cmbNivel").value, event.target.value);
   }
 
-  private v_Filtrar_Cuentas(nivel : string, grupo : string){
+  private v_Filtrar_Cuentas(nivel: string, grupo: string) {
 
     this.lstCuentaPadre = [];
-    
 
-    
+
+
     let Reg: iCuenta[] = this.iDatos.find(f => f.Nombre == "CUENTAS")?.d;
     this.lstCuentaPadre = Reg.filter(f => f.Nivel == (Number(nivel) - 1) && f.ClaseCuenta == "G" && f.IdGrupo == Number(grupo));
 
@@ -193,7 +194,7 @@ export class CatalogoCuentaComponent {
 
 
 
-   
+
   }
 
 
@@ -220,7 +221,7 @@ export class CatalogoCuentaComponent {
       {
         next: (data) => {
 
-          
+
           dialogRef.close();
           let _json: any = data;
 
@@ -233,9 +234,15 @@ export class CatalogoCuentaComponent {
             this.iDatos = _json["d"];
             this.lstGrupos = this.iDatos.find(f => f.Nombre == "GRUPOS")?.d;
 
-         
-            if(this.val.Get("cmbGrupo").value == undefined) this.val.Get("cmbGrupo").setValue(this.lstGrupos[0]?.IdGrupo);
 
+            if (this.val.Get("cmbGrupo").value == undefined) this.val.Get("cmbGrupo").setValue(this.lstGrupos[0]?.IdGrupo);
+
+            if(this.esModal){
+              let CuentaPadre : iCuenta = this.iDatos.find(f => f.Nombre == "CUENTAS")?.d.find((f : any) => f.CuentaContable == this.val.Get("txtCuentaPadre").value)
+           
+              this.val.Get("txtDescripcionPadre").setValue(CuentaPadre?.NombreCuenta);
+           
+            }
 
 
           }
@@ -264,14 +271,14 @@ export class CatalogoCuentaComponent {
   ngOnInit(): void {
 
 
-     ///CAMBIO DE FOCO
-     this.val.addFocus("cmbNivel", "cmbClase", undefined);
-     this.val.addFocus("cmbClase", "txtCuentaPadre", undefined);
-     this.val.addFocus("txtCuentaPadre", "txtCuenta", undefined);
-     this.val.addFocus("txtCuenta", "txtDescripcion", undefined);
-     this.val.addFocus("txtDescripcion", "cmbClase", undefined);
-     this.val.addFocus("cmbClase", "cmbNaturaleza", undefined);
-     this.val.addFocus("cmbNaturaleza", "btnGuardarCuenta", "click");
+    ///CAMBIO DE FOCO
+    this.val.addFocus("cmbNivel", "cmbClase", undefined);
+    this.val.addFocus("cmbClase", "txtCuentaPadre", undefined);
+    this.val.addFocus("txtCuentaPadre", "txtCuenta", undefined);
+    this.val.addFocus("txtCuenta", "txtDescripcion", undefined);
+    this.val.addFocus("txtDescripcion", "cmbClase", undefined);
+    this.val.addFocus("cmbClase", "cmbNaturaleza", undefined);
+    this.val.addFocus("cmbNaturaleza", "btnGuardarCuenta", "click");
 
 
 

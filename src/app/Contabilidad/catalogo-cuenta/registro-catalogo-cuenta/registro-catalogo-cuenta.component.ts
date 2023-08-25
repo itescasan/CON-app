@@ -20,7 +20,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class RegistroCatalogoCuentaComponent {
 
   public val = new Validacion();
-  displayedColumns: string[] = ['col1', "col2", "col3", "col4", "col5"];
+  displayedColumns: string[] = ["col1", "col2", "col3", "col4", "col5"];
   @ViewChild(MatPaginator) paginator: MatPaginator;
  
  
@@ -38,7 +38,7 @@ export class RegistroCatalogoCuentaComponent {
   }
 
 
-  public v_Editar(e : any) : void{
+  public v_Editar(e : iCuenta) : void{
 
     let dialogRef: MatDialogRef<CatalogoCuentaComponent> = this.DIALOG.open(
       CatalogoCuentaComponent,
@@ -53,6 +53,22 @@ export class RegistroCatalogoCuentaComponent {
        
     dialogRef.afterOpened().subscribe(s =>{
       dialogRef.componentInstance.esModal = true;
+
+      dialogRef.componentInstance.v_CargarDatos();
+
+      dialogRef.componentInstance.val.Get("cmbNivel").setValue(e.Nivel);
+      dialogRef.componentInstance.val.Get("cmbGrupo").setValue(e.IdGrupo);
+      dialogRef.componentInstance.val.Get("txtCuenta").setValue(e.CuentaContable);
+      dialogRef.componentInstance.val.Get("txtDescripcion").setValue(e.NombreCuenta);
+      dialogRef.componentInstance.val.Get("cmbClase").setValue(e.ClaseCuenta);
+      dialogRef.componentInstance.val.Get("cmbNaturaleza").setValue(e.Naturaleza);
+      dialogRef.componentInstance.val.Get("chkCuentaBloqueada").setValue(e.Bloqueada);
+      dialogRef.componentInstance.val.Get("txtCuentaPadre").setValue(e.CuentaPadre);
+
+      let chk: any = document.querySelector("#chkCuentaBloqueada");
+      if(e.Bloqueada) chk.bootstrapToggle("on");
+
+
     });
 
    
@@ -100,8 +116,6 @@ export class RegistroCatalogoCuentaComponent {
             this.lstCuenta = new MatTableDataSource(datos[0].d);
             this.lstCuenta.paginator = this.paginator;
 
-          
-
           }
 
         },
@@ -116,7 +130,10 @@ export class RegistroCatalogoCuentaComponent {
           });
 
         },
-        complete: () => { document.getElementById("btnRefrescar-RegCuenta")?.removeAttribute("disabled");}
+        complete: () => { 
+        document.getElementById("btnRefrescar-RegCuenta")?.removeAttribute("disabled");
+        this.lstCuenta.filter = this.val.Get("txtBuscar-Cuenta").value.trim().toLowerCase();
+      }
       }
     );
 
