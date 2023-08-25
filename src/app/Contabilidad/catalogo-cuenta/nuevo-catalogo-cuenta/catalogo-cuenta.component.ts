@@ -220,7 +220,7 @@ export class CatalogoCuentaComponent {
       {
         next: (data) => {
 
-          document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled");
+          
           dialogRef.close();
           let _json: any = data;
 
@@ -252,7 +252,7 @@ export class CatalogoCuentaComponent {
           });
 
         },
-        complete: () => { }
+        complete: () => { document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled"); }
       }
     );
 

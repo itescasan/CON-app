@@ -1,93 +1,103 @@
+
+
+
 <div class="contenedor-tabla">
-    <table class="table table-hover table-sm">
-        <thead>
-            <tr class="row linea-bottom-primario">
-                <th>
-                    <p>Cuentas Contables</p>
-                    <div class="col-12 col-md-12 col-lg-4 offset-lg-8 mb-1">
 
-                        <form autocomplete="off" [formGroup]="val.ValForm">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+    
+    <div class="row">
 
-                                <div class="form-floating">
-                                    <input type="text" id="txtBuscar-Cuenta" class="form-control" placeholder="Buscar"
-                                        aria-label="Buscar" formControlName="txtBuscar-Cuenta"
-                                        (keyup)="v_Filtrar($event)">
-                                    <label for="txtBuscar-Cuenta">Buscar</label>
-
-
-
-                                </div>
-
+        <div class="contenedor-filtro linea-bottom-primario">
+            <div class="row">
+                <p>Cuentas Contables</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-4 offset-lg-8 mb-1">
+                    <form autocomplete="off" [formGroup]="val.ValForm">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+            
+                            <div class="form-floating">
+                                <input type="text" id="txtBuscar-Cuenta" class="form-control" placeholder="Buscar"
+                                    aria-label="Buscar" formControlName="txtBuscar-Cuenta"
+                                    (keyup)="v_Filtrar($event)"
+                                   >
+                                <label for="txtBuscar-Cuenta">Buscar</label>
+            
                             </div>
-
-                        </form>
-
-                    </div>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <tr class="linea-bottom-secundario dashed" *ngFor="let det of lstFilter">
-                <div class="row">
-
-                    <td class="col-12 col-md-12 col-lg-6">
-                        <span><b>Cuenta:</b>{{det.CuentaContable}}</span>
-                        <span><b>Descripcion:</b>{{det.NombreCuenta}}</span>
-                    </td>
-                    <td class="col-4 col-md-4 col-lg-2">
-                        <span> <b>Grupo:</b></span>
-                        <span> {{det.Grupo}}</span>
-
-                    </td>
-
-                    <td class="col-4 col-md-4 col-lg-2">
-                        <span><b>Clase:</b></span>
-                        <span>{{det.ClaseCuenta}}</span>
-
-                    </td>
-                    <td class="col-4 col-md-4 col-lg-2">
-                        <span><b>Bloqueado:</b></span>
-                        <span>{{det.Bloqueada}}</span>
-                    </td>
-
-                    <td class="col-12">
-                        <div class="contenedor-edicion">
-                            <button type="button" class="btn" (click)="v_Editar('')"><i
-                                    class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
-                            </button>
+                            <span class="input-group-text"><button type="button" class="btn btn-secundario" id="btnRefrescar-RegCuenta" (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button></span>
+            
                         </div>
-                    </td>
+            
+                    </form>
+            
                 </div>
-            </tr>
-
-        </tbody>
-    </table>
-
-    <div class="contenedor-pag linea-top-secundario">
-        <nav aria-label="Paginación">
-            <ul class="pagination">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Atras" (click)="v_Pag('A');">
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Atras</span>
-                </a>
-              </li>
-              <li class="page-item" [ngClass]="(Pag == 1) ? 'activo': '' " *ngIf="PagMax>=1" ><a class="page-link" href="#" (click)="v_Pag('1');">1</a></li>
-              <li class="page-item" [ngClass]="(Pag == 2) ? 'activo': '' " *ngIf="PagMax>=2"><a class="page-link" href="#" (click)="v_Pag('2');">2</a></li>
-              <li class="page-item" [ngClass]="(Pag == 3) ? 'activo': '' " *ngIf="PagMax>=3"><a class="page-link" href="#" (click)="v_Pag('3');">3</a></li>
-              <li class="page-item" [ngClass]="(Pag == 4) ? 'activo': '' " *ngIf="PagMax>=4"><a class="page-link" href="#" (click)="v_Pag('4');">4</a></li>
-              <li class="page-item" [ngClass]="(Pag == 5) ? 'activo': '' " *ngIf="PagMax>=5"><a class="page-link" href="#" (click)="v_Pag('5');">5</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Siguiente" (click)="v_Pag('S');">
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Siguiente</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+        
+              
+            </div>
+        </div>
+      
     </div>
 
+
+    <div class="mat-elevation-z8  table-container">
+
+    
+        <table class="mat-elevation-z8" mat-table [dataSource]="lstCuenta" #tabla>
+    
+          
+            <ng-container matColumnDef="col1">
+                <td class="col-12 col-md-12 col-lg-6" mat-cell *matCellDef="let det">
+                    <span><b>Cuenta:</b>{{det.CuentaContable}}</span>
+                    <span><b>Descripcion:</b>{{det.NombreCuenta}}</span>
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="col2">
+                <td class="col-4 col-md-4 col-lg-2" mat-cell *matCellDef="let det">
+                    <span> <b>Grupo:</b></span>
+                    <span> {{det.Grupo}}</span>
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="col3">
+                <td class="col-4 col-md-4 col-lg-2" mat-cell *matCellDef="let det">
+                    <span><b>Clase:</b></span>
+                    <span>{{det.ClaseCuenta}}</span>
+                </td>
+            </ng-container>
+    
+    
+            <ng-container matColumnDef="col4">
+                <td class="col-4 col-md-4 col-lg-2" mat-cell *matCellDef="let det">
+                    <span><b>Bloqueado:</b></span>
+                    <span>{{det.Bloqueada}}</span>
+                </td>
+            </ng-container>
+    
+            <ng-container matColumnDef="col5">
+                <td class="col-12" mat-cell *matCellDef="let det">
+                    <div class="contenedor-edicion">
+                        <button type="button" class="btn" (click)="v_Editar('')"><i
+                                class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+    
+    
+           <div class="row">
+
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed" if="filas"></tr>
+            
+           </div> 
+           
+        </table>
+        <mat-paginator [pageSizeOptions]="[100, 200]"  class="mat-paginator-sticky"></mat-paginator>
+    
+      
+      
+    </div>
+    
 </div>
+

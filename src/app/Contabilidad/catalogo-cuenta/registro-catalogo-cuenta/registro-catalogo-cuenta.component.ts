@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CatalogoCuentaComponent } from '../nuevo-catalogo-cuenta/catalogo-cuenta.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Validacion } from 'src/SHARED/class/validacion';
@@ -7,22 +7,26 @@ import { getCuentaContable } from '../CRUD/GET/get-CatalogoCuenta';
 import { DialogErrorComponent } from 'src/SHARED/componente/dialog-error/dialog-error.component';
 import { iDatos } from 'src/SHARED/interface/i-Datos';
 import { iCuenta } from 'src/app/Interface/i-Cuenta';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 
 @Component({
   selector: 'app-registro-catalogo-cuenta',
   templateUrl: './registro-catalogo-cuenta.component.html',
-  styleUrls: ['./registro-catalogo-cuenta.component.scss']
+  styleUrls: ['./registro-catalogo-cuenta.component.scss'],
 })
 export class RegistroCatalogoCuentaComponent {
 
   public val = new Validacion();
-
-  private lstCuenta : iCuenta[] =  []
-  public lstFilter: any[] = [];
-  public Pag : number = 1;
-  public PagMax : number = 1;
-  private NumRegMax : number = 100;
-  private TotalReg : number = 0
+  displayedColumns: string[] = ['col1', "col2", "col3", "col4", "col5"];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+ 
+ 
+  
+  public lstCuenta : MatTableDataSource<iCuenta[]>;
+ 
 
   constructor(
     private DIALOG: MatDialog, private GET: getCuentaContable
@@ -30,6 +34,7 @@ export class RegistroCatalogoCuentaComponent {
     this.val.add("txtBuscar-Cuenta", "1", "LEN>=", "0", "Buscar", "");
 
     this.v_CargarDatos();
+
   }
 
 
@@ -57,97 +62,14 @@ export class RegistroCatalogoCuentaComponent {
 
 
   public v_Filtrar(event : any){
-
-    this.lstFilter.splice(0, this.lstFilter.length);
-    let value : string = event.target.value.toLowerCase();
- 
-
-    let index : number = 1;
-    this.lstCuenta.filter(f => f.Filtro.toLowerCase().includes(value)).forEach(f =>{
-      let ff = Object.assign({}, f);
-      ff.Index = index;
-      this.lstFilter.push(ff);
-      index++;
-    });
-
-    let Registros = this.lstFilter.map((obj : any) => ({...obj}));
-    this.lstFilter.splice(0, this.lstFilter.length);
-
-    this.PagMax = Math.trunc(Registros.length / this.NumRegMax);
-    if((Registros.length % this.NumRegMax) != 0) this.PagMax++;
-
-    let x : number = 1;
-    let IndexMin : number =  (this.Pag * this.NumRegMax) - (this.NumRegMax - 1);
-    let IndexMax : number =  (this.Pag * this.NumRegMax);
-
-
-    Registros.filter(f => f.Index >= IndexMin && f.Index <= IndexMax).forEach(f =>{
-      this.lstFilter.push(f);
-
-      if(x == this.NumRegMax) return;
-      x++;
-    });
-
-
-  }
-
-  
-  public v_Paginar(){
-
-    this.PagMax = Math.trunc(this.lstCuenta.length / this.NumRegMax);
-    if((this.lstCuenta.length % this.NumRegMax) != 0) this.PagMax++;
-  
-    
-
-    this.lstFilter.splice(0, this.lstFilter.length);
-
-    let x : number = 1;
-    let IndexMin : number =  (this.Pag * this.NumRegMax) - (this.NumRegMax - 1);
-    let IndexMax : number =  (this.Pag * this.NumRegMax);
-
-    this.lstCuenta.filter(f => f.Index >= IndexMin && f.Index <= IndexMax).forEach(f =>{
-      
-      let ff = Object.assign({}, f);
-      this.lstFilter.push(ff);
-
-      if(x == this.NumRegMax) return;
-      x++;
-    });
-
-  }
-
-  public v_Pag(p : string) :void{
-
-    let IndexMax : number =  0;
-
-
-    if(p =="A")
-    {
-      IndexMax =  ((this.Pag - 1) * this.NumRegMax);
-      if(this.lstCuenta.length < IndexMax) return;
-
-      if(this.Pag > 1)this.Pag -=1;
-      this.v_Paginar();
-      return;
-    }
-
-    if(p =="S")
-    {
-      IndexMax = ((this.Pag + 1) * this.NumRegMax);
-      if(this.lstCuenta.length < IndexMax) return;
-
-      if(this.Pag < 5)this.Pag +=1;
-      this.v_Paginar();
-      return;
-    }
-    this.Pag = Number(p);
-    this.v_Paginar();
+    this.lstCuenta.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
   }
 
 
 
   public v_CargarDatos(): void {
 
+    document.getElementById("btnRefrescar-RegCuenta")?.setAttribute("disabled", "disabled");
 
     let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
       WaitComponent,
@@ -163,7 +85,7 @@ export class RegistroCatalogoCuentaComponent {
       {
         next: (data) => {
 
-
+          
           dialogRef.close();
           let _json: any = data;
 
@@ -175,28 +97,17 @@ export class RegistroCatalogoCuentaComponent {
 
             let datos : iDatos[] = _json["d"];
 
-            this.lstCuenta = datos[0].d;
-            this.TotalReg = this.lstCuenta.length;
+            this.lstCuenta = new MatTableDataSource(datos[0].d);
+            this.lstCuenta.paginator = this.paginator;
 
-            this.PagMax = this.TotalReg / this.NumRegMax;
-            alert(this.PagMax)
-
-            return
-            let i : number = 1;
-            this.lstCuenta.forEach(f =>{
-              f.Index = i;
-              i++;
-            });
-
-            this.lstFilter = this.lstCuenta.map((obj : any) => ({...obj}));
-            this.v_Paginar();
-
+          
 
           }
 
         },
         error: (err) => {
 
+          document.getElementById("btnRefrescar-RegCuenta")?.removeAttribute("disabled");
 
           dialogRef.close();
 
@@ -205,7 +116,7 @@ export class RegistroCatalogoCuentaComponent {
           });
 
         },
-        complete: () => { }
+        complete: () => { document.getElementById("btnRefrescar-RegCuenta")?.removeAttribute("disabled");}
       }
     );
 

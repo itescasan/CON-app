@@ -2,27 +2,42 @@
 
 .contenedor-tabla{
     margin-bottom: 50px;
-}
-thead{
-    position: relative;
-    width: 100%;
+    min-width: 100%;
 }
 
-th{
+
+.table-container {
+    width: fit-content;
+    position: relative;
+
+  }
+
+
+.contenedor-filtro{
     position: fixed;
     top: 0;
     right: 0;
     text-align: center;
     z-index: 1;
-    
+    background-color: var(--escan-fondo);
    
    p{
    
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.5em;
    }
 }
 
+table{
+    margin-top: 75px;
+}
+
+.mat-paginator-sticky {
+    bottom: 0px;
+    position: sticky;
+    z-index: 10;
+  }
+  
 tr
 {
 
@@ -56,10 +71,6 @@ tr
           }
 
     }
-}
-
-tr:first-child{
-    margin-top: 75px;
 }
 
 

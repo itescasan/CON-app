@@ -21,7 +21,7 @@ import { DynamicFormDirective } from '../SHARED/directive/dynamic-form.directive
 import { DialogErrorComponent } from '../SHARED/componente/dialog-error/dialog-error.component';
 import { IgxComboModule } from 'igniteui-angular';
 import { IgxIconModule } from 'igniteui-angular';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import { WaitComponent } from '../SHARED/componente/wait/wait.component';
 import { AnularComponent } from '../SHARED/anular/anular.component';
 
@@ -68,7 +68,9 @@ import {MatTableModule} from '@angular/material/table';
     NgxMaskPipe,
     MatTableModule
   ],
-  providers: [provideNgxMask()],
+  providers: [
+    provideNgxMask(),
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -76,4 +78,13 @@ export class AppModule {
     library.addIconPacks(fas);
     library.addIcons(faCoffee);
   }
+  
+}
+
+export function CustomPaginator() {
+  const customPaginatorIntl = new MatPaginatorIntl();
+
+  customPaginatorIntl.itemsPerPageLabel = "Registros por página";
+
+  return customPaginatorIntl;
 }
