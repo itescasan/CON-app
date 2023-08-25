@@ -117,7 +117,7 @@ export class SidebarComponent {
           this.cFunciones.FechaServidor(Datos[0].d);
           this.ErrorServidor = false;
 
-          $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
+        
    
         }
 
@@ -132,11 +132,13 @@ export class SidebarComponent {
           data: "<b class='error'>" + err.message + "</b>",
         });
 
-        $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
+       
    
 
         },
-        complete : () => {}
+        complete : () => { 
+          $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
+        }
       }
     );
 
