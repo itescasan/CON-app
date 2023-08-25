@@ -2,10 +2,12 @@ export interface iCuenta{
     CuentaContable: string;
     NombreCuenta: string;
     Nivel: number;
-    GrupoCuentas: string;
+    IdGrupo: number;
+    Grupo: string,
     ClaseCuenta: string;
     CuentaPadre: string;
     Naturaleza : string;
     Bloqueada : boolean;
-    Filtro : string
+    Filtro : string;
+    Index: number;
 }

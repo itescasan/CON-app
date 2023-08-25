@@ -31,7 +31,7 @@ import { RegistroCatalogoCuentaComponent } from './Contabilidad/catalogo-cuenta/
 import { EjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/nuevo-ejercicio-fiscal/ejercicio-fiscal.component';
 import { RegistroEjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
 import { PeriodosFiscalComponent } from './Contabilidad/ejercicio-fiscal/periodos-fiscal/periodos-fiscal.component';
-
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -65,7 +65,8 @@ import { PeriodosFiscalComponent } from './Contabilidad/ejercicio-fiscal/periodo
     IgxIconModule,
     MatPaginatorModule,
     NgxMaskDirective,
-    NgxMaskPipe
+    NgxMaskPipe,
+    MatTableModule
   ],
   providers: [provideNgxMask()],
   bootstrap: [AppComponent]

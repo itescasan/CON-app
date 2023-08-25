@@ -172,7 +172,7 @@ export class CatalogoCuentaComponent {
 
     
     let Reg: iCuenta[] = this.iDatos.find(f => f.Nombre == "CUENTAS")?.d;
-    this.lstCuentaPadre = Reg.filter(f => f.Nivel == (Number(nivel) - 1) && f.ClaseCuenta == "G" && f.GrupoCuentas == grupo);
+    this.lstCuentaPadre = Reg.filter(f => f.Nivel == (Number(nivel) - 1) && f.ClaseCuenta == "G" && f.IdGrupo == Number(grupo));
 
 
     this.val.Get("txtCuenta").setValue("");
