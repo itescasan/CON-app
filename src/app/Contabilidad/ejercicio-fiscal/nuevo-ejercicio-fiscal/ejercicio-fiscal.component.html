@@ -1,7 +1,7 @@
 
 <div>    
-
-    <form autocomplete="off" [formGroup]="val.ValForm">
+    <div class="container">
+        <form autocomplete="off" [formGroup]="val.ValForm">
         <div class="card">
             <div class="card-header card-escasan-header opcional"> Datos Ejercicio Fiscal..</div>
             <div class="card-body">
@@ -181,7 +181,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="row">
+                <div class="row  mt-2 botones linea-top-secundario">
                     <div class="btn-contenedor">                        
                         <span>
                             <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
@@ -190,14 +190,14 @@
                         <span>
                             <button type="button" class="btn btn-primario" id="btnGuardarEjercicioF"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
                             <button type="button" class="btn btn-opcional" id="btnCancelarEjercicioF"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
-                        </span>
-   
+                        </span>   
                         
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 
