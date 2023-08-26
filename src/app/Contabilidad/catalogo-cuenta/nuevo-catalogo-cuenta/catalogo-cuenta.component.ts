@@ -61,7 +61,7 @@ export class CatalogoCuentaComponent {
 
       case "Limpiar":
 
-        this.Mascara = "";
+        this.Mascara = " 0";
         this.lstCuentaPadre = [];
 
 
@@ -77,7 +77,7 @@ export class CatalogoCuentaComponent {
 
 
 
-        this.val.Get("txtCuenta").disable();
+        this.val.Get("txtCuenta").enable();
         this.val.Get("txtDescripcion").disable();
         this.val.Get("txtCuentaPadre").disable();
         this.val.Get("txtDescripcionPadre").disable();
@@ -95,7 +95,7 @@ export class CatalogoCuentaComponent {
 
     let i_Cuenta: iCuenta = this.lstCuentaPadre.find(f => f.CuentaContable == event.option.value)!;
 
-    this.Prefix = i_Cuenta.CuentaContable + (i_Cuenta.Nivel >= 5 ? "-" : "");
+    this.Prefix = i_Cuenta.CuentaContable + (i_Cuenta.Nivel >= 4 ? "-" : " ");
     this.val.Get("txtDescripcionPadre").setValue(i_Cuenta.NombreCuenta);
 
     this.val.Get("txtCuenta").setValue("");
@@ -132,27 +132,27 @@ export class CatalogoCuentaComponent {
         break;
 
       case "2":
-        this.Mascara = "0";
+        this.Mascara = " 0";
         break;
 
       case "3":
-        this.Mascara = "0";
+        this.Mascara = " 0";
         break;
 
       case "4":
-        this.Mascara = "0";
+        this.Mascara = " 0";
         break;
 
       case "5":
-        this.Mascara = "00";
+        this.Mascara = " 00";
         break;
 
       case "6":
-        this.Mascara = "00";
+        this.Mascara = " 00";
         break;
 
       case "7":
-        this.Mascara = "00";
+        this.Mascara = " 00";
         break;
     }
 
@@ -191,6 +191,8 @@ export class CatalogoCuentaComponent {
       this.val.Get("txtDescripcion").enable();
       this.val.Get("txtCuentaPadre").disable();
     }
+
+    
 
 
 
