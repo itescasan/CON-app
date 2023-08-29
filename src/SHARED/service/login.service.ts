@@ -9,7 +9,7 @@ import { interval, Subscription } from 'rxjs';
 })
 export class LoginService {
 
-  
+ 
 
   constructor(private _Router: Router, private cFunciones : Funciones) { }
 
@@ -40,6 +40,9 @@ export class LoginService {
       let l : iLogin = JSON.parse(s);
       if(this.Diff(new Date(l.Fecha)) <= 120)
       {
+        this.cFunciones.User = l.User;
+        this.cFunciones.Nombre = "";
+        this.cFunciones.Rol = "";
         this.subscription = interval(5000).subscribe(val => this.UpdFecha())
         this._Router.navigate(['/Menu'], { skipLocationChange: false });
         return;
