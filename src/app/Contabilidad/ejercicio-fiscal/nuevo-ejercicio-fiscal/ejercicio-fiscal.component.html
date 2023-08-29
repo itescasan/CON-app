@@ -7,26 +7,26 @@
             <div class="card-body">
 
                 <div class="row">
-                    <div class="col-8 mb-1">
+                    <div class="col-9 mb-1">
                         <div  class="input-group">
                             <span class="input-group-text"><i class="fa-regular fa-file fa-beat-fade"></i></span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="idEjercicioFiscal" placeholder="Ejercicio Fiscal" [(ngModel)] = "inputValue" [ngModelOptions]="{standalone: true}">
+                                <input type="text" class="form-control" id="idEjercicioFiscal" placeholder="Ejercicio Fiscal">
                                 <label for="idEjercicioFiscal">Ejercicio Fiscal:</label>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="col-12 col-md-12 col-lg-4 mb-3">
-                        <div class="bloqueada">
-
-                            <div class="contenedor">
-                                <label> Bloqueado</label>
-                                <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
-                                    data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
-                                    id="chkBloqueada" formControlName="chkBloqueada">  
+                    <div class="col-12 col-md-12 col-lg-3 mb-3">
+                        <div class="row justify-content-md-center">
+                            <div class="bloqueada">
+                                <div class="contenedor ">
+                                    <label> Bloqueado</label>
+                                    <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
+                                        data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
+                                        id="chkBloqueadaEF" formControlName="chkBloqueadaEF">
+                                </div>                        
                             </div>
-                        
                         </div>
                     </div>
                     
@@ -41,39 +41,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-12 col-lg-6 mb-1">
-                        <div  class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-beat-fade fa-lg"></i></span>
-                            <div class="form-floating">
-                                <input type="text" mask="0000" class="form-control" id="idFechaFin" placeholder="Fecha Final" min="2020" max="2030">
-                                <label for="idFechaFin">Fecha Final</label>
-                            </div>
-                        </div>
-                    </div>
+                    
 
                     <div class="col-12 col-md-12 col-lg-6 mb-1">
                         <div class="row mb-1">
                             <div class="input-group">
-                                <span class="input-group-text"><i class="fa-solid fa-file-invoice fa-beat-fade fa-lg"></i></span>
+                                <span class="input-group-text"><i class="fa-regular fa-newspaper fa-beat-fade fa-lg"></i></span>
                                 <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupoCP"
-                                        formControlName="cmbGrupoCP">
-                                        <option value="0">Clase 1</option>
-                                        <option value="1">Clase 2</option>
-                                    </select>
-                                    <label for="cmbGrupoCP">Clase Periodo</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-12 col-lg-6 mb-1">
-                        <div class="row mb-1">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fa-solid fa-list-ol fa-beat-fade fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" id="idNperiodos" placeholder="No Periodos" value="{{ inputValue }}">
-                                    <label for="idNperiodos">N° Periodos:</label>
+                                    <div>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" placeholder="Cuenta"
+                                                id="txtCuentaA" formControlName="txtCuentaA"
+                                                [matAutocomplete]="cmbPadre">
+                                            <label for="txtCuentaA">Cuenta Acumulada</label>
+                                        </div>
+                                                                         
+                                        <mat-autocomplete autoActiveFirstOption #cmbPadre="matAutocomplete"
+                                        (optionSelected)="v_Select_Cuenta($event)">
+                                        <mat-option *ngFor="let option of filteredCuenta1 | async" [value]="option.Filtro">
+                                            {{option.Filtro}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>
@@ -84,37 +73,56 @@
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fa-regular fa-newspaper fa-beat-fade fa-lg"></i></span>
                                 <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupoA"
-                                        formControlName="cmbGrupoA">
-                                        <option value="0">Cta # 1115-01</option>
-                                        <option value="1">Cta # 1115-02</option>
-                                    </select>
-                                    <label for="cmbGrupoA">Cta. Acumulada</label>
+                                    <div>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" placeholder="Cuenta"
+                                                id="txtCuentaP" formControlName="txtCuentaP"
+                                                [matAutocomplete]="cmbPadre2">
+                                            <label for="txtCuentaP">Cuenta Perdida</label>
+                                        </div>
+                                                                         
+                                        <mat-autocomplete autoActiveFirstOption #cmbPadre2="matAutocomplete"
+                                        (optionSelected)="v_Select_Cuenta($event)">
+                                        <mat-option *ngFor="let option of filteredCuenta2 | async" [value]="option.Filtro">
+                                            {{option.Filtro}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                   
 
                     <div class="col-12 col-md-12 col-lg-6 mb-1">
                         <div class="row mb-1">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fa-solid fa-arrow-down-wide-short fa-beat-fade fa-lg"></i></span>
                                 <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Grupo" id="cmbGrupoCtaP"
-                                        formControlName="cmbGrupoCtaP">
-                                        <option value="0">Cta # 1115-01</option>
-                                        <option value="1">Cta # 1115-02</option>
-                                    </select>
-                                    <label for="cmbGrupoCtaP">Cta. Periodo</label>
+                                    <div>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" placeholder="Cuenta"
+                                                id="txtCuentaPr" formControlName="txtCuentaPr"
+                                                [matAutocomplete]="cmbPadre3">
+                                            <label for="txtCuentaPr">Cuenta Periodo</label>
+                                        </div>
+                                                                         
+                                        <mat-autocomplete autoActiveFirstOption #cmbPadre3="matAutocomplete"
+                                        (optionSelected)="v_Select_Cuenta($event)">
+                                        <mat-option *ngFor="let option of filteredCuenta3 | async" [value]="option.Filtro">
+                                            {{option.Filtro}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="btn-contenedor d-grid gap-2 d-md-flex justify-content-md-end">
-                            
+                        <div class="btn-contenedor d-grid gap-2 d-md-flex justify-content-md-end mb-3">                            
                             <span>
-                                <button type="button" (click)="v_Editar('')"  class="btn btn-secundario" id="btnPeriodos"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i> Ver Periodos</button>
+                                <button type="button" class="btn btn-secundario" id="btnPeriodos"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i> Ver Periodos</button>
                             </span>
                         </div>
                     </div>
@@ -182,9 +190,9 @@
                     </table>
                 </div>
                 <div class="row  mt-2 botones linea-top-secundario">
-                    <div class="btn-contenedor">                        
+                    <div class="btn-contenedor mt-3 mb-3">                        
                         <span>
-                            <button type="button" class="btn btn-secundario" id="btnRefrescar"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
+                            <button type="button" class="btn btn-secundario" id="btnRefrescar"  (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
                         </span>
 
                         <span>
