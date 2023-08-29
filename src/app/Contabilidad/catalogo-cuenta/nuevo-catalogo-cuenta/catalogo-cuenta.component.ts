@@ -305,8 +305,6 @@ export class CatalogoCuentaComponent {
     Fila.Naturaleza = this.val.Get("cmbNaturaleza").value;
     Fila.Bloqueada = this.val.Get("chkCuentaBloqueada").value;
 
-    console.log(Fila)
-
     document.getElementById("btnGuardar-Cuenta")?.setAttribute("disabled", "disabled");
 
     this.POST.GuardarCatalogo(Fila).subscribe(
