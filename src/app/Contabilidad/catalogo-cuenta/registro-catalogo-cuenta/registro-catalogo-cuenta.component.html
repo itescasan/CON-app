@@ -46,52 +46,54 @@
         <table class="table table-hover  table-sm tabla-layout mat-elevation-z8" mat-table [dataSource]="lstCuenta">
     
             
-          
+           
             <ng-container matColumnDef="col1">
-                <td class="col-12 col-md-12 col-lg-6" mat-cell *matCellDef="let det">
-                    <span><b>Cuenta:</b>{{det.CuentaContable}}</span>
-                    <span><b>Descripcion:</b>{{det.NombreCuenta}}</span>
-                </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="col2">
-                <td class="col-4 col-md-4 col-lg-2" mat-cell *matCellDef="let det">
-                    <span> <b>Grupo:</b></span>
-                    <span> {{det.Grupo}}</span>
-                </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="col3">
-                <td class="col-4 col-md-4 col-lg-2" mat-cell *matCellDef="let det">
-                    <span><b>Clase:</b></span>
-                    <span>{{det.ClaseCuenta == "G"? "Grupo" : "Detalle"}}</span>
-                </td>
-            </ng-container>
-    
-    
-            <ng-container matColumnDef="col4">
-                <td class="col-4 col-md-4 col-lg-2" mat-cell *matCellDef="let det">
-                    <span><b>Estado:</b></span>
-                    <span><i [ngClass]="det.Bloqueada ? 'fas fa-lock fa-lg': 'fas fa-lock-open fa-lg abierto' "></i></span>
-                </td>
-            </ng-container>
-    
-            <ng-container matColumnDef="col5">
-                <td class="col-12" mat-cell *matCellDef="let det">
-                    <div class="contenedor-edicion">
-                        <button type="button" class="btn" (click)="v_Editar(det)"><i
-                                class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
-                        </button>
+                <td mat-cell *matCellDef="let det">
+                    <div class="row">
+
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <span><b>Cuenta:</b>{{det.CuentaContable}}</span>
+                            <span><b>Descripcion:</b>{{det.NombreCuenta}}</span>
+                        </div>
+
+                        <div class="col-4 col-md-4 col-lg-2">
+                            <span> <b>Grupo:</b></span>
+                            <span> {{det.Grupo}}</span>
+                        </div>
+
+                        <div class="col-4 col-md-4 col-lg-2">
+                            <span><b>Clase:</b></span>
+                            <span>{{det.ClaseCuenta == "G"? "Grupo" : "Detalle"}}</span>
+                        </div>
+
+                        <div class="col-4 col-md-4 col-lg-2">
+                            <span><b>Estado:</b></span>
+                            <span><i [ngClass]="det.Bloqueada ? 'fas fa-lock fa-lg': 'fas fa-lock-open fa-lg abierto' "></i></span>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="contenedor-edicion">
+                                <button type="button" class="btn" (click)="v_Editar(det)"><i
+                                        class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
                 </td>
             </ng-container>
-    
-    
-           <div class="row">
 
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
+          
+    
+ 
+    
+    
+          
+      
+    
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
             
-           </div> 
            
         </table>
         <mat-paginator [pageSizeOptions]="[100, 200]"  class="mat-paginator-sticky"></mat-paginator>

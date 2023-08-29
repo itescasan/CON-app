@@ -20,7 +20,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class RegistroCatalogoCuentaComponent {
 
   public val = new Validacion();
-  displayedColumns: string[] = ["col1", "col2", "col3", "col4", "col5"];
+  displayedColumns: string[] = ["col1"];
   @ViewChild(MatPaginator) paginator: MatPaginator;
  
  
