@@ -32,6 +32,7 @@ import { EjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/nuevo-
 import { RegistroEjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
 import { PeriodosFiscalComponent } from './Contabilidad/ejercicio-fiscal/periodos-fiscal/periodos-fiscal.component';
 import {MatTableModule} from '@angular/material/table';
+import { CustomMatPaginatorIntl } from 'src/SHARED/class/CustomMatPaginatorIntl ';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,7 @@ import {MatTableModule} from '@angular/material/table';
   ],
   providers: [
     provideNgxMask(),
-    { provide: MatPaginatorIntl, useValue: CustomPaginator() }],
+     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
@@ -81,10 +82,3 @@ export class AppModule {
   
 }
 
-export function CustomPaginator() {
-  const customPaginatorIntl = new MatPaginatorIntl();
-
-  customPaginatorIntl.itemsPerPageLabel = "Registros por página";
-
-  return customPaginatorIntl;
-}

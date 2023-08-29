@@ -79,6 +79,13 @@ tr
 }
 
 
+tr:hover,
+td:hover{
+    background-color: rgba(86, 164, 59, 0.30);
+    font-weight: bold;
+}
+
+
 .bottom-secundario{
     border-style:dashed;
 }

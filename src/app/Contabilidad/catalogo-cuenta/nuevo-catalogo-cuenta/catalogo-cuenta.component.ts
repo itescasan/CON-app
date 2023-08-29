@@ -9,6 +9,7 @@ import { WaitComponent } from 'src/SHARED/componente/wait/wait.component';
 import { DialogErrorComponent } from 'src/SHARED/componente/dialog-error/dialog-error.component';
 import { iDatos } from 'src/SHARED/interface/i-Datos';
 import { iGrupo } from 'src/app/Interface/i-Grupo';
+import { postCuentaContable } from '../CRUD/POST/post-catalogo-cuenta';
 
 @Component({
   selector: 'app-catalogo-cuenta',
@@ -32,7 +33,7 @@ export class CatalogoCuentaComponent {
   lstGrupos: iGrupo[] = [];
 
 
-  constructor(private DIALOG: MatDialog, private GET: getCuentaContable) {
+  constructor(private DIALOG: MatDialog, private GET: getCuentaContable, private POST : postCuentaContable) {
 
     this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "Seleccione un nivel.");
     this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
@@ -262,6 +263,91 @@ export class CatalogoCuentaComponent {
 
         },
         complete: () => { document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled"); }
+      }
+    );
+
+
+  }
+
+
+  public v_Guardar() : void{
+
+    this.val.EsValido();
+
+
+    if (this.val.Errores != "") {
+      this.DIALOG.open(DialogErrorComponent, {
+        data: this.val.Errores,
+      });
+
+      return;
+    }
+
+   
+
+ 
+    let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+      }
+    );
+
+    let Fila : iCuenta = {} as iCuenta;
+
+    Fila.CuentaContable = this.val.Get("txtCuenta").value;
+    Fila.NombreCuenta = this.val.Get("txtDescripcion").value;
+    Fila.Nivel = this.val.Get("cmbNivel").value;
+    Fila.IdGrupo = this.val.Get("cmbGrupo").value;
+    Fila.ClaseCuenta = this.val.Get("cmbClase").value;
+    Fila.CuentaPadre = this.val.Get("txtCuentaPadre").value;
+    Fila.Naturaleza = this.val.Get("cmbNaturaleza").value;
+    Fila.Bloqueada = this.val.Get("chkCuentaBloqueada").value;
+
+    console.log(Fila)
+
+    document.getElementById("btnGuardar-Cuenta")?.setAttribute("disabled", "disabled");
+
+    this.POST.GuardarCatalogo(Fila).subscribe(
+      {
+        next: (s) => {
+
+          dialogRef.close();
+          let _json = JSON.parse(s);
+  
+          if (_json["esError"] == 1) {
+            this.DIALOG.open(DialogErrorComponent, {
+              data: _json["msj"].Mensaje,
+            });
+          } 
+          else {
+  
+  
+            let Datos: iDatos[] = _json["d"];
+            let Consecutivo: string = Datos[0].d;
+  
+            this.DIALOG.open(DialogErrorComponent, {
+              data: "<p>Documento Generado: <b class='error'>" + Consecutivo + "</b></p>"
+            });
+  
+  
+            if(!this.esModal)   this.v_Evento("Limpiar");
+  
+          }
+
+        },
+        error: (err) => {
+          dialogRef.close();
+      
+          document.getElementById("btnGuardar-Cuenta")?.removeAttribute("disabled");
+          this.DIALOG.open(DialogErrorComponent, {
+            data: "<b class='error'>" + err.message + "</b>",
+          });
+        },
+        complete: () => {
+          document.getElementById("btnGuardar-Cuenta")?.removeAttribute("disabled");
+        }
       }
     );
 
