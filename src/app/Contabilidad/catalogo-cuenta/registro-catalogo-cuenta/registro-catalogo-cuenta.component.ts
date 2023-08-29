@@ -21,7 +21,8 @@ export class RegistroCatalogoCuentaComponent {
 
   public val = new Validacion();
   displayedColumns: string[] = ["col1"];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true })
+  paginator: MatPaginator;
  
  
   
@@ -116,6 +117,7 @@ export class RegistroCatalogoCuentaComponent {
             this.lstCuenta = new MatTableDataSource(datos[0].d);
             this.lstCuenta.paginator = this.paginator;
 
+          
           }
 
         },
