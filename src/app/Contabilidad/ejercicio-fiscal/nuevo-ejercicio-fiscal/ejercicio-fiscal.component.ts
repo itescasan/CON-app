@@ -32,6 +32,8 @@ export class EjercicioFiscalComponent {
 
   public Mascara: string = "";
   public Prefix: string = "";
+  displayedColumns: string[] = ["col1"];
+
   filteredCuenta1: Observable<iCuenta[]> | undefined;
   filteredCuenta2: Observable<iCuenta[]> | undefined;
   filteredCuenta3: Observable<iCuenta[]> | undefined;
@@ -124,7 +126,11 @@ export class EjercicioFiscalComponent {
 
 
   }
+  public v_Editar(){
 
+    this.val.Get("idFechaIni").value;
+     
+  }
 
 
   ngOnInit() : void{
