@@ -30,3 +30,54 @@
 
    
  }
+
+ tr
+{
+
+    background-color: var(--escan-fondo);
+
+    td:first-child{
+
+        span{
+            display: block;
+        }
+        
+        span:last-child{
+            margin-left: 30px;
+        }
+    
+    }
+    
+    b{
+        margin-right: 5px;
+    }
+
+    td:not(:first-child){
+
+        @include Tamano_Menor(lg) {
+            span{
+                display: block;
+            }
+            span:last-child{
+                margin-left: 15px;
+            }
+          }
+
+    }
+}
+
+
+tr:hover,
+td:hover{
+    background-color: rgba(86, 164, 59, 0.30);
+    font-weight: bold;
+}
+
+
+.bottom-secundario{
+    border-style:dashed;
+}
+
+.abierto{
+    color: var(--escan-primario);
+}
