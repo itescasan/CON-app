@@ -15,15 +15,15 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { faCoffee, fas, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 
-import { SidebarComponent } from '../SHARED/componente/sidebar/sidebar.component';
-import { LoginComponent } from '../SHARED/componente/login/login.component';
-import { DynamicFormDirective } from '../SHARED/directive/dynamic-form.directive';
-import { DialogErrorComponent } from '../SHARED/componente/dialog-error/dialog-error.component';
+import { SidebarComponent } from './SHARED/componente/sidebar/sidebar.component';
+import { LoginComponent } from './SHARED/componente/login/login.component';
+import { DynamicFormDirective } from './SHARED/directive/dynamic-form.directive';
+import { DialogErrorComponent } from './SHARED/componente/dialog-error/dialog-error.component';
 import { IgxComboModule } from 'igniteui-angular';
 import { IgxIconModule } from 'igniteui-angular';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
-import { WaitComponent } from '../SHARED/componente/wait/wait.component';
-import { AnularComponent } from '../SHARED/anular/anular.component';
+import { WaitComponent } from './SHARED/componente/wait/wait.component';
+import { AnularComponent } from './SHARED/anular/anular.component';
 
 import { CatalogoCuentaComponent } from './Contabilidad/catalogo-cuenta/nuevo-catalogo-cuenta/catalogo-cuenta.component';
 import { IConfig, NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
@@ -32,7 +32,8 @@ import { EjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/nuevo-
 import { RegistroEjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
 import { PeriodosFiscalComponent } from './Contabilidad/ejercicio-fiscal/periodos-fiscal/periodos-fiscal.component';
 import {MatTableModule} from '@angular/material/table';
-import { CustomMatPaginatorIntl } from 'src/SHARED/class/CustomMatPaginatorIntl ';
+import { CustomMatPaginatorIntl } from 'src/app/SHARED/class/CustomMatPaginatorIntl ';
+import { DialogoConfirmarComponent } from './SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { CustomMatPaginatorIntl } from 'src/SHARED/class/CustomMatPaginatorIntl 
     RegistroCatalogoCuentaComponent,
     RegistroEjercicioFiscalComponent,
     PeriodosFiscalComponent,
+    DialogoConfirmarComponent,
   ],
   imports: [
     BrowserModule,

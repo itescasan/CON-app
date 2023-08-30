@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from '../SHARED/componente/login/login.component';
-import { SidebarComponent } from '../SHARED/componente/sidebar/sidebar.component';
+import { LoginComponent } from './SHARED/componente/login/login.component';
+import { SidebarComponent } from './SHARED/componente/sidebar/sidebar.component';
 
 const routes: Routes = [
   { path: 'Login', component: LoginComponent },
