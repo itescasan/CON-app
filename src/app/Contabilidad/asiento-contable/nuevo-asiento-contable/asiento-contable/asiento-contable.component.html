@@ -15,46 +15,58 @@
 
                 <div class="row linea-bottom-opcional g-1">
 
-                    <div class="col-12 col-md-12 col-lg-2 mb-2">
-                       
+                    <div class="col-12 col-md-12 col-lg-2 mb-1">
+
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Serie"
-                                    id="cmbSerie" formControlName="cmbSerie"
-                                    [matAutocomplete]="cmbSerie">
+                                <input type="text" class="form-control" placeholder="Serie" id="cmbSerie"
+                                    formControlName="cmbSerie" [matAutocomplete]="cmbSerie">
                                 <label for="cmbSerie">Serie</label>
                             </div>
-    
+
                         </div>
                         <mat-autocomplete autoActiveFirstOption #cmbSerie="matAutocomplete">
-                           
+
                         </mat-autocomplete>
                     </div>
 
-                    <div class="col-12 col-md-12 col-lg-3 mb-2">
-                       
+                    <div class="col-12 col-md-12 col-lg-3 mb-1">
+
                         <div class="input-group">
                             <span class="input-group-text secundario">Asiento</span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="No"
-                                    id="txtNoAsiento"
+                                <input type="text" class="form-control" placeholder="No" id="txtNoAsiento"
                                     formControlName="txtNoAsiento">
                                 <label for="txtNoAsiento">No</label>
                             </div>
- 
+
                         </div>
 
                     </div>
 
-                    <div class="col-12 col-md-12 col-lg-2 offset-lg-5 mb-2">
-                       
+                    <div class="col-12 col-md-12 col-lg-4 offset-lg-1">
                         <div class="input-group">
-                            <span class="input-group-text"><i
-                                class="bi bi-calendar"></i></span>
+                            <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                             <div class="form-floating">
-                                <input type="date" id="txtFecha"
-                                    class="form-control" placeholder="Vence" aria-label="Fecha" formControlName="txtFecha">
+                                <input type="text" class="form-control" placeholder="Bodega" id="cmbBodega"
+                                    formControlName="cmbBodega" [matAutocomplete]="cmbBodega">
+                                <label for="cmbBodega">Bodega</label>
+                            </div>
+
+                        </div>
+                        <mat-autocomplete autoActiveFirstOption #cmbBodega="matAutocomplete">
+
+                        </mat-autocomplete>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-2 mb-1">
+
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                            <div class="form-floating">
+                                <input type="date" id="txtFecha" class="form-control" placeholder="Vence"
+                                    aria-label="Fecha" formControlName="txtFecha">
                                 <label for="txtFecha">Fecha</label>
 
                             </div>
@@ -63,70 +75,106 @@
 
                     </div>
 
-                 
+
                 </div>
 
 
                 <div class="row mt-2 g-1">
 
-                    <div class="col-12 col-md-12 col-lg-6 mb-1">
-                       
-                        <div class="input-group">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Referencia"
-                                    id="txtReferencia"
-                                    formControlName="txtReferencia">
-                                <label for="txtReferencia">Referencia</label>
+                    <div class="col-12 col-md-12 col-lg-4 mb-1">
+
+                        <div class="row">
+                            <div class="col-12 mb-1">
+                                <div class="input-group">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Referencia"
+                                            id="txtReferencia" formControlName="txtReferencia">
+                                        <label for="txtReferencia">Referencia</label>
+                                    </div>
+
+                                </div>
                             </div>
- 
+
+                            <div class="col-12">
+
+                                <div class="row">
+
+                                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                            <div class="form-floating">
+                                                <select class="form-select form-select-lg" aria-label="Moneda"
+                                                    id="cmbMoneda" formControlName="cmbMoneda">
+
+                                                </select>
+                                                <label for="cmbMoneda">Moneda</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                                        <div class="input-group">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" placeholder="TC" id="TxtTC"
+                                                    formControlName="TxtTC">
+                                                <label for="TxtTC">TC</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
+
+
 
                     </div>
 
-                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                    <div class="col-12 col-md-12 col-lg-8 mb-1">
                         <div class="observaciones">
                             <div class="form-floating">
-                                <textarea type="textarea"  class="form-control"  placeholder="Observaciones"
-                                    id="txtObservaciones"
-                                    formControlName="txtObs"></textarea>
+                                <textarea type="textarea" class="form-control" placeholder="Observaciones"
+                                    id="txtObservaciones" formControlName="txtObs"></textarea>
                                 <label for="txtObservaciones">Observaciones</label>
                             </div>
                         </div>
-                       
+
 
 
                     </div>
 
-                 
+
                 </div>
 
 
-             
-                <div class="row mt-2 linea-top-secundario">
 
-                    <div class="botones">
-                        <div class="col-12 col-md-12 col-lg-6 mb-3">
-                            <button type="button" class="btn btn-secundario" id="btnRefrescar-Asiento"
-                                (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
-                                Refrescar</button>
-                        </div>
-    
-                        <div class="col-12 col-md-12 col-lg-6">
-                            <div class="btn-contenedor">
-                                <button type="button" class="btn btn-primario" id="btnGuardar-Asiento"
-                                    (click)="v_Guardar();"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
-                                    Guardar</button>
-                                <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento"
-                                    (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i
-                                        class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
-    
-                            </div>
-                        </div>
-                    </div>
 
-                  
-                </div>
             </div>
         </div>
     </form>
+</div>
+
+
+<div class="contenedor-pie">
+    <div class="pie-asiento">
+
+        <div class="botones">
+            <div>
+                <button type="button" class="btn btn-secundario" id="btnRefrescar-Asiento" (click)="v_CargarDatos();"><i
+                        class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                    Refrescar</button>
+            </div>
+
+            <div>
+                <button type="button" class="btn btn-primario" id="btnGuardar-Asiento" (click)="v_Guardar();"><i
+                        class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
+                    Guardar</button>
+                    
+                <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento" (click)="v_Evento('Limpiar');"
+                    *ngIf="esModal"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+            </div>
+        </div>
+
+    </div>
 </div>

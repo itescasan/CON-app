@@ -6,66 +6,65 @@
 .observaciones {
 
     textarea{
-        min-height: 58px;
-        height: 174px;
+        height: 120px;
             
     }
 
     
   }
 
-.botones{
-    div{
-        width: 50%;
-        display: inline-block;
 
-        @include Tamano_Menor(lg) {
-            width: 100%;
-            display: block;
-          }
 
-    }
-    
-    div:first-child{
-        margin-top: 5px;
-    }
+ //████████████████████████████████████████████PIE████████████████████████████████████████████████████████████████████████
 
-    div:last-child{
+ .contenedor-pie{
+    position: relative;
+ }
+ .pie-asiento{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 1;
+    background-color: var(--escan-fondo);
+    padding: 10px;
+   
+
+    .botones{
+
+        position: relative;
+        width: 100vw;
+        
+
         div{
-            width: 100%;
+            text-align: left;
+            width: 50%;
+            display: inline-block;
+        }
+
+
+
+        div:last-child{
+            text-align: right;
+            position: flex;
+            right: 0;
+            bottom:0;
+
+ 
+            button{
+                margin-right: 20px;
+            }
+
+     
       
+
         }
-    }
-
-
-
-    .btn-secundario{
-        @include Tamano_Menor(lg) {
-            width: 100%;
-          }
         
-    }
-
-    .btn-contenedor{
-        display: flex;
-        justify-content:right;
-    
         
-    
-        .btn-primario{
-            margin-right: 10px;
-        }
-
-        button{
-            @include Tamano_Menor(lg) {
-                width: 100%;
-              }
-        }
-
-      
     
      }
 
     
 
  }
+

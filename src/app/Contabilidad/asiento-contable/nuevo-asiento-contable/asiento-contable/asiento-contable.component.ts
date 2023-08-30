@@ -25,9 +25,11 @@ export class AsientoContableComponent {
 
     this.val.add("cmbSerie", "1", "LEN>", "0", "Serie", "Seleccione una serie.");
     this.val.add("txtNoAsiento", "1", "LEN>", "0", "No Asiento", "No se ha configurado en número de asiento.");
+    this.val.add("cmbBodega", "1", "LEN>", "0", "Bodega", "Seleccione una bodega.");
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
     this.val.add("txtReferencia", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.val.add("txtObservaciones", "1", "LEN>", "0", "Observaciones", "Ingrese una observacion.");
+    this.val.add("txtTC", "1", "LEN>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
     
 
     this.v_Evento("Iniciar");
@@ -48,9 +50,11 @@ export class AsientoContableComponent {
 
         this.val.Get("cmbSerie").setValue("");
         this.val.Get("txtNoAsiento").setValue("");
+        this.val.Get("cmbBodega").setValue("");
         this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
         this.val.Get("txtReferencia").setValue("");
         this.val.Get("txtObservaciones").setValue("");
+        this.val.Get("txtTC").setValue("0.0000");
         
         break;
     }
