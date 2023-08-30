@@ -134,57 +134,51 @@
     
                     <table class="table table-hover  table-sm tabla-layout mat-elevation-z8" mat-table [dataSource]="lstPeriodo">                           
                        
-                        <ng-container matColumnDef="col1">
-                            <td mat-cell *matCellDef="let det">
-                                <div class="row">            
-                                    <div class="col-12 col-md-12 col-lg-6">
-                                        <span><b>N° Periodo:</b>{{det.Periodo}}</span>
-                                        <!-- <span><b>Descripcion:</b></span> -->
-                                    </div>
-            
-                                    <div class="col-4 col-md-4 col-lg-2">
-                                        <span> <b>Nombre Periodo:</b>{{det.NombrePeriodo}}</span>
-                                        <span> </span>
-                                    </div>
-            
-                                    <div class="col-4 col-md-4 col-lg-2">
-                                        <span><b>Clase Periodo:</b>{{det.ClasePeriodo}}</span>
-                                        <span></span>
-                                    </div>
-            
-                                    <div class="col-4 col-md-4 col-lg-2">
-                                        <span><b>Fecha Inicio:</b>{{det.FechaPeridoI}}</span>
-                                        <span></span>
-                                    </div>
+                         <!-- Position Column -->
+                        <ng-container matColumnDef="NoPeriodo">
+                            <th mat-header-cell *matHeaderCellDef> N° Periodo. </th>
+                            <td mat-cell *matCellDef="let det"> {{det.NoPeriodo}} </td>
+                        </ng-container>
+                    
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="NombrePeriodo">
+                            <th mat-header-cell *matHeaderCellDef> Nombre Periodo </th>
+                            <td mat-cell *matCellDef="let det"> {{det.NombrePeriodo}} </td>
+                        </ng-container>
+                    
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="ClasePeriodo">
+                            <th mat-header-cell *matHeaderCellDef> Clase Periodo </th>
+                            <td mat-cell *matCellDef="let det"> {{det.ClasePeriodo}} </td>
+                        </ng-container>
+                    
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="FechaPeridoI">
+                            <th mat-header-cell *matHeaderCellDef> Fecha Inicial </th>
+                            <td mat-cell *matCellDef="let det"> {{det.FechaPeridoI | date : 'yyyy-MM-dd'}} </td>
+                        </ng-container>
 
-                                    <div class="col-4 col-md-4 col-lg-2">
-                                        <span><b>Fecha Final:</b>{{det.FechaPeridoF}}</span>
-                                        <span></span>
-                                    </div>
-
-                                    <div class="col-4 col-md-4 col-lg-2">
-                                        <span><b>Estado:</b></span>
-                                        <span><i [ngClass]="det.Estado === 'Cerrado' ? 'fas fa-lock fa-lg': 'fas fa-lock-open fa-lg abierto' "></i></span>
-                                    </div>
+                        <!-- Weight Column -->
+                        <ng-container matColumnDef="FechaPeridoF">
+                            <th mat-header-cell *matHeaderCellDef> Fecha Final </th>
+                            <td mat-cell *matCellDef="let det"> {{det.FechaPeriodoF | date : 'yyyy-MM-dd'}} </td>
+                        </ng-container>
+                    
+                        <!-- Symbol Column -->
+                        <ng-container matColumnDef="Estado">
+                            <th mat-header-cell *matHeaderCellDef> Estado </th>
+                            <td mat-cell *matCellDef="let det"> {{det.Estado}} <i [ngClass]="det.Estado === 'Bloqueado' ? 'fas fa-lock fa-lg': 'fas fa-lock-open fa-lg abierto' "></i></td>
+                        </ng-container>
+                                               
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
             
-            
-                                    <div class="row">
-                                        <div class="contenedor-edicion">
-                                            <button type="button" class="btn" ><i
-                                                    class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-            
-                                </div>
-                            </td>
-                        </ng-container>                   
-                
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
-                        
-                       
+           
                     </table>
-                    <mat-paginator [pageSizeOptions]="[12,24]"  class="mat-paginator-sticky"></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                        showFirstLastButtons
+                        aria-label="Select page of periodic elements">
+                    </mat-paginator>
                 
                   
                   

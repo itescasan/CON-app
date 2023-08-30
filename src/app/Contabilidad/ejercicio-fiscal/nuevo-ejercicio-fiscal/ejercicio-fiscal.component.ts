@@ -16,6 +16,7 @@ import { Funciones } from 'src/SHARED/class/cls_Funciones';
 import { month } from '@igniteui/material-icons-extended';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import {formatDate} from '@angular/common';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class EjercicioFiscalComponent {
   public Mascara: string = "";
   public Prefix: string = "";
   
-  displayedColumns: string[] = ["col1"];
+  displayedColumns: string[] = ["NoPeriodo","NombrePeriodo","ClasePeriodo","FechaPeridoI","FechaPeridoF","Estado"];
 
   public lstPeriodo = new MatTableDataSource<iPeriodo> ;
 
@@ -147,24 +148,28 @@ export class EjercicioFiscalComponent {
   }
 
   public fill_Table(){
+    this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
     
-    for (let i = 1; i < 12; i++) {
+    for (let i = 0; i <= 11; i++) {
 
 
       let periodo : iPeriodo = {} as iPeriodo;
 
 
+      
+
       let Fecha : Date = new Date(this.val.Get("idFechaIni").value, i, 1);
       let FechaFin = new Date(this.cFunciones.DateAdd("Month", Fecha, i));
-      let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'long'}).format(new Date());
-      FechaFin = new Date(this.cFunciones.DateAdd("Day", Fecha, -1));
+      let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'short'}).format(new Date(Fecha));
+      // FechaFin = new Date(this.cFunciones.DateAdd("Day", FechaFin, -1));
+     
 
 
-      periodo.NoPeriodo = i;
-      periodo.NombrePeriodo = mesActual.toLowerCase() && this.val.Get("idFechaIni").value;
+      periodo.NoPeriodo = i + 1;
+      periodo.NombrePeriodo = mesActual.toUpperCase() + "-" + this.val.Get("idFechaIni").value;
       periodo.ClasePeriodo = 'Mensuales';
-      periodo.FechaPeridoI = Fecha;
-      periodo.FechaPeriodoF = FechaFin;
+      periodo.FechaPeridoI = new Date(Fecha);
+      periodo.FechaPeriodoF = new Date(FechaFin);
       periodo.Estado = 'Bloqueado';
 
       this.lstPeriodo.data.push(periodo); 
