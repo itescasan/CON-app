@@ -159,11 +159,9 @@ export class EjercicioFiscalComponent {
       
 
       let Fecha : Date = new Date(this.val.Get("idFechaIni").value, i, 1);
-      let FechaFin = new Date(this.cFunciones.DateAdd("Month", Fecha, i));
+      let FechaFin = new Date(this.cFunciones.LastDay(Fecha));
       let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'short'}).format(new Date(Fecha));
-      // FechaFin = new Date(this.cFunciones.DateAdd("Day", FechaFin, -1));
-     
-
+   
 
       periodo.NoPeriodo = i + 1;
       periodo.NombrePeriodo = mesActual.toUpperCase() + "-" + this.val.Get("idFechaIni").value;
