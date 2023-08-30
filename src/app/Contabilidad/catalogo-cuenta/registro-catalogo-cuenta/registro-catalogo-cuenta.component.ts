@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { CatalogoCuentaComponent } from '../nuevo-catalogo-cuenta/catalogo-cuenta.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Validacion } from 'src/SHARED/class/validacion';
-import { WaitComponent } from 'src/SHARED/componente/wait/wait.component';
+import { Validacion } from 'src/app/SHARED/class/validacion';
+import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { getCuentaContable } from '../CRUD/GET/get-CatalogoCuenta';
-import { DialogErrorComponent } from 'src/SHARED/componente/dialog-error/dialog-error.component';
-import { iDatos } from 'src/SHARED/interface/i-Datos';
+import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
+import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iCuenta } from 'src/app/Interface/i-Cuenta';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';

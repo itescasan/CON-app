@@ -3,7 +3,7 @@ import { LoginService } from "../../service/login.service";
 import { Validacion } from "../../class/validacion";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { DialogErrorComponent } from "../dialog-error/dialog-error.component";
-import { DynamicFormDirective } from "src/SHARED/directive/dynamic-form.directive";
+import { DynamicFormDirective } from "src/app/SHARED/directive/dynamic-form.directive";
 
 @Component({
   selector: "app-login",

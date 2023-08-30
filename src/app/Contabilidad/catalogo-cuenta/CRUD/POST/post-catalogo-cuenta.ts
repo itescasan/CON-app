@@ -1,7 +1,7 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
-import { Conexion } from "src/SHARED/class/Cadena_Conexion";
+import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 import { iCuenta } from "src/app/Interface/i-Cuenta";
 
 @Injectable({
