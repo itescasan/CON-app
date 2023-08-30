@@ -26,7 +26,7 @@ export class RegistroCatalogoCuentaComponent {
  
  
   
-  public lstCuenta : MatTableDataSource<iCuenta[]>;
+  public lstCuenta : MatTableDataSource<iCuenta>;
  
 
   constructor(
@@ -70,6 +70,10 @@ export class RegistroCatalogoCuentaComponent {
       if(e.Bloqueada) chk.bootstrapToggle("on");
 
 
+    });
+
+    dialogRef.afterClosed().subscribe(s =>{
+      this.v_CargarDatos();
     });
 
    
