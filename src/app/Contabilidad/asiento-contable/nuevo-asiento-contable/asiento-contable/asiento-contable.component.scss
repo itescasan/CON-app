@@ -1,0 +1,71 @@
+@import "/src/assets/scss/media.scss";
+
+
+
+
+.observaciones {
+
+    textarea{
+        min-height: 58px;
+        height: 174px;
+            
+    }
+
+    
+  }
+
+.botones{
+    div{
+        width: 50%;
+        display: inline-block;
+
+        @include Tamano_Menor(lg) {
+            width: 100%;
+            display: block;
+          }
+
+    }
+    
+    div:first-child{
+        margin-top: 5px;
+    }
+
+    div:last-child{
+        div{
+            width: 100%;
+      
+        }
+    }
+
+
+
+    .btn-secundario{
+        @include Tamano_Menor(lg) {
+            width: 100%;
+          }
+        
+    }
+
+    .btn-contenedor{
+        display: flex;
+        justify-content:right;
+    
+        
+    
+        .btn-primario{
+            margin-right: 10px;
+        }
+
+        button{
+            @include Tamano_Menor(lg) {
+                width: 100%;
+              }
+        }
+
+      
+    
+     }
+
+    
+
+ }

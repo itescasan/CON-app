@@ -115,6 +115,26 @@ Where size is one of margin :
 auto - for classes that set the margin to auto, like mx-auto
 */
 
+
+/*
+Bootstrap 5 has still includes spacing utilities for padding. However,
+because of new RTL support "left" and "right" have been changed to
+"start" and "end". For example pl-2 is now ps-2.
+
+"start" and "end" 
+(class="pr-0  pe-0 pl-0 ps-0") 
+
+
+pl-* => ps-* (padding-left)
+pr-* => pe-* (padding-right)
+ml-* => ms-* (margin-left)
+mr-* => me-* (margin-right)
+Additionally, Bootstrap 5 introduces new grid gutter classes that can be used to
+adjust the spacing between columns. The guttter is set on the row instead 
+of each col-* inside the row. For example, use g-0 for no spacing between columns.
+
+*/
+
 :root {
     --escan-primario: #56a43b;
     --escan-primario-sombra: rgba(86, 164, 59, 0.5);
@@ -169,35 +189,71 @@ i {
     color: var(--escan-secundario);
 }
 
+.primario{
+    color: var(--escan-primario);
+}
+
+.secundario{
+    color: var(--escan-secundario);
+}
+
+.opcional{
+    color: var(--escan-opcional);
+}
+
+
 
 .linea-top-primario{
     border-top: 2px solid var(--escan-primario);
-
-  
 }
-    
+
+
+.linea-top-primario-dashed{
+    border-top: 2px dashed var(--escan-primario);
+}
+
+
 
 .linea-bottom-primario {
     border-bottom: 2px solid var(--escan-primario);
 }
 
+.linea-bottom-primario-dashed{
+    border-bottom: 2px dashed var(--escan-primario);
+}
+
+
 .linea-top-secundario{
     border-top: 2px solid var(--escan-secundario);
+}
+
+.linea-top-secundario-dashed{
+    border-top: 2px dashed var(--escan-secundario);
 }
 
 .linea-bottom-secundario {
     border-bottom: 2px solid var(--escan-secundario);
 }
 
+.linea-bottom-secundario-dashed {
+    border-bottom: 2px dashed var(--escan-secundario);
+}
+
 
 .linea-top-opcional{
     border-top: 2px solid var(--escan-opcional);
 }
-
-.linea-bottom-opcional {
-    border-bottom: 2px solid var(--escan-secundario);
+.linea-top-opcional-dashed{
+    border-top: 2px dashed var(--escan-opcional);
 }
 
+.linea-bottom-opcional {
+    border-bottom: 2px solid var(--escan-opcional);
+}
+
+.linea-bottom-opcional-dashed {
+    border-bottom: 2px dashed var(--escan-opcional);
+}
 
 
 input:disabled,
