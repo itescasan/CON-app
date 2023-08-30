@@ -22,6 +22,7 @@ export class postCuentaContable{
 
  
    GuardarCatalogo(d : iCuenta) : Observable<string> { 
+    console.log(d)
     return this.http.post<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
 
 }

@@ -13,6 +13,7 @@ import { WaitComponent } from '../wait/wait.component';
 import { CatalogoCuentaComponent } from 'src/app/Contabilidad/catalogo-cuenta/nuevo-catalogo-cuenta/catalogo-cuenta.component';
 import { RegistroCatalogoCuentaComponent } from 'src/app/Contabilidad/catalogo-cuenta/registro-catalogo-cuenta/registro-catalogo-cuenta.component';
 import { EjercicioFiscalComponent } from 'src/app/Contabilidad/ejercicio-fiscal/nuevo-ejercicio-fiscal/ejercicio-fiscal.component';
+import { Subscription, interval } from 'rxjs';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -25,8 +26,9 @@ declare let gapi: any;
 export class SidebarComponent {
 
   @ViewChild(DynamicFormDirective, { static: true }) DynamicFrom!: DynamicFormDirective;
-  public ErrorServidor : boolean = true;
+  public ErrorServidor : boolean = false;
   
+  subscription: Subscription = {} as Subscription;
 
   constructor(
     private renderer: Renderer2,
@@ -73,80 +75,11 @@ export class SidebarComponent {
 
 
 
-  ngOnInit() {
-
-    //INSERTAR SCRIPT
-    /*
-    const script = this.renderer.createElement("script");
-    this.renderer.setProperty(
-      script,
-      "text",
-      "alert('asdsa')"
-    );
-    this.renderer.appendChild(this.document.body, script);
-*/
-    //FIN
-
-    this.ErrorServidor = true;
-    let dialogRef: MatDialogRef<WaitComponent> = this.dialog.open(
-      WaitComponent,
-      {
-        panelClass: "escasan-dialog-full-blur",
-        data: "",
-      }
-    );
-    
-
- 
- 
-    this.Conexion.FechaServidor().subscribe(
-      {
-        next : (data) => {
-          
-          dialogRef.close();
-
-          let _json : any = data;
-
-        if (_json["esError"] == 1) {
-          this.dialog.open(DialogErrorComponent, {
-            data: _json["msj"].Mensaje,
-          });
-        } else {
-          let Datos: iDatos[] = _json["d"];
-
-          this.cFunciones.FechaServidor(Datos[0].d);
-          this.ErrorServidor = false;
-
-        
-   
-        }
-
-        },
-        error: (err) => {
-
-          
-        this.ErrorServidor = true;
-        dialogRef.close();
-
-        this.dialog.open(DialogErrorComponent, {
-          data: "<b class='error'>" + err.message + "</b>",
-        });
-
-       
-   
-
-        },
-        complete : () => { 
-          $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
-        }
-      }
-    );
-
-  }
-
 
   
   public v_Abrir_Form(id : string) : void{
+
+    
 
     if(id == "") return;
     if(id == "btnMenu") return;
@@ -198,6 +131,81 @@ export class SidebarComponent {
     }
   }
   
+
+  private ActualizarDatosServidor() : void{
+    this.ErrorServidor = false;
+
+
+    this.Conexion.FechaServidor(this.cFunciones.User).subscribe(
+      {
+        next : (data) => {
+          
+          let _json : any = data;
+
+        if (_json["esError"] == 1) {
+          this.dialog.open(DialogErrorComponent, {
+            data: _json["msj"].Mensaje,
+          });
+        } else {
+          let Datos: iDatos[] = _json["d"];
+
+          this.cFunciones.FechaServidor(Datos[0].d);
+          this.cFunciones.SetTiempoDesconexion(Number(Datos[1].d));
+          this._SrvLogin.UpdFecha(String(Datos[0].d));
+        }
+
+        },
+        error: (err) => {
+
+          
+        this.ErrorServidor = true;
+        
+        this.dialog.open(DialogErrorComponent, {
+          data: "<b class='error'>" + err.message + "</b>",
+        });
+
+       
+   
+
+        },
+        complete : ( ) => { 
+
+        }
+      }
+    );
+    
+  }
+
+
+  
+  ngOnInit() {
+
+    this.subscription = interval(10000).subscribe(val => this.ActualizarDatosServidor())
+    
+    //INSERTAR SCRIPT
+    /*
+    const script = this.renderer.createElement("script");
+    this.renderer.setProperty(
+      script,
+      "text",
+      "alert('asdsa')"
+    );
+    this.renderer.appendChild(this.document.body, script);
+*/
+    //FIN
+
+
+
+  }
+
+  ngAfterContentInit() {
+    $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+
+  }
 
 }
 

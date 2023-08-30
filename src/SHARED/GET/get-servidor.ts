@@ -20,10 +20,14 @@ export class getServidor{
 
     }
 
-    public FechaServidor() : Observable<any>{
-      return this.http.get<any>(this._Cnx.Url() + "Sistema/FechaServidor");
+    public FechaServidor(user : string) : Observable<any>{
+      return this.http.get<any>(this._Cnx.Url() + "Sistema/FechaServidor?user="+ user);
    }
     
+   public Login(user: string, pass : string) : Observable<any>{
+    return this.http.get<any>(this._Cnx.Url() + "Sistema/Login?user=" + user + "&pass=" + pass);
+ }
+  
  
 
 }

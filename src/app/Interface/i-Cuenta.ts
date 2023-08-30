@@ -9,4 +9,5 @@ export interface iCuenta{
     Naturaleza : string;
     Bloqueada : boolean;
     Filtro : string;
+    UsuarioModifica : string;
 }

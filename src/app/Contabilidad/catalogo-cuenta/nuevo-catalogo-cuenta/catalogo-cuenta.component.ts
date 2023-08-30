@@ -10,6 +10,7 @@ import { DialogErrorComponent } from 'src/SHARED/componente/dialog-error/dialog-
 import { iDatos } from 'src/SHARED/interface/i-Datos';
 import { iGrupo } from 'src/app/Interface/i-Grupo';
 import { postCuentaContable } from '../CRUD/POST/post-catalogo-cuenta';
+import { Funciones } from 'src/SHARED/class/cls_Funciones';
 
 @Component({
   selector: 'app-catalogo-cuenta',
@@ -33,7 +34,7 @@ export class CatalogoCuentaComponent {
   lstGrupos: iGrupo[] = [];
 
 
-  constructor(private DIALOG: MatDialog, private GET: getCuentaContable, private POST : postCuentaContable) {
+  constructor(private DIALOG: MatDialog, private GET: getCuentaContable, private POST : postCuentaContable, private cFunciones : Funciones) {
 
     this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "Seleccione un nivel.");
     this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
@@ -304,15 +305,17 @@ export class CatalogoCuentaComponent {
     Fila.CuentaPadre = this.val.Get("txtCuentaPadre").value;
     Fila.Naturaleza = this.val.Get("cmbNaturaleza").value;
     Fila.Bloqueada = this.val.Get("chkCuentaBloqueada").value;
+    Fila.UsuarioModifica = this.cFunciones.User;
+ 
 
     document.getElementById("btnGuardar-Cuenta")?.setAttribute("disabled", "disabled");
 
     this.POST.GuardarCatalogo(Fila).subscribe(
       {
-        next: (s) => {
+        next: (data) => {
 
           dialogRef.close();
-          let _json = JSON.parse(s);
+          let _json : any = data;
   
           if (_json["esError"] == 1) {
             this.DIALOG.open(DialogErrorComponent, {
@@ -323,10 +326,10 @@ export class CatalogoCuentaComponent {
   
   
             let Datos: iDatos[] = _json["d"];
-            let Consecutivo: string = Datos[0].d;
+            let msj: string = Datos[0].d;
   
             this.DIALOG.open(DialogErrorComponent, {
-              data: "<p>Documento Generado: <b class='error'>" + Consecutivo + "</b></p>"
+              data: "<p><b class='bold'>" + msj + "</b></p>"
             });
   
   
