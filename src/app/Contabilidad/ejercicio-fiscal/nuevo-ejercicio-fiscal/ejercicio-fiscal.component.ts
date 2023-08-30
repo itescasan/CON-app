@@ -7,10 +7,16 @@ import { FormsModule } from '@angular/forms';
 import { WaitComponent } from 'src/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/SHARED/interface/i-Datos';
 import { iGrupo } from 'src/app/Interface/i-Grupo';
+import { iPeriodo } from 'src/app/Interface/i-Periodo';
 import { DialogErrorComponent } from 'src/SHARED/componente/dialog-error/dialog-error.component';
 import { iCuenta } from 'src/app/Interface/i-Cuenta';
 import { getCuentaContable } from '../CRUD/get-CatalogoCuenta';
 import { Observable, catchError, map, startWith, tap } from 'rxjs';
+import { Funciones } from 'src/SHARED/class/cls_Funciones';
+import { month } from '@igniteui/material-icons-extended';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
 
 @Component({
   selector: 'app-ejercicio-fiscal',
@@ -28,17 +34,22 @@ export class EjercicioFiscalComponent {
 
   lstCuenta: iCuenta[] = [];
   public esModal: boolean = false;
-  lstGrupos: iGrupo[] = [];
 
+   
   public Mascara: string = "";
   public Prefix: string = "";
+  
   displayedColumns: string[] = ["col1"];
+
+  public lstPeriodo = new MatTableDataSource<iPeriodo> ;
 
   filteredCuenta1: Observable<iCuenta[]> | undefined;
   filteredCuenta2: Observable<iCuenta[]> | undefined;
   filteredCuenta3: Observable<iCuenta[]> | undefined;
+
+
   
-  constructor(private DIALOG: MatDialog, private GET: getCuentaContable )
+  constructor(private DIALOG: MatDialog, private GET: getCuentaContable, private cFunciones : Funciones )
   {
     this.val.add("idEjercicioFiscal", "1", "LEN>", "0", "Ejercio_Fiscal", "Ingrese un número de cuenta.");
     this.val.add("idFechaIni", "1", "LEN>", "0", "Fecha", "Seleccione fecha inicial.");    
@@ -55,9 +66,12 @@ export class EjercicioFiscalComponent {
   public v_Evento(e: string): void {
     switch (e) {
       case "Iniciar":
+        this.v_Evento("Limpiar");
       this.v_CargarDatos();
       break;
       case "Limpiar":
+
+      this.val.Get("idFechaIni").setValue(this.cFunciones.FechaServer.getFullYear());
       break;
     }
   }
@@ -71,7 +85,7 @@ export class EjercicioFiscalComponent {
 
   public v_CargarDatos(): void {
 
-    this.lstGrupos = [];
+    // this.lstGrupos = [];
 
     document.getElementById("btnRefrescar-Cuenta")?.setAttribute("disabled", "disabled");
 
@@ -130,6 +144,34 @@ export class EjercicioFiscalComponent {
 
     this.val.Get("idFechaIni").value;
      
+  }
+
+  public fill_Table(){
+    
+    for (let i = 1; i < 12; i++) {
+
+
+      let periodo : iPeriodo = {} as iPeriodo;
+
+
+      let Fecha : Date = new Date(this.val.Get("idFechaIni").value, i, 1);
+      let FechaFin = new Date(this.cFunciones.DateAdd("Month", Fecha, i));
+      let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'long'}).format(new Date());
+      FechaFin = new Date(this.cFunciones.DateAdd("Day", Fecha, -1));
+
+
+      periodo.NoPeriodo = i;
+      periodo.NombrePeriodo = mesActual.toLowerCase() && this.val.Get("idFechaIni").value;
+      periodo.ClasePeriodo = 'Mensuales';
+      periodo.FechaPeridoI = Fecha;
+      periodo.FechaPeriodoF = FechaFin;
+      periodo.Estado = 'Bloqueado';
+
+      this.lstPeriodo.data.push(periodo); 
+     
+    }
+     
+    this.lstPeriodo.filter = "";
   }
 
 

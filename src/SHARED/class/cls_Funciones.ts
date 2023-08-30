@@ -35,7 +35,7 @@ export class Funciones {
 
 
 
-  public DateAddDay(Tipo: string, Fecha: Date, Num: number): string {
+  public DateAdd(Tipo: string, Fecha: Date, Num: number): string {
     let f = new Date(Fecha);
     switch (Tipo) {
       case 'Day':
