@@ -17,6 +17,8 @@ import { month } from '@igniteui/material-icons-extended';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {formatDate} from '@angular/common';
+import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
+import { DialogRef } from '@angular/cdk/dialog';
 
 
 @Component({
@@ -147,6 +149,31 @@ export class EjercicioFiscalComponent {
      
   }
 
+  public E_ditar(det: iPeriodo) {
+    let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.DIALOG.open(
+      DialogoConfirmarComponent,
+      {
+        disableClose: true
+
+      }
+    );
+
+    dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Cambiar el Estado</p>";
+    dialogRef.componentInstance.textBoton1 = "SI";
+    dialogRef.componentInstance.textBoton2 = "No";
+
+    dialogRef.afterClosed().subscribe(s => {
+      if (dialogRef.componentInstance.retorno == "1") {
+        if (det.Estado  == 'Abierto' ) {
+          det.Estado = "Bloqueado";
+        }
+        else{
+          det.Estado = "Abierto";
+        }
+      }
+    })
+  }
+
   public fill_Table(){
     this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
     
@@ -175,6 +202,10 @@ export class EjercicioFiscalComponent {
     }
      
     this.lstPeriodo.filter = "";
+  }
+
+  public v_Guardar() : void{
+    
   }
 
 

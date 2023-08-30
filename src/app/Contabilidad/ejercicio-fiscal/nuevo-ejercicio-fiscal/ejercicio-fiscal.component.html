@@ -167,7 +167,11 @@
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="Estado">
                             <th mat-header-cell *matHeaderCellDef> Estado </th>
-                            <td mat-cell *matCellDef="let det"> {{det.Estado}} <i [ngClass]="det.Estado === 'Bloqueado' ? 'fas fa-lock fa-lg': 'fas fa-lock-open fa-lg abierto' "></i></td>
+                            <td mat-cell *matCellDef="let det"> {{det.Estado}} 
+                                <button class="btn btn-secundario" (click)="E_ditar(det)">
+                                    <i [ngClass]="det.Estado == 'Bloqueado' ? 'fas fa-lock fa-lg': 'fas fa-lock-open fa-lg' "></i>
+                                </button>
+                            </td>
                         </ng-container>
 
                                                
@@ -188,7 +192,7 @@
                         </span>
 
                         <span>
-                            <button type="button" class="btn btn-primario" id="btnGuardarEjercicioF"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
+                            <button type="button" class="btn btn-primario" id="btnGuardarEjercicioF" (click)="v_Guardar()"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
                             <button type="button" class="btn btn-opcional" id="btnCancelarEjercicioF"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
                         </span>   
                         
