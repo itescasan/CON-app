@@ -14,6 +14,64 @@
   }
 
 
+ //████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
+
+ .numero{
+    text-align:right;
+}
+.header,
+.header-cell
+{
+    background-color: var(--escan-primario);
+    padding: 5px;
+    span{
+        color: var(--escan-fondo);
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.1em;
+    }
+}
+
+ .header{
+
+    @include Tamano_Menor(lg) {
+        display: none;
+     }
+   
+    
+ }
+
+  .contenedor-tabla{
+    margin-bottom: 100px;
+
+
+    table{
+
+        textarea{
+            height: 31px;
+        }
+
+        .header-cell{
+
+            display: none;
+
+            @include Tamano_Menor(lg) {
+                display: initial;
+                text-align: center;
+                background-color: var(--escan-fondo);
+                span{
+                    color: var(--escan-opcional);
+                }
+                
+             }
+
+        }
+      
+    }
+}
+
+
+
 
  //████████████████████████████████████████████PIE████████████████████████████████████████████████████████████████████████
 
@@ -29,6 +87,11 @@
     background-color: var(--escan-fondo);
     padding: 10px;
    
+    .totales{
+        background-color: aqua;
+        width: 100vw;
+  
+    }
 
     .botones{
 

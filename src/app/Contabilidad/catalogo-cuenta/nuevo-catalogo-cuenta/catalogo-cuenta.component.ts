@@ -371,7 +371,7 @@ export class CatalogoCuentaComponent {
 
 
 
-    //FILTRO CLIENTE
+    //FILTRO
     this.filteredCuentaPadre = this.val.Get("txtCuentaPadre").valueChanges.pipe(
       startWith(""),
       map((value: string) => {

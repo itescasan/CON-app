@@ -12,6 +12,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 
 import { faCoffee, fas, faWarehouse } from '@fortawesome/free-solid-svg-icons';
 
@@ -70,6 +71,7 @@ import { RegistroAsientoContableComponent } from './Contabilidad/asiento-contabl
     MatIconModule,
     IgxComboModule,
     IgxIconModule,
+    MatMenuModule,
     MatPaginatorModule,
     NgxMaskDirective,
     NgxMaskPipe,
