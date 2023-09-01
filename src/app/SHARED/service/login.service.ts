@@ -54,6 +54,8 @@ export class LoginService {
               this.cFunciones.Rol = l.Rol;
               this.cFunciones.FechaServidor(datos[1].d);
               this.cFunciones.SetTiempoDesconexion(Number(datos[2].d));
+              l.FechaServer = datos[1].d;
+              l.TimeOut = Number(datos[2].d);
     
               localStorage.removeItem("login");
 
@@ -98,6 +100,17 @@ export class LoginService {
 
       let l : iLogin = JSON.parse(s);
 
+      
+    if(this.cFunciones.User == "")
+    {
+      this.cFunciones.User = l.User;
+      this.cFunciones.Nombre = l.Nombre;
+      this.cFunciones.Rol = l.Rol;
+      this.cFunciones.FechaServidor(new Date(l.FechaServer));
+      this.cFunciones.SetTiempoDesconexion(l.TimeOut);
+    }
+
+
       if(this.Diff(new Date(l.FechaLogin)) <= this.cFunciones.TiempoDesconexion())
       {
 
@@ -117,7 +130,6 @@ export class LoginService {
 
 
   Diff(FechaLogin : Date){
-
     let FechaServidor : Date = new Date(this.cFunciones.FechaServer);
 
     var Segundos = Math.abs((FechaLogin.getTime() - FechaServidor.getTime()) / 1000);

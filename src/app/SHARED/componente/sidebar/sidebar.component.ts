@@ -174,18 +174,26 @@ export class SidebarComponent {
           this._SrvLogin.UpdFecha(String(Datos[0].d));
         }
 
+          if(this.dialog.getDialogById("error-servidor") != undefined) 
+          {
+            this.dialog.getDialogById("error-servidor")?.close();
+          }
+
+
         },
         error: (err) => {
-
-          
-        this.ErrorServidor = true;
+         
+          this.ErrorServidor = true;
         
-        this.dialog.open(DialogErrorComponent, {
-          data: "<b class='error'>" + err.message + "</b>",
-        });
-
+          
+          if(this.dialog.getDialogById("error-servidor") == undefined) 
+          {
+            this.dialog.open(DialogErrorComponent, {
+              id : "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
        
-   
 
         },
         complete : ( ) => { 
