@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable, map, startWith } from 'rxjs';
-import { getCuentaContable } from 'src/app/Contabilidad/ejercicio-fiscal/CRUD/get-CatalogoCuenta';
+import { getCuentaContable } from 'src/app/Contabilidad/catalogo-cuenta/CRUD/GET/get-CatalogoCuenta';
 import { iAsientoDetalle } from 'src/app/Interface/i-Asiento-Detalle';
 import { iCuenta } from 'src/app/Interface/i-Cuenta';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
