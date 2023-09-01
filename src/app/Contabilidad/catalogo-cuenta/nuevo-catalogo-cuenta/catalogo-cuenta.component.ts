@@ -257,10 +257,14 @@ export class CatalogoCuentaComponent {
 
           document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled");
           dialogRef.close();
-
-          this.DIALOG.open(DialogErrorComponent, {
-            data: "<b class='error'>" + err.message + "</b>",
-          });
+          
+          if(this.DIALOG.getDialogById("error-servidor") == undefined) 
+          {
+            this.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
 
         },
         complete: () => { document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled"); }
@@ -342,9 +346,13 @@ export class CatalogoCuentaComponent {
           dialogRef.close();
       
           document.getElementById("btnGuardar-Cuenta")?.removeAttribute("disabled");
-          this.DIALOG.open(DialogErrorComponent, {
-            data: "<b class='error'>" + err.message + "</b>",
-          });
+          if(this.DIALOG.getDialogById("error-servidor") == undefined) 
+          {
+            this.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
         },
         complete: () => {
           document.getElementById("btnGuardar-Cuenta")?.removeAttribute("disabled");
