@@ -11,7 +11,7 @@
                         <div  class="input-group">
                             <span class="input-group-text"><i class="fa-regular fa-file fa-beat-fade"></i></span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="idEjercicioFiscal" placeholder="Ejercicio Fiscal">
+                                <input type="text" class="form-control" id="idEjercicioFiscal" placeholder="Ejercicio Fiscal" formControlName="idEjercicioFiscal">
                                 <label for="idEjercicioFiscal">Ejercicio Fiscal:</label>
                             </div>
                         </div>
@@ -155,13 +155,13 @@
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="FechaPeridoI">
                             <th mat-header-cell *matHeaderCellDef> Fecha Inicial </th>
-                            <td mat-cell *matCellDef="let det"> {{det.FechaPeridoI | date : 'dd-MM-yyyy'}} </td>
+                            <td mat-cell *matCellDef="let det"> {{det.FechaInicio | date : 'dd-MM-yyyy'}} </td>
                         </ng-container>
 
                         <!-- Weight Column -->
                         <ng-container matColumnDef="FechaPeridoF">
                             <th mat-header-cell *matHeaderCellDef> Fecha Final </th>
-                            <td mat-cell *matCellDef="let det"> {{det.FechaPeriodoF | date : 'dd-MM-yyyy'}} </td>
+                            <td mat-cell *matCellDef="let det"> {{det.FechaFinal | date : 'dd-MM-yyyy'}} </td>
                         </ng-container>
                     
                         <!-- Symbol Column -->

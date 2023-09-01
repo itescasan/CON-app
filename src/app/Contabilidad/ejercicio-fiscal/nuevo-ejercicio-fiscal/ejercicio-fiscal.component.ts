@@ -10,7 +10,7 @@ import { iGrupo } from 'src/app/Interface/i-Grupo';
 import { iPeriodo } from 'src/app/Interface/i-Periodo';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
 import { iCuenta } from 'src/app/Interface/i-Cuenta';
-import { getCuentaContable } from '../CRUD/get-CatalogoCuenta';
+import { getCuentaContable } from '../CRUD/GET/get-CatalogoCuenta';
 import { Observable, catchError, map, startWith, tap } from 'rxjs';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { month } from '@igniteui/material-icons-extended';
@@ -19,6 +19,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import {formatDate} from '@angular/common';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 import { DialogRef } from '@angular/cdk/dialog';
+import { iEjercicioFiscal } from 'src/app/Interface/i-EjercicioFiscal';
+import { postEjercicioFiscal } from '../CRUD/POST/post-Ejercicio-fiscal';
 
 
 @Component({
@@ -36,6 +38,7 @@ export class EjercicioFiscalComponent {
   public iDatos: iDatos[] = [];
 
   lstCuenta: iCuenta[] = [];
+  
   public esModal: boolean = false;
 
    
@@ -46,13 +49,15 @@ export class EjercicioFiscalComponent {
 
   public lstPeriodo = new MatTableDataSource<iPeriodo> ;
 
+  
+
   filteredCuenta1: Observable<iCuenta[]> | undefined;
   filteredCuenta2: Observable<iCuenta[]> | undefined;
   filteredCuenta3: Observable<iCuenta[]> | undefined;
 
 
   
-  constructor(private DIALOG: MatDialog, private GET: getCuentaContable, private cFunciones : Funciones )
+  constructor(private DIALOG: MatDialog, private GET: getCuentaContable, private POST: postEjercicioFiscal ,private cFunciones : Funciones )
   {
     this.val.add("idEjercicioFiscal", "1", "LEN>", "0", "Ejercio_Fiscal", "Ingrese un número de cuenta.");
     this.val.add("idFechaIni", "1", "LEN>", "0", "Fecha", "Seleccione fecha inicial.");    
@@ -138,11 +143,97 @@ export class EjercicioFiscalComponent {
       }
     ); 
 
-
-
-
-
   }
+
+
+  public v_Guardar() : void{
+    this.val.EsValido();
+
+
+    if (this.val.Errores != "") {
+      this.DIALOG.open(DialogErrorComponent, {
+        data: this.val.Errores,
+      });
+
+      return;
+      }
+
+      let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+        }
+      );
+
+      let Fila : iEjercicioFiscal = {} as iEjercicioFiscal;
+
+      Fila.IdEjercicio = -1
+      Fila.Nombre = this.val.Get("idEjercicioFiscal").value;
+      Fila.Estado = this.val.Get("chkBloqueadaEF").value;
+      Fila.FechaInicio = new Date(this.val.Get("idFechaIni").value, 1, 1);
+      Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
+      Fila.ClasePeriodo = "Mensuales";
+      Fila.NumerosPeriodos = 12;
+      Fila.Estado = "Abierto";
+      Fila.CuentaContableAcumulada = this.val.Get("txtCuentaA").value;
+      Fila.CuentaPerdidaGanancia = this.val.Get("txtCuentaP").value;
+      Fila.CuentaContablePeriodo = this.val.Get("txtCuentaPr").value;
+      Fila.FechaReg = new Date();
+      Fila.UsuarioReg = this.cFunciones.User;
+      // Detalle Ejercicio Fiscal (Periodos)
+      Fila.Periodos = this.lstPeriodo.data;
+      
+
+      document.getElementById("btnGuardarEjercicioF")?.setAttribute("disabled", "disabled");
+
+      this.POST.GuardarEjercio(Fila).subscribe(
+        {
+          next: (data) => {
+  
+            dialogRef.close();
+            let _json : any = data;
+    
+            if (_json["esError"] == 1) {
+              this.DIALOG.open(DialogErrorComponent, {
+                data: _json["msj"].Mensaje,
+              });
+            } 
+            else {
+    
+    
+              let Datos: iDatos[] = _json["d"];
+              let msj: string = Datos[0].d;
+    
+              this.DIALOG.open(DialogErrorComponent, {
+                data: "<p><b class='bold'>" + msj + "</b></p>"
+              });
+    
+    
+              if(!this.esModal)   this.v_Evento("Limpiar");
+    
+            }
+  
+          },
+          error: (err) => {
+            dialogRef.close();
+        
+            document.getElementById("btnGuardarEjercicioF")?.removeAttribute("disabled");
+            this.DIALOG.open(DialogErrorComponent, {
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          },
+          complete: () => {
+            document.getElementById("btnGuardarEjercicioF")?.removeAttribute("disabled");
+          }
+        }
+      );
+
+
+    }
+
+
+
   public v_Editar(){
 
     this.val.Get("idFechaIni").value;
@@ -189,13 +280,15 @@ export class EjercicioFiscalComponent {
       let FechaFin = new Date(this.cFunciones.LastDay(Fecha));
       let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'short'}).format(new Date(Fecha));
    
-
+      periodo.IdPeriodo = -1
+      periodo.IdEjercicio = -1
       periodo.NoPeriodo = i + 1;
       periodo.NombrePeriodo = mesActual.toUpperCase() + "-" + this.val.Get("idFechaIni").value;
       periodo.ClasePeriodo = 'Mensuales';
-      periodo.FechaPeridoI = new Date(Fecha);
-      periodo.FechaPeriodoF = new Date(FechaFin);
+      periodo.FechaInicio = new Date(Fecha);
+      periodo.FechaFinal = new Date(FechaFin);
       periodo.Estado = 'Bloqueado';
+      periodo.FechaReg = new Date()
 
       this.lstPeriodo.data.push(periodo); 
      
@@ -203,11 +296,6 @@ export class EjercicioFiscalComponent {
      
     this.lstPeriodo.filter = "";
   }
-
-  public v_Guardar() : void{
-    
-  }
-
 
   ngOnInit() : void{
 

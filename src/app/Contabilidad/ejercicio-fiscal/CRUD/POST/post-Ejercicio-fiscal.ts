@@ -2,11 +2,12 @@ import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
+import { iEjercicioFiscal } from "src/app/Interface/i-EjercicioFiscal";
 
 @Injectable({
     providedIn: 'root',
   })
-export class getCuentaContable{
+export class postEjercicioFiscal{
     
     private _Cnx = new Conexion();
     private http: HttpClient;
@@ -20,13 +21,10 @@ export class getCuentaContable{
     }
 
  
-   public Datos() : Observable<string>{
-      return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Datos");
-   }
+   GuardarEjercio(d : iEjercicioFiscal) : Observable<string> { 
+console.log(d.Periodos)
+    return this.http.post<any>(this._Cnx.Url() + "Contabilidad/EjercicioFiscal/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
 
-   public Get() : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Get");
- }
-   
+}
 
 }
