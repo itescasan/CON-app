@@ -35,7 +35,7 @@ export class getServidor{
 
 
 public Serie(CodBodega : string, Tipo : string) : Observable<any>{
-  return this.http.get<any>(this._Cnx.Url() + "Sistema/CodBodega?f="+ CodBodega + "&Tipo=" + Tipo);
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/Serie?CodBodega="+ CodBodega + "&Tipo=" + Tipo);
 }
   
 

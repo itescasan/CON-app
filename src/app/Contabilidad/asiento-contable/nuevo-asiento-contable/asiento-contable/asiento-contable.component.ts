@@ -113,14 +113,15 @@ export class AsientoContableComponent {
     if (event.added.length) {
       event.newSelection = event.added;
       this.val.Get("cmbSerie").setValue([event.added]);
+      this.v_Consecutivo();
     }
   }
 
   public v_Enter_Serie(event: any) {
     if (event.key == "Enter") {
-      let _Item: iBodega = this.cmbBodega.dropdown.focusedItem.value;
-      this.cmbBodega.setSelectedItem(_Item.Codigo);
-      this.val.Get("cmbSerie").setValue([_Item.Codigo]);
+      let _Item: iSerie = this.cmbSerie.dropdown.focusedItem.value;
+      this.cmbSerie.setSelectedItem(_Item);
+      this.val.Get("cmbSerie").setValue([_Item]);
 
     }
   }
@@ -365,6 +366,7 @@ export class AsientoContableComponent {
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
 
             this.V_TasaCambios();
+            this.v_Serie();
 
 
           }
@@ -457,6 +459,8 @@ export class AsientoContableComponent {
             let datos: iDatos = _json["d"];
             this.lstSerie = datos.d;
 
+            this.v_Consecutivo();
+
           }
 
         },
@@ -476,10 +480,10 @@ export class AsientoContableComponent {
 
   public v_Consecutivo(): void {
 
-    if (this.cmbBodega.selection.length == 0) return;
+    if (this.cmbSerie.selection.length == 0) return;
 
 
-    this.cFunciones.GET.Serie(this.val.Get("txtBodega").value, "Contabilidad").subscribe(
+    this.cFunciones.GET.Consecutivo(this.val.Get("cmbSerie").value, "Contabilidad").subscribe(
       {
         next: (data) => {
 
