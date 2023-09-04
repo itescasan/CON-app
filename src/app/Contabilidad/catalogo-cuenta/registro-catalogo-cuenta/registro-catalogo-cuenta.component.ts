@@ -6,7 +6,7 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { getCuentaContable } from '../CRUD/GET/get-CatalogoCuenta';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
-import { iCuenta } from 'src/app/Interface/i-Cuenta';
+import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
