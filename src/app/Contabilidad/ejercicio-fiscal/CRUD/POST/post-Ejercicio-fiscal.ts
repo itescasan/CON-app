@@ -2,7 +2,7 @@ import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
-import { iEjercicioFiscal } from "src/app/Interface/i-EjercicioFiscal";
+import { iEjercicioFiscal } from "src/app/Interface/Contabilidad/i-EjercicioFiscal";
 
 @Injectable({
     providedIn: 'root',

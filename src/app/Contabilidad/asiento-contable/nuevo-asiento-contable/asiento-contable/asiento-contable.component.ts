@@ -5,8 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings, scaleInCenter, scaleOutCenter } from 'igniteui-angular';
 import { Observable, map, startWith } from 'rxjs';
 import { getCuentaContable } from 'src/app/Contabilidad/catalogo-cuenta/CRUD/GET/get-CatalogoCuenta';
-import { iAsientoDetalle } from 'src/app/Interface/i-Asiento-Detalle';
-import { iCuenta } from 'src/app/Interface/i-Cuenta';
+import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
+import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
+import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
@@ -23,11 +24,15 @@ export class AsientoContableComponent {
   public val = new Validacion();
   public valTabla = new Validacion();
 
+  @ViewChildren(IgxComboComponent)
+  public cmbCuenta: QueryList<IgxComboComponent>;
+  
+
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
+  lstBodega: iBodega[] = [];
   lstCuenta: iCuenta[] = [];
-  filteredCuenta: Observable<iCuenta[]> | undefined;
 
   public esModal: boolean = false;
   public dec_TotalDebe : number = 0;
@@ -92,6 +97,28 @@ export class AsientoContableComponent {
   }
 
 
+  @ViewChild("cmbBodega", { static: false })
+  public cmbBodega: IgxComboComponent;
+
+  public v_Select_Bodega(event: any) {
+    if (event.added.length) {
+      event.newSelection = event.added;
+      this.val.Get("txtBodega").setValue(event.added);
+    }
+  }
+
+  public v_Enter_Bodega(event: any) {
+    if (event.key == "Enter") {
+      let _Item: iBodega = this.cmbBodega.dropdown.focusedItem.value;
+      this.cmbBodega.setSelectedItem(_Item.Codigo);
+      this.val.Get("txtBodega").setValue([_Item.Codigo]);
+
+    }
+  }
+
+
+
+
    //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det : iAsientoDetalle): void {
@@ -118,13 +145,11 @@ export class AsientoContableComponent {
 
     
   }
-  @ViewChildren(IgxComboComponent)
-  public combos: QueryList<IgxComboComponent>;
-  
+ 
   public v_Enter_Cuenta(event: any, det : iAsientoDetalle) {
 
     if (event.key == "Enter") {
-      let txtCuenta : any = this.combos.find(f => f.id == "txtCuenta" + det.NoLinea);
+      let txtCuenta : any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
 
       let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
       txtCuenta.setSelectedItem(_Item.CuentaContable);
@@ -258,8 +283,8 @@ export class AsientoContableComponent {
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 
-      let txtCuenta : any = this.combos.find(f => f.id == "txtCuenta" + x);
-      txtCuenta.open();
+      let txtCuenta : any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+      if(x > 1)txtCuenta.open();
 
       
 

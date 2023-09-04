@@ -48,12 +48,19 @@
                     <div class="col-12 col-md-12 col-lg-4 offset-lg-1">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Bodega" id="cmbBodega"
-                                    formControlName="cmbBodega" [matAutocomplete]="cmbBodega">
-                                <label for="cmbBodega">Bodega</label>
-                            </div>
 
+                            <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo"
+                            displayKey="Key" id="txtBodega" formControlName="txtBodega"
+                            placeholder="Bodega" searchPlaceholder="Seleccione una bodega..."
+                            [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
+                            (selectionChanging)="v_Select_Bodega($event)"
+                            (keyup)="v_Enter_Bodega($event);">
+                            <label igxLabel>Bodega</label>
+                            <igx-prefix><i class="bi bi-shop"></i></igx-prefix>
+                        </igx-combo>
+
+
+                          
                         </div>
                         <mat-autocomplete autoActiveFirstOption #cmbBodega="matAutocomplete">
 

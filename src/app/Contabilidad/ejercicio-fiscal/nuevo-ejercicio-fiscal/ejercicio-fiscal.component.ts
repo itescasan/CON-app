@@ -6,10 +6,10 @@ import { PeriodosFiscalComponent } from '../periodos-fiscal/periodos-fiscal.comp
 import { FormsModule } from '@angular/forms';
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
-import { iGrupo } from 'src/app/Interface/i-Grupo';
-import { iPeriodo } from 'src/app/Interface/i-Periodo';
+import { iGrupo } from 'src/app/Interface/Contabilidad/i-Grupo';
+import { iPeriodo } from 'src/app/Interface/Contabilidad/i-Periodo';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
-import { iCuenta } from 'src/app/Interface/i-Cuenta';
+import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { getCuentaContable } from '../CRUD/GET/get-CatalogoCuenta';
 import { Observable, catchError, map, startWith, tap } from 'rxjs';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
@@ -19,7 +19,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import {formatDate} from '@angular/common';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 import { DialogRef } from '@angular/cdk/dialog';
-import { iEjercicioFiscal } from 'src/app/Interface/i-EjercicioFiscal';
+import { iEjercicioFiscal } from 'src/app/Interface/Contabilidad/i-EjercicioFiscal';
 import { postEjercicioFiscal } from '../CRUD/POST/post-Ejercicio-fiscal';
 
 
