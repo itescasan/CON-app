@@ -3,7 +3,7 @@ import { Validacion } from 'src/app/SHARED/class/validacion';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RegistroEjercicioFiscalComponent } from '../registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
 import { PeriodosFiscalComponent } from '../periodos-fiscal/periodos-fiscal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, UntypedFormBuilder } from '@angular/forms';
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iGrupo } from 'src/app/Interface/Contabilidad/i-Grupo';
@@ -43,8 +43,8 @@ export class EjercicioFiscalComponent {
   public esModal: boolean = false;
 
    
-  public Mascara: string = "";
-  public Prefix: string = "";
+  // public Mascara: string = "";
+  // public Prefix: string = "";
   
   displayedColumns: string[] = ["NoPeriodo","NombrePeriodo","ClasePeriodo","FechaPeridoI","FechaPeridoF","Estado"];
 
@@ -79,8 +79,15 @@ export class EjercicioFiscalComponent {
       this.v_CargarDatos();
       break;
       case "Limpiar":
-
-      this.val.Get("idFechaIni").setValue(this.cFunciones.FechaServer.getFullYear());
+      
+        this.val.Get("idEjercicioFiscal").setValue("");       
+        this.val.Get("idFechaIni").setValue();
+        this.val.Get("txtCuentaA").setValue("");
+        this.val.Get("txtCuentaP").setValue("");
+        this.val.Get("txtCuentaPr").setValue("");
+        this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
+        
+        this.val.Get("idFechaIni").setValue(this.cFunciones.FechaServer.getFullYear());
       break;
     }
   }
@@ -169,7 +176,8 @@ export class EjercicioFiscalComponent {
 
       let Fila : iEjercicioFiscal = {} as iEjercicioFiscal;
 
-      Fila.IdEjercicio = -1
+    
+      Fila.IdEjercicio = undefined;
       Fila.Nombre = this.val.Get("idEjercicioFiscal").value;
       Fila.Estado = this.val.Get("chkBloqueadaEF").value;
       Fila.FechaInicio = new Date(this.val.Get("idFechaIni").value, 1, 1);
@@ -177,6 +185,7 @@ export class EjercicioFiscalComponent {
       Fila.ClasePeriodos = "Mensuales";
       Fila.NumerosPeriodos = 12;
       Fila.Estado = "Abierto";
+     
       Fila.CuentaContableAcumulada = this.val.Get("txtCuentaA").value;
       Fila.CuentaPerdidaGanancia = this.val.Get("txtCuentaP").value;
       Fila.CuentaContablePeriodo = this.val.Get("txtCuentaPr").value;
@@ -281,8 +290,8 @@ export class EjercicioFiscalComponent {
       let FechaFin = new Date(this.cFunciones.LastDay(Fecha));
       let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'short'}).format(new Date(Fecha));
    
-      periodo.IdPeriodo = -1
-      periodo.IdEjercicio = -1
+      periodo.IdPeriodo = undefined;
+      periodo.IdEjercicio = undefined;
       periodo.NoPeriodo = i + 1;
       periodo.NombrePeriodo = mesActual.toUpperCase() + "-" + this.val.Get("idFechaIni").value;
       periodo.ClasePeriodo = 'Mensuales';
@@ -290,7 +299,7 @@ export class EjercicioFiscalComponent {
       periodo.FechaFinal = new Date(FechaFin);
       periodo.Estado = 'Bloqueado';
       periodo.FechaReg = new Date();      
-      periodo.
+      periodo.UsuarioReg = this.cFunciones.User;
       this.lstPeriodo.data.push(periodo); 
      
     }

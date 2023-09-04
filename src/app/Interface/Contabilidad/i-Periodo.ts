@@ -1,6 +1,6 @@
 export interface iPeriodo{
-    IdPeriodo : number;
-    IdEjercicio : number;
+    IdPeriodo : undefined;
+    IdEjercicio : undefined;
     NoPeriodo : number;
     NombrePeriodo: string;
     ClasePeriodo: string;
