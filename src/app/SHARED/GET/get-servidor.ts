@@ -32,6 +32,18 @@ export class getServidor{
   return this.http.get<any>(this._Cnx.Url() + "Sistema/TC?f="+ f);
 }
   
+
+
+public Serie(CodBodega : string, Tipo : string) : Observable<any>{
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/CodBodega?f="+ CodBodega + "&Tipo=" + Tipo);
+}
+  
+
+
+public Consecutivo(Serie : string, Tipo : string) : Observable<any>{
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/Consecutivo?Serie="+ Serie + "&Tipo=" + Tipo);
+}
+  
  
 
 }

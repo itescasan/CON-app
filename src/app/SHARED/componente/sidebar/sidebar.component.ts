@@ -37,8 +37,7 @@ export class SidebarComponent {
     @Inject(DOCUMENT) private document: HTMLDocument,
     private _SrvLogin: LoginService,
     private Conexion: getServidor,
-    private cFunciones : Funciones,
-    private dialog: MatDialog,
+    private cFunciones : Funciones
   ) {
 }
   
@@ -88,7 +87,8 @@ export class SidebarComponent {
 
 
     if(this.ErrorServidor && id != "aSalir"){
-      this.dialog.open(DialogErrorComponent, {
+      this.cFunciones.DIALOG.closeAll();
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
         data: "<b class='error'>" + "Error al conectar con el servidor, por favor recargue la pagina o cierre sessión." + "</b>",
       });
       return;
@@ -164,8 +164,8 @@ export class SidebarComponent {
 
         if (_json["esError"] == 1) {
 
-          if(this.dialog.getDialogById("error-servidor-msj") == undefined){
-            this.dialog.open(DialogErrorComponent, {
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined){
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor-msj",
               data: _json["msj"].Mensaje,
             });
@@ -180,9 +180,9 @@ export class SidebarComponent {
           this.cFunciones.TC = Datos[2].d;
         }
 
-          if(this.dialog.getDialogById("error-servidor") != undefined) 
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") != undefined) 
           {
-            this.dialog.getDialogById("error-servidor")?.close();
+            this.cFunciones.DIALOG.getDialogById("error-servidor")?.close();
           }
 
 
@@ -192,9 +192,9 @@ export class SidebarComponent {
           this.ErrorServidor = true;
         
           
-          if(this.dialog.getDialogById("error-servidor") == undefined) 
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
           {
-            this.dialog.open(DialogErrorComponent, {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id : "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
             });

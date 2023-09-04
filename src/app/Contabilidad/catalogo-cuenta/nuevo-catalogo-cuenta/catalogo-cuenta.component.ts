@@ -34,7 +34,7 @@ export class CatalogoCuentaComponent {
   lstGrupos: iGrupo[] = [];
 
 
-  constructor(private DIALOG: MatDialog, private GET: getCuentaContable, private POST : postCuentaContable, private cFunciones : Funciones) {
+  constructor(private GET: getCuentaContable, private POST : postCuentaContable, private cFunciones : Funciones) {
 
     this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "Seleccione un nivel.");
     this.val.add("cmbGrupo", "1", "LEN>", "0", "Group", "Seleccione un grupo.");
@@ -211,7 +211,7 @@ export class CatalogoCuentaComponent {
 
     document.getElementById("btnRefrescar-Cuenta")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
       WaitComponent,
       {
         panelClass: "escasan-dialog-full-blur",
@@ -230,9 +230,12 @@ export class CatalogoCuentaComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            this.DIALOG.open(DialogErrorComponent, {
-              data: _json["msj"].Mensaje,
-            });
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
           } else {
 
             this.iDatos = _json["d"];
@@ -258,9 +261,9 @@ export class CatalogoCuentaComponent {
           document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled");
           dialogRef.close();
           
-          if(this.DIALOG.getDialogById("error-servidor") == undefined) 
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
           {
-            this.DIALOG.open(DialogErrorComponent, {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
             });
@@ -281,7 +284,7 @@ export class CatalogoCuentaComponent {
 
 
     if (this.val.Errores != "") {
-      this.DIALOG.open(DialogErrorComponent, {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
         data: this.val.Errores,
       });
 
@@ -291,7 +294,7 @@ export class CatalogoCuentaComponent {
    
 
  
-    let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
       WaitComponent,
       {
         panelClass: "escasan-dialog-full-blur",
@@ -322,9 +325,12 @@ export class CatalogoCuentaComponent {
           let _json : any = data;
   
           if (_json["esError"] == 1) {
-            this.DIALOG.open(DialogErrorComponent, {
-              data: _json["msj"].Mensaje,
-            });
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
           } 
           else {
   
@@ -332,7 +338,7 @@ export class CatalogoCuentaComponent {
             let Datos: iDatos[] = _json["d"];
             let msj: string = Datos[0].d;
   
-            this.DIALOG.open(DialogErrorComponent, {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               data: "<p><b class='bold'>" + msj + "</b></p>"
             });
   
@@ -346,9 +352,9 @@ export class CatalogoCuentaComponent {
           dialogRef.close();
       
           document.getElementById("btnGuardar-Cuenta")?.removeAttribute("disabled");
-          if(this.DIALOG.getDialogById("error-servidor") == undefined) 
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
           {
-            this.DIALOG.open(DialogErrorComponent, {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
             });
