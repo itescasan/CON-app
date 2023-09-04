@@ -17,8 +17,8 @@
 
                     <div class="col-12 col-md-12 col-lg-2 mb-1">
 
-                        <igx-combo #cmbSerie [data]="lstSerie" valueKey="IdSerie"
-                        displayKey="IdSerie" id="cmbSerie" formControlName="cmbSerie"
+                        <igx-combo #cmbSerie [data]="lstSerie" 
+                        id="cmbSerie" formControlName="cmbSerie"
                         placeholder="Serie" searchPlaceholder="Seleccione una serie..."
                         [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
                         (selectionChanging)="v_Select_Serie($event)"
@@ -48,15 +48,14 @@
 
                     <div class="col-12 col-md-12 col-lg-4 offset-lg-1">
                         <div class="input-group">
-                            <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-
+                 
                             <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega"
                                 id="txtBodega" formControlName="txtBodega" placeholder="Bodega"
                                 searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
                                 [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
                                 (keyup)="v_Enter_Bodega($event);">
                                 <label igxLabel>Bodega</label>
-                                <igx-prefix><i class="bi bi-shop"></i></igx-prefix>
+                                <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
                             </igx-combo>
 
 

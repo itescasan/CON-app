@@ -19,13 +19,17 @@
     color: black,
 }
 
-
-
 .logo{
-    width: 105px;
-    height: 84px;
+    display: flex;
+    justify-content:center;
+    width: 100%;
 }
 
+img{
+   
+    width:220px;
+    height:60px;
+}
 button{
     width: 100px;
 }
