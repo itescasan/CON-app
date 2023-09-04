@@ -80,6 +80,9 @@ export class AsientoContableComponent {
 
       case "Limpiar":
 
+      this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+      this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
+
         this.dec_TotalDebe = 0;
         this.dec_TotalHaber = 0;
         this.dec_Dif = 0;
@@ -94,7 +97,7 @@ export class AsientoContableComponent {
         this.val.Get("TxtTC").setValue(0);
 
         this.val.Get("txtNoAsiento").disable();
-
+        this.val.Get("TxtTC").disable();
 
 
         this.V_TasaCambios();
