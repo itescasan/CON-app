@@ -29,6 +29,9 @@ export class AsientoContableComponent {
   filteredCuenta: Observable<iCuenta[]> | undefined;
 
   public esModal: boolean = false;
+  public dec_TotalDebe : number = 0;
+  public dec_TotalHaber : number = 0;
+  public TC : number;
 
 
 
@@ -63,14 +66,17 @@ export class AsientoContableComponent {
 
       case "Limpiar":
 
+      this.dec_TotalDebe = 0;
+      this.dec_TotalHaber = 0;
+
         this.val.Get("cmbSerie").setValue("");
         this.val.Get("txtNoAsiento").setValue("");
         this.val.Get("cmbBodega").setValue("");
         this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
         this.val.Get("txtReferencia").setValue("");
         this.val.Get("txtObservaciones").setValue("");
-        this.val.Get("cmbMoneda").setValue("0.0000");
-        this.val.Get("TxtTC").setValue("0.0000");
+        this.val.Get("cmbMoneda").setValue("COR");
+        this.val.Get("TxtTC").setValue(this.cFunciones.TC);
 
         let NuevaLinea : iAsientoDetalle = {} as iAsientoDetalle;
         this.V_Agregar();
@@ -180,6 +186,7 @@ export class AsientoContableComponent {
     this.V_Ordenar(i);
 
    
+   
   }
 
   V_Eliminar(item: iAsientoDetalle) {
@@ -201,6 +208,8 @@ export class AsientoContableComponent {
     this.lstDetalle.data = this.lstDetalle.data.sort((a,b) => b.NoLinea - a.NoLinea);
 
     this.lstDetalle.data = [...this.lstDetalle.data];
+
+    this.V_Calcular();
 
     if(x == -1) return;
 
@@ -310,6 +319,41 @@ export class AsientoContableComponent {
 
   }
 
+
+  public V_Calcular() : void{
+
+    this.dec_TotalDebe = 0;
+    this.dec_TotalHaber = 0;
+
+    this.lstDetalle.data.forEach(f =>{
+
+      let Debe = Number(f.Debito.replaceAll(",", ""));
+      let Haber = Number(f.Credito.replaceAll(",", ""));
+
+      if(this.val.Get("cmbMoneda").value == "COR")
+      {
+        f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
+        f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML / this.TC, "2"); 
+
+        f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
+        f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML / this.TC, "2"); 
+
+      }
+      else{
+        f.DebitoMS = this.cFunciones.Redondeo(Debe, "2");
+        f.DebitoML = this.cFunciones.Redondeo(f.DebitoMS * this.TC, "2"); 
+
+        f.CreditoMS = this.cFunciones.Redondeo(Haber, "2");
+        f.CreditoML = this.cFunciones.Redondeo(f.CreditoMS * this.TC, "2"); 
+
+      }
+
+      this.dec_TotalDebe += Debe;
+      this.dec_TotalHaber += Haber;
+
+    });
+
+  }
 
 
   ngOnInit(): void {

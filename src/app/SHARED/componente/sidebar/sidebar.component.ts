@@ -163,15 +163,21 @@ export class SidebarComponent {
           let _json : any = data;
 
         if (_json["esError"] == 1) {
-          this.dialog.open(DialogErrorComponent, {
-            data: _json["msj"].Mensaje,
-          });
+
+          if(this.dialog.getDialogById("error-servidor-msj") == undefined){
+            this.dialog.open(DialogErrorComponent, {
+              id: "error-servidor-msj",
+              data: _json["msj"].Mensaje,
+            });
+          }
+         
         } else {
           let Datos: iDatos[] = _json["d"];
 
           this.cFunciones.FechaServidor(Datos[0].d);
           this.cFunciones.SetTiempoDesconexion(Number(Datos[1].d));
           this._SrvLogin.UpdFecha(String(Datos[0].d));
+          this.cFunciones.TC = Datos[2].d;
         }
 
           if(this.dialog.getDialogById("error-servidor") != undefined) 

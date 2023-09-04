@@ -22,6 +22,7 @@ export class Funciones {
   public User : string = "";
   public Nombre : string = "";
   public Rol : string = "";
+  public TC : number = 0;
 
 
 
