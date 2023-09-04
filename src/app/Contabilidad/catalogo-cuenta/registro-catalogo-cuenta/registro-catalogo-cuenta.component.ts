@@ -9,6 +9,7 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 
 
 
@@ -29,8 +30,7 @@ export class RegistroCatalogoCuentaComponent {
   public lstCuenta : MatTableDataSource<iCuenta>;
  
 
-  constructor(
-    private DIALOG: MatDialog, private GET: getCuentaContable
+  constructor(private GET: getCuentaContable, private cFunciones : Funciones
   ) {
     this.val.add("txtBuscar-Cuenta", "1", "LEN>=", "0", "Buscar", "");
 
@@ -41,7 +41,7 @@ export class RegistroCatalogoCuentaComponent {
 
   public v_Editar(e : iCuenta) : void{
 
-    let dialogRef: MatDialogRef<CatalogoCuentaComponent> = this.DIALOG.open(
+    let dialogRef: MatDialogRef<CatalogoCuentaComponent> = this.cFunciones.DIALOG.open(
       CatalogoCuentaComponent,
       {
         panelClass: window.innerWidth < 576 ? "escasan-dialog-full" : "",
@@ -92,7 +92,7 @@ export class RegistroCatalogoCuentaComponent {
 
     document.getElementById("btnRefrescar-RegCuenta")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
       WaitComponent,
       {
         panelClass: "escasan-dialog-full-blur",
@@ -111,9 +111,12 @@ export class RegistroCatalogoCuentaComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            this.DIALOG.open(DialogErrorComponent, {
-              data: _json["msj"].Mensaje,
-            });
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
           } else {
 
             let datos : iDatos[] = _json["d"];
@@ -131,9 +134,9 @@ export class RegistroCatalogoCuentaComponent {
 
           dialogRef.close();
 
-          if(this.DIALOG.getDialogById("error-servidor") == undefined) 
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
           {
-            this.DIALOG.open(DialogErrorComponent, {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
             });

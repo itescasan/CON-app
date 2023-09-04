@@ -13,6 +13,8 @@ import { Validacion } from 'src/app/SHARED/class/validacion';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
+import { getAsientoContable } from '../../CRUD/GET/get-Asiento-contable';
+import { iSerie } from 'src/app/Interface/Sistema/i-Serie';
 
 @Component({
   selector: 'app-asiento-contable',
@@ -26,40 +28,42 @@ export class AsientoContableComponent {
 
   @ViewChildren(IgxComboComponent)
   public cmbCuenta: QueryList<IgxComboComponent>;
-  
+
 
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
+  lstSerie: iSerie[] = [];
   lstBodega: iBodega[] = [];
   lstCuenta: iCuenta[] = [];
 
   public esModal: boolean = false;
-  public dec_TotalDebe : number = 0;
-  public dec_TotalHaber : number = 0;
-  public dec_Dif : number = 0;
-  public TC : number;
+  public dec_TotalDebe: number = 0;
+  public dec_TotalHaber: number = 0;
+  public dec_Dif: number = 0;
+  public TC: number;
 
   public overlaySettings: OverlaySettings = {};
 
 
 
 
-  constructor(private DIALOG: MatDialog, private GET_CATALOGO: getCuentaContable,  public cFunciones : Funciones) {
+  constructor(private DIALOG: MatDialog, public cFunciones: Funciones,
+    private GET: getAsientoContable) {
 
     this.val.add("cmbSerie", "1", "LEN>", "0", "Serie", "Seleccione una serie.");
     this.val.add("txtNoAsiento", "1", "LEN>", "0", "No Asiento", "No se ha configurado en número de asiento.");
-    this.val.add("cmbBodega", "1", "LEN>", "0", "Bodega", "Seleccione una bodega.");
+    this.val.add("txtBodega", "1", "LEN>", "0", "Bodega", "Seleccione una bodega.");
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
     this.val.add("txtReferencia", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.val.add("txtObservaciones", "1", "LEN>", "0", "Observaciones", "Ingrese una observacion.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("TxtTC", "1", "LEN>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
-    
-    
+
+
     this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "", "")
-      
-    
+
+
     this.v_Evento("Iniciar");
   }
 
@@ -76,18 +80,23 @@ export class AsientoContableComponent {
 
       case "Limpiar":
 
-      this.dec_TotalDebe = 0;
-      this.dec_TotalHaber = 0;
-      this.dec_Dif = 0;
+        this.dec_TotalDebe = 0;
+        this.dec_TotalHaber = 0;
+        this.dec_Dif = 0;
 
         this.val.Get("cmbSerie").setValue("");
         this.val.Get("txtNoAsiento").setValue("");
-        this.val.Get("cmbBodega").setValue("");
+        this.cmbBodega?.setSelectedItem([]);
         this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
         this.val.Get("txtReferencia").setValue("");
         this.val.Get("txtObservaciones").setValue("");
         this.val.Get("cmbMoneda").setValue("COR");
         this.val.Get("TxtTC").setValue(0);
+
+        this.val.Get("txtNoAsiento").disable();
+
+
+
         this.V_TasaCambios();
 
         this.V_Agregar();
@@ -97,13 +106,35 @@ export class AsientoContableComponent {
   }
 
 
+  @ViewChild("cmbSerie", { static: false })
+  public cmbSerie: IgxComboComponent;
+
+  public v_Select_Serie(event: any) {
+    if (event.added.length) {
+      event.newSelection = event.added;
+      this.val.Get("cmbSerie").setValue([event.added]);
+    }
+  }
+
+  public v_Enter_Serie(event: any) {
+    if (event.key == "Enter") {
+      let _Item: iBodega = this.cmbBodega.dropdown.focusedItem.value;
+      this.cmbBodega.setSelectedItem(_Item.Codigo);
+      this.val.Get("cmbSerie").setValue([_Item.Codigo]);
+
+    }
+  }
+
+
+
+
   @ViewChild("cmbBodega", { static: false })
   public cmbBodega: IgxComboComponent;
 
   public v_Select_Bodega(event: any) {
     if (event.added.length) {
       event.newSelection = event.added;
-      this.val.Get("txtBodega").setValue(event.added);
+      this.val.Get("txtBodega").setValue([event.added]);
     }
   }
 
@@ -119,16 +150,16 @@ export class AsientoContableComponent {
 
 
 
-   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
+  //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
-  public v_Select_Cuenta(event: any, det : iAsientoDetalle): void {
+  public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
 
     if (event.added.length) {
       event.newSelection = event.added;
 
-      let txtCuenta : IgxComboComponent = event.owner
+      let txtCuenta: IgxComboComponent = event.owner
 
-     
+
       let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
       det.Descripcion = i_Cuenta.NombreCuenta;
       det.Naturaleza = i_Cuenta.Naturaleza;
@@ -136,20 +167,20 @@ export class AsientoContableComponent {
       document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
 
-      if(i_Cuenta.Naturaleza == "D")  document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+      if (i_Cuenta.Naturaleza == "D") document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
 
-      if(i_Cuenta.Naturaleza == "C")  document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+      if (i_Cuenta.Naturaleza == "C") document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
 
     }
 
 
-    
+
   }
- 
-  public v_Enter_Cuenta(event: any, det : iAsientoDetalle) {
+
+  public v_Enter_Cuenta(event: any, det: iAsientoDetalle) {
 
     if (event.key == "Enter") {
-      let txtCuenta : any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
+      let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
 
       let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
       txtCuenta.setSelectedItem(_Item.CuentaContable);
@@ -165,7 +196,7 @@ export class AsientoContableComponent {
 
 
   public V_FocusOut(det: iAsientoDetalle): void {
-    
+
 
     det.Debito = this.cFunciones.NumFormat(Number(det.Debito.replaceAll(",", "")), "2");
     det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
@@ -176,43 +207,39 @@ export class AsientoContableComponent {
 
   }
 
-  public V_Focus(columna : string, det : iAsientoDetalle)
-  {
+  public V_Focus(columna: string, det: iAsientoDetalle) {
 
-    if(columna != "NuevaFila")
-    {
-      if(columna != "Debito/Credito")
-      {
-        document?.getElementById("txt" +columna + det.NoLinea)?.focus();
+    if (columna != "NuevaFila") {
+      if (columna != "Debito/Credito") {
+        document?.getElementById("txt" + columna + det.NoLinea)?.focus();
       }
-      else{
-        if(det.Naturaleza == "D") document?.getElementById("txtDebito" + det.NoLinea)?.focus();
-        if(det.Naturaleza == "C") document?.getElementById("txtCredito" + det.NoLinea)?.focus();
-  
+      else {
+        if (det.Naturaleza == "D") document?.getElementById("txtDebito" + det.NoLinea)?.focus();
+        if (det.Naturaleza == "C") document?.getElementById("txtCredito" + det.NoLinea)?.focus();
+
       }
-     
+
     }
-    else
-    {
-     
-      let i : number = 1;
+    else {
+
+      let i: number = 1;
 
       if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea))
 
-      if(det.NoLinea != i) return;
+      if (det.NoLinea != i) return;
 
       this.V_Agregar();
     }
-    
+
   }
 
 
- //██████████████████████████████████████████POPUP██████████████████████████████████████████████████████
+  //██████████████████████████████████████████POPUP██████████████████████████████████████████████████████
 
   @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
-  public V_Popup(event: MouseEvent, item: iAsientoDetalle): void{
+  public V_Popup(event: MouseEvent, item: iAsientoDetalle): void {
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
@@ -224,8 +251,8 @@ export class AsientoContableComponent {
 
   V_Agregar() {
 
-    let det : iAsientoDetalle = {} as iAsientoDetalle;
-    let i : number = 1;
+    let det: iAsientoDetalle = {} as iAsientoDetalle;
+    let i: number = 1;
 
     if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
 
@@ -246,52 +273,51 @@ export class AsientoContableComponent {
 
     this.V_Ordenar(i);
 
-   
-   
+
+
   }
 
   V_Eliminar(item: iAsientoDetalle) {
     let i = this.lstDetalle.data.findIndex(f => f.NoLinea == item.NoLinea);
 
-    if(i == -1) return;
+    if (i == -1) return;
 
     this.lstDetalle.data.splice(i, 1);
-   this.V_Ordenar(-1);
+    this.V_Ordenar(-1);
 
-   this.valTabla.del("txtCuenta" + item.NoLinea);
+    this.valTabla.del("txtCuenta" + item.NoLinea);
 
 
   }
 
-  private V_Ordenar(x : number)
-  {
+  private V_Ordenar(x: number) {
 
-    this.lstDetalle.data = this.lstDetalle.data.sort((a,b) => b.NoLinea - a.NoLinea);
+    this.lstDetalle.data = this.lstDetalle.data.sort((a, b) => b.NoLinea - a.NoLinea);
 
     this.lstDetalle.data = [...this.lstDetalle.data];
 
     this.V_Calcular();
 
-    if(x == -1) return;
+    if (x == -1) return;
 
 
 
 
-    setTimeout(()=>{ 
+    setTimeout(() => {
       document?.getElementById("txtCuenta" + x)?.focus();
       document.getElementById("txtDescripcion" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 
-      let txtCuenta : any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
-      if(x > 1)txtCuenta.open();
+      let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+      if (x > 1) txtCuenta.open();
 
-      
+
 
 
     }, 250);
-   
- 
+
+
   }
 
 
@@ -314,7 +340,8 @@ export class AsientoContableComponent {
 
 
 
-    this.GET_CATALOGO.Datos().subscribe(
+
+    this.GET.Datos().subscribe(
       {
         next: (data) => {
 
@@ -323,13 +350,22 @@ export class AsientoContableComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            this.DIALOG.open(DialogErrorComponent, {
-              data: _json["msj"].Mensaje,
-            });
+            if (this.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
           } else {
 
-            let datos : iDatos[] = _json["d"];
-            this.lstCuenta = datos.find(f => f.Nombre == "CUENTAS")?.d.filter((f : any) => f.ClaseCuenta == "D");
+            let datos: iDatos[] = _json["d"];
+            this.lstBodega = datos[0].d;
+            this.lstCuenta = datos[1].d.filter((f: any) => f.ClaseCuenta == "D");
+
+            if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
+
+            this.V_TasaCambios();
+
 
           }
 
@@ -340,9 +376,13 @@ export class AsientoContableComponent {
           document.getElementById("btnRefrescar-Asiento")?.removeAttribute("disabled");
           dialogRef.close();
 
-          this.DIALOG.open(DialogErrorComponent, {
-            data: "<b class='error'>" + err.message + "</b>",
-          });
+
+          if (this.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
 
         },
         complete: () => { document.getElementById("btnRefrescar-Asiento")?.removeAttribute("disabled"); }
@@ -353,9 +393,9 @@ export class AsientoContableComponent {
   }
 
 
-  public V_TasaCambios(): void{
+  public V_TasaCambios(): void {
 
-    if(this.val.Get("txtFecha").value == undefined) return;
+    if (this.val.Get("txtFecha").value == undefined) return;
 
 
     this.cFunciones.GET.TC(this.val.Get("txtFecha").value).subscribe(
@@ -365,15 +405,99 @@ export class AsientoContableComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            this.DIALOG.open(DialogErrorComponent, {
-              data: _json["msj"].Mensaje,
-            });
+            if (this.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
           } else {
 
-            let datos : iDatos = _json["d"];
+            let datos: iDatos = _json["d"];
             this.TC = Number(datos.d);
             this.val.Get("TxtTC").setValue(this.TC);
             this.V_Calcular();
+          }
+
+        },
+        error: (err) => {
+
+          if (this.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+      }
+    );
+  }
+
+  public v_Serie(): void {
+
+    if (this.cmbBodega.selection.length == 0) return;
+
+
+    this.cFunciones.GET.Serie(this.val.Get("txtBodega").value, "Contabilidad").subscribe(
+      {
+        next: (data) => {
+
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos = _json["d"];
+            this.lstSerie = datos.d;
+
+          }
+
+        },
+        error: (err) => {
+
+          if (this.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+      }
+    );
+  }
+
+  public v_Consecutivo(): void {
+
+    if (this.cmbBodega.selection.length == 0) return;
+
+
+    this.cFunciones.GET.Serie(this.val.Get("txtBodega").value, "Contabilidad").subscribe(
+      {
+        next: (data) => {
+
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos = _json["d"];
+            this.val.Get("txtNoAsiento").setValue(datos.d);
+
+
           }
 
         },
@@ -388,7 +512,8 @@ export class AsientoContableComponent {
     );
   }
 
-  public v_Guardar() : void{
+
+  public v_Guardar(): void {
 
     this.val.EsValido();
 
@@ -401,40 +526,39 @@ export class AsientoContableComponent {
       return;
     }
 
-   
 
- 
+
+
 
 
   }
 
 
-  public V_Calcular() : void{
+  public V_Calcular(): void {
 
     this.dec_TotalDebe = 0;
     this.dec_TotalHaber = 0;
     this.dec_Dif = 0;
 
-    this.lstDetalle.data.forEach(f =>{
+    this.lstDetalle.data.forEach(f => {
 
       let Debe = Number(f.Debito.replaceAll(",", ""));
       let Haber = Number(f.Credito.replaceAll(",", ""));
 
-      if(this.val.Get("cmbMoneda").value == "COR")
-      {
+      if (this.val.Get("cmbMoneda").value == "COR") {
         f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
-        f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML / this.TC, "2"); 
+        f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML / this.TC, "2");
 
         f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
-        f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML / this.TC, "2"); 
+        f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML / this.TC, "2");
 
       }
-      else{
+      else {
         f.DebitoMS = this.cFunciones.Redondeo(Debe, "2");
-        f.DebitoML = this.cFunciones.Redondeo(f.DebitoMS * this.TC, "2"); 
+        f.DebitoML = this.cFunciones.Redondeo(f.DebitoMS * this.TC, "2");
 
         f.CreditoMS = this.cFunciones.Redondeo(Haber, "2");
-        f.CreditoML = this.cFunciones.Redondeo(f.CreditoMS * this.TC, "2"); 
+        f.CreditoML = this.cFunciones.Redondeo(f.CreditoMS * this.TC, "2");
 
       }
 
@@ -442,7 +566,7 @@ export class AsientoContableComponent {
       this.dec_TotalHaber += Haber;
     });
 
-    this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2"); 
+    this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2");
 
   }
 
@@ -452,15 +576,16 @@ export class AsientoContableComponent {
 
     this.overlaySettings = {};
 
-    if(window.innerWidth <= 992)
-    {
-      this.overlaySettings = {positionStrategy: new GlobalPositionStrategy({ openAnimation: scaleInCenter  , closeAnimation: scaleOutCenter }),
-      modal: true,
-      closeOnOutsideClick: true};
+    if (window.innerWidth <= 992) {
+      this.overlaySettings = {
+        positionStrategy: new GlobalPositionStrategy({ openAnimation: scaleInCenter, closeAnimation: scaleOutCenter }),
+        modal: true,
+        closeOnOutsideClick: true
+      };
     }
-    
+
   }
 
-  
+
 }
 

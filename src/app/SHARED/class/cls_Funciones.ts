@@ -1,6 +1,7 @@
 import { DatePipe, formatNumber } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { getServidor } from '../GET/get-servidor';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,7 @@ export class Funciones {
   public TC : number = 0;
 
 
-  constructor(public GET: getServidor) {
+  constructor(public GET: getServidor, public DIALOG: MatDialog) {
 
   }
 

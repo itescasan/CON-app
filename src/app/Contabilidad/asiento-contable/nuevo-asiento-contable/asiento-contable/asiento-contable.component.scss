@@ -2,7 +2,7 @@
 
 
 .contenedor-asiento{
-    margin-bottom: 200px;
+    margin-bottom: 250px;
 }
 
 
@@ -82,6 +82,7 @@
 
 .contenedor-pie {
     position: relative;
+    
 }
 
 .pie-asiento {
@@ -89,9 +90,10 @@
     bottom: 0;
     left: 0;
     width: 100vw;
-    z-index: 1;
+    z-index: 2;
     background-color: var(--escan-fondo);
     padding: 10px;
+ 
 
     .totales {
 
@@ -118,7 +120,7 @@
         }
 
         .valores.dif{
-            background-color: var(--escan-secundario);
+            background-color: var(--escan-primario);
         }
 
         .etiqueta,
@@ -168,14 +170,36 @@
             position: flex;
             right: 0;
             bottom: 0;
-
-
-
-
-
-
         }
 
+        .botones-edicion{
+            margin-top: 5px;
+            button:last-child{
+                margin-left: 20px;
+            }
+        }
+
+        
+
+        @include Tamano_Menor(lg) {
+
+
+            div {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+    
+
+            div:first-child{
+
+                button{
+                    width: 100%;
+                }
+               
+            }
+        
+        }
 
 
     }
