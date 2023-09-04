@@ -1,12 +1,11 @@
 import { iPeriodo } from "./i-Periodo";
 
 export interface iEjercicioFiscal{
-    IdEjercicio : number;
-    CuentaContable: string;
+    IdEjercicio : number;    
     Nombre: string;
     FechaInicio: Date;
     FechaFinal: Date;
-    ClasePeriodo: string,
+    ClasePeriodos: string,
     NumerosPeriodos: number;
     Estado: string;
     CuentaContableAcumulada : string;

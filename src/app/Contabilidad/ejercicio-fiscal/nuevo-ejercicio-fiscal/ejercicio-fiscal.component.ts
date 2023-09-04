@@ -174,7 +174,7 @@ export class EjercicioFiscalComponent {
       Fila.Estado = this.val.Get("chkBloqueadaEF").value;
       Fila.FechaInicio = new Date(this.val.Get("idFechaIni").value, 1, 1);
       Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
-      Fila.ClasePeriodo = "Mensuales";
+      Fila.ClasePeriodos = "Mensuales";
       Fila.NumerosPeriodos = 12;
       Fila.Estado = "Abierto";
       Fila.CuentaContableAcumulada = this.val.Get("txtCuentaA").value;
@@ -289,7 +289,7 @@ export class EjercicioFiscalComponent {
       periodo.FechaInicio = new Date(Fecha);
       periodo.FechaFinal = new Date(FechaFin);
       periodo.Estado = 'Bloqueado';
-      periodo.FechaReg = new Date()
+      periodo.FechaReg = new Date();      
 
       this.lstPeriodo.data.push(periodo); 
      

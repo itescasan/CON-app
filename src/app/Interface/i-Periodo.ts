@@ -7,5 +7,5 @@ export interface iPeriodo{
     FechaInicio: Date;
     FechaFinal: Date;
     Estado: string;
-    FechaReg : Date;
+    FechaReg : Date;    
     }
