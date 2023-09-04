@@ -27,6 +27,10 @@ export class getServidor{
    public Login(user: string, pass : string) : Observable<any>{
     return this.http.get<any>(this._Cnx.Url() + "Sistema/Login?user=" + user + "&pass=" + pass);
  }
+
+ public TC(f : Date) : Observable<any>{
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/TC?f="+ f);
+}
   
  
 

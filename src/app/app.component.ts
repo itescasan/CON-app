@@ -8,7 +8,7 @@ import { LoginService } from './SHARED/service/login.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Global Vet';
+  title = 'Escasan';
 
   public constructor(private _SrvLogin: LoginService){
     this._SrvLogin.isLogin();

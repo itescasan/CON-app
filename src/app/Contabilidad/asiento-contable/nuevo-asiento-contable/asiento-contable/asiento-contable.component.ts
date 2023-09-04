@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatTableDataSource } from '@angular/material/table';
+import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings, scaleInCenter, scaleOutCenter } from 'igniteui-angular';
 import { Observable, map, startWith } from 'rxjs';
 import { getCuentaContable } from 'src/app/Contabilidad/catalogo-cuenta/CRUD/GET/get-CatalogoCuenta';
 import { iAsientoDetalle } from 'src/app/Interface/i-Asiento-Detalle';
@@ -31,7 +32,11 @@ export class AsientoContableComponent {
   public esModal: boolean = false;
   public dec_TotalDebe : number = 0;
   public dec_TotalHaber : number = 0;
+  public dec_Dif : number = 0;
   public TC : number;
+
+  public overlaySettings: OverlaySettings = {};
+
 
 
 
@@ -68,6 +73,7 @@ export class AsientoContableComponent {
 
       this.dec_TotalDebe = 0;
       this.dec_TotalHaber = 0;
+      this.dec_Dif = 0;
 
         this.val.Get("cmbSerie").setValue("");
         this.val.Get("txtNoAsiento").setValue("");
@@ -76,9 +82,9 @@ export class AsientoContableComponent {
         this.val.Get("txtReferencia").setValue("");
         this.val.Get("txtObservaciones").setValue("");
         this.val.Get("cmbMoneda").setValue("COR");
-        this.val.Get("TxtTC").setValue(this.cFunciones.TC);
+        this.val.Get("TxtTC").setValue(0);
+        this.V_TasaCambios();
 
-        let NuevaLinea : iAsientoDetalle = {} as iAsientoDetalle;
         this.V_Agregar();
 
         break;
@@ -88,20 +94,50 @@ export class AsientoContableComponent {
 
    //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
-
   public v_Select_Cuenta(event: any, det : iAsientoDetalle): void {
 
-    let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.option.value)!;
-    det.Descripcion = i_Cuenta.NombreCuenta;
-    det.Naturaleza = i_Cuenta.Naturaleza;
+    if (event.added.length) {
+      event.newSelection = event.added;
 
-    document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-    document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+      let txtCuenta : IgxComboComponent = event.owner
 
-    if(i_Cuenta.Naturaleza == "D")  document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+     
+      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
+      det.Descripcion = i_Cuenta.NombreCuenta;
+      det.Naturaleza = i_Cuenta.Naturaleza;
 
-    if(i_Cuenta.Naturaleza == "C")  document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+      document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+
+      if(i_Cuenta.Naturaleza == "D")  document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+
+      if(i_Cuenta.Naturaleza == "C")  document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+
+    }
+
+
+    
   }
+  @ViewChildren(IgxComboComponent)
+  public combos: QueryList<IgxComboComponent>;
+  
+  public v_Enter_Cuenta(event: any, det : iAsientoDetalle) {
+
+    if (event.key == "Enter") {
+      let txtCuenta : any = this.combos.find(f => f.id == "txtCuenta" + det.NoLinea);
+
+      let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
+      txtCuenta.setSelectedItem(_Item.CuentaContable);
+      this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
+      det.Descripcion = _Item.NombreCuenta;
+      det.Naturaleza = _Item.Naturaleza;
+
+      txtCuenta.close();
+      this.V_Focus("Referencia", det);
+    }
+
+  }
+
 
   public V_FocusOut(det: iAsientoDetalle): void {
     
@@ -222,20 +258,13 @@ export class AsientoContableComponent {
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 
-      
-      //FILTRO CUENTAS
-      this.filteredCuenta = this.valTabla.Get("txtCuenta" + x).valueChanges.pipe(
-        startWith(""),
-        map((value: string) => {
-          return this.lstCuenta.filter((option) =>
-            option.Filtro.toLowerCase().includes(
-              (value || "").toLowerCase().trimStart()
-            )
-          );
-        })
-      );
+      let txtCuenta : any = this.combos.find(f => f.id == "txtCuenta" + x);
+      txtCuenta.open();
 
-    }, 0);
+      
+
+
+    }, 250);
    
  
   }
@@ -299,6 +328,41 @@ export class AsientoContableComponent {
   }
 
 
+  public V_TasaCambios(): void{
+
+    if(this.val.Get("txtFecha").value == undefined) return;
+
+
+    this.cFunciones.GET.TC(this.val.Get("txtFecha").value).subscribe(
+      {
+        next: (data) => {
+
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            this.DIALOG.open(DialogErrorComponent, {
+              data: _json["msj"].Mensaje,
+            });
+          } else {
+
+            let datos : iDatos = _json["d"];
+            this.TC = Number(datos.d);
+            this.val.Get("TxtTC").setValue(this.TC);
+            this.V_Calcular();
+          }
+
+        },
+        error: (err) => {
+
+          this.DIALOG.open(DialogErrorComponent, {
+            data: "<b class='error'>" + err.message + "</b>",
+          });
+
+        },
+      }
+    );
+  }
+
   public v_Guardar() : void{
 
     this.val.EsValido();
@@ -324,6 +388,7 @@ export class AsientoContableComponent {
 
     this.dec_TotalDebe = 0;
     this.dec_TotalHaber = 0;
+    this.dec_Dif = 0;
 
     this.lstDetalle.data.forEach(f =>{
 
@@ -350,8 +415,9 @@ export class AsientoContableComponent {
 
       this.dec_TotalDebe += Debe;
       this.dec_TotalHaber += Haber;
-
     });
+
+    this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2"); 
 
   }
 
@@ -359,6 +425,15 @@ export class AsientoContableComponent {
   ngOnInit(): void {
 
 
+    this.overlaySettings = {};
+
+    if(window.innerWidth <= 992)
+    {
+      this.overlaySettings = {positionStrategy: new GlobalPositionStrategy({ openAnimation: scaleInCenter  , closeAnimation: scaleOutCenter }),
+      modal: true,
+      closeOnOutsideClick: true};
+    }
+    
   }
 
   

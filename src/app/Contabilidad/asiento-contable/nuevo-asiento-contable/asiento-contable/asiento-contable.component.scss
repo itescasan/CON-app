@@ -2,7 +2,7 @@
 
 
 .contenedor-asiento{
-    margin-bottom: 150px;
+    margin-bottom: 200px;
 }
 
 
@@ -100,10 +100,14 @@
 
 
         .debito {
-            width: 80%;
+            width: 60%;
         }
 
         .credito {
+            width: 20%;
+        }
+
+        .diferencia {
             width: 20%;
         }
 
@@ -111,6 +115,10 @@
         .valores {
             background-color: var(--escan-opcional);
             color: var(--escan-fondo);
+        }
+
+        .valores.dif{
+            background-color: var(--escan-secundario);
         }
 
         .etiqueta,

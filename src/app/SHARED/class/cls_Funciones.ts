@@ -1,5 +1,6 @@
 import { DatePipe, formatNumber } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { getServidor } from '../GET/get-servidor';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,10 @@ export class Funciones {
   public Rol : string = "";
   public TC : number = 0;
 
+
+  constructor(public GET: getServidor) {
+
+  }
 
 
 
