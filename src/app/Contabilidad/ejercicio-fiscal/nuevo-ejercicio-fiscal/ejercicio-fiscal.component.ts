@@ -290,7 +290,7 @@ export class EjercicioFiscalComponent {
       periodo.FechaFinal = new Date(FechaFin);
       periodo.Estado = 'Bloqueado';
       periodo.FechaReg = new Date();      
-
+      periodo.
       this.lstPeriodo.data.push(periodo); 
      
     }
