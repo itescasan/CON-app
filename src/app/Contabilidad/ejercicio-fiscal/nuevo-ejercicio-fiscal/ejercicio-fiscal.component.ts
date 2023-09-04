@@ -58,7 +58,7 @@ export class EjercicioFiscalComponent {
 
 
   
-  constructor(private DIALOG: MatDialog, private GET: getCuentaContable, private POST: postEjercicioFiscal ,private cFunciones : Funciones )
+  constructor(private GET: getCuentaContable, private POST: postEjercicioFiscal ,private cFunciones : Funciones )
   {
     this.val.add("idEjercicioFiscal", "1", "LEN>", "0", "Ejercio_Fiscal", "Ingrese un número de cuenta.");
     this.val.add("idFechaIni", "1", "LEN>", "0", "Fecha", "Seleccione fecha inicial.");    
@@ -98,7 +98,7 @@ export class EjercicioFiscalComponent {
 
     document.getElementById("btnRefrescar-Cuenta")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+    let dialogRef: MatDialogRef<WaitComponent> =  this.cFunciones.DIALOG.open(
       WaitComponent,
       {
         panelClass: "escasan-dialog-full-blur",
@@ -115,9 +115,12 @@ export class EjercicioFiscalComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            this.DIALOG.open(DialogErrorComponent, {
-              data: _json["msj"].Mensaje,
-            });
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
           } else {
 
             this.iDatos = _json["d"];
@@ -135,7 +138,7 @@ export class EjercicioFiscalComponent {
           document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled");
           dialogRef.close();
 
-          this.DIALOG.open(DialogErrorComponent, {
+          this.cFunciones.DIALOG.open(DialogErrorComponent, {
             data: "<b class='error'>" + err.message + "</b>",
           });
 
@@ -152,14 +155,14 @@ export class EjercicioFiscalComponent {
 
 
     if (this.val.Errores != "") {
-      this.DIALOG.open(DialogErrorComponent, {
+       this.cFunciones.DIALOG.open(DialogErrorComponent, {
         data: this.val.Errores,
       });
 
       return;
       }
 
-      let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+      let dialogRef: MatDialogRef<WaitComponent> =  this.cFunciones.DIALOG.open(
         WaitComponent,
         {
           panelClass: "escasan-dialog-full-blur",
@@ -196,9 +199,12 @@ export class EjercicioFiscalComponent {
             let _json : any = data;
     
             if (_json["esError"] == 1) {
-              this.DIALOG.open(DialogErrorComponent, {
-                data: _json["msj"].Mensaje,
-              });
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  id: "error-servidor-msj",
+                  data: _json["msj"].Mensaje,
+                });
+              }
             } 
             else {
     
@@ -206,7 +212,7 @@ export class EjercicioFiscalComponent {
               let Datos: iDatos[] = _json["d"];
               let msj: string = Datos[0].d;
     
-              this.DIALOG.open(DialogErrorComponent, {
+               this.cFunciones.DIALOG.open(DialogErrorComponent, {
                 data: "<p><b class='bold'>" + msj + "</b></p>"
               });
     
@@ -220,7 +226,7 @@ export class EjercicioFiscalComponent {
             dialogRef.close();
         
             document.getElementById("btnGuardarEjercicioF")?.removeAttribute("disabled");
-            this.DIALOG.open(DialogErrorComponent, {
+             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               data: "<b class='error'>" + err.message + "</b>",
             });
           },
@@ -242,7 +248,7 @@ export class EjercicioFiscalComponent {
   }
 
   public E_ditar(det: iPeriodo) {
-    let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.DIALOG.open(
+    let dialogRef: MatDialogRef<DialogoConfirmarComponent> =  this.cFunciones.DIALOG.open(
       DialogoConfirmarComponent,
       {
         disableClose: true
