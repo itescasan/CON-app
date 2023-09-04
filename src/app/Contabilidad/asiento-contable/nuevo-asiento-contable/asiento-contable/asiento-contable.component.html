@@ -69,7 +69,7 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-calendar"></i></span>
                             <div class="form-floating">
-                                <input type="date" id="txtFecha" class="form-control" placeholder="Vence"
+                                <input type="date" id="txtFecha" class="form-control" placeholder="Fecha"
                                     aria-label="Fecha" formControlName="txtFecha" (change)="V_TasaCambios();">
                                 <label for="txtFecha">Fecha</label>
 
@@ -92,7 +92,7 @@
                                 <div class="input-group">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Referencia"
-                                            id="txtReferencia" formControlName="txtReferencia">
+                                            id="txtReferencia" formControlName="txtReferencia" >
                                         <label for="txtReferencia">Referencia</label>
                                     </div>
 
@@ -120,7 +120,7 @@
                                     <div class="col-12 col-md-12 col-lg-6 mb-1">
                                         <div class="input-group">
                                             <div class="form-floating">
-                                                <input type="text" class="form-control" placeholder="TC" id="TxtTC"
+                                                <input type="text" class="form-control" placeholder="TC" id="TxtTC" 
                                                     formControlName="TxtTC">
                                                 <label for="TxtTC">TC</label>
                                             </div>
@@ -242,7 +242,7 @@
                             </div>
                             <div class="row">
                                 <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}"
-                                    [(ngModel)]="det.Referencia" (keydown.Enter)="V_Focus('Debito/Credito', det);"
+                                    [(ngModel)]="det.Referencia"  (keydown.Enter)="V_Focus('Debito/Credito', det);"
                                     autocomplete="off">
 
                             </div>

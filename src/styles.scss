@@ -532,3 +532,17 @@ button:active {
     font-weight: bold;
     color: black;
 }
+
+
+textarea:before,
+.error-validacion:before{
+    content: '';
+    display: block;
+    background: url("../src/assets/images/error-icon.png") no-repeat;
+    width: 16px;
+    height: 16px;
+    float: left;
+    margin: 0 6px 0 0;
+    z-index: 99;
+}
+
