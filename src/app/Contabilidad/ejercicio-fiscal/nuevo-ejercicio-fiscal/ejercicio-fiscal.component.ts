@@ -86,6 +86,7 @@ export class EjercicioFiscalComponent {
         this.val.Get("txtCuentaP").setValue("");
         this.val.Get("txtCuentaPr").setValue("");
         this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
+        this.lstPeriodo = new MatTableDataSource<iPeriodo> ;
         
         this.val.Get("idFechaIni").setValue(this.cFunciones.FechaServer.getFullYear());
       break;
@@ -188,10 +189,12 @@ export class EjercicioFiscalComponent {
       Fila.ClasePeriodos = "Mensuales";
       Fila.NumerosPeriodos = 12;
       Fila.Estado = "Abierto";
-     
-      Fila.CuentaContableAcumulada = this.val.Get("txtCuentaA").value;
-      Fila.CuentaPerdidaGanancia = this.val.Get("txtCuentaP").value;
-      Fila.CuentaContablePeriodo = this.val.Get("txtCuentaPr").value;
+      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaA").value)!;
+      Fila.CuentaContableAcumulada = i_Cuenta.CuentaContable;
+      let i_Cuenta2: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaP").value)!;
+      Fila.CuentaPerdidaGanancia = i_Cuenta2.CuentaContable;
+      let i_Cuenta3: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaPr").value)!;
+      Fila.CuentaContablePeriodo = i_Cuenta3.CuentaContable;
       Fila.FechaReg = new Date();
       Fila.UsuarioReg = this.cFunciones.User;
       // Detalle Ejercicio Fiscal (Periodos)
