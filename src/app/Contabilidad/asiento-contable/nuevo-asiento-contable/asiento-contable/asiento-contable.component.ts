@@ -61,8 +61,6 @@ export class AsientoContableComponent {
     this.val.add("TxtTC", "1", "LEN>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
 
 
-    this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "", "")
-
 
     this.v_Evento("Iniciar");
   }
@@ -260,7 +258,7 @@ export class AsientoContableComponent {
 
     if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
 
-    this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "", "")
+    this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta");
 
     det.NoLinea = i;
     det.CuentaContable = "";
@@ -523,6 +521,7 @@ export class AsientoContableComponent {
   public v_Guardar(): void {
 
     this.val.EsValido();
+    this.valTabla.EsValido();
 
 
     if (this.val.Errores != "") {
@@ -532,6 +531,17 @@ export class AsientoContableComponent {
 
       return;
     }
+
+
+    
+    if (this.valTabla.Errores != "") {
+      this.DIALOG.open(DialogErrorComponent, {
+        data: this.valTabla.Errores,
+      });
+
+      return;
+    }
+
 
 
 
