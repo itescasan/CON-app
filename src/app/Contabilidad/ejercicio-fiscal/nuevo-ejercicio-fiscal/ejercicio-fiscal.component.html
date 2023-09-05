@@ -35,9 +35,9 @@
                     <div class="col-12 col-md-12 col-lg-6 mb-1">
                         <div  class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-calendar-days fa-beat-fade fa-lg"></i></span>
-                            <div class="form-floating">                               
+                            <div class="form-floating"> 
                                 <input type="text"  mask="0000"  class="form-control" id="idFechaIni" 
-                                formControlName="idFechaIni" placeholder="Fecha Inicio Ejercicio Fiscal" min="2020" max="2030">
+                                formControlName="idFechaIni" (keyup)="fill_Table()" placeholder="Fecha Inicio Ejercicio Fiscal" min="2020" max="2030">
                                 <label for="idFechaIni">Fecha Inicio</label>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                                             <input type="text" class="form-control" placeholder="Cuenta"
                                                 id="txtCuentaP" formControlName="txtCuentaP"
                                                 [matAutocomplete]="cmbPadre2">
-                                            <label for="txtCuentaP">Cuenta Perdida</label>
+                                            <label for="txtCuentaP">Utilidad Perdida</label>
                                         </div>
                                                                          
                                         <mat-autocomplete autoActiveFirstOption #cmbPadre2="matAutocomplete"
@@ -106,7 +106,7 @@
                                             <input type="text" class="form-control" placeholder="Cuenta"
                                                 id="txtCuentaPr" formControlName="txtCuentaPr"
                                                 [matAutocomplete]="cmbPadre3">
-                                            <label for="txtCuentaPr">Cuenta Periodo</label>
+                                            <label for="txtCuentaPr">Utilidad Periodo</label>
                                         </div>
                                                                          
                                         <mat-autocomplete autoActiveFirstOption #cmbPadre3="matAutocomplete"
@@ -120,13 +120,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="btn-contenedor d-grid gap-2 d-md-flex justify-content-md-end mb-3">                            
                             <span>
                                 <button type="button" class="btn btn-secundario" id="btnPeriodos" (click)="fill_Table()"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i> Ver Periodos</button>
                             </span>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="mat-elevation-z8  table-container">
@@ -193,7 +193,7 @@
 
                         <span>
                             <button type="button" class="btn btn-primario" id="btnGuardarEjercicioF" (click)="v_Guardar()"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
-                            <button type="button" class="btn btn-opcional" id="btnCancelarEjercicioF"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+                            <button type="button" class="btn btn-opcional" id="btnCancelarEjercicioF" (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
                         </span>   
                         
                     </div>

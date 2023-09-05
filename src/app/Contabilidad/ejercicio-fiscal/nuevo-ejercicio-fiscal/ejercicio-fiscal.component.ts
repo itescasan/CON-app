@@ -60,7 +60,7 @@ export class EjercicioFiscalComponent {
   
   constructor(private GET: getCuentaContable, private POST: postEjercicioFiscal ,private cFunciones : Funciones )
   {
-    this.val.add("idEjercicioFiscal", "1", "LEN>", "0", "Ejercio_Fiscal", "Ingrese un número de cuenta.");
+    this.val.add("idEjercicioFiscal", "1", "LEN>", "0", "Ejercio_Fiscal", "Ingrese Nombre Ejercicio Fiscal.");
     this.val.add("idFechaIni", "1", "LEN>", "0", "Fecha", "Seleccione fecha inicial.");    
     this.val.add("txtCuentaA", "1", "LEN>=", "0", "Cuenta Acumulada", "");    
     this.val.add("txtCuentaP", "1", "LEN>", "0", "Cuenta Perdida", "Seleccione una Cuenta.");
@@ -88,7 +88,7 @@ export class EjercicioFiscalComponent {
         this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
         this.lstPeriodo = new MatTableDataSource<iPeriodo> ;
         
-        this.val.Get("idFechaIni").setValue(this.cFunciones.FechaServer.getFullYear());
+        // this.val.Get("idFechaIni").setValue(this.cFunciones.FechaServer.getFullYear());
       break;
     }
   }
