@@ -177,6 +177,7 @@
             button:last-child{
                 margin-left: 20px;
             }
+
         }
 
         
@@ -209,3 +210,9 @@
 }
 
 
+
+
+.btn-contenedor-custom {
+    display: flex;
+    justify-content: flex-end;
+}

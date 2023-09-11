@@ -198,11 +198,11 @@
 
 
                                 <form autocomplete="off" [formGroup]="valTabla.ValForm">
-                                    <igx-combo [data]="lstCuenta" valueKey="CuentaContable" displayKey="NombreCuenta"
+                                    <igx-combo [data]="lstCuenta"  [(ngModel)]="det.CuentaContable" valueKey="CuentaContable" displayKey="NombreCuenta"
                                         id="txtCuenta{{det.NoLinea}}" formControlName="txtCuenta{{det.NoLinea}}"
                                         [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
                                         (selectionChanging)="v_Select_Cuenta($event, det)"
-                                        (keyup)="v_Enter_Cuenta($event, det);">
+                                        (keyup)="v_Enter_Cuenta($event, det);" >
 
                                     </igx-combo>
                                 </form>
@@ -242,9 +242,12 @@
                                 <div class="header-cell"><span>Referencia</span></div>
                             </div>
                             <div class="row">
-                                <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}"
-                                    [(ngModel)]="det.Referencia"  (keydown.Enter)="V_Focus('Debito/Credito', det);"
-                                    autocomplete="off">
+                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                    <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}"
+                                    formControlName="txtReferencia{{det.NoLinea}}"  [(ngModel)]="det.Referencia"   (keydown.Enter)="V_Focus('Debito/Credito', det);"
+                                        >
+                                </form>
+                               
 
                             </div>
 
@@ -341,7 +344,7 @@
             </div>
 
             <div class="botones-edicion">
-                <button type="button" class="btn btn-primario" id="btnGuardar-Asiento" (click)="v_Guardar();"><i
+                <button type="button"  class="btn btn-primario" id="btnGuardar-Asiento" (click)="v_Guardar();"><i
                         class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
                     Guardar</button>
 

@@ -22,8 +22,8 @@ export class postAsientoContable{
 
  
    GuardarAsiento(d : iAsiento) : Observable<string> { 
-    console.log(d)
-    return this.http.post<any>(this._Cnx.Url() + "Contabilidad/Asiento/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
+   
+    return this.http.post<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
 
 }
 

@@ -27,7 +27,7 @@ export class AsientoContableComponent {
   public val = new Validacion();
   public valTabla = new Validacion();
 
-  public FILA : iAsiento = {} as iAsiento;
+  private FILA: iAsiento = {} as iAsiento;
 
   @ViewChildren(IgxComboComponent)
   public cmbCuenta: QueryList<IgxComboComponent>;
@@ -81,6 +81,7 @@ export class AsientoContableComponent {
 
       case "Limpiar":
 
+        this.FILA.IdAsiento = -1;
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
         this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
@@ -99,6 +100,8 @@ export class AsientoContableComponent {
 
         this.val.Get("txtNoAsiento").disable();
         this.val.Get("TxtTC").disable();
+
+        if (this.lstBodega.length > 0) this.cmbBodega?.setSelectedItem(this.lstBodega[0].Codigo);
 
 
         this.V_TasaCambios();
@@ -166,7 +169,7 @@ export class AsientoContableComponent {
 
 
       let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
-      det.Descripcion = i_Cuenta.NombreCuenta;
+      det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
       det.Naturaleza = i_Cuenta.Naturaleza;
 
       document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
@@ -190,7 +193,7 @@ export class AsientoContableComponent {
       let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
       txtCuenta.setSelectedItem(_Item.CuentaContable);
       this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
-      det.Descripcion = _Item.NombreCuenta;
+      det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;
       det.Naturaleza = _Item.Naturaleza;
 
       txtCuenta.close();
@@ -261,8 +264,11 @@ export class AsientoContableComponent {
 
     if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
 
-    this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta");
+    this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+    this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
 
+    det.IdDetalleAsiento = -1;
+    det.IdAsiento = this.FILA.IdAsiento;
     det.NoLinea = i;
     det.CuentaContable = "";
     det.Debito = "0";
@@ -291,6 +297,7 @@ export class AsientoContableComponent {
     this.V_Ordenar(-1);
 
     this.valTabla.del("txtCuenta" + item.NoLinea);
+    this.valTabla.del("txtReferencia" + item.NoLinea);
 
 
   }
@@ -326,6 +333,52 @@ export class AsientoContableComponent {
   }
 
 
+  public v_Visualizar(f: iAsiento) {
+    this.FILA = f;
+    this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
+    this.cmbBodega.setSelectedItem(this.FILA.Bodega);
+    this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
+    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
+    this.val.Get("txtReferencia").setValue(this.FILA.Referencia);
+    this.val.Get("txtObservaciones").setValue(this.FILA.Concepto);
+    this.val.Get("cmbMoneda").setValue(this.FILA.IdMoneda);
+    this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
+    this.TC = this.FILA.TasaCambio;
+
+    this.val.Get("cmbSerie").disable();
+    this.val.Get("txtNoAsiento").disable();
+  
+
+    this.lstDetalle.data = JSON.parse(JSON.stringify(f.AsientosContablesDetalle));
+
+
+    let x: number = 1;
+    this.lstDetalle.data.forEach(f => {
+      this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+      this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+      x++;
+    });
+
+    setTimeout(() => {
+
+
+      x = 1;
+      this.lstDetalle.data.forEach(f => {
+        let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+        txtCuenta.setSelectedItem(f.CuentaContable);
+        //this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
+       // this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
+
+        x++;
+      });
+
+
+    }, 250);
+
+
+
+
+  }
 
 
   //██████████████████████████████████████████CARGAR DATOS██████████████████████████████████████████████████████
@@ -572,17 +625,33 @@ export class AsientoContableComponent {
 
   }
 
-  private V_POST(): void
-  {
-    this.FILA.IdSerie = this.val.Get("cmbSerie").value;
-    this.FILA.NoAsiento = this.val.Get("txtNoAsiento").value;
-    this.FILA.Bodega = this.val.Get("txtBodega").value;
-    this.FILA.Fecha =   this.val.Get("txtFecha").value;
+  private V_POST(): void {
+    this.FILA.IdSerie = this.val.Get("cmbSerie").value[0];
+    this.FILA.NoAsiento = this.val.Get("txtNoAsiento").value[0];
+    this.FILA.Bodega = this.val.Get("txtBodega").value[0];
+    this.FILA.Fecha = this.val.Get("txtFecha").value;
     this.FILA.Referencia = this.val.Get("txtReferencia").value;
     this.FILA.Concepto = this.val.Get("txtObservaciones").value;
     this.FILA.IdMoneda = this.val.Get("cmbMoneda").value;
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
-    this.FILA.AsientosContablesDetalle = this.lstDetalle.data;
+    this.FILA.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalle.data));
+    this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
+    this.FILA.TotalML = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+    this.FILA.TotalMS = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    this.FILA.UsuarioReg = this.cFunciones.User;
+    this.FILA.FechaReg = new Date();
+
+    this.FILA.AsientosContablesDetalle.forEach(f =>{
+      f.CuentaContable = f.CuentaContable[0];
+    });
+
+
+    if (!this.esModal) {
+      this.FILA.IdPeriodo = 0;
+      this.FILA.Estado = "Solicitado";
+      this.FILA.TipoAsiento = "ASIENTO BASE"
+
+    }
 
 
     let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
@@ -601,8 +670,8 @@ export class AsientoContableComponent {
         next: (data) => {
 
           dialogRef.close();
-          let _json : any = data;
-  
+          let _json: any = data;
+
           if (_json["esError"] == 1) {
             if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
               this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -610,29 +679,28 @@ export class AsientoContableComponent {
                 data: _json["msj"].Mensaje,
               });
             }
-          } 
+          }
           else {
-  
-  
+
+
             let Datos: iDatos[] = _json["d"];
             let msj: string = Datos[0].d;
-  
+
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               data: "<p><b class='bold'>" + msj + "</b></p>"
             });
-  
-  
-            if(!this.esModal)   this.v_Evento("Limpiar");
-  
+
+
+            if (!this.esModal) this.v_Evento("Limpiar");
+
           }
 
         },
         error: (err) => {
           dialogRef.close();
-      
+
           document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
-          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
-          {
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
@@ -658,8 +726,8 @@ export class AsientoContableComponent {
 
     this.lstDetalle.data.forEach(f => {
 
-      let Debe = Number(f.Debito.replaceAll(",", ""));
-      let Haber = Number(f.Credito.replaceAll(",", ""));
+      let Debe = Number(String(f.Debito).replaceAll(",", ""));
+      let Haber = Number(String(f.Credito).replaceAll(",", ""));
 
       if (this.val.Get("cmbMoneda").value == "COR") {
         f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
