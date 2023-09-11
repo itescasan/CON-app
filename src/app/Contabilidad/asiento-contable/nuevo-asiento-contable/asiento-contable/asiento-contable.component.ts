@@ -3,8 +3,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings, scaleInCenter, scaleOutCenter } from 'igniteui-angular';
-import { Observable, map, startWith } from 'rxjs';
-import { getCuentaContable } from 'src/app/Contabilidad/catalogo-cuenta/CRUD/GET/get-CatalogoCuenta';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
 import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
@@ -15,6 +13,9 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { getAsientoContable } from '../../CRUD/GET/get-Asiento-contable';
 import { iSerie } from 'src/app/Interface/Sistema/i-Serie';
+import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
+import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
+import { postAsientoContable } from '../../CRUD/POST/post-Asiento-contable';
 
 @Component({
   selector: 'app-asiento-contable',
@@ -25,6 +26,8 @@ export class AsientoContableComponent {
 
   public val = new Validacion();
   public valTabla = new Validacion();
+
+  public FILA : iAsiento = {} as iAsiento;
 
   @ViewChildren(IgxComboComponent)
   public cmbCuenta: QueryList<IgxComboComponent>;
@@ -49,7 +52,7 @@ export class AsientoContableComponent {
 
 
   constructor(private DIALOG: MatDialog, public cFunciones: Funciones,
-    private GET: getAsientoContable) {
+    private GET: getAsientoContable, private POST: postAsientoContable) {
 
     this.val.add("cmbSerie", "1", "LEN>", "0", "Serie", "Seleccione una serie.");
     this.val.add("txtNoAsiento", "1", "LEN>", "0", "No Asiento", "No se ha configurado en número de asiento.");
@@ -78,8 +81,8 @@ export class AsientoContableComponent {
 
       case "Limpiar":
 
-      this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
-      this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
+        this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+        this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
         this.dec_TotalDebe = 0;
         this.dec_TotalHaber = 0;
@@ -533,7 +536,7 @@ export class AsientoContableComponent {
     }
 
 
-    
+
     if (this.valTabla.Errores != "") {
       this.DIALOG.open(DialogErrorComponent, {
         data: this.valTabla.Errores,
@@ -542,9 +545,105 @@ export class AsientoContableComponent {
       return;
     }
 
+    if (this.dec_Dif != 0) {
+      let DilogConfirmar = this.DIALOG.open(DialogoConfirmarComponent, {});
+
+      DilogConfirmar.afterOpened().subscribe(s => {
+        DilogConfirmar.componentInstance.mensaje = "<span>Tiene una diferencia de: <b>" + this.cFunciones.NumFormat(this.dec_Dif, "2") + "</b><br>Desea Guardar el documento?</span>"
+        DilogConfirmar.componentInstance.textBoton1 = "Si";
+        DilogConfirmar.componentInstance.textBoton2 = "No";
+      });
 
 
+      DilogConfirmar.afterClosed().subscribe(s => {
 
+        if (DilogConfirmar.componentInstance.retorno == "1") {
+          this.V_POST();
+        }
+
+      });
+
+      return;
+
+    }
+
+
+    this.V_POST();
+
+  }
+
+  private V_POST(): void
+  {
+    this.FILA.IdSerie = this.val.Get("cmbSerie").value;
+    this.FILA.NoAsiento = this.val.Get("txtNoAsiento").value;
+    this.FILA.Bodega = this.val.Get("txtBodega").value;
+    this.FILA.Fecha =   this.val.Get("txtFecha").value;
+    this.FILA.Referencia = this.val.Get("txtReferencia").value;
+    this.FILA.Concepto = this.val.Get("txtObservaciones").value;
+    this.FILA.IdMoneda = this.val.Get("cmbMoneda").value;
+    this.FILA.TasaCambio = this.val.Get("TxtTC").value;
+    this.FILA.AsientosContablesDetalle = this.lstDetalle.data;
+
+
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+      }
+    );
+
+    document.getElementById("btnGuardar-Asiento")?.setAttribute("disabled", "disabled");
+
+
+    this.POST.GuardarAsiento(this.FILA).subscribe(
+      {
+        next: (data) => {
+
+          dialogRef.close();
+          let _json : any = data;
+  
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } 
+          else {
+  
+  
+            let Datos: iDatos[] = _json["d"];
+            let msj: string = Datos[0].d;
+  
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              data: "<p><b class='bold'>" + msj + "</b></p>"
+            });
+  
+  
+            if(!this.esModal)   this.v_Evento("Limpiar");
+  
+          }
+
+        },
+        error: (err) => {
+          dialogRef.close();
+      
+          document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
+          {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+        },
+        complete: () => {
+          document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
+        }
+      }
+    );
 
 
 
