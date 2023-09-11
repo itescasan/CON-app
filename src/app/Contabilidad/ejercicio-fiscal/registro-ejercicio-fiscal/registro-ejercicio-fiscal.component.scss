@@ -1,0 +1,107 @@
+@import "/src/assets/scss/media.scss";
+
+.contenedor-tabla{
+    margin-bottom: 50px;
+    min-width: 100%;
+}
+
+
+.table-container {
+    width: fit-content;
+    position: relative;
+
+  }
+
+
+.contenedor-filtro{
+    position: fixed;
+    top: 0;
+    right: 0;
+    text-align: center;
+    z-index: 1;
+    background-color: var(--escan-fondo);
+   
+   p{
+   
+    font-weight: bold;
+    font-size: 1.5em;
+   }
+}
+
+table{
+    margin-top: 75px;
+}
+
+table, .tabla-layout{
+    table-layout: fixed;
+    width: 100%
+}
+
+.mat-paginator-sticky {
+    bottom: 0px;
+    position: sticky;
+    z-index: 10;
+  }
+  
+tr
+{
+
+    background-color: var(--escan-fondo);
+
+    td:first-child{
+
+        span{
+            display: block;
+        }
+        
+        span:last-child{
+            margin-left: 30px;
+        }
+    
+    }
+    
+    b{
+        margin-right: 5px;
+    }
+
+    td:not(:first-child){
+
+        @include Tamano_Menor(lg) {
+            span{
+                display: block;
+            }
+            span:last-child{
+                margin-left: 15px;
+            }
+          }
+
+    }
+}
+
+
+tr:hover,
+td:hover{
+    background-color: rgba(86, 164, 59, 0.30);
+    font-weight: bold;
+}
+
+
+.bottom-secundario{
+    border-style:dashed;
+}
+
+
+.contenedor-edicion{
+    display: flex;
+    justify-content: right;
+}
+
+
+.dashed{
+    border-style: dashed;
+}
+
+
+.abierto{
+    color: var(--escan-primario);
+}

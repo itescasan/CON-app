@@ -13,7 +13,7 @@ import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { getCuentaContable } from '../CRUD/GET/get-CatalogoCuenta';
 import { Observable, catchError, map, startWith, tap } from 'rxjs';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
-import { month } from '@igniteui/material-icons-extended';
+import { check, month } from '@igniteui/material-icons-extended';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {formatDate} from '@angular/common';
@@ -41,6 +41,7 @@ export class EjercicioFiscalComponent {
   lstCuenta: iCuenta[] = [];
   
   public esModal: boolean = false;
+  public Fila : iEjercicioFiscal = {} as iEjercicioFiscal;
 
    
   // public Mascara: string = "";
@@ -85,11 +86,15 @@ export class EjercicioFiscalComponent {
         this.val.Get("txtCuentaA").setValue("");
         this.val.Get("txtCuentaP").setValue("");
         this.val.Get("txtCuentaPr").setValue("");
+        this.val.Get("chkBloqueadaEF").setValue(true);
+
         this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
         this.lstPeriodo = new MatTableDataSource<iPeriodo> ;
         
-        // this.val.Get("idFechaIni").setValue(this.cFunciones.FechaServer.getFullYear());
-      break;
+        let chk: any = document.querySelector("#chkBloqueadaEF");
+        if (chk != undefined) chk.bootstrapToggle("on");
+   
+      break; 
     }
   }
 
@@ -103,7 +108,8 @@ export class EjercicioFiscalComponent {
   public v_CargarDatos(): void {
 
     // this.lstGrupos = [];
-
+    
+   
     document.getElementById("btnRefrescar-Cuenta")?.setAttribute("disabled", "disabled");
 
     let dialogRef: MatDialogRef<WaitComponent> =  this.cFunciones.DIALOG.open(
@@ -113,6 +119,7 @@ export class EjercicioFiscalComponent {
         data: "",
       }
     );
+
 
     this.GET.Datos().subscribe(
       {
@@ -178,32 +185,29 @@ export class EjercicioFiscalComponent {
         }
       );
 
-      let Fila : iEjercicioFiscal = {} as iEjercicioFiscal;
-
+      console.log(this.val.Get("idFechaIni").value)
     
-      Fila.IdEjercicio = undefined;
-      Fila.Nombre = this.val.Get("idEjercicioFiscal").value;
-      Fila.Estado = this.val.Get("chkBloqueadaEF").value;
-      Fila.FechaInicio = new Date(this.val.Get("idFechaIni").value, 1, 1);
-      Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
-      Fila.ClasePeriodos = "Mensuales";
-      Fila.NumerosPeriodos = 12;
-      Fila.Estado = "Abierto";
+      this.Fila.Nombre = this.val.Get("idEjercicioFiscal").value;
+      this.Fila.Estado = this.val.Get("chkBloqueadaEF").value === true ?  'ABIERTO': 'CERRADO';
+      this.Fila.FechaInicio = new Date(Number(this.val.Get("idFechaIni").value), 0, 1);
+      this.Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
+      this.Fila.ClasePeriodos = "Mensuales";
+      this.Fila.NumerosPeriodos = 12;     
       let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaA").value)!;
-      Fila.CuentaContableAcumulada = i_Cuenta.CuentaContable;
+      this.Fila.CuentaContableAcumulada = i_Cuenta.CuentaContable;
       let i_Cuenta2: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaP").value)!;
-      Fila.CuentaPerdidaGanancia = i_Cuenta2.CuentaContable;
+      this.Fila.CuentaPerdidaGanancia = i_Cuenta2.CuentaContable;
       let i_Cuenta3: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaPr").value)!;
-      Fila.CuentaContablePeriodo = i_Cuenta3.CuentaContable;
-      Fila.FechaReg = new Date();
-      Fila.UsuarioReg = this.cFunciones.User;
+      this.Fila.CuentaContablePeriodo = i_Cuenta3.CuentaContable;
+      this.Fila.FechaReg = new Date();
+      this.Fila.UsuarioReg = this.cFunciones.User;
       // Detalle Ejercicio Fiscal (Periodos)
-      Fila.Periodos = this.lstPeriodo.data;
+      this.Fila.Periodos = this.lstPeriodo.data;
       
 
       document.getElementById("btnGuardarEjercicioF")?.setAttribute("disabled", "disabled");
 
-      this.POST.GuardarEjercio(Fila).subscribe(
+      this.POST.GuardarEjercio(this.Fila).subscribe(
         {
           next: (data) => {
   
@@ -251,7 +255,9 @@ export class EjercicioFiscalComponent {
 
     }
 
-
+    public v_Bloqueada(event: any): void {
+      this.val.Get("chkBloqueadaEF").setValue(event.target.checked);
+    }
 
   public v_Editar(){
 
@@ -269,16 +275,16 @@ export class EjercicioFiscalComponent {
     );
 
     dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Cambiar el Estado</p>";
-    dialogRef.componentInstance.textBoton1 = "SI";
-    dialogRef.componentInstance.textBoton2 = "No";
+    dialogRef.componentInstance.textBoton1 = "ABIERTO";
+    dialogRef.componentInstance.textBoton2 = "CERRADO";
 
     dialogRef.afterClosed().subscribe(s => {
       if (dialogRef.componentInstance.retorno == "1") {
-        if (det.Estado  == 'Abierto' ) {
-          det.Estado = "Bloqueado";
+        if (det.Estado  == 'ABIERTO' ) {
+          det.Estado = "CERRADO";
         }
         else{
-          det.Estado = "Abierto";
+          det.Estado = "ABIERTO";
         }
       }
     })
@@ -306,7 +312,7 @@ export class EjercicioFiscalComponent {
       periodo.ClasePeriodo = 'Mensuales';
       periodo.FechaInicio = new Date(Fecha);
       periodo.FechaFinal = new Date(FechaFin);
-      periodo.Estado = 'Bloqueado';
+      periodo.Estado = 'BLOQUEADO';
       periodo.FechaReg = new Date();      
       periodo.UsuarioReg = this.cFunciones.User;
       this.lstPeriodo.data.push(periodo); 

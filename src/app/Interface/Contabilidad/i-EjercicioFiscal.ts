@@ -1,7 +1,7 @@
 import { iPeriodo } from "./i-Periodo";
 
 export interface iEjercicioFiscal{
-    IdEjercicio : undefined;    
+    IdEjercicio : any;    
     Nombre: string;
     FechaInicio: Date;
     FechaFinal: Date;

@@ -1,5 +1,13 @@
 
-<div>    
+<div>  
+    <div class="escasan-dialog" *ngIf="esModal">
+        <div class="btn-contenedor-custom" >
+            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+              <mat-icon class="close-icon" color="warn">close</mat-icon>
+            </button>
+          </div>
+    </div>
+    
     <div class="container">
         <form autocomplete="off" [formGroup]="val.ValForm">
         <div class="card">
@@ -21,10 +29,11 @@
                         <div class="row justify-content-md-center">
                             <div class="bloqueada">
                                 <div class="contenedor ">
-                                    <label> Bloqueado</label>
-                                    <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
-                                        data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
-                                        id="chkBloqueadaEF" formControlName="chkBloqueadaEF">
+                                    <label> Estado </label>                                    
+                                        <input type="checkbox" checked data-toggle="toggle" data-style="on" data-onstyle="on" 
+                                            data-offstyle="off" data-onlabel="ABIERTO" data-offlabel="CERRADO" data-width="120"
+                                            id="chkBloqueadaEF" formControlName="chkBloqueadaEF" 
+                                            (change)="v_Bloqueada($event)">
                                 </div>                        
                             </div>
                         </div>
@@ -168,8 +177,8 @@
                         <ng-container matColumnDef="Estado">
                             <th mat-header-cell *matHeaderCellDef> Estado </th>
                             <td mat-cell *matCellDef="let det"> {{det.Estado}} 
-                                <button class="btn btn-secundario" (click)="E_ditar(det)">
-                                    <i [ngClass]="det.Estado == 'Bloqueado' ? 'fas fa-lock fa-lg': 'fas fa-lock-open fa-lg' "></i>
+                                <button class="btn btn-opcional" (click)="E_ditar(det)">
+                                    <i [ngClass]="det.Estado == 'ABIERTO' ? 'fas fa-lock-open fa-lg' : 'fas fa-lock fa-lg'  "></i>
                                 </button>
                             </td>
                         </ng-container>
@@ -198,6 +207,7 @@
                         
                     </div>
                 </div>
+                
             </div>
         </div>
         </form>
