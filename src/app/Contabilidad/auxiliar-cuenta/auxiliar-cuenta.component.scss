@@ -1,3 +1,5 @@
+@import "/src/assets/scss/media.scss";
+
 .contenedor-tabla{
     background: var(--escan-fondo);
 }
@@ -24,3 +26,44 @@
     font-size: 1.5em;
    }
 }
+
+
+.saldo-inicial{
+    text-align: left;
+    font-size: 1.2em;
+    height: 35px;
+
+    span{
+        padding: 10px;
+        background: var(--escan-primario);
+        color: var(--escan-fondo);
+
+        b{
+            color: var(--escan-fondo);
+        }
+    }
+
+
+}
+
+table, .tabla-layout{
+    table-layout: fixed;
+    width: 100%
+}
+
+
+table{
+
+    margin-top: 150px;
+
+    @include Tamano_Menor(lg) {
+        margin-top: 137px;
+    }
+
+
+    .columna-titulo{
+        font-weight: bold;
+    }
+ 
+}
+

@@ -1,9 +1,13 @@
 export interface iAuxiliarCuenta{
-    Bodega : string,
-    CuentaContable : string,
-    Referencia : string,
+
     Fecha : Date,
-    NoDocumento : string,
-    Debito : number,
-    Credito: number
+    Serie : string,
+    NoDoc : string,
+    Cuenta : string,
+    Concepto : string,
+    Referencia : string,
+    DEBE : number,
+    HABER : number,
+    Linea : number,
+    Cuenta_Padre: string
 }

@@ -6,6 +6,11 @@ import { iAuxiliarCuenta } from 'src/app/Interface/Contabilidad/i-Auxiliar-Cuent
 import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { Validacion } from 'src/app/SHARED/class/validacion';
+import { getAuxiliarCuenta } from './CRUD/GET/get-Auxiliar-Cuenta';
+import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
+import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 
 @Component({
   selector: 'app-auxiliar-cuenta',
@@ -14,18 +19,19 @@ import { Validacion } from 'src/app/SHARED/class/validacion';
 })
 export class AuxiliarCuentaComponent {
   public val = new Validacion();
-  displayedColumns: string[] = ["col1"];
+  displayedColumns: string[] = ["Fecha", "Cuenta", "NoDoc",  "Referencia", "DEBE", "HABER", "Cuenta_Padre"];
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
   public lstAuxiliar : MatTableDataSource<iAuxiliarCuenta>;
+  public SaldoInicial : number = 0;
 
   lstBodega: iBodega[] = [];
 
   public overlaySettings: OverlaySettings = {};
 
 
-  constructor(private cFunciones : Funciones
+  constructor(private cFunciones : Funciones, private GET : getAuxiliarCuenta
     ) {
   
       this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
@@ -66,10 +72,77 @@ export class AuxiliarCuentaComponent {
 
 
   
-
+public v_Buscar(det : iAuxiliarCuenta, e : string)
+{
+  let Cuenta : string = e == 'P' ? det.Cuenta_Padre : det.Cuenta;
+ 
+  this.val.Get("txtCuenta-Asiento").setValue(Cuenta);
+  this.v_CargarDatos();
+}
 
   public v_CargarDatos(): void {
 
+    document.getElementById("btnRefrescar-Auxiliar")?.setAttribute("disabled", "disabled");
+
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+      }
+    );
+
+
+
+    this.GET.Get(this.val.Get("txtFecha1").value, this.val.Get("txtFecha2").value, this.val.Get("txtBodega").value, this.val.Get("txtCuenta-Asiento").value).subscribe(
+      {
+        next: (data) => {
+
+          
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos : iDatos[] = _json["d"];
+
+            let INI : iAuxiliarCuenta =   datos[0].d.find((f : any)=> f.Serie == "INI" );
+
+            this.lstAuxiliar = new MatTableDataSource(datos[0].d.filter((f : any)=> f.Serie != "INI" ));
+            this.SaldoInicial = INI!.DEBE - INI!.HABER; 
+            this.lstAuxiliar.paginator = this.paginator;
+     
+          }
+
+        },
+        error: (err) => {
+
+          document.getElementById("btnRefrescar-Auxiliar")?.removeAttribute("disabled");
+
+          dialogRef.close();
+
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
+          {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => { 
+        document.getElementById("btnRefrescar-Auxiliar")?.removeAttribute("disabled");
+        
+      }
+      }
+    );
 
 
   }
