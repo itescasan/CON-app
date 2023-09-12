@@ -17,6 +17,7 @@ import { Subscription, interval } from 'rxjs';
 import { AsientoContableComponent } from 'src/app/Contabilidad/asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { RegistroAsientoContableComponent } from 'src/app/Contabilidad/asiento-contable/registro-asiento-contable/registro-asiento-contable.component';
 import { RegistroEjercicioFiscalComponent } from 'src/app/Contabilidad/ejercicio-fiscal/registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
+import { AuxiliarCuentaComponent } from 'src/app/Contabilidad/auxiliar-cuenta/auxiliar-cuenta.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -55,13 +56,14 @@ export class SidebarComponent {
     ) {
      
    
-      if (element.tagName.toString().toLocaleLowerCase() == "a" && element.getAttribute("href") == "#" || element.tagName.toString().toLocaleLowerCase()  == "i") {
+      if (element.tagName.toString().toLocaleLowerCase() == "a" && element.getAttribute("href") == "#" || (element.tagName.toString().toLocaleLowerCase()  == "i" || element.tagName.toString().toLocaleLowerCase()  == "span")) {
         
-        if(element.tagName.toString().toLocaleLowerCase()  == "i"){
+        if(element.tagName.toString().toLocaleLowerCase()  == "i" || element.tagName.toString().toLocaleLowerCase()  == "span"){
           element = <HTMLElement>event.target;
           element = <HTMLElement>element.parentElement;
           
         }
+
         this.v_Abrir_Form(element.id);
       }
 
@@ -143,6 +145,15 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let RegCuenta: ComponentRef<RegistroAsientoContableComponent> = this.DynamicFrom.viewContainerRef.createComponent(RegistroAsientoContableComponent);
+
+    }
+
+
+    if(id == "aAuxiliar"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let Auxiliar: ComponentRef<AuxiliarCuentaComponent> = this.DynamicFrom.viewContainerRef.createComponent(AuxiliarCuentaComponent);
 
     }
 

@@ -37,6 +37,7 @@ import { CustomMatPaginatorIntl } from 'src/app/SHARED/class/CustomMatPaginatorI
 import { DialogoConfirmarComponent } from './SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 import { AsientoContableComponent } from './Contabilidad/asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { RegistroAsientoContableComponent } from './Contabilidad/asiento-contable/registro-asiento-contable/registro-asiento-contable.component';
+import { AuxiliarCuentaComponent } from './Contabilidad/auxiliar-cuenta/auxiliar-cuenta.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { RegistroAsientoContableComponent } from './Contabilidad/asiento-contabl
     DialogoConfirmarComponent,
     AsientoContableComponent,
     RegistroAsientoContableComponent,
+    AuxiliarCuentaComponent,
   ],
   imports: [
     BrowserModule,
