@@ -374,16 +374,6 @@ export class CatalogoCuentaComponent {
   ngOnInit(): void {
 
 
-    ///CAMBIO DE FOCO
-    this.val.addFocus("cmbNivel", "cmbClase", undefined);
-    this.val.addFocus("cmbClase", "txtCuentaPadre", undefined);
-    this.val.addFocus("txtCuentaPadre", "txtCuenta", undefined);
-    this.val.addFocus("txtCuenta", "txtDescripcion", undefined);
-    this.val.addFocus("txtDescripcion", "cmbClase", undefined);
-    this.val.addFocus("cmbClase", "cmbNaturaleza", undefined);
-    this.val.addFocus("cmbNaturaleza", "btnGuardarCuenta", "click");
-
-
 
     //FILTRO
     this.filteredCuentaPadre = this.val.Get("txtCuentaPadre").valueChanges.pipe(
@@ -402,6 +392,20 @@ export class CatalogoCuentaComponent {
     lstcheckbox.forEach((f: any) => {
       f.bootstrapToggle();
     });
+
+  }
+
+  ngAfterViewInit(): void{
+
+    ///CAMBIO DE FOCO
+    this.val.addFocus("cmbNivel", "cmbClase", undefined);
+    this.val.addFocus("cmbClase", "txtCuentaPadre", undefined);
+    this.val.addFocus("txtCuentaPadre", "txtCuenta", undefined);
+    this.val.addFocus("txtCuenta", "txtDescripcion", undefined);
+    this.val.addFocus("txtDescripcion", "cmbClase", undefined);
+    this.val.addFocus("cmbClase", "cmbNaturaleza", undefined);
+    this.val.addFocus("cmbNaturaleza", "btnGuardarCuenta", "click");
+
 
   }
 

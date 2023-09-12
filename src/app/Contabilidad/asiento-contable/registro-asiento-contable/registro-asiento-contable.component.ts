@@ -142,6 +142,14 @@ export class RegistroAsientoContableComponent {
 
   }
 
+  ngAfterViewInit(): void{
+    ///CAMBIO DE FOCO
+    this.val.addFocus("txtFecha1", "txtFecha2", undefined);
+    this.val.addFocus("txtFecha2", "txtBuscar-Asiento", undefined);
+    this.val.addFocus("txtBuscar-Asiento", "btnRefrescar-RegAsiento", "click");
+
+    }
+    
 
 
 }

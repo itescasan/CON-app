@@ -1,0 +1,26 @@
+.contenedor-tabla{
+    background: var(--escan-fondo);
+}
+
+.table-container {
+    width: fit-content;
+    position: relative;
+
+  }
+
+
+
+.contenedor-filtro{
+    position: fixed;
+    top: 0;
+    right: 0;
+    text-align: center;
+    z-index: 1;
+    background-color: var(--escan-fondo);
+   
+   p{
+   
+    font-weight: bold;
+    font-size: 1.5em;
+   }
+}

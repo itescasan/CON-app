@@ -771,5 +771,19 @@ export class AsientoContableComponent {
   }
 
 
+  ngAfterViewInit(): void{
+  ///CAMBIO DE FOCO
+  this.val.addFocus("cmbSerie", "txtBodega", undefined);
+  this.val.addFocus("txtBodega", "txtFecha", undefined);
+  this.val.addFocus("txtFecha", "txtReferencia", undefined);
+  this.val.addFocus("txtReferencia", "cmbMoneda", undefined);
+  this.val.addFocus("cmbMoneda", "txtObservaciones", undefined);
+  }
+  
+  
+
+
+
+
 }
 
