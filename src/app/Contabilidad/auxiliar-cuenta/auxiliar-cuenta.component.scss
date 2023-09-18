@@ -64,6 +64,33 @@ table{
     .columna-titulo{
         font-weight: bold;
     }
+
+    td, th{
+        .texto{
+            display: block;
+            text-align: left;
+            margin-left: 10px;
+
+            span{
+                margin-right: 15px;
+            }
+        }
+
+
+        
+
+        .numero{
+            display: block;
+            text-align: right;
+        }
+
+        .evento{
+            display: block;
+            display: flex;
+            justify-content: flex-end;
+            
+        }
+    }
  
 }
 

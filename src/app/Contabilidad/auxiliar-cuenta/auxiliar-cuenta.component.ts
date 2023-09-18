@@ -11,6 +11,8 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
+import { AsientoContableComponent } from '../asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
+import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 
 @Component({
   selector: 'app-auxiliar-cuenta',
@@ -19,37 +21,37 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 })
 export class AuxiliarCuentaComponent {
   public val = new Validacion();
-  displayedColumns: string[] = ["Fecha", "Cuenta", "NoDoc",  "Referencia", "DEBE", "HABER", "Cuenta_Padre"];
+  displayedColumns: string[] = ["Fecha", "Cuenta", "NoDoc", "Referencia", "DEBE", "HABER", "Cuenta_Padre"];
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
-  public lstAuxiliar : MatTableDataSource<iAuxiliarCuenta>;
-  public SaldoInicial : number = 0;
+  public lstAuxiliar: MatTableDataSource<iAuxiliarCuenta>;
+  public SaldoInicial: number = 0;
 
   lstBodega: iBodega[] = [];
 
   public overlaySettings: OverlaySettings = {};
 
 
-  constructor(private cFunciones : Funciones, private GET : getAuxiliarCuenta
-    ) {
-  
-      this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
-      this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
-      this.val.add("txtBodega", "1", "LEN>=", "0", "Bodega", "");
-      this.val.add("txtCuenta-Asiento", "1", "LEN>=", "0", "Cuenta", "");
-      
-      this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth() -1, 1)), "yyyy-MM-dd"));
-      this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
-  
-      this.v_CargarDatos();
-  
-    }
-  
-  
+  constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta
+  ) {
+
+    this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
+    this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
+    this.val.add("txtBodega", "1", "LEN>=", "0", "Bodega", "");
+    this.val.add("txtCuenta-Asiento", "1", "LEN>=", "0", "Cuenta", "");
+
+    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth() - 1, 1)), "yyyy-MM-dd"));
+    this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
+
+    this.v_CargarDatos();
+
+  }
 
 
-    
+
+
+
 
   @ViewChild("cmbBodega", { static: false })
   public cmbBodega: IgxComboComponent;
@@ -71,14 +73,100 @@ export class AuxiliarCuentaComponent {
   }
 
 
-  
-public v_Buscar(det : iAuxiliarCuenta, e : string)
-{
-  let Cuenta : string = e == 'P' ? det.Cuenta_Padre : det.Cuenta;
- 
-  this.val.Get("txtCuenta-Asiento").setValue(Cuenta);
-  this.v_CargarDatos();
-}
+
+  public v_Buscar(det: iAuxiliarCuenta, e: string) {
+    let Cuenta: string = e == 'P' ? det.Cuenta_Padre : det.Cuenta;
+
+    this.val.Get("txtCuenta-Asiento").setValue(Cuenta);
+    this.v_CargarDatos();
+  }
+
+
+  public v_Editar(e: iAuxiliarCuenta): void {
+
+
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+      }
+    );
+
+
+    this.GET.GetAsiento(e.NoDoc, e.Serie).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos : iDatos[] = _json["d"];
+
+            let Asiento : iAsiento = datos[0].d[0];
+
+
+            let dialogAsiento: MatDialogRef<AsientoContableComponent> = this.cFunciones.DIALOG.open(
+              AsientoContableComponent,
+              {
+                panelClass: "escasan-dialog-full",
+                disableClose: true
+              }
+            );
+
+
+            dialogAsiento.afterOpened().subscribe(s => {
+              dialogAsiento.componentInstance.esModal = true;
+
+              dialogAsiento.componentInstance.v_CargarDatos();
+              dialogAsiento.componentInstance.v_Visualizar(Asiento);
+
+            });
+
+
+
+            dialogAsiento.afterClosed().subscribe(s => {
+              this.v_CargarDatos();
+            });
+
+
+
+          }
+
+        },
+        error: (err) => {
+
+
+          dialogRef.close();
+
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
+          {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => { }
+      }
+    );
+
+
+
+
+
+  }
 
   public v_CargarDatos(): void {
 
@@ -98,7 +186,7 @@ public v_Buscar(det : iAuxiliarCuenta, e : string)
       {
         next: (data) => {
 
-          
+
           dialogRef.close();
           let _json: any = data;
 
@@ -111,14 +199,14 @@ public v_Buscar(det : iAuxiliarCuenta, e : string)
             }
           } else {
 
-            let datos : iDatos[] = _json["d"];
+            let datos: iDatos[] = _json["d"];
 
-            let INI : iAuxiliarCuenta =   datos[0].d.find((f : any)=> f.Serie == "INI" );
+            let INI: iAuxiliarCuenta = datos[0].d.find((f: any) => f.Serie == "INI");
 
-            this.lstAuxiliar = new MatTableDataSource(datos[0].d.filter((f : any)=> f.Serie != "INI" ));
-            this.SaldoInicial = INI!.DEBE - INI!.HABER; 
+            this.lstAuxiliar = new MatTableDataSource(datos[0].d.filter((f: any) => f.Serie != "INI"));
+            this.SaldoInicial = INI!.DEBE - INI!.HABER;
             this.lstAuxiliar.paginator = this.paginator;
-     
+
           }
 
         },
@@ -128,8 +216,7 @@ public v_Buscar(det : iAuxiliarCuenta, e : string)
 
           dialogRef.close();
 
-          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
-          {
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
@@ -137,10 +224,10 @@ public v_Buscar(det : iAuxiliarCuenta, e : string)
           }
 
         },
-        complete: () => { 
-        document.getElementById("btnRefrescar-Auxiliar")?.removeAttribute("disabled");
-        
-      }
+        complete: () => {
+          document.getElementById("btnRefrescar-Auxiliar")?.removeAttribute("disabled");
+
+        }
       }
     );
 
@@ -148,7 +235,7 @@ public v_Buscar(det : iAuxiliarCuenta, e : string)
   }
 
 
-  public v_Filtrar(event : any){
+  public v_Filtrar(event: any) {
     this.lstAuxiliar.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
   }
 
@@ -170,14 +257,14 @@ public v_Buscar(det : iAuxiliarCuenta, e : string)
   }
 
 
-  ngAfterViewInit(): void{
+  ngAfterViewInit(): void {
     ///CAMBIO DE FOCO
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBodega", undefined);
     this.val.addFocus("txtBodega", "txtCuenta-Asiento", undefined);
     this.val.addFocus("txtCuenta-Asiento", "btnRefrescar-Auxiliar", "click");
 
-    }
-    
+  }
+
 
 }

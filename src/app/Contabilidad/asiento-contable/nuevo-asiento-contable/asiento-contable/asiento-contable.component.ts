@@ -51,7 +51,7 @@ export class AsientoContableComponent {
 
 
 
-  constructor(private DIALOG: MatDialog, public cFunciones: Funciones,
+  constructor(public cFunciones: Funciones,
     private GET: getAsientoContable, private POST: postAsientoContable) {
 
     this.val.add("cmbSerie", "1", "LEN>", "0", "Serie", "Seleccione una serie.");
@@ -388,7 +388,7 @@ export class AsientoContableComponent {
 
     document.getElementById("btnRefrescar-Asiento")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
       WaitComponent,
       {
         panelClass: "escasan-dialog-full-blur",
@@ -408,8 +408,8 @@ export class AsientoContableComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            if (this.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.DIALOG.open(DialogErrorComponent, {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
                 id: "error-servidor-msj",
                 data: _json["msj"].Mensaje,
               });
@@ -436,8 +436,8 @@ export class AsientoContableComponent {
           dialogRef.close();
 
 
-          if (this.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.DIALOG.open(DialogErrorComponent, {
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
             });
@@ -464,8 +464,8 @@ export class AsientoContableComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            if (this.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.DIALOG.open(DialogErrorComponent, {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
                 id: "error-servidor-msj",
                 data: _json["msj"].Mensaje,
               });
@@ -481,8 +481,8 @@ export class AsientoContableComponent {
         },
         error: (err) => {
 
-          if (this.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.DIALOG.open(DialogErrorComponent, {
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
             });
@@ -505,8 +505,8 @@ export class AsientoContableComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            if (this.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.DIALOG.open(DialogErrorComponent, {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
                 id: "error-servidor-msj",
                 data: _json["msj"].Mensaje,
               });
@@ -523,8 +523,8 @@ export class AsientoContableComponent {
         },
         error: (err) => {
 
-          if (this.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.DIALOG.open(DialogErrorComponent, {
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
             });
@@ -547,8 +547,8 @@ export class AsientoContableComponent {
           let _json: any = data;
 
           if (_json["esError"] == 1) {
-            if (this.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.DIALOG.open(DialogErrorComponent, {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
                 id: "error-servidor-msj",
                 data: _json["msj"].Mensaje,
               });
@@ -564,7 +564,7 @@ export class AsientoContableComponent {
         },
         error: (err) => {
 
-          this.DIALOG.open(DialogErrorComponent, {
+          this.cFunciones.DIALOG.open(DialogErrorComponent, {
             data: "<b class='error'>" + err.message + "</b>",
           });
 
@@ -581,7 +581,7 @@ export class AsientoContableComponent {
 
 
     if (this.val.Errores != "") {
-      this.DIALOG.open(DialogErrorComponent, {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
         data: this.val.Errores,
       });
 
@@ -591,7 +591,7 @@ export class AsientoContableComponent {
 
 
     if (this.valTabla.Errores != "") {
-      this.DIALOG.open(DialogErrorComponent, {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
         data: this.valTabla.Errores,
       });
 
@@ -599,7 +599,7 @@ export class AsientoContableComponent {
     }
 
     if (this.dec_Dif != 0) {
-      let DilogConfirmar = this.DIALOG.open(DialogoConfirmarComponent, {});
+      let DilogConfirmar = this.cFunciones.DIALOG.open(DialogoConfirmarComponent, {});
 
       DilogConfirmar.afterOpened().subscribe(s => {
         DilogConfirmar.componentInstance.mensaje = "<span>Tiene una diferencia de: <b>" + this.cFunciones.NumFormat(this.dec_Dif, "2") + "</b><br>Desea Guardar el documento?</span>"
