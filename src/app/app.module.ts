@@ -38,6 +38,7 @@ import { DialogoConfirmarComponent } from './SHARED/componente/dialogo-confirmar
 import { AsientoContableComponent } from './Contabilidad/asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { RegistroAsientoContableComponent } from './Contabilidad/asiento-contable/registro-asiento-contable/registro-asiento-contable.component';
 import { AuxiliarCuentaComponent } from './Contabilidad/auxiliar-cuenta/auxiliar-cuenta.component';
+import {CdkDrag} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { AuxiliarCuentaComponent } from './Contabilidad/auxiliar-cuenta/auxiliar
     MatPaginatorModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    MatTableModule
+    MatTableModule,
+    CdkDrag
   ],
   providers: [
     provideNgxMask(),
