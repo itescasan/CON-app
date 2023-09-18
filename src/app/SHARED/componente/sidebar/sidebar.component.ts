@@ -99,7 +99,7 @@ export class SidebarComponent {
     
     if(id == "aNewEjercicio"){
       $("#btnMenu").trigger("click");
-      //this.DynamicFrom.viewContainerRef.clear();
+      this.DynamicFrom.viewContainerRef.clear();
 
       this.DynamicFrom.viewContainerRef.createComponent(EjercicioFiscalComponent);
 
