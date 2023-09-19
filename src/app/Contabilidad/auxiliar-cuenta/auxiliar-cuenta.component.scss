@@ -1,44 +1,58 @@
 @import "/src/assets/scss/media.scss";
 
-.contenedor-tabla{
+.contenedor-tabla {
     background: var(--escan-fondo);
 }
 
 .table-container {
     width: fit-content;
     position: relative;
+    margin-bottom: 50px;
+}
 
-  }
 
 
 
-.contenedor-filtro{
+.contenedor-filtro {
     position: fixed;
     top: 0;
     right: 0;
     text-align: center;
     z-index: 1;
     background-color: var(--escan-fondo);
-   
-   p{
-   
-    font-weight: bold;
-    font-size: 1.5em;
-   }
+
+    p {
+
+        font-weight: bold;
+        font-size: 1.5em;
+    }
 }
 
 
-.saldo-inicial{
+
+
+
+.saldo-inicial {
     text-align: left;
+
+}
+
+.saldo-final {
+    text-align: right;
+}
+
+
+.saldo-inicial,
+.saldo-final {
     font-size: 1.2em;
     height: 35px;
 
-    span{
+    span {
         padding: 10px;
         background: var(--escan-primario);
         color: var(--escan-fondo);
 
-        b{
+        b {
             color: var(--escan-fondo);
         }
     }
@@ -46,51 +60,153 @@
 
 }
 
-table, .tabla-layout{
+table,
+.tabla-layout {
     table-layout: fixed;
-    width: 100%
+    width: 100%;
 }
 
 
-table{
+table {
 
     margin-top: 150px;
 
     @include Tamano_Menor(lg) {
-        margin-top: 137px;
+        margin-top: 260px;
     }
 
 
-    .columna-titulo{
+    .columna-titulo {
         font-weight: bold;
     }
 
-    td, th{
-        .texto{
+    td,
+    th {
+
+
+        .texto {
             display: block;
             text-align: left;
             margin-left: 10px;
 
-            span{
+            span {
                 margin-right: 15px;
             }
         }
 
 
-        
 
-        .numero{
+
+        .numero {
             display: block;
             text-align: right;
         }
 
-        .evento{
+        .evento {
             display: block;
             display: flex;
             justify-content: flex-end;
-            
+
         }
     }
- 
+
+
+
 }
 
+
+.mobile-label {
+    display: none;
+}
+
+.mobile-col:not(.haber) {
+    .numero {
+        div:last-child {
+            visibility: hidden;
+        }
+    }
+
+}
+
+@include Tamano_Menor(lg) {
+
+
+    .texto {
+
+        div {
+            display: inline-block;
+        }
+
+
+        div:first-child {
+            width: 30%;
+        }
+
+        div:last-child {
+            width: 70%;
+        }
+    }
+
+
+    .numero {
+        div {
+            display: inline-block;
+            width: 50%;
+        }
+
+        div:nth-child(1),
+        div:nth-child(2)
+        {
+            text-align: center;
+        }
+
+    }
+
+
+    .mobile-label {
+        display: initial;
+        font-weight: bold;
+    }
+
+    .columna-titulo {
+        display: none;
+    }
+
+    .mobile-col {
+        display: block;
+
+    }
+
+    .mobile-col.haber {
+        display: none;
+    }
+
+    .mobile-col.debe {
+
+        .numero{
+            div:last-child{
+                visibility:visible;
+            }
+        }
+
+       
+    }
+
+
+
+
+}
+
+
+
+.pie {
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background-color: var(--escan-fondo);
+    height: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    z-index: 2;
+}

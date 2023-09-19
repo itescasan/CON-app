@@ -13,6 +13,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { AsientoContableComponent } from '../asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
+import { getBodega } from 'src/app/Inventario/Bodega/CRUD/GET/get-Bodega';
 
 @Component({
   selector: 'app-auxiliar-cuenta',
@@ -27,13 +28,14 @@ export class AuxiliarCuentaComponent {
 
   public lstAuxiliar: MatTableDataSource<iAuxiliarCuenta>;
   public SaldoInicial: number = 0;
+  public SaldoFinal: number = 0;
 
   lstBodega: iBodega[] = [];
 
   public overlaySettings: OverlaySettings = {};
 
 
-  constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta
+  constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta, private GET_BODEGA : getBodega
   ) {
 
     this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
@@ -44,7 +46,7 @@ export class AuxiliarCuentaComponent {
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth() - 1, 1)), "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
 
-    this.v_CargarDatos();
+   this.v_BODEGA();
 
   }
 
@@ -168,6 +170,66 @@ export class AuxiliarCuentaComponent {
 
   }
 
+  public v_BODEGA(): void {
+
+
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+      }
+    );
+
+
+
+    this.GET_BODEGA.Get().subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos[] = _json["d"];
+
+            this.lstBodega = datos[0].d;
+            this.v_CargarDatos();
+
+ 
+          }
+
+        },
+        error: (err) => {
+
+
+          dialogRef.close();
+
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {}
+      }
+    );
+
+
+  }
+
+
   public v_CargarDatos(): void {
 
     document.getElementById("btnRefrescar-Auxiliar")?.setAttribute("disabled", "disabled");
@@ -205,6 +267,7 @@ export class AuxiliarCuentaComponent {
 
             this.lstAuxiliar = new MatTableDataSource(datos[0].d.filter((f: any) => f.Serie != "INI"));
             this.SaldoInicial = INI!.DEBE - INI!.HABER;
+            this.SaldoFinal = (this.SaldoInicial + this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE, 0)) - this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.HABER, 0);
             this.lstAuxiliar.paginator = this.paginator;
 
           }
@@ -255,6 +318,7 @@ export class AuxiliarCuentaComponent {
     }
 
   }
+
 
 
   ngAfterViewInit(): void {
