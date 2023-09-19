@@ -6,6 +6,7 @@ export interface iAuxiliarCuenta{
     Cuenta : string,
     Concepto : string,
     Referencia : string,
+    Editar : number,
     DEBE : number,
     HABER : number,
     Linea : number,

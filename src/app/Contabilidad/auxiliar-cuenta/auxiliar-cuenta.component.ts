@@ -129,7 +129,7 @@ export class AuxiliarCuentaComponent {
 
             dialogAsiento.afterOpened().subscribe(s => {
               dialogAsiento.componentInstance.esModal = true;
-              dialogAsiento.componentInstance.esAuxiliar = true;
+              dialogAsiento.componentInstance.esAuxiliar = (e.Editar == 1? false : true);
 
               dialogAsiento.componentInstance.v_CargarDatos();
               dialogAsiento.componentInstance.v_Visualizar(Asiento);
