@@ -336,7 +336,7 @@
                     "1.2-2"}}</span></span>
         </div>
 
-        <div class="botones">
+        <div class="botones" *ngIf="!esAuxiliar">
             <div>
                 <button type="button" class="btn btn-secundario" id="btnRefrescar-Asiento" (click)="v_CargarDatos();"><i
                         class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>

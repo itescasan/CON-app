@@ -41,6 +41,7 @@ export class AsientoContableComponent {
   lstCuenta: iCuenta[] = [];
 
   public esModal: boolean = false;
+  public esAuxiliar : boolean = false;
   public dec_TotalDebe: number = 0;
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
