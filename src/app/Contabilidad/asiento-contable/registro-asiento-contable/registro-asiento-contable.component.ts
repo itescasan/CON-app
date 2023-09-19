@@ -125,12 +125,10 @@ export class RegistroAsientoContableComponent {
     
        
     dialogRef.afterOpened().subscribe(s =>{
+      dialogRef.componentInstance.FILA = e;
       dialogRef.componentInstance.esModal = true;
 
       dialogRef.componentInstance.v_CargarDatos();
-      dialogRef.componentInstance.v_Visualizar(e);
-
-    
 
     });
 

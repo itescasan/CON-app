@@ -27,7 +27,7 @@ export class AsientoContableComponent {
   public val = new Validacion();
   public valTabla = new Validacion();
 
-  private FILA: iAsiento = {} as iAsiento;
+  public FILA: iAsiento = {} as iAsiento;
 
   @ViewChildren(IgxComboComponent)
   public cmbCuenta: QueryList<IgxComboComponent>;
@@ -42,6 +42,7 @@ export class AsientoContableComponent {
 
   public esModal: boolean = false;
   public esAuxiliar : boolean = false;
+  private _Load : boolean = false;
   public dec_TotalDebe: number = 0;
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
@@ -66,7 +67,7 @@ export class AsientoContableComponent {
 
 
 
-    this.v_Evento("Iniciar");
+   this.v_Evento("Iniciar");
   }
 
 
@@ -77,7 +78,7 @@ export class AsientoContableComponent {
       case "Iniciar":
         this.v_Evento("Limpiar");
         this.v_CargarDatos();
-        this.esModal = false;
+
         break;
 
       case "Limpiar":
@@ -162,6 +163,7 @@ export class AsientoContableComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
+    if(this._Load) return;
 
     if (event.added.length) {
       event.newSelection = event.added;
@@ -170,6 +172,7 @@ export class AsientoContableComponent {
 
 
       let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
+   
       det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
       det.Naturaleza = i_Cuenta.Naturaleza;
 
@@ -334,8 +337,7 @@ export class AsientoContableComponent {
   }
 
 
-  public v_Visualizar(f: iAsiento) {
-    this.FILA = f;
+  public v_Visualizar() {
     this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
@@ -350,7 +352,7 @@ export class AsientoContableComponent {
     this.val.Get("txtNoAsiento").disable();
   
 
-    this.lstDetalle.data = JSON.parse(JSON.stringify(f.AsientosContablesDetalle));
+    this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.AsientosContablesDetalle));
 
 
     let x: number = 1;
@@ -360,18 +362,23 @@ export class AsientoContableComponent {
       x++;
     });
 
+
     setTimeout(() => {
 
 
       x = 1;
+      this._Load = true;
       this.lstDetalle.data.forEach(f => {
+
+
         let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
         txtCuenta.setSelectedItem(f.CuentaContable);
-        //this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
-       // this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
+
 
         x++;
       });
+
+      this._Load = false;
 
 
     }, 250);
@@ -425,6 +432,7 @@ export class AsientoContableComponent {
 
             this.V_TasaCambios();
             this.v_Serie();
+            if(this.esModal) this.v_Visualizar();
 
 
           }
