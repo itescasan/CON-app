@@ -42,7 +42,6 @@ export class AsientoContableComponent {
 
   public esModal: boolean = false;
   public esAuxiliar : boolean = false;
-  private _Load : boolean = false;
   public dec_TotalDebe: number = 0;
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
@@ -163,7 +162,6 @@ export class AsientoContableComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-    if(this._Load) return;
 
     if (event.added.length) {
       event.newSelection = event.added;
@@ -367,21 +365,31 @@ export class AsientoContableComponent {
 
 
       x = 1;
-      this._Load = true;
+
       this.lstDetalle.data.forEach(f => {
 
-
+        let Cuenta : string = f.CuentaContable;
         let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
-        txtCuenta.setSelectedItem(f.CuentaContable);
+        txtCuenta.setSelectedItem(Cuenta);
+
+        
+      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == Cuenta)!;
+   
+ 
+      document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+
+      if (i_Cuenta.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
+
+      if (i_Cuenta.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
+
 
 
         x++;
       });
 
-      this._Load = false;
 
-
-    }, 250);
+    }, 500);
 
 
 
