@@ -368,20 +368,19 @@ export class AsientoContableComponent {
 
       this.lstDetalle.data.forEach(f => {
 
-        let Cuenta : string = f.CuentaContable;
+
         let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
-        txtCuenta.setSelectedItem(Cuenta);
+        txtCuenta.setSelectedItem(f.CuentaContable);
 
         
-      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == Cuenta)!;
-   
+
  
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 
-      if (i_Cuenta.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
+      if (f.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
 
-      if (i_Cuenta.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
+      if (f.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
 
 
 
