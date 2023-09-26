@@ -1,1 +1,167 @@
-<p>transferencia works!</p>
+
+<div class="contenedor-transferencia">
+    <form autocomplete="off" [formGroup]="val.ValForm">
+
+
+        <div class="card">
+            <div class="card-header card-escasan-header opcional">Transferencia Bancaria</div>
+            <div class="card-body">
+                <div class="row linea-bottom-primario">
+
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                        <igx-combo #cmbSerie [data]="lstCuentabancaria" valueKey="IdCuenta" displayKey="NoCuenta" id="cmbCuenta"
+                        formControlName="cmbCuenta" placeholder="No Cuenta" searchPlaceholder="Seleccione una serie..."
+                        [autoFocusSearch]="true" [overlaySettings]="overlaySettings">
+                        <label igxLabel>Cuenta Bancaria</label>
+                        <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
+                    </igx-combo>
+                    </div>
+        
+                    
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                        <div class="input-group">
+                                            
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="Nombre Cuenta"
+                                    id="txtNombreCuenta" formControlName="txtNombreCuenta" >
+                                <label for="txtNombreCuenta">Nombre Cuenta</label>
+                            </div>
+        
+                        </div>
+                    </div>
+        
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                        <div class="input-group">
+                                            
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="Banco"
+                                    id="txtBanco" formControlName="txtBanco" >
+                                <label for="txtBanco">Banco</label>
+                            </div>
+        
+                        </div>
+                    </div>
+                   
+                </div>
+
+                <div class="row linea-bottom-secundario mt-2">
+
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                        
+                        <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega"
+                        id="cmbBodega" formControlName="cmbBodega" placeholder="Bodega"
+                        searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
+                        [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
+                        (keyup)="v_Enter_Bodega($event);">
+                        <label igxLabel>Bodega</label>
+                        <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                    </igx-combo>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4 mb-1">
+                        
+                        <div class="input-group">
+                            <span class="input-group-text secundario">No</span>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="No" id="txtNoDoc"
+                                    formControlName="txtNoDoc">
+                                <label for="txtNoDoc">No</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-2 offset-lg-2 mb-1">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                            <div class="form-floating">
+                                <input type="date" id="txtFecha" class="form-control" placeholder="Fecha"
+                                    aria-label="Fecha" formControlName="txtFecha">
+                                <label for="txtFecha">Fecha</label>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-2">
+
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-1">
+                        <div class="input-group">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="Beneficiario" id="txtBeneficiario"
+                                    formControlName="txtBeneficiario">
+                                <label for="txtBeneficiario">Beneficiario</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
+                        <div class="input-group">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="Beneficiario" id="txtMoneda"
+                                formControlName="txtMoneda">
+                                 <label for="txtMoneda">Moneda</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="TC" id="TxtTC" 
+                                    formControlName="TxtTC">
+                                <label for="TxtTC">TC</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+
+        
+                    <div class="col-12 col-md-12 col-lg-9 mb-1">
+                        <div class="concepto">
+                            <div class="form-floating">
+                                <textarea type="textarea" class="form-control" placeholder="Concepto"
+                                    id="txtConcepto" formControlName="txtConcepto"></textarea>
+                                <label for="txtConcepto">Concepto</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-12 col-md-12 col-lg-3 mb-1">
+
+                        <div class="anulado">
+
+                            <div class="contenedor">
+                                <label> Anulado</label>
+                                <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
+                                    data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
+                                    id="chkAnulado" formControlName="chkAnulado"
+                                    (change)="v_Anulado($event)">
+                               
+                                
+                            </div>
+                           
+                        </div>
+                      
+                    </div>
+
+                </div>
+            </div>
+        </div>
+       
+    
+    </form>
+</div>
+
+

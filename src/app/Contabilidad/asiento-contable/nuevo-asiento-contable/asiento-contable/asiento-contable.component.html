@@ -47,9 +47,7 @@
                     </div>
 
                     <div class="col-12 col-md-12 col-lg-4 offset-lg-1">
-                        <div class="input-group">
-                 
-                            <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega"
+                        <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega"
                                 id="txtBodega" formControlName="txtBodega" placeholder="Bodega"
                                 searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
                                 [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
@@ -57,10 +55,6 @@
                                 <label igxLabel>Bodega</label>
                                 <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
                             </igx-combo>
-
-
-
-                        </div>
 
                     </div>
 
@@ -120,6 +114,7 @@
 
                                     <div class="col-12 col-md-12 col-lg-6 mb-1">
                                         <div class="input-group">
+                                            <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" placeholder="TC" id="TxtTC" 
                                                     formControlName="TxtTC">
