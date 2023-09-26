@@ -39,6 +39,7 @@ import { AsientoContableComponent } from './Contabilidad/asiento-contable/nuevo-
 import { RegistroAsientoContableComponent } from './Contabilidad/asiento-contable/registro-asiento-contable/registro-asiento-contable.component';
 import { AuxiliarCuentaComponent } from './Contabilidad/auxiliar-cuenta/auxiliar-cuenta.component';
 import {CdkDrag} from '@angular/cdk/drag-drop';
+import { TransferenciaComponent } from './Contabilidad/Operaciones-bancarias/transferencia/transferencia.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import {CdkDrag} from '@angular/cdk/drag-drop';
     AsientoContableComponent,
     RegistroAsientoContableComponent,
     AuxiliarCuentaComponent,
+    TransferenciaComponent,
   ],
   imports: [
     BrowserModule,

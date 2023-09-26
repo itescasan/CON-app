@@ -18,6 +18,7 @@ import { AsientoContableComponent } from 'src/app/Contabilidad/asiento-contable/
 import { RegistroAsientoContableComponent } from 'src/app/Contabilidad/asiento-contable/registro-asiento-contable/registro-asiento-contable.component';
 import { RegistroEjercicioFiscalComponent } from 'src/app/Contabilidad/ejercicio-fiscal/registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
 import { AuxiliarCuentaComponent } from 'src/app/Contabilidad/auxiliar-cuenta/auxiliar-cuenta.component';
+import { TransferenciaComponent } from 'src/app/Contabilidad/Operaciones-bancarias/transferencia/transferencia.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -158,6 +159,16 @@ export class SidebarComponent {
     }
 
 
+
+
+    
+    if(id == "aNewTransferencia"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let CatalogoCuenta: ComponentRef<TransferenciaComponent> = this.DynamicFrom.viewContainerRef.createComponent(TransferenciaComponent);
+
+    }
 
     
 
