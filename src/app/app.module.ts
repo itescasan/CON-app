@@ -40,6 +40,7 @@ import { RegistroAsientoContableComponent } from './Contabilidad/asiento-contabl
 import { AuxiliarCuentaComponent } from './Contabilidad/auxiliar-cuenta/auxiliar-cuenta.component';
 import {CdkDrag} from '@angular/cdk/drag-drop';
 import { TransferenciaComponent } from './Contabilidad/Operaciones-bancarias/transferencia/transferencia.component';
+import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,10 @@ import { TransferenciaComponent } from './Contabilidad/Operaciones-bancarias/tra
     NgxMaskDirective,
     NgxMaskPipe,
     MatTableModule,
-    CdkDrag
+    CdkDrag,
+    BackButtonDisableModule.forRoot({
+      preserveScroll: true // DISABLE BACK
+    })
   ],
   providers: [
     provideNgxMask(),
