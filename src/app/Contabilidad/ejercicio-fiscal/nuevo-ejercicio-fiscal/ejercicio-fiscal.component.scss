@@ -115,8 +115,20 @@
 
  }
 
- 
+ .contenedor-pie {
+    position: relative;
+    
+}
 
+.pie-asiento {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 2;
+    background-color: var(--escan-fondo);
+    padding: 10px;
+}
 
 
 

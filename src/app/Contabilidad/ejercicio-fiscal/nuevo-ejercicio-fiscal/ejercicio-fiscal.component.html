@@ -194,20 +194,23 @@
                 </div>
 
             
+                <div class="contenedor-pie">
+                    <div class="pie-asiento">
+                        <div class="row mt-6 botones linea-top-secundario">
+                            <div class="col-12 col-md-12 col-lg-6 mb-3">                     
+                                    <button type="button" class="btn btn-secundario" id="btnRefrescar"  (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
+                            </div>   
 
-                <div class="row mt-6 botones linea-top-secundario">
-                    <div class="col-12 col-md-12 col-lg-6 mb-3">                     
-                            <button type="button" class="btn btn-secundario" id="btnRefrescar"  (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
-                    </div>   
-
-                    <div class="col-12 col-md-12 col-lg-6">
-                        <div class="btn-contenedor">
-                            <button type="button" class="btn btn-primario" id="btnGuardarEjercicioF" (click)="v_Guardar()"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
-                            <button type="button" class="btn btn-opcional" id="btnCancelarEjercicioF" (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
-      
+                            <div class="col-12 col-md-12 col-lg-6">
+                                <div class="btn-contenedor">
+                                    <button type="button" class="btn btn-primario" id="btnGuardarEjercicioF" (click)="v_Guardar()"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i> Guardar</button>
+                                    <button type="button" class="btn btn-opcional" id="btnCancelarEjercicioF" (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+                
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>               
+                </div>             
             </div>
         </div>
         </form>
