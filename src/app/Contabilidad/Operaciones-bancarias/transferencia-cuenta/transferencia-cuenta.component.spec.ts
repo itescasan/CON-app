@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TransferenciaComponent } from './transferencia.component';
+import { TransferenciaCuentaComponent } from './transferencia-cuenta.component';
 
 describe('TransferenciaComponent', () => {
-  let component: TransferenciaComponent;
-  let fixture: ComponentFixture<TransferenciaComponent>;
+  let component: TransferenciaCuentaComponent;
+  let fixture: ComponentFixture<TransferenciaCuentaComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TransferenciaComponent]
+      declarations: [TransferenciaCuentaComponent]
     });
-    fixture = TestBed.createComponent(TransferenciaComponent);
+    fixture = TestBed.createComponent(TransferenciaCuentaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
