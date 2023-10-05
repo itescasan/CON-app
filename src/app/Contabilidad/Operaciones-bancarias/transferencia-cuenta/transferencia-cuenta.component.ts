@@ -13,6 +13,10 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { getTransferencia } from '../CRUD/GET/get-Transferencia';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
+import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
+import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
+import { iTransferenciaCuneta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
+import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
 
 @Component({
   selector: 'app-transferencia-cuenta',
@@ -38,6 +42,8 @@ export class TransferenciaCuentaComponent {
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
 
+  public FILA: iTransferenciaCuneta = {} as iTransferenciaCuneta;
+
 
   public esModal: boolean = false;
   public dec_TotalDebe: number = 0;
@@ -47,7 +53,7 @@ export class TransferenciaCuentaComponent {
 
 
 
-  constructor(public cFunciones: Funciones, private GET: getTransferencia) {
+  constructor(public cFunciones: Funciones, private GET: getTransferencia, private POST : postTrasnferencia) {
 
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una serie.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "Nombre Cuenta", "No se ha definido el nombre de la cuenta.");
@@ -78,7 +84,8 @@ export class TransferenciaCuentaComponent {
 
       case "Limpiar":
 
-       
+      this.FILA.IdTransferencia = "00000000-0000-0000-0000-000000000000";
+
         this.val.Get("cmbCuentaBancaria").setValue();
         this.val.Get("txtNombreCuenta").setValue("");
         this.val.Get("txtBanco").setValue("");
@@ -527,6 +534,146 @@ export class TransferenciaCuentaComponent {
 
   public v_Guardar() : void{
 
+    this.val.EsValido();
+    this.valTabla.EsValido();
+
+
+    if (this.val.Errores != "") {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+        data: this.val.Errores,
+      });
+
+      return;
+    }
+
+
+
+    if (this.valTabla.Errores != "") {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+        data: this.valTabla.Errores,
+      });
+
+      return;
+    }
+
+
+    if (this.dec_Dif != 0) {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+        data: "<span>Tiene una diferencia de: <b>" + this.cFunciones.NumFormat(this.dec_Dif, "2") + "</b></span>",
+      });
+
+      return;
+    }
+
+    this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
+    this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
+    this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
+    this.FILA.Fecha = this.val.Get("txtFecha").value;
+    this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
+    this.FILA.TasaCambio = this.val.Get("TxtTC").value;
+    this.FILA.Concepto = this.val.Get("txtConcepto").value;
+    if(!this.esModal) this.FILA.Anulado = false;
+    this.FILA.TipoTransferencia = "C";
+
+
+
+    let Asiento : iAsiento = {} as iAsiento;
+    let CuentaBancaria = this.lstCuentabancaria.find(f=> f.IdCuentaBanco == this.FILA.IdCuentaBanco);
+
+
+    Asiento.NoDocOrigen = this.FILA.NoTransferencia;
+    Asiento.IdSerieDocOrigen = "Transfer";
+    Asiento.TipoDocOrigen = "TRANSFERENCIA A CUENTA";
+
+    Asiento.IdSerie = Asiento.IdSerieDocOrigen;
+    if(!this.esModal) Asiento.NoAsiento = "";
+    Asiento.Bodega = this.FILA.CodBodega;
+    Asiento.Fecha = this.FILA.Fecha;
+    Asiento.Referencia = this.FILA.Beneficiario;
+    Asiento.Concepto = this.FILA.Concepto ;
+    Asiento.IdMoneda = String(CuentaBancaria?.IdMoneda);
+    Asiento.TasaCambio = this.val.Get("TxtTC").value;
+    Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalle.data));
+    Asiento.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
+    Asiento.TotalML = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+    Asiento.TotalMS = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    Asiento.UsuarioReg = this.cFunciones.User;
+    Asiento.FechaReg = new Date();
+
+    Asiento.AsientosContablesDetalle.forEach(f =>{
+      f.CuentaContable = f.CuentaContable[0];
+    });
+
+
+    if (!this.esModal) {
+      Asiento.IdPeriodo = 0;
+      Asiento.Estado = "Solicitado";
+      Asiento.TipoAsiento = "ASIENTO BASE"
+
+    }
+
+
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+      }
+    );
+
+    document.getElementById("btnGuardar-Asiento")?.setAttribute("disabled", "disabled");
+
+
+
+    this.POST.GuardarTransferencia([this.FILA, Asiento]).subscribe(
+      {
+        next: (data) => {
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          }
+          else {
+
+
+            let Datos: iDatos[] = _json["d"];
+            let msj: string = Datos[0].d;
+
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              data: "<p><b class='bold'>" + msj + "</b></p>"
+            });
+
+
+            if (!this.esModal) this.v_Evento("Limpiar");
+
+          }
+
+        },
+        error: (err) => {
+          dialogRef.close();
+
+          document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+        },
+        complete: () => {
+          document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
+        }
+      }
+    );
+
+  
   }
 
 

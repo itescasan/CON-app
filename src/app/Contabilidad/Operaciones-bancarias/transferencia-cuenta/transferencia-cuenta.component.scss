@@ -122,6 +122,11 @@
     z-index: 2;
     background-color: var(--escan-fondo);
     padding: 10px;
+
+    .totales,
+    .botones{
+        margin-right: 20px;
+    }
  
 
     .totales {

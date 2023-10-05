@@ -3,7 +3,7 @@ import { iAsientoDetalle } from "./i-Asiento-Detalle";
 export interface iAsiento{
     IdAsiento: number;
     IdPeriodo: number;
-    NoAsiento: number;
+    NoAsiento: string;
     IdSerie: string;
     Fecha: Date,
     IdMoneda: string;
