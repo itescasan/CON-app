@@ -41,6 +41,7 @@ import { AuxiliarCuentaComponent } from './Contabilidad/auxiliar-cuenta/auxiliar
 import {CdkDrag} from '@angular/cdk/drag-drop';
 import { TransferenciaCuentaComponent } from './Contabilidad/Operaciones-bancarias/transferencia-cuenta/transferencia-cuenta.component';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
+import { RegistroTrasnferenciaComponent } from './Contabilidad/Operaciones-bancarias/registro-trasnferencia/registro-trasnferencia.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
     RegistroAsientoContableComponent,
     AuxiliarCuentaComponent,
     TransferenciaCuentaComponent,
+    RegistroTrasnferenciaComponent,
   ],
   imports: [
     BrowserModule,
