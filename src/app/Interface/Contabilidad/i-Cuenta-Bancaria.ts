@@ -5,8 +5,7 @@ export interface iCuentaBancaria{
     NombreCuenta : string,
     IdMoneda : string,
     Moneda : string,
-    ConsecutivoCheque : number,
-    ConsecutivoTransferencia : number,
+    Consecutivo : string,
     Activo : boolean,
     DisplayKey : string,
 }

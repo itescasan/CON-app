@@ -1,4 +1,4 @@
-export interface iTransferenciaCuneta{
+export interface iTransferenciaCunta{
     IdTransferencia: any;
     IdCuentaBanco: number;
     CodBodega: string;

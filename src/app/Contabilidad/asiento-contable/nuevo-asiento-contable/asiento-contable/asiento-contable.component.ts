@@ -46,6 +46,7 @@ export class AsientoContableComponent {
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
   public TC: number;
+  private Visualizando : boolean = false;
 
   public overlaySettings: OverlaySettings = {};
 
@@ -64,7 +65,7 @@ export class AsientoContableComponent {
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("TxtTC", "1", "LEN>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
 
-
+    
 
    this.v_Evento("Iniciar");
   }
@@ -162,6 +163,7 @@ export class AsientoContableComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
+    if(!this.Visualizando) return;
 
     if (event.added.length) {
       event.newSelection = event.added;
@@ -336,6 +338,8 @@ export class AsientoContableComponent {
 
 
   public v_Visualizar() {
+
+    this.Visualizando = true;
     this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
@@ -371,8 +375,7 @@ export class AsientoContableComponent {
 
         let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
         txtCuenta.setSelectedItem(f.CuentaContable);
-
-        
+   
 
  
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
@@ -387,6 +390,7 @@ export class AsientoContableComponent {
         x++;
       });
 
+      this.Visualizando = false;
 
     }, 500);
 
@@ -572,7 +576,7 @@ export class AsientoContableComponent {
           } else {
 
             let datos: iDatos = _json["d"];
-            this.val.Get("txtNoAsiento").setValue(datos.d);
+            if(!this.esModal)this.val.Get("txtNoAsiento").setValue(datos.d);
 
 
           }

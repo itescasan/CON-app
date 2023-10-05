@@ -141,20 +141,36 @@
 
                     <div class="col-12 col-md-12 col-lg-3 mb-1">
 
-                        <div class="anulado">
+                        <div class="row">
 
-                            <div class="contenedor">
-                                <label> Anulado</label>
-                                <input type="checkbox" data-toggle="toggle" data-style="on" data-onstyle="on"
-                                    data-offstyle="off" data-onlabel="Si" data-offlabel="No" data-width="120"
-                                    id="chkAnulado" formControlName="chkAnulado" (change)="v_Anulado($event)">
+                            <div class="col-12 mb-1">
 
-
+                                <div class="input-group">
+                                    <span class="input-group-text">C$</span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Total Cordoba"
+                                            id="txtTotalCordoba" formControlName="txtTotalCordoba">
+                                        <label for="txtTotalCordoba">Total</label>
+                                    </div>
+                                </div>
                             </div>
 
+                            <div class="col-12 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text">U$</span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
+                                            formControlName="txtTotalDolar">
+                                        <label for="txtTotalDolar">Total</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
+
                     </div>
+
+            
 
                 </div>
             </div>
