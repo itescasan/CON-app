@@ -2,6 +2,7 @@ export interface iTransferenciaCunta{
     IdTransferencia: any;
     IdCuentaBanco: number;
     CodBodega: string;
+    IdSerie: string;
     NoTransferencia: string;
     Fecha: Date,
     Beneficiario: string;
