@@ -42,6 +42,7 @@ import {CdkDrag} from '@angular/cdk/drag-drop';
 import { TransferenciaCuentaComponent } from './Contabilidad/Operaciones-bancarias/transferencia-cuenta/transferencia-cuenta.component';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { RegistroTrasnferenciaComponent } from './Contabilidad/Operaciones-bancarias/registro-trasnferencia/registro-trasnferencia.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { RegistroTrasnferenciaComponent } from './Contabilidad/Operaciones-banca
   ],
   providers: [
     provideNgxMask(),
-     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl }],
+     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorIntl },
+     { provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
