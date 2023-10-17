@@ -20,6 +20,9 @@ import { RegistroEjercicioFiscalComponent } from 'src/app/Contabilidad/ejercicio
 import { AuxiliarCuentaComponent } from 'src/app/Contabilidad/auxiliar-cuenta/auxiliar-cuenta.component';
 import { TransferenciaCuentaComponent } from 'src/app/Contabilidad/Operaciones-bancarias/transferencia-cuenta/transferencia-cuenta.component';
 import { RegistroTrasnferenciaComponent } from 'src/app/Contabilidad/Operaciones-bancarias/registro-trasnferencia/registro-trasnferencia.component';
+import { NuevoChequeComponent } from 'src/app/Contabilidad/Operaciones-bancarias/nuevo-cheque/nuevo-cheque.component';
+import { RegistroChequesComponent } from 'src/app/Contabilidad/Operaciones-bancarias/registro-cheques/registro-cheques.component';
+
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -180,6 +183,22 @@ export class SidebarComponent {
 
     }
 
+    if(id == "aNewCheque"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let NuevoCheque: ComponentRef<NuevoChequeComponent> = this.DynamicFrom.viewContainerRef.createComponent(NuevoChequeComponent);
+
+    }
+
+
+    if(id == "aRegCheques"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let RegCheques: ComponentRef<RegistroChequesComponent> = this.DynamicFrom.viewContainerRef.createComponent(RegistroChequesComponent);
+
+    }
     
 
     
