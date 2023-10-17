@@ -1,0 +1,252 @@
+@import "/src/assets/scss/media.scss";
+
+
+.contenedor-transferencia{
+    background-color: var(--escan-fondo);
+}
+
+
+
+.concepto {
+
+    textarea {
+        height: 120px;
+
+    }
+
+}
+
+
+.anulado {
+
+    display: flex;
+    justify-content: center;
+    
+    
+    .contenedor{
+        text-align: center;
+
+        label{
+            font-weight: bold;
+            display: block;
+            margin-bottom: 2px;
+        }
+    }
+
+    
+  @include Tamano_Menor(lg) {
+    justify-content: right;
+  }
+   
+  }
+
+
+
+
+
+  
+
+//████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
+
+.numero {
+    text-align: right;
+}
+
+.header,
+.header-cell {
+    background-color: var(--escan-primario);
+    padding: 5px;
+
+    span {
+        color: var(--escan-fondo);
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.1em;
+    }
+}
+
+.header {
+
+    @include Tamano_Menor(lg) {
+        display: none;
+    }
+
+
+}
+
+.contenedor-tabla {
+    margin-bottom: 100px;
+
+
+    table {
+
+        textarea {
+            height: 31px;
+        }
+
+        .header-cell {
+
+            display: none;
+
+            @include Tamano_Menor(lg) {
+                display: initial;
+                text-align: center;
+                background-color: var(--escan-fondo);
+
+                span {
+                    color: var(--escan-opcional);
+                }
+
+            }
+
+        }
+
+    }
+}
+
+
+
+
+//████████████████████████████████████████████PIE████████████████████████████████████████████████████████████████████████
+
+.contenedor-pie {
+    position: relative;
+    
+}
+
+.pie-transferencia {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 2;
+    background-color: var(--escan-fondo);
+    padding: 10px;
+
+    .totales,
+    .botones{
+        margin-right: 20px;
+    }
+ 
+
+    .totales {
+
+        width: 100%;
+        text-align: right;
+
+
+        .debito {
+            width: 60%;
+        }
+
+        .credito {
+            width: 20%;
+        }
+
+        .diferencia {
+            width: 20%;
+        }
+
+
+        .valores {
+            background-color: var(--escan-opcional);
+            color: var(--escan-fondo);
+        }
+
+        .valores.dif{
+            background-color: var(--escan-primario);
+        }
+
+        .etiqueta,
+        .valores {
+            display: inline-block;
+            width: 250px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 5px;
+        }
+
+        @include Tamano_Menor(lg) {
+
+
+            .etiqueta {
+                width: 30%;
+            }
+
+
+            .valores {
+                width: 70%;
+            }
+
+
+
+        }
+
+    }
+
+    .botones {
+
+        position: relative;
+        width: 100%;
+
+
+        div {
+            text-align: left;
+            width: 50%;
+            display: inline-block;
+        }
+
+
+
+        div:last-child {
+            text-align: right;
+            position: flex;
+            right: 0;
+            bottom: 0;
+        }
+
+        .botones-edicion{
+            margin-top: 5px;
+            button:last-child{
+                margin-left: 20px;
+            }
+
+        }
+
+        
+
+        @include Tamano_Menor(lg) {
+
+
+            div {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+    
+
+            div:first-child{
+
+                button{
+                    width: 100%;
+                }
+               
+            }
+        
+        }
+
+
+    }
+
+
+
+}
+
+
+
+
+.btn-contenedor-custom {
+    display: flex;
+    justify-content: flex-end;
+}
