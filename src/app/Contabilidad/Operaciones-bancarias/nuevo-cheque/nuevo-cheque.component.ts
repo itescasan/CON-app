@@ -17,6 +17,8 @@ import { iTransferenciaCunta } from 'src/app/Interface/Contabilidad/i-Transferen
 import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
 import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
 import { getCheques } from '../CRUD/GET/get-Cheques';
+import { Observable, catchError, map, startWith, tap } from 'rxjs';
+import { getCuentaContable } from '../../catalogo-cuenta/CRUD/GET/get-CatalogoCuenta';
 
 
 @Component({
@@ -46,6 +48,7 @@ export class NuevoChequeComponent {
 
   public FILA: iTransferenciaCunta = {} as iTransferenciaCunta;
 
+  filteredCuenta1: Observable<iCuenta[]> | undefined;
 
   public esModal: boolean = false;
   public dec_TotalDebe: number = 0;
@@ -55,7 +58,7 @@ export class NuevoChequeComponent {
 
 
 
-  constructor(public cFunciones: Funciones, private GET: getCheques, private POST : postTrasnferencia) {
+  constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postTrasnferencia) {
 
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una serie.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "Nombre Cuenta", "No se ha definido el nombre de la cuenta.");
@@ -71,8 +74,10 @@ export class NuevoChequeComponent {
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
     
     this.v_Evento("Iniciar");
-
+    
   }
+
+
 
 
 
@@ -230,7 +235,7 @@ export class NuevoChequeComponent {
             this.lstCuentabancaria = datos[0].d;
             this.lstBodega = datos[1].d;
             this.lstCuenta = datos[2].d.filter((f: any) => f.ClaseCuenta == "D");
-        
+           
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
 
@@ -244,12 +249,12 @@ export class NuevoChequeComponent {
               this.val.Get("txtNoDoc").setValue(i_C?.Consecutivo);
               this.IdMoneda = String(i_C?.IdMoneda);
               this.V_Calcular();
-            }
-            
+            }       
 
 
             this.V_TasaCambios();
             if(this.esModal) this.v_Visualizar();
+
 
 
           }
@@ -318,11 +323,6 @@ export class NuevoChequeComponent {
     );
   }
   
-
-
-  
-
-
   
 
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
@@ -349,6 +349,13 @@ export class NuevoChequeComponent {
 
     }
 
+
+
+  }
+
+  public v_Select_CuentaC(event: any): void {
+
+    let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.option.value)!;
 
 
   }
@@ -717,11 +724,21 @@ export class NuevoChequeComponent {
       };
     }
 
+    // this.filteredCuenta1 = this.val.Get("txtCuentaA").valueChanges.pipe(
+    //   startWith(""),
+    //   map((value: string) => {
+    //     return this.lstCuenta.filter((option) =>
+    //       option.Filtro.toLowerCase().includes(
+    //         (value || "").toLowerCase().trimStart()
+    //       )
+    //     );
+    //   })
+    // );
+
 
     let chk: any = document.querySelector("#chkAnulado");
     if (chk != undefined) chk.bootstrapToggle();
-
-
+    
     
   }
 }
