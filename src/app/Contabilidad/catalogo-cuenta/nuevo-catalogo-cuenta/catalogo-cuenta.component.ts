@@ -69,7 +69,8 @@ export class CatalogoCuentaComponent {
 
         this.val.Get("cmbNivel").setValue("1");
         this.val.Get("cmbGrupo").setValue(this.lstGrupos[0]?.IdGrupo);
-        this.val.Get("txtCuenta").setValue("");A        this.val.Get("txtDescripcion").setValue("");
+        this.val.Get("txtCuenta").setValue("");
+        this.val.Get("txtDescripcion").setValue("");
         this.val.Get("txtCuentaPadre").setValue("");
         this.val.Get("txtDescripcionPadre").setValue("");
         this.val.Get("cmbClase").setValue("");
