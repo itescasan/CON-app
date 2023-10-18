@@ -217,7 +217,7 @@
                             <div class="row">
 
 
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                <form autocomplete="off">
                                     <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable"
                                         valueKey="CuentaContable" displayKey="NombreCuenta"
                                         id="txtCuenta{{det.NoLinea}}" formControlName="txtCuenta{{det.NoLinea}}"
@@ -243,7 +243,7 @@
                                 <div class="header-cell"><span>Referencia</span></div>
                             </div>
                             <div class="row">
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                <form autocomplete="off">
                                     <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}"
                                         formControlName="txtReferencia{{det.NoLinea}}" [(ngModel)]="det.Referencia"
                                         (keydown.Enter)="V_Focus('Debito/Credito', det);">
@@ -261,7 +261,7 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                <form autocomplete="off">
                                     <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Debito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
@@ -282,7 +282,7 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                <form autocomplete="off">
                                     <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Credito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"

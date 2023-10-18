@@ -52,7 +52,6 @@ export class TransferenciaCuentaComponent {
   public TC: number;
 
 
-
   constructor(public cFunciones: Funciones, private GET: getTransferencia, private POST : postTrasnferencia) {
 
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una serie.");
@@ -67,6 +66,8 @@ export class TransferenciaCuentaComponent {
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
+
+    this.valTabla.IsTable = true;
     
     this.v_Evento("Iniciar");
 
@@ -134,8 +135,9 @@ export class TransferenciaCuentaComponent {
   public cmbCuentaBancaria: IgxComboComponent;
 
   public v_Select_CuentaBanco(event: any) {
-    if (event.added.length) {
-      event.newSelection = event.added;
+    this.val.Get("cmbCuentaBancaria").setValue("");
+    if (event.added.length == 1) {
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
       let _Item  = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.added);
 
       this.val.Get("cmbCuentaBancaria").setValue([event.added]);
@@ -164,8 +166,9 @@ export class TransferenciaCuentaComponent {
   public cmbBodega: IgxComboComponent;
 
   public v_Select_Bodega(event: any) {
-    if (event.added.length) {
-      event.newSelection = event.added;
+    this.val.Get("cmbBodega").setValue("");
+    if (event.added.length == 1) {
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
       this.val.Get("cmbBodega").setValue([event.added]);
     }
   }
@@ -326,9 +329,9 @@ export class TransferenciaCuentaComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-
-    if (event.added.length) {
-      event.newSelection = event.added;
+    this.val.Get("txtCuenta" + det.NoLinea).setValue("");
+    if (event.added.length == 1) {
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
 
       let txtCuenta: IgxComboComponent = event.owner
 
@@ -454,6 +457,7 @@ export class TransferenciaCuentaComponent {
   }
 
   V_Eliminar(item: iAsientoDetalle) {
+
     let i = this.lstDetalle.data.findIndex(f => f.NoLinea == item.NoLinea);
 
     if (i == -1) return;
