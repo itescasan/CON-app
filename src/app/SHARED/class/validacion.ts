@@ -213,7 +213,7 @@ export class Validacion {
       span?.remove();
 
 
-     if(this.IsTable && frm.value == undefined){
+     if(this.IsTable && (String(frm.value) == "undefined" || String(frm.value) == "")){
       frm.setValue((<HTMLInputElement>document.getElementById(f.Id)).value);
      }
   
