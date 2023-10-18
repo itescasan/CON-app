@@ -46,7 +46,7 @@ export class AsientoContableComponent {
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
   public TC: number;
-  private Visualizando : boolean = false;
+
 
   public overlaySettings: OverlaySettings = {};
 
@@ -65,7 +65,7 @@ export class AsientoContableComponent {
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("TxtTC", "1", "LEN>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
 
-    
+    this.valTabla.IsTable = true;
 
    this.v_Evento("Iniciar");
   }
@@ -119,8 +119,9 @@ export class AsientoContableComponent {
   public cmbSerie: IgxComboComponent;
 
   public v_Select_Serie(event: any) {
-    if (event.added.length) {
-      event.newSelection = event.added;
+    this.val.Get("cmbSerie").setValue("");
+    if (event.added.length == 1) {
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
       this.val.Get("cmbSerie").setValue([event.added]);
       this.v_Consecutivo();
     }
@@ -142,8 +143,9 @@ export class AsientoContableComponent {
   public cmbBodega: IgxComboComponent;
 
   public v_Select_Bodega(event: any) {
-    if (event.added.length) {
-      event.newSelection = event.added;
+    this.val.Get("txtBodega").setValue("");
+    if (event.added.length == 1) {
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
       this.val.Get("txtBodega").setValue([event.added]);
     }
   }
@@ -163,11 +165,12 @@ export class AsientoContableComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-    if(this.Visualizando) return;
-
-    if (event.added.length) {
-      event.newSelection = event.added;
-
+    
+    this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
+    if (event.added.length == 1 ) {
+      
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
+      this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([event.added]);
       let txtCuenta: IgxComboComponent = event.owner
 
 
@@ -263,6 +266,8 @@ export class AsientoContableComponent {
 
   V_Agregar() {
 
+
+
     let det: iAsientoDetalle = {} as iAsientoDetalle;
     let i: number = 1;
 
@@ -293,6 +298,7 @@ export class AsientoContableComponent {
   }
 
   V_Eliminar(item: iAsientoDetalle) {
+
     let i = this.lstDetalle.data.findIndex(f => f.NoLinea == item.NoLinea);
 
     if (i == -1) return;
@@ -339,7 +345,7 @@ export class AsientoContableComponent {
 
   public v_Visualizar() {
 
-    this.Visualizando = true;
+
     this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
@@ -357,43 +363,52 @@ export class AsientoContableComponent {
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.AsientosContablesDetalle));
 
 
-    let x: number = 1;
-    this.lstDetalle.data.forEach(f => {
-      this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
-      this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-      x++;
-    });
-
+   let x: number = 1;
+   
 
     setTimeout(() => {
 
-
-      x = 1;
-
       this.lstDetalle.data.forEach(f => {
-
-
+        this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+        this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+  
+  
+        
         let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
         txtCuenta.setSelectedItem(f.CuentaContable);
-   
-
- 
-      document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
-      document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
-
-      if (f.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
-
-      if (f.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
-
-
-
+  
+  
+        if(!this.esAuxiliar)
+        {
+          document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+    
+          if (f.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
+    
+          if (f.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
+  
+          
+        }
+        else
+        {
+          txtCuenta.disabled = true;
+          document.getElementById("txtCuenta" + x)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+        
+        }
+  
+        
+  
         x++;
       });
+  
 
-      this.Visualizando = false;
 
-    }, 500);
 
+     
+    }, 250);
 
 
 

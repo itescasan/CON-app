@@ -192,9 +192,9 @@
                             <div class="row">
 
 
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                <form autocomplete="off">
                                     <igx-combo [data]="lstCuenta"  [(ngModel)]="det.CuentaContable" valueKey="CuentaContable" displayKey="NombreCuenta"
-                                        id="txtCuenta{{det.NoLinea}}" formControlName="txtCuenta{{det.NoLinea}}"
+                                        id="txtCuenta{{det.NoLinea}}"   [ngModelOptions]="{standalone: true}"
                                         [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
                                         (selectionChanging)="v_Select_Cuenta($event, det)"
                                         (keyup)="v_Enter_Cuenta($event, det);" >
@@ -216,9 +216,9 @@
                                 <div class="header-cell"><span>Referencia</span></div>
                             </div>
                             <div class="row">
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
-                                    <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}"
-                                    formControlName="txtReferencia{{det.NoLinea}}"  [(ngModel)]="det.Referencia"   (keydown.Enter)="V_Focus('Debito/Credito', det);"
+                                <form autocomplete="off">
+                                    <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}"  
+                                      [(ngModel)]="det.Referencia"    (keydown.Enter)="V_Focus('Debito/Credito', det);"   [ngModelOptions]="{standalone: true}"
                                         >
                                 </form>
                                
@@ -233,7 +233,7 @@
                                 <div class="header-cell"><span>Débito</span></div>
                             </div>
                             <div class="row">
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                <form autocomplete="off">
                                     <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Debito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
@@ -255,7 +255,7 @@
                      
                             <div class="row">
 
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                <form autocomplete="off">
                                     <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Credito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
@@ -288,7 +288,7 @@
 
         </table>
 
-        <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+        <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"  *ngIf="!esAuxiliar"
             [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
         </div>
         <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
