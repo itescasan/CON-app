@@ -24,6 +24,10 @@ export class getCuentaContable{
       return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Datos");
    }
 
+   public GetCuentaNueva(Nivel : number, Grupo : number, CuentaPadre : string) : Observable<string>{
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/GetCuentaNueva?Nivel=" + Nivel + "&Grupo=" + Grupo + "&CuentaPadre=" + CuentaPadre);
+ }
+
    public Get() : Observable<string>{
     return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CatalogoCuenta/Get");
  }

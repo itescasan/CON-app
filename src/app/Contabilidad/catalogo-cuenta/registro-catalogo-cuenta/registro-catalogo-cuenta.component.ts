@@ -56,10 +56,13 @@ export class RegistroCatalogoCuentaComponent {
       dialogRef.componentInstance.esModal = true;
 
       dialogRef.componentInstance.v_CargarDatos();
+      
+      dialogRef.componentInstance.v_Nivel(e.Nivel);
+      dialogRef.componentInstance.Prefix = e.CuentaPadre + (e.Nivel >= 4 ? "-" : "");
 
       dialogRef.componentInstance.val.Get("cmbNivel").setValue(e.Nivel);
       dialogRef.componentInstance.val.Get("cmbGrupo").setValue(e.IdGrupo);
-      dialogRef.componentInstance.val.Get("txtCuenta").setValue(e.CuentaContable);
+      dialogRef.componentInstance.val.Get("txtCuenta").setValue(e.CuentaContable.replace(e.CuentaPadre + "-", ""));
       dialogRef.componentInstance.val.Get("txtDescripcion").setValue(e.NombreCuenta);
       dialogRef.componentInstance.val.Get("cmbClase").setValue(e.ClaseCuenta);
       dialogRef.componentInstance.val.Get("cmbNaturaleza").setValue(e.Naturaleza);
