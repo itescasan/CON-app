@@ -166,7 +166,7 @@ export class AsientoContableComponent {
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
     
-    this.val.Get("txtCuenta" + det.NoLinea).setValue("");
+    this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
     if (event.added.length == 1 ) {
       
       if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
