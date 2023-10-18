@@ -8,8 +8,6 @@ import { getServidor } from '../../GET/get-servidor';
 import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
 import { iDatos } from '../../interface/i-Datos';
 import { Funciones } from '../../class/cls_Funciones';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { WaitComponent } from '../wait/wait.component';
 import { CatalogoCuentaComponent } from 'src/app/Contabilidad/catalogo-cuenta/nuevo-catalogo-cuenta/catalogo-cuenta.component';
 import { RegistroCatalogoCuentaComponent } from 'src/app/Contabilidad/catalogo-cuenta/registro-catalogo-cuenta/registro-catalogo-cuenta.component';
 import { EjercicioFiscalComponent } from 'src/app/Contabilidad/ejercicio-fiscal/nuevo-ejercicio-fiscal/ejercicio-fiscal.component';

@@ -1,5 +1,4 @@
-import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings, scaleInCenter, scaleOutCenter } from 'igniteui-angular';
@@ -46,8 +45,7 @@ export class AsientoContableComponent {
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
   public TC: number;
-
-
+ 
   public overlaySettings: OverlaySettings = {};
 
 
@@ -64,8 +62,6 @@ export class AsientoContableComponent {
     this.val.add("txtObservaciones", "1", "LEN>", "0", "Observaciones", "Ingrese una observacion.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("TxtTC", "1", "LEN>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
-
-    this.valTabla.IsTable = true;
 
    this.v_Evento("Iniciar");
   }
@@ -346,6 +342,9 @@ export class AsientoContableComponent {
   public v_Visualizar() {
 
 
+    
+
+
     this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
@@ -401,6 +400,7 @@ export class AsientoContableComponent {
   
         
   
+
         x++;
       });
   
@@ -419,24 +419,32 @@ export class AsientoContableComponent {
 
   public v_CargarDatos(): void {
 
-
     document.getElementById("btnRefrescar-Asiento")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
-      WaitComponent,
-      {
-        panelClass: "escasan-dialog-full-blur",
-        data: "",
-      }
-    );
+  
+      let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+     
 
+      if(dialogRef == undefined)
+      {
+        dialogRef = this.cFunciones.DIALOG.open(
+          WaitComponent,
+          {
+            panelClass: "escasan-dialog-full-blur",
+            data: "",
+            id : "wait"
+          }
+        );
+  
+      }
+
+     
 
 
 
     this.GET.Datos().subscribe(
       {
         next: (data) => {
-
 
           dialogRef.close();
           let _json: any = data;
@@ -485,6 +493,8 @@ export class AsientoContableComponent {
 
 
   }
+
+
 
 
   public V_TasaCambios(): void {
@@ -689,11 +699,12 @@ export class AsientoContableComponent {
     }
 
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+    let dialogRef= this.cFunciones.DIALOG.open(
       WaitComponent,
       {
         panelClass: "escasan-dialog-full-blur",
         data: "",
+        id: "wait"
       }
     );
 

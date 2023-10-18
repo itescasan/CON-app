@@ -123,6 +123,7 @@ export class RegistroAsientoContableComponent {
       }
     );
     
+    
        
     dialogRef.afterOpened().subscribe(s =>{
       dialogRef.componentInstance.FILA = e;
