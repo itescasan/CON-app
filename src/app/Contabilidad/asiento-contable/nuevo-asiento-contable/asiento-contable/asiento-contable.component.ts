@@ -163,7 +163,7 @@ export class AsientoContableComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-    if(!this.Visualizando) return;
+    if(this.Visualizando) return;
 
     if (event.added.length) {
       event.newSelection = event.added;

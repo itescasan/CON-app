@@ -210,27 +210,6 @@
                         </div>
 
 
-                        <!--
-                        <div class="col-12 col-lg-3">
-                            <div class="row">
-                                <div class="header-cell"><span>Descripción</span></div>
-                            </div>
-                            <div class="row">
-
-                                <textarea type="textarea" class="form-control"
-                                id="txtDescripcion{{det.NoLinea}}" [(ngModel)]="det.Descripcion"
-                                (keydown.Enter)="V_Focus('Referencia', det);" autocomplete="off"></textarea>
-
-                               
-
-                               
-
-                            </div>
-
-
-                        </div>
-
-                    -->
 
                         <div class="col-12 col-lg-3">
                             <div class="row">
@@ -254,11 +233,14 @@
                                 <div class="header-cell"><span>Débito</span></div>
                             </div>
                             <div class="row">
-                                <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"
+                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                    <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Debito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
                                     (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
                                     (change)="V_Calcular();" autocomplete="off">
+                                </form>
+                               
 
                             </div>
 
@@ -270,12 +252,18 @@
                             <div class="row">
                                 <div class="header-cell"><span>Crédito</span></div>
                             </div>
+                     
                             <div class="row">
-                                <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"
+
+                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                    <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Credito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
                                     (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
                                     (change)="V_Calcular();" autocomplete="off">
+                                </form>
+                                
+                               
 
                             </div>
 
