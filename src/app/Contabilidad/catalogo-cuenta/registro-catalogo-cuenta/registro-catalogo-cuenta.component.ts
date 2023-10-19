@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewChildren } from '@angular/core';
 import { CatalogoCuentaComponent } from '../nuevo-catalogo-cuenta/catalogo-cuenta.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Validacion } from 'src/app/SHARED/class/validacion';
@@ -10,6 +10,7 @@ import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
+import { IgxComboComponent } from 'igniteui-angular';
 
 
 
@@ -56,10 +57,13 @@ export class RegistroCatalogoCuentaComponent {
       dialogRef.componentInstance.esModal = true;
 
       dialogRef.componentInstance.v_CargarDatos();
+      
+      dialogRef.componentInstance.v_Nivel(e.Nivel);
+      dialogRef.componentInstance.Prefix = e.CuentaPadre + (e.Nivel >= 4 ? "-" : "");
 
       dialogRef.componentInstance.val.Get("cmbNivel").setValue(e.Nivel);
       dialogRef.componentInstance.val.Get("cmbGrupo").setValue(e.IdGrupo);
-      dialogRef.componentInstance.val.Get("txtCuenta").setValue(e.CuentaContable);
+      dialogRef.componentInstance.val.Get("txtCuenta").setValue(e.CuentaContable.replace(e.CuentaPadre + "-", ""));
       dialogRef.componentInstance.val.Get("txtDescripcion").setValue(e.NombreCuenta);
       dialogRef.componentInstance.val.Get("cmbClase").setValue(e.ClaseCuenta);
       dialogRef.componentInstance.val.Get("cmbNaturaleza").setValue(e.Naturaleza);

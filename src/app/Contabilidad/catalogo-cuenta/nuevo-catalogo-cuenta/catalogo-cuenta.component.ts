@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChildren } from '@angular/core';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import * as $ from 'jquery';
 import { Observable, catchError, map, startWith, tap } from 'rxjs';
@@ -11,6 +11,7 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iGrupo } from 'src/app/Interface/Contabilidad/i-Grupo';
 import { postCuentaContable } from '../CRUD/POST/post-catalogo-cuenta';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
+import { IgxComboComponent } from 'igniteui-angular';
 
 @Component({
   selector: 'app-catalogo-cuenta',
@@ -69,7 +70,7 @@ export class CatalogoCuentaComponent {
 
         this.val.Get("cmbNivel").setValue("1");
         this.val.Get("cmbGrupo").setValue(this.lstGrupos[0]?.IdGrupo);
-        this.val.Get("txtCuenta").setValue();
+        this.val.Get("txtCuenta").setValue("");
         this.val.Get("txtDescripcion").setValue("");
         this.val.Get("txtCuentaPadre").setValue("");
         this.val.Get("txtDescripcionPadre").setValue("");
@@ -97,7 +98,7 @@ export class CatalogoCuentaComponent {
 
     let i_Cuenta: iCuenta = this.lstCuentaPadre.find(f => f.CuentaContable == event.option.value)!;
 
-    this.Prefix = i_Cuenta.CuentaContable + (i_Cuenta.Nivel >= 4 ? "-" : " ");
+    this.Prefix = i_Cuenta.CuentaContable + (i_Cuenta.Nivel >= 4 ? "-" : "");
     this.val.Get("txtDescripcionPadre").setValue(i_Cuenta.NombreCuenta);
 
     this.val.Get("txtCuenta").setValue("");
@@ -105,6 +106,8 @@ export class CatalogoCuentaComponent {
 
     this.val.Get("txtCuenta").enable();
     this.val.Get("txtDescripcion").enable();
+
+    this.GetCuentaNueva();
   }
 
 
@@ -113,9 +116,10 @@ export class CatalogoCuentaComponent {
     this.val.Get("chkCuentaBloqueada").setValue(event.target.checked);
   }
 
-  public v_Nivel(event: any): void {
+  public v_Nivel(value: any): void {
 
-    let value: string = event.target.value;
+
+    if(value.value != undefined) value = Number(value.value);
 
 
     this.Prefix = "";
@@ -129,32 +133,39 @@ export class CatalogoCuentaComponent {
 
     switch (value) {
 
-      case "1":
+      case 1:
         this.Mascara = "0";
+        this.GetCuentaNueva();
         break;
 
-      case "2":
-        this.Mascara = " 0";
+      case 2:
+        this.Mascara = "0";
+        this.GetCuentaNueva();
         break;
 
-      case "3":
-        this.Mascara = " 0";
+      case 3:
+        this.Mascara = "0";
+        this.GetCuentaNueva();
         break;
 
-      case "4":
-        this.Mascara = " 0";
+      case 4:
+        this.Mascara = "0";
+        this.GetCuentaNueva();
         break;
 
-      case "5":
-        this.Mascara = " 00";
+      case 5:
+        this.Mascara = "0000";
+        this.GetCuentaNueva();
         break;
 
-      case "6":
-        this.Mascara = " 00";
+      case 6:
+        this.Mascara = "000";
+        this.GetCuentaNueva();
         break;
 
-      case "7":
-        this.Mascara = " 00";
+      case 7:
+        this.Mascara = "000";
+        this.GetCuentaNueva();
         break;
     }
 
@@ -270,7 +281,10 @@ export class CatalogoCuentaComponent {
           }
 
         },
-        complete: () => { document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled"); }
+        complete: () => { 
+          document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled");
+          this.GetCuentaNueva(); 
+        }
       }
     );
 
@@ -278,8 +292,60 @@ export class CatalogoCuentaComponent {
   }
 
 
+  private GetCuentaNueva(): void{
+
+    if(this.esModal) return;
+
+    this.val.Get("txtCuenta").setValue("");
+
+    if(this.val.Get("cmbNivel").value == 1) return
+
+    this.GET.GetCuentaNueva( this.val.Get("cmbNivel").value, this.val.Get("cmbGrupo").value, this.val.Get("txtCuentaPadre").value).subscribe(
+      {
+        next: (data) => {
+
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+    
+            this.val.Get("txtCuenta").setValue(_json["d"].d);
+
+      
+          }
+
+        },
+        error: (err) => {
+
+
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
+          {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {  }
+      }
+    );
+
+
+
+   
+  }
+
   public v_Guardar() : void{
 
+  
     this.val.EsValido();
 
 
@@ -304,7 +370,7 @@ export class CatalogoCuentaComponent {
 
     let Fila : iCuenta = {} as iCuenta;
 
-    Fila.CuentaContable = this.val.Get("txtCuenta").value;
+    Fila.CuentaContable = this.Prefix + this.val.Get("txtCuenta").value;
     Fila.NombreCuenta = this.val.Get("txtDescripcion").value;
     Fila.Nivel = this.val.Get("cmbNivel").value;
     Fila.IdGrupo = this.val.Get("cmbGrupo").value;

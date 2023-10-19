@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings, scaleInCenter, scaleOutCenter } from 'igniteui-angular';
@@ -33,6 +33,9 @@ export class AuxiliarCuentaComponent {
   lstBodega: iBodega[] = [];
 
   public overlaySettings: OverlaySettings = {};
+
+  @ViewChildren(IgxComboComponent)
+  public cmbCombo: QueryList<IgxComboComponent>;
 
 
   constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta, private GET_BODEGA : getBodega
@@ -92,6 +95,7 @@ export class AuxiliarCuentaComponent {
       {
         panelClass: "escasan-dialog-full-blur",
         data: "",
+        id: "wait"
       }
     );
 
@@ -101,7 +105,8 @@ export class AuxiliarCuentaComponent {
         next: (data) => {
 
 
-          dialogRef.close();
+          
+   
           let _json: any = data;
 
           if (_json["esError"] == 1) {
@@ -122,25 +127,26 @@ export class AuxiliarCuentaComponent {
               AsientoContableComponent,
               {
                 panelClass: "escasan-dialog-full",
-                disableClose: true
+                disableClose: true,
               }
             );
-
+            dialogAsiento.componentInstance.esModal = true;
 
             dialogAsiento.afterOpened().subscribe(s => {
-              dialogAsiento.componentInstance.FILA = Asiento;
-              dialogAsiento.componentInstance.esModal = true;
-              dialogAsiento.componentInstance.esAuxiliar = (e.Editar == 1? false : true);
 
-              dialogAsiento.componentInstance.v_CargarDatos();
+
               
+              dialogAsiento.componentInstance.FILA = Asiento;
+              dialogAsiento.componentInstance.esAuxiliar = (e.Editar == 1? false : true);
+            
+
 
             });
 
 
 
             dialogAsiento.afterClosed().subscribe(s => {
-              this.v_CargarDatos();
+              //this.v_CargarDatos();
             });
 
 
@@ -175,13 +181,21 @@ export class AuxiliarCuentaComponent {
   public v_BODEGA(): void {
 
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
-      WaitComponent,
+    let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+
+
+      if(dialogRef == undefined)
       {
-        panelClass: "escasan-dialog-full-blur",
-        data: "",
+        dialogRef = this.cFunciones.DIALOG.open(
+          WaitComponent,
+          {
+            panelClass: "escasan-dialog-full-blur",
+            data: "",
+            id : "wait"
+          }
+        );
+  
       }
-    );
 
 
 
@@ -236,13 +250,21 @@ export class AuxiliarCuentaComponent {
 
     document.getElementById("btnRefrescar-Auxiliar")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
-      WaitComponent,
+    let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+
+
+      if(dialogRef == undefined)
       {
-        panelClass: "escasan-dialog-full-blur",
-        data: "",
+        dialogRef = this.cFunciones.DIALOG.open(
+          WaitComponent,
+          {
+            panelClass: "escasan-dialog-full-blur",
+            data: "",
+            id : "wait"
+          }
+        );
+  
       }
-    );
 
 
 
@@ -325,6 +347,7 @@ export class AuxiliarCuentaComponent {
 
   ngAfterViewInit(): void {
     ///CAMBIO DE FOCO
+    this.val.Combo(this.cmbCombo);
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBodega", undefined);
     this.val.addFocus("txtBodega", "txtCuenta-Asiento", undefined);
