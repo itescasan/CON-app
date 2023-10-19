@@ -345,7 +345,7 @@ export class AsientoContableComponent {
 
     setTimeout(() => {
       document?.getElementById("txtCuenta" + x)?.focus();
-      document.getElementById("txtDescripcion" + x)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 

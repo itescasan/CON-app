@@ -14,6 +14,18 @@ import { IgxComboComponent } from "igniteui-angular";
 import { QueryList } from "@angular/core";
 
 
+function getRectArea(elmento : HTMLElement) {
+
+  let _element_next  = lstFocus.find(f => f.Id == elmento.id)!;
+  if(_element_next == undefined) return elmento;
+
+  elmento  = document?.getElementById(_element_next.IdNext)!;
+
+  if(elmento.getAttribute("disabled") == undefined) return elmento;
+  
+  return getRectArea(elmento)
+
+}
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -153,14 +165,10 @@ export class Validacion {
     if(_element_next.IdNext == "") return;
     
 
-    let elmento :HTMLElement = document?.getElementById(_element_next.IdNext)!;
+    let elmento :HTMLElement = document?.getElementById(_element_next.Id)!;
+    elmento = getRectArea(elmento);
 
-    if(elmento.getAttribute("disabled") != undefined)
-    {
-      _element_next  = lstFocus.find(f => f.Id == elmento.id)!;
-      elmento  = document?.getElementById(_element_next.IdNext)!;
-    }
-
+   
 
 
 
