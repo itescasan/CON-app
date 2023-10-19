@@ -151,8 +151,19 @@ export class Validacion {
 
     if(_element_next == undefined) return;
     if(_element_next.IdNext == "") return;
+    
 
     let elmento :HTMLElement = document?.getElementById(_element_next.IdNext)!;
+
+    if(elmento.getAttribute("disabled") != undefined)
+    {
+      _element_next  = lstFocus.find(f => f.Id == elmento.id)!;
+      elmento  = document?.getElementById(_element_next.IdNext)!;
+    }
+
+
+
+
     elmento?.focus();
 
    

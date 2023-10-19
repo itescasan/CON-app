@@ -419,8 +419,8 @@ export class TransferenciaCuentaComponent {
         document?.getElementById("txt" + columna + det.NoLinea)?.focus();
       }
       else {
-        if (det.Naturaleza == "D") document?.getElementById("txtDebito" + det.NoLinea)?.focus();
-        if (det.Naturaleza == "C") document?.getElementById("txtCredito" + det.NoLinea)?.focus();
+        //if (det.Naturaleza == "D") document?.getElementById("txtDebito" + det.NoLinea)?.focus();
+        //if (det.Naturaleza == "C") document?.getElementById("txtCredito" + det.NoLinea)?.focus();
 
       }
 

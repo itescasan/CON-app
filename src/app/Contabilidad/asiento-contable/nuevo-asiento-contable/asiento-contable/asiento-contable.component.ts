@@ -167,7 +167,7 @@ export class AsientoContableComponent {
       if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
 
       let txtCuenta: IgxComboComponent = event.owner
-
+      
 
       let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
    
