@@ -14,11 +14,11 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { iTransferenciaCunta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
-import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
+import { postTrasnferencia } from '../Contabilidad/Operaciones-bancarias/CRUD/POST/post-Transferencia';
 import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
-import { getCheques } from '../CRUD/GET/get-Cheques';
+import { getCheques } from '../Contabilidad/Operaciones-bancarias/CRUD/GET/get-Cheques';
 import { Observable, catchError, map, startWith, tap } from 'rxjs';
-import { getCuentaContable } from '../../catalogo-cuenta/CRUD/GET/get-CatalogoCuenta';
+
 
 
 @Component({
@@ -48,7 +48,7 @@ export class NuevoChequeComponent {
 
   public FILA: iTransferenciaCunta = {} as iTransferenciaCunta;
 
-  filteredCuenta1: Observable<iCuenta[]> | undefined;
+  filteredCuenta: Observable<iCuenta[]> | undefined;
 
   public esModal: boolean = false;
   public dec_TotalDebe: number = 0;
@@ -60,27 +60,29 @@ export class NuevoChequeComponent {
 
   constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postTrasnferencia) {
 
-    this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una serie.");
+    this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una Cuenta de Banco.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "Nombre Cuenta", "No se ha definido el nombre de la cuenta.");
     this.val.add("txtBanco", "1", "LEN>", "0", "Banco", "No se ha definido el banco.");
     this.val.add("cmbBodega", "1", "LEN>", "0", "Sucursal", "Seleccione una sucursal.");
     this.val.add("txtNoDoc", "1", "LEN>", "0", "No Doc", "No se ha definido el número de consecutivo.");
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
-    this.val.add("txtBeneficiario", "1", "LEN>", "0", "Fecha", "No se ha especificado el beneficiario de la transferencia.");
+    this.val.add("txtBeneficiario", "1", "LEN>", "0", "Fecha", "No se ha especificado el beneficiario del Cheque.");
     this.val.add("txtMoneda", "1", "LEN>", "0", "Fecha", "No se ha especificado la moneda de la cuenta.");
     this.val.add("TxtTC", "1", "DEC>", "0", "Fecha", "No se ha configurado el tipo de cambio.");
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
+    this.val.add("cmbCuentaC", "1", "LEN>", "0", "No Cuenta", "Seleccione una Cuenta Contable.");
+
+    this.val.add("txtIrFuente", "1", "LEN>=", "0", "IR", "Ir en la fuente.")
+    this.val.add("txtServP", "1", "LEN>=", "0", "SP", "Servicios Profecionales.")
+    this.val.add("txtAlcaldias", "1", "LEN>=", "0", "Alcaldias", "Alcaldias")
+    this.val.add("txtIva", "1", "LEN>=", "0", "IVA", "IVA.")
+    this.val.add("txtTcCompraD", "1", "LEN>=", "0", "Compra Divisa", "Compra Divisa.")
+
     
-    this.v_Evento("Iniciar");
     
   }
-
-
-
-
-
   
   public v_Evento(e: string): void {
     switch (e) {
@@ -112,6 +114,14 @@ export class NuevoChequeComponent {
         this.val.Get("txtConcepto").setValue("");
         this.val.Get("txtTotalDolar").setValue("0.00");
         this.val.Get("txtTotalCordoba").setValue("0.00");
+        this.val.Get("cmbCuentaC").setValue("");
+
+        this.val.Get("txtIrFuente").setValue("");
+        this.val.Get("txtServP").setValue("");
+        this.val.Get("txtAlcaldias").setValue("");
+        this.val.Get("txtIva").setValue("");
+        this.val.Get("txtTcCompraD").setValue("");
+        
 
 
         this.val.Get("txtNombreCuenta").disable();
@@ -121,8 +131,14 @@ export class NuevoChequeComponent {
         this.val.Get("TxtTC").disable();
         this.val.Get("txtTotalDolar").disable();
         this.val.Get("txtTotalCordoba").disable();
+        
 
+        
+       // document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled");
 
+        
+       
+    
         if (this.lstBodega.length > 0) this.cmbBodega?.setSelectedItem(this.lstBodega[0].Codigo);
 
 
@@ -152,6 +168,15 @@ export class NuevoChequeComponent {
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
       this.IdMoneda = String(_Item?.IdMoneda);
       
+      //document.getElementById("btnContabilizar-Cheques")?.removeAttribute("disabled");
+
+      this.val.Get("txtTotalDolar").setValue("0.00");
+      this.val.Get("txtTotalCordoba").setValue("0.00");
+      this.val.Get("txtIrFuente").setValue("");
+      this.val.Get("txtServP").setValue("");
+      this.val.Get("txtAlcaldias").setValue("");
+      this.val.Get("txtIva").setValue("");
+      this.val.Get("txtTcCompraD").setValue("");
     }
   }
 
@@ -186,7 +211,24 @@ export class NuevoChequeComponent {
     }
   }
 
+ @ViewChild("cmbCuentaC", { static: false })
+ public cmbCuentaC: IgxComboComponent;
 
+ public v_Select_Cuenta2(event: any) {
+  if (event.added.length) {
+    event.newSelection = event.added;
+    this.val.Get("cmbCuentaC").setValue([event.added]);
+  }
+}
+
+public v_Enter_Cuenta2(event: any) {
+  if (event.key == "Enter") {
+    let _Item: iCuenta = this.cmbBodega.dropdown.focusedItem.value;
+    this.cmbBodega.setSelectedItem(_Item.NombreCuenta);
+    this.val.Get("cmbCuentaC").setValue([_Item.CuentaContable]);
+
+  }
+}
 
   public v_Anulado(event: any): void {
     this.val.Get("chkAnulado").setValue(event.target.checked);
@@ -351,14 +393,7 @@ export class NuevoChequeComponent {
 
 
 
-  }
-
-  public v_Select_CuentaC(event: any): void {
-
-    let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.option.value)!;
-
-
-  }
+  }  
 
   public v_Enter_Cuenta(event: any, det: iAsientoDetalle) {
 
@@ -705,6 +740,22 @@ export class NuevoChequeComponent {
   
   }
 
+  public HabiliarValor(event: any): void {
+
+    if ( this.val.Get("txtMoneda").value == "Cordobas" ) {
+      this.val.Get("txtTotalDolar").disable();
+      this.val.Get("txtTotalCordoba").enable();
+    }else {
+      if (this.val.Get("txtMoneda").value == "Dolares") {
+        this.val.Get("txtTotalDolar").enable();
+      this.val.Get("txtTotalCordoba").desable();
+      }      
+    }
+    
+   
+    this.val.Get("chkBloqueadaEF").setValue(event.target.checked);
+  }
+
 
   private v_Visualizar()
   {
@@ -713,7 +764,7 @@ export class NuevoChequeComponent {
   
   ngOnInit(): void {
 
-
+    this.v_Evento("Iniciar");   
     this.overlaySettings = {};
 
     if (window.innerWidth <= 992) {
@@ -724,18 +775,7 @@ export class NuevoChequeComponent {
       };
     }
 
-    // this.filteredCuenta1 = this.val.Get("txtCuentaA").valueChanges.pipe(
-    //   startWith(""),
-    //   map((value: string) => {
-    //     return this.lstCuenta.filter((option) =>
-    //       option.Filtro.toLowerCase().includes(
-    //         (value || "").toLowerCase().trimStart()
-    //       )
-    //     );
-    //   })
-    // );
-
-
+      
     let chk: any = document.querySelector("#chkAnulado");
     if (chk != undefined) chk.bootstrapToggle();
     

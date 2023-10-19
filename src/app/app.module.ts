@@ -43,8 +43,8 @@ import { TransferenciaCuentaComponent } from './Contabilidad/Operaciones-bancari
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { RegistroTrasnferenciaComponent } from './Contabilidad/Operaciones-bancarias/registro-trasnferencia/registro-trasnferencia.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import { NuevoChequeComponent } from './Contabilidad/Operaciones-bancarias/nuevo-cheque/nuevo-cheque.component';
-import { RegistroChequesComponent } from './Contabilidad/Operaciones-bancarias/registro-cheques/registro-cheques.component';
+import { NuevoChequeComponent } from './nuevo-cheque/nuevo-cheque.component';
+import { RegistroChequesComponent } from './registro-cheques/registro-cheques.component';
 
 @NgModule({
   declarations: [

@@ -12,14 +12,14 @@
                             displayKey="DisplayKey" id="cmbCuentaBancaria" formControlName="cmbCuentaBancaria"
                             placeholder="No Cuenta" searchPlaceholder="Seleccione una serie..." [autoFocusSearch]="true"
                             [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CuentaBanco($event)"
-                            (keyup)="v_Enter_CuentaBanco($event);">
+                            (keyup)="v_Enter_CuentaBanco($event);" >
                             <label igxLabel>Banco</label>
                             <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
                         </igx-combo>
                     </div>
 
 
-                    <div class="col-12 col-sm-12 col-md-2 col-lg-2 mb-1">
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
                         <div class="input-group">
 
                             <div class="form-floating">
@@ -31,7 +31,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
+                    <div class="col-12 col-sm-12 col-md-2 col-lg-2 mb-1">
                         <div class="input-group">
 
                             <div class="form-floating">
@@ -44,7 +44,7 @@
                     </div>
 
 
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
+                    <div class="col-12 col-sm-12 col-md-2 col-lg-2 mb-1">
                         <div class="input-group">
                             <div class="form-floating">
                                 <input type="text" class="form-control" placeholder="Moneda" id="txtMoneda"
@@ -52,14 +52,9 @@
                                 <label for="txtMoneda">Moneda</label>
                             </div>
                         </div>
-                    </div>                    
-                </div>
+                    </div>
 
-                <div class="row linea-bottom-secundario mt-2">
-
-                    
-
-                    <div class="col-6 col-sm-6 col-md-4 col-lg-4 mb-1">
+                    <div class="col-12 col-sm-12 col-md-2 col-lg-2 mb-1">
 
                         <div class="input-group">
                             <span class="input-group-text secundario">N°CK</span>
@@ -72,6 +67,10 @@
                         </div>
                     </div>
 
+                </div>
+
+                <div class="row linea-bottom-secundario mt-2">
+             
                     <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
 
                         <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
@@ -84,62 +83,18 @@
                         </igx-combo>
                     </div>
 
-
-                    <div class="col-6 col-sm-6 col-md-4 col-lg-2 offset-lg-2 mb-1">
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-calendar"></i></span>
                             <div class="form-floating">
                                 <input type="date" id="txtFecha" class="form-control" placeholder="Fecha"
                                     aria-label="Fecha" formControlName="txtFecha" (change)="V_TasaCambios();">
                                 <label for="txtFecha">Fecha</label>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row mt-2">
-
-                    <div class="col-12 col-md-12 col-lg-4 mb-1">
-                        <div class="row mb-1">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fa-regular fa-newspaper fa-beat-fade fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <div>
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" placeholder="Cuenta"
-                                                id="txtCuentaA" formControlName="txtCuentaA"
-                                                [matAutocomplete]="cmbPadre">
-                                            <label for="txtCuentaA">Cuenta Contable</label>
-                                        </div>
-                                                                         
-                                        <mat-autocomplete autoActiveFirstOption #cmbPadre="matAutocomplete"
-                                        (optionSelected)="v_Select_CuentaC($event)">
-                                        <mat-option *ngFor="let option of filteredCuenta1 | async" [value]="option.Filtro">
-                                            {{option.Filtro}}
-                                        </mat-option>
-                                    </mat-autocomplete>
-                                    </div>                                    
-                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-5 col-lg-5 mb-1">
-                        <div class="input-group">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="A Nombre de" id="txtBeneficiario"
-                                    formControlName="txtBeneficiario">
-                                <label for="txtBeneficiario">A Nombre de</label>
-                            </div>
-
-                        </div>
-                    </div>                  
-
-
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
+                    <div class="col-12 col-sm-12 col-md-2 col-lg-2 mb-1">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
                             <div class="form-floating">
@@ -150,57 +105,149 @@
                         </div>
                     </div>
 
-                </div>
+                    <div class="col-12 col-sm-12 col-md-2 col-lg-2 mb-1">
 
-                <div class="row">
-
-
-                    <div class="col-12 col-md-12 col-lg-9 mb-1">
-                        <div class="concepto">
+                        <div class="input-group">
+                            <span class="input-group-text">C$</span>
                             <div class="form-floating">
-                                <textarea type="textarea" class="form-control" placeholder="Concepto" id="txtConcepto"
-                                    formControlName="txtConcepto"></textarea>
-                                <label for="txtConcepto">Concepto</label>
+                                <input type="text" class="form-control" placeholder="Total Cordoba"
+                                    id="txtTotalCordoba" formControlName="txtTotalCordoba">
+                                <label for="txtTotalCordoba">Valor</label>
                             </div>
                         </div>
-
                     </div>
 
-
-                    <div class="col-12 col-md-12 col-lg-3 mb-1">
-
-                        <div class="row">
-
-                            <div class="col-12 mb-1">
-
-                                <div class="input-group">
-                                    <span class="input-group-text">C$</span>
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Total Cordoba"
-                                            id="txtTotalCordoba" formControlName="txtTotalCordoba">
-                                        <label for="txtTotalCordoba">Valor</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 mb-1">
-                                <div class="input-group">
-                                    <span class="input-group-text">U$</span>
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
-                                            formControlName="txtTotalDolar">
-                                        <label for="txtTotalDolar">Valor</label>
-                                    </div>
-                                </div>
+                    <div class="col-12 col-sm-12 col-md-2 col-lg-2 mb-1">
+                        <div class="input-group">
+                            <span class="input-group-text">U$</span>
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
+                                    formControlName="txtTotalDolar">
+                                <label for="txtTotalDolar">Valor</label>
                             </div>
                         </div>
-
-
                     </div>
 
-            
 
                 </div>
+                
+                <div class="row mt-2">
+
+                    <div class="col-12 col-sm-12 col-lg-8 ">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5 mb-1">
+
+                                <igx-combo #cmbBodega [data]="lstCuenta" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbCuentaC"
+                                    formControlName="cmbCuentaC" placeholder="Cuenta Contable"
+                                    searchPlaceholder="Seleccione una Cuenta contable..." [autoFocusSearch]="true"
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Cuenta2($event)"
+                                    (keyup)="v_Enter_Bodega($event);">
+                                    <label igxLabel>Cuenta</label>
+                                    <igx-prefix><i class="fa-solid fa-list"></i></igx-prefix>
+                                </igx-combo>
+                            </div>
+        
+        
+                            <div class="col-12 col-sm-12 col-md-7 col-lg-7 mb-1">
+                                <div class="input-group">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="A Nombre de" id="txtBeneficiario"
+                                            formControlName="txtBeneficiario">
+                                        <label for="txtBeneficiario">A Nombre de</label>
+                                    </div>
+        
+                                </div>
+                            </div>                                   
+        
+                            <div class="col-12 col-md-12 col-lg-12 mb-1">
+                                <div class="concepto">
+                                    <div class="form-floating">
+                                        <textarea type="textarea" class="form-control" placeholder="Concepto" id="txtConcepto"
+                                            formControlName="txtConcepto"></textarea>
+                                        <label for="txtConcepto">Concepto</label>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-xs-12 col-lg-4">                       
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text">IR</span>
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" placeholder="IR en la fuente"
+                                            id="txtIrFuente" formControlName="txtIrFuente" ((keypress))="HabiliarValor($event)">
+                                        <label for="txtIrFuente">IR en la fuente</label>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="col-12 col-md-12 col-lg-6 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text">SP</span>
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtServP" 
+                                            formControlName="txtServP" ((keypress))="HabiliarValor($event)">
+                                        <label for="txtServP">Servicios Profesionales</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-12 col-lg-6 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text">AL</span>
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtAlcaldias"
+                                            formControlName="txtAlcaldias" ((keypress))="HabiliarValor($event)">
+                                        <label for="txtAlcaldias">Alcaldia</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-12 col-lg-6 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text">IVA</span>
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtIva"
+                                            formControlName="txtIva" ((keypress))="HabiliarValor($event)">
+                                        <label for="txtIva">Ingrese el Valor</label>
+                                    </div>
+                                </div>                                    
+                            </div>
+
+                            <div class="col-12 col-md-12 col-lg-6 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text">TC</span>
+                                    <div class="form-floating">
+                                        <input type="number" class="form-control" placeholder="TC Compra Divisa" id="txtTcCompraD"
+                                            formControlName="txtTcCompraD" ((keypress))="HabiliarValor($event)">
+                                        <label for="txtTcCompraD">TC Compra Divisa</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Botones reembolsos y contabilizar -->
+                            <div class="col-12 col-md-12 col-lg-6 mb-1">
+                                <div class="row mt-3 ">
+                                    <div class="botones-edicion col-12 col-md-12 col-lg-6 mb-1">
+                                        <button type="button" class="btn btn-primario" id="btnContabilizar-Cheques" (click)="v_Guardar();" [disabled]="!this.val.EsValido()"><i class="fa-solid fa-file-invoice"></i>
+                                            Contabilizar</button> 
+                                    </div>
+                                    <div class="botones-edicion col-12 col-md-12 col-lg-6 mb-1">
+                                        <button type="button" class="btn btn-opcional" id="btnModal-Reembolso"
+                                    (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-money-bill-transfer"></i>
+                                    Reembolso</button>
+                                    </div>
+                                    
+                                </div>
+                                    
+                            </div>
+
+                        </div>                         
+                    </div>                                      
+                </div>                
             </div>
         </div>
 
@@ -352,7 +399,7 @@
 
 
 <div class="contenedor-pie">
-    <div class="pie-transferencia">
+    <div class="pie-cheques">
 
         <div class="totales">
             <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
@@ -365,17 +412,17 @@
 
         <div class="botones" *ngIf="!esModal">
             <div>
-                <button type="button" class="btn btn-secundario" id="btnRefrescar-Transferencia"
+                <button type="button" class="btn btn-secundario" id="btnRefrescar-Cheques"
                     (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
                     Refrescar</button>
             </div>
 
             <div class="botones-edicion">
-                <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia" (click)="v_Guardar();"><i
+                <button type="button" class="btn btn-primario" id="btnGuardar-Cheques" (click)="v_Guardar();"><i
                         class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
                     Guardar</button>
 
-                <button type="button" class="btn btn-opcional" id="btnCanclar-Transferencia"
+                <button type="button" class="btn btn-opcional" id="btnCanclar-Cheques"
                     (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i>
                     Cancelar</button>
             </div>
