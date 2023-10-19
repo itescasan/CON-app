@@ -398,6 +398,10 @@ export class AsientoContableComponent {
         this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
   
   
+        f.Debito = this.cFunciones.NumFormat(Number(f.Debito), "2");
+        f.Credito = this.cFunciones.NumFormat(Number(f.Credito), "2");
+  
+
         
         let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
         txtCuenta.setSelectedItem(f.CuentaContable);
@@ -423,8 +427,6 @@ export class AsientoContableComponent {
           document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
         
         }
-  
-        
   
 
         x++;

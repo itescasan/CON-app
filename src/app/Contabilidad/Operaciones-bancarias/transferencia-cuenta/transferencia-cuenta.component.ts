@@ -764,7 +764,7 @@ export class TransferenciaCuentaComponent {
     this.val.Combo(this.cmbCombo);
     this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
     this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
-    this.val.addFocus("txtBeneficiario", "txtCuenta1", undefined);
+    this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
 
 
   }
