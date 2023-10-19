@@ -344,7 +344,6 @@ export class AsientoContableComponent {
 
     
 
-
     this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
@@ -406,6 +405,8 @@ export class AsientoContableComponent {
   
 
 
+      let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+      if(dialogRef != undefined) dialogRef.close();
 
      
     }, 250);
@@ -446,7 +447,7 @@ export class AsientoContableComponent {
       {
         next: (data) => {
 
-          dialogRef.close();
+         if(!this.esModal) dialogRef.close();
           let _json: any = data;
 
           if (_json["esError"] == 1) {
