@@ -188,10 +188,22 @@ export class Validacion {
   public del(id: string): void {
     let i: number = this.lstReglas.findIndex((f) => f.Id == id);
 
-    if (i == -1) return;
+    if (i != -1) 
+    {
+      this.ValForm.removeControl(id);
+      this.lstReglas.splice(i, 1);
+    }
 
-    this.ValForm.removeControl(id);
-    this.lstReglas.splice(i, 1);
+    
+
+    i = lstFocus.findIndex((f) => f.Id == id);
+
+    if (i != -1)
+    {
+      lstFocus.splice(i, 1);
+    }
+
+    
   }
 
   public delRule(id: string, regla: string): void {

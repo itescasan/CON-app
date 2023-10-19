@@ -161,12 +161,11 @@ export class AsientoContableComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-    
     this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
-    if (event.added.length == 1 ) {
-      
+    
+    if (event.added.length == 1) {
       if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-      this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([event.added]);
+
       let txtCuenta: IgxComboComponent = event.owner
 
 
@@ -175,19 +174,30 @@ export class AsientoContableComponent {
       det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
       det.Naturaleza = i_Cuenta.Naturaleza;
 
+      document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
       document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
 
-      if (i_Cuenta.Naturaleza == "D") document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+      if (i_Cuenta.Naturaleza == "D")
+      {
+        document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+        det.Debito = det.Credito;
+        det.Credito = "0.00";
+      }
 
-      if (i_Cuenta.Naturaleza == "C") document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+      if (i_Cuenta.Naturaleza == "C")
+      {
+        document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+        det.Credito  = det.Debito;
+        det.Debito = "0.00";
+      }
 
     }
 
+    this.V_Calcular();
 
 
   }
-
   public v_Enter_Cuenta(event: any, det: iAsientoDetalle) {
 
     if (event.key == "Enter") {
@@ -304,6 +314,8 @@ export class AsientoContableComponent {
 
     this.valTabla.del("txtCuenta" + item.NoLinea);
     this.valTabla.del("txtReferencia" + item.NoLinea);
+    this.valTabla.del("txtDebito" + item.NoLinea);
+    this.valTabla.del("txtCredito" + item.NoLinea);
 
 
   }
@@ -329,6 +341,11 @@ export class AsientoContableComponent {
 
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
       if (x > 1) txtCuenta.open();
+
+      
+      this.val.addFocus("txtCuenta" + x , "txtReferencia" + x, undefined);
+      this.val.addFocus("txtReferencia" + x, "txtDebito" + x, undefined);
+      this.val.addFocus("txtDebito" + x, "txtCredito" + x, undefined);
 
 
 
