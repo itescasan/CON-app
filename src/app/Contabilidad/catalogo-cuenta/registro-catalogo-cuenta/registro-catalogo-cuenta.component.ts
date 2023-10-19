@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewChildren } from '@angular/core';
 import { CatalogoCuentaComponent } from '../nuevo-catalogo-cuenta/catalogo-cuenta.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Validacion } from 'src/app/SHARED/class/validacion';
@@ -10,6 +10,7 @@ import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
+import { IgxComboComponent } from 'igniteui-angular';
 
 
 

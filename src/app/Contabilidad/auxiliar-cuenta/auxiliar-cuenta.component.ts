@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings, scaleInCenter, scaleOutCenter } from 'igniteui-angular';
@@ -33,6 +33,9 @@ export class AuxiliarCuentaComponent {
   lstBodega: iBodega[] = [];
 
   public overlaySettings: OverlaySettings = {};
+
+  @ViewChildren(IgxComboComponent)
+  public cmbCombo: QueryList<IgxComboComponent>;
 
 
   constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta, private GET_BODEGA : getBodega
@@ -344,6 +347,7 @@ export class AuxiliarCuentaComponent {
 
   ngAfterViewInit(): void {
     ///CAMBIO DE FOCO
+    this.val.Combo(this.cmbCombo);
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBodega", undefined);
     this.val.addFocus("txtBodega", "txtCuenta-Asiento", undefined);

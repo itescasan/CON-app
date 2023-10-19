@@ -52,6 +52,10 @@ export class TransferenciaCuentaComponent {
   public TC: number;
 
 
+  @ViewChildren(IgxComboComponent)
+  public cmbCombo: QueryList<IgxComboComponent>;
+
+
   constructor(public cFunciones: Funciones, private GET: getTransferencia, private POST : postTrasnferencia) {
 
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una serie.");
@@ -726,4 +730,17 @@ export class TransferenciaCuentaComponent {
 
     
   }
+
+
+
+  ngAfterViewInit(): void {
+    ///CAMBIO DE FOCO
+    this.val.Combo(this.cmbCombo);
+    this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
+    this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
+    this.val.addFocus("txtBeneficiario", "", undefined);
+
+
+  }
+
 }

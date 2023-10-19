@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChildren } from '@angular/core';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import * as $ from 'jquery';
 import { Observable, catchError, map, startWith, tap } from 'rxjs';
@@ -11,6 +11,7 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iGrupo } from 'src/app/Interface/Contabilidad/i-Grupo';
 import { postCuentaContable } from '../CRUD/POST/post-catalogo-cuenta';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
+import { IgxComboComponent } from 'igniteui-angular';
 
 @Component({
   selector: 'app-catalogo-cuenta',

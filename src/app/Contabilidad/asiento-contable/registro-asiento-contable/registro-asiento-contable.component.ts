@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
@@ -10,6 +10,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { AsientoContableComponent } from '../nuevo-asiento-contable/asiento-contable/asiento-contable.component';
+import { IgxComboComponent } from 'igniteui-angular';
 
 @Component({
   selector: 'app-registro-asiento-contable',

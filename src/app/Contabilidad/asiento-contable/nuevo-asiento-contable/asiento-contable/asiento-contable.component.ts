@@ -409,7 +409,7 @@ export class AsientoContableComponent {
       if(dialogRef != undefined) dialogRef.close();
 
      
-    }, 250);
+    });
 
 
 

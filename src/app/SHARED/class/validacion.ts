@@ -10,8 +10,11 @@ import {
 import { ErrorStateMatcher } from "@angular/material/core";
 
 import { formatDate } from "@angular/common";
-import { EventEmitter, Injectable, Output } from "@angular/core";
-import { event } from "jquery";
+import { IgxComboComponent } from "igniteui-angular";
+import { QueryList } from "@angular/core";
+
+
+
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -51,9 +54,11 @@ interface iFocus {
 
 
 const lstFocus: iFocus[] = [];
-
+let cmb: QueryList<IgxComboComponent>;
 
 export class Validacion {
+
+ 
   
   private fb = new FormBuilder();
   public Iniciar: boolean = false;
@@ -64,11 +69,17 @@ export class Validacion {
   private lstReglas: ReglasValidacion[] = [];
   private lstFrm: I_Frm[] = [];
  
+  
 
-  constructor() {}
+  constructor() {
+  }
 
   public ValForm = this.fb.nonNullable.group({});
 
+  public Combo(c : any)
+  {
+    cmb = c;
+  }
   public CambioRegla(id: string, r: string): string {
     return this.lstReglas.filter((f) => f.Id == id && f.Regla == r)[0].valor;
   }
@@ -128,14 +139,39 @@ export class Validacion {
 
     
     let id : string = event.target.id;
+
+    if(id == "" && event.target.name == "comboInput")
+    {
+      id = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+       event.target.setAttribute("id", id);
+    }
+
+
     let _element_next  = lstFocus.find(f => f.Id == id);
 
     if(_element_next == undefined) return;
+    if(_element_next.IdNext == "") return;
 
+    let elmento :HTMLElement = document?.getElementById(_element_next.IdNext)!;
+    elmento?.focus();
 
-    document?.getElementById(_element_next.IdNext)?.focus();
+   
 
-    if(_element_next.Evento != undefined) $("#" + _element_next.IdNext)?.trigger(_element_next.Evento);
+    if(cmb != undefined && elmento.localName == "igx-combo")
+    {
+      let input  : HTMLElement = elmento.getElementsByTagName("input")[0];
+      input?.setAttribute("id", _element_next?.IdNext);
+      
+      let elment : IgxComboComponent = cmb.find(f => f.id == _element_next?.IdNext)!;
+
+      if(elment != undefined) elment.open();
+
+ 
+    
+    }
+
+     if(_element_next.Evento != undefined) $("#" + _element_next.IdNext)?.trigger(_element_next.Evento);
+ 
 
     /*
     if(String(event.target.value) == "") {
@@ -476,3 +512,4 @@ export class Validacion {
 
 
 }
+

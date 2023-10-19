@@ -428,8 +428,8 @@ button:active {
 //cdk-overlay-container -zindex : 1000 default
 
 
-.cdk-overlay-container:has(.cdk-global-overlay-wrapper > .cdk-overlay-pane.escasan-dialog-full-blur),
-.cdk-global-overlay-wrapper:has(.cdk-overlay-pane.escasan-dialog-full-blur)
+.cdk-overlay-container:has(.cdk-global-overlay-wrapper > .cdk-overlay-pane.escasan-dialog-full-blur > .mat-mdc-dialog-container > .mdc-dialog__container > .mat-mdc-dialog-surface > app-wait),
+.cdk-global-overlay-wrapper:has(.cdk-overlay-pane.escasan-dialog-full-blur > .mat-mdc-dialog-container > .mdc-dialog__container > .mat-mdc-dialog-surface > app-wait)
 {
     z-index:2000; 
 }

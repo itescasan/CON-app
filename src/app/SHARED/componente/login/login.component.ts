@@ -1,9 +1,10 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, ViewChildren } from "@angular/core";
 import { LoginService } from "../../service/login.service";
 import { Validacion } from "../../class/validacion";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { DialogErrorComponent } from "../dialog-error/dialog-error.component";
 import { DynamicFormDirective } from "src/app/SHARED/directive/dynamic-form.directive";
+import { IgxComboComponent } from "igniteui-angular";
 
 @Component({
   selector: "app-login",
