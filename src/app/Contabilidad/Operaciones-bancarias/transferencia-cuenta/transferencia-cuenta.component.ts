@@ -353,16 +353,27 @@ export class TransferenciaCuentaComponent {
       if (i_Cuenta.Naturaleza == "D")
       {
         document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
-        det.Debito = det.Credito;
-        det.Credito = "0.00";
+        if(Number(det.Credito.replaceAll(",", "")) != 0)
+        {
+          det.Debito = det.Credito;
+          det.Credito = "0.00";
+        }
+
+
+        
       }
 
       if (i_Cuenta.Naturaleza == "C")
       {
         document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
-        det.Credito  = det.Debito;
-        det.Debito = "0.00";
+        if(Number(det.Debito.replaceAll(",", "")) != 0)
+        {
+          det.Credito  = det.Debito;
+          det.Debito = "0.00";
+        }
+        
       }
+
 
     }
 
