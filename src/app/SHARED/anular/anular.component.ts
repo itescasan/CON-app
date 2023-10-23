@@ -92,6 +92,7 @@ export class AnularComponent {
             });
 
             this.Anulado = true;
+            this.dialogRef.close();
 
           }
 
@@ -108,6 +109,8 @@ export class AnularComponent {
             });
           }
 
+          document.getElementById("btnAnular")?.removeAttribute("disabled");
+          document.getElementById("btnCancelarAnular")?.removeAttribute("disabled");
         },
         complete: () => {
           document.getElementById("btnAnular")?.removeAttribute("disabled");

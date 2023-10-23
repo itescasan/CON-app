@@ -294,7 +294,7 @@ export class RegistroTrasnferenciaComponent {
         },
         error: (err) => {
 
-          
+          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
           dialogRef.close();
 
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
