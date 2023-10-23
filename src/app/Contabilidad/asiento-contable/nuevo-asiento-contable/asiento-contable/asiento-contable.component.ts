@@ -214,7 +214,7 @@ export class AsientoContableComponent {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
 
       let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
-      txtCuenta.setSelectedItem(_Item.CuentaContable);
+      if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
       this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;
       det.Naturaleza = _Item.Naturaleza;
@@ -404,7 +404,7 @@ export class AsientoContableComponent {
 
         
         let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
-        txtCuenta.setSelectedItem(f.CuentaContable);
+        if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
   
   
         if(!this.esAuxiliar)

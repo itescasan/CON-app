@@ -69,10 +69,10 @@ table,
 
 table {
 
-    margin-top: 150px;
+    margin-top: 125px;
 
     @include Tamano_Menor(lg) {
-        margin-top: 260px;
+        margin-top: 245px;
     }
 
 

@@ -1,4 +1,13 @@
 <div class="contenedor-transferencia">
+
+    <div class="escasan-dialog" *ngIf="esModal">
+        <div class="btn-contenedor-custom">
+            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    
     <form autocomplete="off" [formGroup]="val.ValForm">
 
 
@@ -349,7 +358,7 @@
                     "1.2-2"}}</span></span>
         </div>
 
-        <div class="botones" *ngIf="!esModal">
+        <div class="botones" *ngIf="!Anulado">
             <div>
                 <button type="button" class="btn btn-secundario" id="btnRefrescar-Transferencia"
                     (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
@@ -361,9 +370,8 @@
                         class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
                     Guardar</button>
 
-                <button type="button" class="btn btn-opcional" id="btnCanclar-Transferencia"
-                    (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i>
-                    Cancelar</button>
+                    <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento" (click)="v_Evento('Limpiar');"
+                    [disabled]="esModal"  ><i class="fa-solid fa-arrow-left fa-beat fa-lg"  ></i> Cancelar</button>
             </div>
         </div>
 

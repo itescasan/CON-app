@@ -56,10 +56,10 @@ table,
 
 table {
 
-    margin-top: 150px;
+    margin-top: 85px;
 
     @include Tamano_Menor(lg) {
-        margin-top: 260px;
+        margin-top: 185px;
     }
 
 
@@ -106,7 +106,7 @@ table {
     display: none;
 }
 
-.mobile-col:not(.haber) {
+.mobile-col:not(.cordoba) {
     .numero {
         div:last-child {
             visibility: hidden;
@@ -149,6 +149,14 @@ table {
 
     }
 
+    .edicion{
+        text-align: right;
+
+        button:first-child{
+            margin-right: 50px;
+        }
+    }
+
 
     .mobile-label {
         display: initial;
@@ -164,11 +172,11 @@ table {
 
     }
 
-    .mobile-col.haber {
+    .mobile-col.cordoba {
         display: none;
     }
 
-    .mobile-col.debe {
+    .mobile-col.dolar {
 
         .numero{
             div:last-child{
@@ -178,7 +186,6 @@ table {
 
        
     }
-
 
 
 

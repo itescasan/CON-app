@@ -56,7 +56,7 @@
                                         <label igxLabel>Bodega</label>
                                         <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
                                         <igx-suffix>
-                                            
+
                                         </igx-suffix>
                                     </igx-combo>
 
@@ -64,12 +64,12 @@
 
                                 <div class="col-12 col-md-12 col-lg-4 mb-1 contenedor-boton">
                                     <button type="button" class="btn btn-secundario"
-                                    id="btnRefrescar-RegtransferenciaCuenta" (click)="v_CargarDatos();"><i
-                                        class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
-                                    Refrescar</button>
-        
+                                        id="btnRefrescar-RegtransferenciaCuenta" (click)="v_CargarDatos();"><i
+                                            class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                                        Refrescar</button>
+
                                 </div>
-                           
+
                             </div>
 
 
@@ -78,7 +78,7 @@
                         </div>
 
 
-                       
+
 
 
 
@@ -87,7 +87,7 @@
             </div>
 
 
-      
+
         </div>
 
     </div>
@@ -107,18 +107,18 @@
                 </td>
             </ng-container>
 
-                
+
             <ng-container matColumnDef="CuentaBancaria">
                 <th mat-header-cell *matHeaderCellDef> <span class="texto">Cuenta</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col"> 
+                <td mat-cell *matCellDef="let det" class="mobile-col">
                     <div class="texto">
                         <span class="mobile-label">Cuenta:</span>
                         <div>{{det.CuentaBancaria}}</div>
-                    </div> 
+                    </div>
                 </td>
             </ng-container>
 
-           
+
 
 
             <ng-container matColumnDef="NoTransferencia">
@@ -137,29 +137,29 @@
                     <div class="texto">
                         <div class="mobile-label">Beneficiario:</div>
                         <div>{{det.Beneficiario}}</div>
- 
+
                     </div>
 
                 </td>
             </ng-container>
 
 
-         
+
 
 
             <ng-container matColumnDef="Concepto">
                 <th mat-header-cell *matHeaderCellDef> <span class="texto">Concepto</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col"> 
+                <td mat-cell *matCellDef="let det" class="mobile-col">
                     <div class="texto">
                         <span class="mobile-label">Concepto:</span>
                         <div>{{det.Concepto}}</div>
-                    </div> 
+                    </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="TotalDolar">
                 <th mat-header-cell *matHeaderCellDef> <span class="numero">Total Dolar</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col debe">
+                <td mat-cell *matCellDef="let det" class="mobile-col dolar">
                     <div class="numero">
                         <div class="mobile-label">Total Dolar</div>
                         <div class="mobile-label">Total Cordoba</div>
@@ -171,14 +171,32 @@
 
             <ng-container matColumnDef="TotalCordoba">
                 <th mat-header-cell *matHeaderCellDef> <span class="numero">Total Cordoba</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col haber">
+                <td mat-cell *matCellDef="let det" class="mobile-col cordoba">
                     <div class="numero">
                         <div>{{det.TotalCordoba | number : '1.2-2'}}</div>
                     </div>
                 </td>
             </ng-container>
 
-           
+
+
+            <ng-container matColumnDef="Anulado">
+                <th mat-header-cell *matHeaderCellDef> <span class="texto"></span> </th>
+                <td mat-cell *matCellDef="let det" class="mobile-col">
+                    <div class="edicion">
+                        <button type="button" class="btn" (click)="V_EditarTransCuenta(det)"><i
+                                class="fa-solid fa-eye fa-beat-fade fa-lg primario"></i>
+                        </button>
+
+                        <button type="button" class="btn"><i class="fa-solid fa-ban fa-beat-fade fa-lg"
+                                (click)="V_Anular(det)" *ngIf="!det.Anulado"></i>
+                        </button>
+                    </div>
+                </td>
+            </ng-container>
+
+
+
 
 
 

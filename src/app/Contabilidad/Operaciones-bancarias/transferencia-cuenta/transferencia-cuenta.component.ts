@@ -50,6 +50,7 @@ export class TransferenciaCuentaComponent {
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
   public TC: number;
+  public Anulado : boolean = false;
 
 
   @ViewChildren(IgxComboComponent)
@@ -89,6 +90,7 @@ export class TransferenciaCuentaComponent {
 
       case "Limpiar":
 
+      this.Anulado = false;
       this.FILA.IdTransferencia = "00000000-0000-0000-0000-000000000000";
 
       this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
@@ -203,13 +205,22 @@ export class TransferenciaCuentaComponent {
 
     document.getElementById("btnRefrescar-Transferencia")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
-      WaitComponent,
-      {
-        panelClass: "escasan-dialog-full-blur",
-        data: "",
-      }
-    );
+  
+    let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+     
+
+    if(dialogRef == undefined)
+    {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id : "wait"
+        }
+      );
+
+    }
 
 
 
@@ -263,7 +274,6 @@ export class TransferenciaCuentaComponent {
         error: (err) => {
 
 
-          document.getElementById("btnRefrescar-Transferencia")?.removeAttribute("disabled");
           dialogRef.close();
 
 
@@ -388,7 +398,7 @@ export class TransferenciaCuentaComponent {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
 
       let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
-      txtCuenta.setSelectedItem(_Item.CuentaContable);
+      if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
       this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;
       det.Naturaleza = _Item.Naturaleza;
@@ -737,6 +747,61 @@ export class TransferenciaCuentaComponent {
   private v_Visualizar()
   {
 
+
+    this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
+    this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
+    this.val.Get("txtNoDoc").setValue(this.FILA.NoTransferencia);
+    this.val.Get("txtFecha").setValue( this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
+    this.val.Get("txtBeneficiario").setValue(this.FILA.Beneficiario);
+    this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
+    this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
+    this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
+    this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+
+    this.TC = this.FILA.TasaCambio;
+    this.Anulado = this.FILA.Anulado;
+
+
+
+
+   let x: number = 1;
+   
+
+    setTimeout(() => {
+
+      this.lstDetalle.data.forEach(f => {
+        this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+        this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+
+        f.Debito = this.cFunciones.NumFormat(Number(String(f.Debito).replaceAll(",", "")), "2");
+        f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");
+        
+        let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+
+        
+
+        if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
+  
+  
+        document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
+        document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+  
+        if (f.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
+  
+        if (f.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
+
+  
+
+        x++;
+      });
+  
+
+
+      let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+      if(dialogRef != undefined) dialogRef.close();
+
+     
+    });
   }
   
   ngOnInit(): void {

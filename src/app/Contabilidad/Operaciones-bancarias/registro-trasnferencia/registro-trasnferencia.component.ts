@@ -10,6 +10,10 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { getTransferencia } from '../CRUD/GET/get-Transferencia';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { AnularComponent } from 'src/app/SHARED/anular/anular.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { TransferenciaCuentaComponent } from '../transferencia-cuenta/transferencia-cuenta.component';
+import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 
 @Component({
   selector: 'app-registro-trasnferencia',
@@ -19,7 +23,7 @@ import { MatPaginator } from '@angular/material/paginator';
 export class RegistroTrasnferenciaComponent {
 
   public val = new Validacion();
-  displayedColumns: string[] = ["Fecha",   "CuentaBancaria", "NoTransferencia", "Beneficiario","Concepto", "TotalDolar", "TotalCordoba"];
+  displayedColumns: string[] = ["Fecha",   "CuentaBancaria", "NoTransferencia", "Beneficiario","Concepto", "TotalDolar", "TotalCordoba", "Anulado"];
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
@@ -143,6 +147,8 @@ export class RegistroTrasnferenciaComponent {
 
     document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.setAttribute("disabled", "disabled");
 
+
+
     let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
 
 
@@ -210,6 +216,135 @@ export class RegistroTrasnferenciaComponent {
 
   }
 
+
+  public V_EditarTransCuenta(det : any) : void{
+
+
+    
+    
+    let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+
+
+      if(dialogRef == undefined)
+      {
+        dialogRef = this.cFunciones.DIALOG.open(
+          WaitComponent,
+          {
+            panelClass: "escasan-dialog-full-blur",
+            data: "",
+            id : "wait"
+          }
+        );
+  
+      }
+
+
+      
+    this.GET.GetDetalleCuenta(det.IdTransferencia).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos[] = _json["d"];
+
+          
+              let dialogTransf: MatDialogRef<TransferenciaCuentaComponent> = this.cFunciones.DIALOG.open(
+                TransferenciaCuentaComponent,
+                {
+                  panelClass: "escasan-dialog-full",
+                  disableClose: true
+                }
+              );
+              
+              
+                
+              dialogTransf.afterOpened().subscribe(s =>{
+                dialogTransf.componentInstance.FILA = det;
+                dialogTransf.componentInstance.esModal = true;
+
+
+                dialogTransf.componentInstance.lstDetalle.data = JSON.parse(JSON.stringify(datos[0].d));
+
+
+                dialogTransf.componentInstance.v_CargarDatos();
+
+              });
+
+              dialogTransf.afterClosed().subscribe(s =>{
+                this.v_CargarDatos();
+              });
+
+
+     
+
+          }
+
+        },
+        error: (err) => {
+
+          
+          dialogRef.close();
+
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
+
+
+        }
+      }
+    );
+
+
+
+
+
+
+
+
+  }
+
+  public V_Anular(det : any) : void{
+    let dialogRef: MatDialogRef<AnularComponent> = this.cFunciones.DIALOG.open(
+      AnularComponent,
+      {
+        panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+        disableClose: true
+      }
+    );
+
+    dialogRef.afterOpened().subscribe(s => {
+      dialogRef.componentInstance.val.Get("txtNoDoc").setValue(det.NoTransferencia);
+      dialogRef.componentInstance.val.Get("txtSerie").setValue(det.IdSerie);
+      dialogRef.componentInstance.val.Get("txtBodega").setValue(det.CodBodega);
+      dialogRef.componentInstance.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(det.Fecha, "yyyy-MM-dd"));
+      dialogRef.componentInstance.IdDoc = det.IdTransferencia;
+      dialogRef.componentInstance.Tipo = "Transferencia";
+    });
+
+
+    dialogRef.afterClosed().subscribe(s => {
+      if(dialogRef.componentInstance.Anulado) this.v_CargarDatos();
+    });
+  }
 
 
   

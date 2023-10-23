@@ -5,6 +5,7 @@ import { DialogErrorComponent } from '../componente/dialog-error/dialog-error.co
 import { iDatos } from '../interface/i-Datos';
 import { WaitComponent } from '../componente/wait/wait.component';
 import { postAnular } from '../POST/post-anular';
+import { Funciones } from '../class/cls_Funciones';
 
 @Component({
   selector: 'app-anular',
@@ -16,9 +17,11 @@ export class AnularComponent {
   public val = new Validacion();
   public IdDoc: string;
   public Tipo: string;
+  public Anulado : boolean = false;
+
 
   constructor(private dialog: MatDialog, public dialogRef: MatDialogRef<AnularComponent>,
-    private POST: postAnular){
+    private POST: postAnular, private cFunciones: Funciones){
 
     this.val.add("txtNoDoc", "1", "LEN>", "0", "No Documento", "Error con el número del documento.");
     this.val.add("txtSerie", "1", "LEN>", "0", "Serie", "Error con la serie del documento.");
@@ -36,6 +39,8 @@ export class AnularComponent {
 
   
   public v_Aceptar() :void{
+
+    this.Anulado = false;
 
     this.val.EsValido();
    
@@ -61,40 +66,56 @@ export class AnularComponent {
     );
     
 
-    this.POST.Anular(this.IdDoc, this.val.Get("txtMotivo").value, "jmg").subscribe(
-      (s) => {
-   
-        document.getElementById("btnAnular")?.removeAttribute("disabled");
-        document.getElementById("btnCancelarAnular")?.removeAttribute("disabled");
 
-        dialogRef.close();
-        let _json = JSON.parse(s);
+    
+    this.POST.Anular(this.IdDoc, this.val.Get("txtMotivo").value, this.Tipo, this.cFunciones.User).subscribe(
+      {
+        next: (data) => {
 
-        if (_json["esError"] == 1) {
-          this.dialog.open(DialogErrorComponent, {
-            data: _json["msj"].Mensaje,
-          });
-        } 
-        else {
 
-          this.dialogRef.close();
- 
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            this.Anulado = true;
+            this.dialogRef.close();
+     
+
+          }
+
+        },
+        error: (err) => {
+
+          
+          dialogRef.close();
+
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnAnular")?.removeAttribute("disabled");
+          document.getElementById("btnCancelarAnular")?.removeAttribute("disabled");
+  
         }
-      },
-      (err) => {
-
-        document.getElementById("btnAnular")?.removeAttribute("disabled");
-        document.getElementById("btnCancelarAnular")?.removeAttribute("disabled");
-
-        
-        dialogRef.close();
-      
-        this.dialog.open(DialogErrorComponent, {
-          data: "<b class='error'>" + err.message + "</b>",
-        });
       }
     );
-    
+
+
+
+
     
     
   }
