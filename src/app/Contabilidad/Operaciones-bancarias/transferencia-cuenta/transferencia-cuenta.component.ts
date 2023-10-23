@@ -59,7 +59,7 @@ export class TransferenciaCuentaComponent {
 
   constructor(public cFunciones: Funciones, private GET: getTransferencia, private POST : postTrasnferencia) {
 
-    this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una serie.");
+    this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una cuenta bancaria.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "Nombre Cuenta", "No se ha definido el nombre de la cuenta.");
     this.val.add("txtBanco", "1", "LEN>", "0", "Banco", "No se ha definido el banco.");
     this.val.add("cmbBodega", "1", "LEN>", "0", "Sucursal", "Seleccione una sucursal.");
@@ -650,7 +650,6 @@ export class TransferenciaCuentaComponent {
     Asiento.TipoDocOrigen = "TRANSFERENCIA A CUENTA";
 
     Asiento.IdSerie = Asiento.IdSerieDocOrigen;
-    if(!this.esModal) Asiento.NoAsiento = "";
     Asiento.Bodega = this.FILA.CodBodega;
     Asiento.Fecha = this.FILA.Fecha;
     Asiento.Referencia = this.FILA.Beneficiario;
@@ -663,18 +662,17 @@ export class TransferenciaCuentaComponent {
     Asiento.TotalMS = this.FILA.TotalDolar;
     Asiento.UsuarioReg = this.FILA.UsuarioReg;
     Asiento.FechaReg = new Date();
+    Asiento.Estado = "";
 
     Asiento.AsientosContablesDetalle.forEach(f =>{
       f.CuentaContable = f.CuentaContable[0];
     });
 
 
-    if (!this.esModal) {
-      Asiento.IdPeriodo = 0;
-      Asiento.Estado = "Solicitado";
-      Asiento.TipoAsiento = "ASIENTO BASE"
-
-    }
+    Asiento.IdPeriodo = 0;
+    Asiento.Estado = "Solicitado";
+    Asiento.TipoAsiento = "ASIENTO BASE";
+    Asiento.NoAsiento = "";
 
 
     let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
@@ -781,6 +779,7 @@ export class TransferenciaCuentaComponent {
         
 
         if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
+        this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable)
   
   
         document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
