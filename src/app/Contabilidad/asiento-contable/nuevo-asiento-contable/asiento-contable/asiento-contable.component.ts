@@ -45,6 +45,7 @@ export class AsientoContableComponent {
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
   public TC: number;
+  public Estado : string = "Solicitado";
  
   public overlaySettings: OverlaySettings = {};
 
@@ -79,6 +80,7 @@ export class AsientoContableComponent {
 
       case "Limpiar":
 
+        this.Estado = "Solicitado";
         this.FILA.IdAsiento = -1;
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
         this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
@@ -380,6 +382,7 @@ export class AsientoContableComponent {
     this.val.Get("cmbMoneda").setValue(this.FILA.IdMoneda);
     this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
     this.TC = this.FILA.TasaCambio;
+    this.Estado = this.FILA.Estado;
 
     this.val.Get("cmbSerie").disable();
     this.val.Get("txtNoAsiento").disable();
@@ -396,6 +399,8 @@ export class AsientoContableComponent {
       this.lstDetalle.data.forEach(f => {
         this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
         this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+
+       
   
   
         f.Debito = this.cFunciones.NumFormat(Number(f.Debito), "2");
@@ -405,6 +410,9 @@ export class AsientoContableComponent {
         
         let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
         if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
+
+        this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
+        this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
   
   
         if(!this.esAuxiliar)

@@ -11,6 +11,10 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { AsientoContableComponent } from '../nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { IgxComboComponent } from 'igniteui-angular';
+import { AnularComponent } from 'src/app/SHARED/anular/anular.component';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
+import { postAsientoContable } from '../CRUD/POST/post-Asiento-contable';
 
 @Component({
   selector: 'app-registro-asiento-contable',
@@ -28,7 +32,7 @@ export class RegistroAsientoContableComponent {
   public lstAsiento : MatTableDataSource<iAsiento>;
  
 
-  constructor(private GET: getAsientoContable, private cFunciones : Funciones
+  constructor(private GET: getAsientoContable, private cFunciones : Funciones, private POST: postAsientoContable
   ) {
 
     this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
@@ -141,6 +145,138 @@ export class RegistroAsientoContableComponent {
    
 
   }
+
+
+  public V_Anular(det : any) : void{
+
+    let dialogRef: MatDialogRef<AnularComponent> = this.cFunciones.DIALOG.open(
+      AnularComponent,
+      {
+        panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+        disableClose: true
+      }
+    );
+
+    dialogRef.afterOpened().subscribe(s => {
+      dialogRef.componentInstance.val.Get("txtNoDoc").setValue(det.NoAsiento);
+      dialogRef.componentInstance.val.Get("txtSerie").setValue(det.IdSerie);
+      dialogRef.componentInstance.val.Get("txtBodega").setValue(det.Bodega);
+      dialogRef.componentInstance.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(det.Fecha, "yyyy-MM-dd"));
+      dialogRef.componentInstance.IdDoc = det.IdAsiento;
+      dialogRef.componentInstance.Tipo = "Asiento";
+    });
+
+
+    dialogRef.afterClosed().subscribe(s => {
+      if(dialogRef.componentInstance.Anulado) this.v_CargarDatos();
+    });
+  }
+
+
+
+
+  
+  //██████████████████████████████████████████POPUP██████████████████████████████████████████████████████
+
+  @ViewChild(MatMenuTrigger)
+  contextMenu: MatMenuTrigger;
+  contextMenuPosition = { x: '0px', y: '0px' };
+  public V_Popup(event: MouseEvent, item: iAsiento): void {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenu.menuData = { 'item': item };
+    this.contextMenu.menu!.focusFirstItem('mouse');
+    this.contextMenu.openMenu();
+  }
+
+
+  V_Autorizar(item: iAsiento) : void
+  {
+
+    let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+      DialogoConfirmarComponent,
+      {
+        panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+        disableClose: true
+      }
+    );
+
+
+
+    dialogRef.afterOpened().subscribe(s => {
+      dialogRef.componentInstance.textBoton1 = "SI";
+      dialogRef.componentInstance.textBoton2 = "NO";
+      dialogRef.componentInstance.mensaje = "<p>Esta seguro de Autorizar? <br>Asiento: <b> " + item.NoAsiento+"</b><br>Bodega: <b> " + item.Bodega +"</b><br>Referencia: <b>"+item.Referencia+"</b></p>";
+    });
+
+
+    
+    dialogRef.afterClosed().subscribe(s => {
+
+      if(dialogRef.componentInstance.retorno == "1")
+      {
+
+        document.getElementById("btnRefrescar-RegAsiento")?.setAttribute("disabled", "disabled");
+
+
+        this.POST.AutorizarAiento(item.IdAsiento, this.cFunciones.User).subscribe(
+          {
+            next: (data) => {
+    
+              dialogRef.close();
+              let _json: any = data;
+    
+              if (_json["esError"] == 1) {
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    id: "error-servidor-msj",
+                    data: _json["msj"].Mensaje,
+                  });
+                }
+              }
+              else {
+    
+    
+                let Datos: iDatos[] = _json["d"];
+     
+                this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  data: "<p><b class='bold'>" + Datos[0].d + "</b></p>"
+                });
+    
+    
+               
+    
+              }
+    
+            },
+            error: (err) => {
+              dialogRef.close();
+    
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  id: "error-servidor",
+                  data: "<b class='error'>" + err.message + "</b>",
+                });
+              }
+            },
+            complete: () => {
+              document.getElementById("btnRefrescar-RegAsiento")?.removeAttribute("disabled");
+            }
+          }
+        );
+
+        
+      }
+
+    });
+
+
+  }
+
+
+
+  
 
   ngAfterViewInit(): void{
     ///CAMBIO DE FOCO

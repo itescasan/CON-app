@@ -320,13 +320,13 @@
         </div>
 
         <div class="botones" *ngIf="!esAuxiliar">
-            <div>
+            <div *ngIf="!(['Anulado', 'Autorizado']).includes(Estado)">
                 <button type="button" class="btn btn-secundario" id="btnRefrescar-Asiento" (click)="v_CargarDatos();"><i
                         class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
                     Refrescar</button>
             </div>
 
-            <div class="botones-edicion">
+            <div class="botones-edicion" *ngIf="!(['Anulado', 'Autorizado']).includes(Estado)">
                 <button type="button"  class="btn btn-primario" id="btnGuardar-Asiento" (click)="v_Guardar();"><i
                         class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
                     Guardar</button>

@@ -779,8 +779,12 @@ export class TransferenciaCuentaComponent {
         
 
         if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
-        this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable)
-  
+
+        
+        this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
+        this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
+
+       
   
         document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
         document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");

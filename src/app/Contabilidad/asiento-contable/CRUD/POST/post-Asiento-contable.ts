@@ -6,25 +6,31 @@ import { iAsiento } from "src/app/Interface/Contabilidad/i-Asiento";
 
 @Injectable({
     providedIn: 'root',
-  })
-export class postAsientoContable{
-    
+})
+export class postAsientoContable {
+
     private _Cnx = new Conexion();
     private http: HttpClient;
 
-    constructor(){
+    constructor() {
 
-        this.http = new HttpClient(new HttpXhrBackend({ 
-            build: () => new XMLHttpRequest() 
+        this.http = new HttpClient(new HttpXhrBackend({
+            build: () => new XMLHttpRequest()
         }));
 
     }
 
- 
-   GuardarAsiento(d : iAsiento) : Observable<string> { 
-   
-    return this.http.post<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
 
-}
+    GuardarAsiento(d: iAsiento): Observable<string> {
+
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
+
+    }
+
+    AutorizarAiento(IdAsiento : number, Usuario : string): Observable<string> {
+
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Autorizar?IdAsiento=" +  IdAsiento + "&Usuario=" + Usuario, { headers: { 'content-type': 'application/text' } });
+
+    }
 
 }

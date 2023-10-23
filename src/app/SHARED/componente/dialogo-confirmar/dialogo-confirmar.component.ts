@@ -10,7 +10,6 @@ export class DialogoConfirmarComponent {
 
   public retorno: string="0";
   public mensaje: string="";
-  public texto: string="";
   public textBoton1 : string ="";
   public textBoton2 : string ="";
 
