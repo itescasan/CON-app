@@ -622,6 +622,9 @@ export class TransferenciaCuentaComponent {
     this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
+    this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
+    this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+    this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
     this.FILA.UsuarioReg = this.cFunciones.User;
     if(!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoTransferencia = "C";
@@ -645,9 +648,9 @@ export class TransferenciaCuentaComponent {
     Asiento.IdMoneda = String(CuentaBancaria?.IdMoneda);
     Asiento.TasaCambio = this.val.Get("TxtTC").value;
     Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalle.data));
-    Asiento.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
-    Asiento.TotalML = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
-    Asiento.TotalMS = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    Asiento.Total = this.FILA.Total;
+    Asiento.TotalML = this.FILA.TotalCordoba;
+    Asiento.TotalMS = this.FILA.TotalDolar;
     Asiento.UsuarioReg = this.FILA.UsuarioReg;
     Asiento.FechaReg = new Date();
 

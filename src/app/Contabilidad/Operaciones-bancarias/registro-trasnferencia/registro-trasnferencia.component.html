@@ -1,1 +1,198 @@
-<p>registro-trasnferencia works!</p>
+<div class="contenedor-tabla">
+    <div class="row">
+
+        <div class="contenedor-filtro linea-bottom-primario">
+            <div class="row">
+                <p>Registros de Transferencia</p>
+            </div>
+
+            <div class="row mb-2">
+                <form autocomplete="off" [formGroup]="val.ValForm">
+                    <div class="row">
+
+
+                        <div class="col-12 col-md-12 col-lg-6">
+                            <div class="row">
+                                <div class="col-6 col-md-6 col-lg-6 mb-1">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                        <div class="form-floating">
+                                            <input type="date" id="txtFecha1" class="form-control"
+                                                placeholder="Fecha Inicio" aria-label="Fecha Final"
+                                                formControlName="txtFecha1">
+                                            <label for="txtFecha1">Desde</label>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-6 col-lg-6 px-1 mb-1">
+                                    <div class="input-group">
+
+                                        <div class="form-floating">
+                                            <input type="date" id="txtFecha2" class="form-control"
+                                                placeholder="Fecha Final" aria-label="Fecha Final"
+                                                formControlName="txtFecha2">
+                                            <label for="txtFecha2">Hasta</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-12 col-md-12 col-lg-6">
+
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-8 mb-1">
+                                    <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega"
+                                        id="txtBodega" formControlName="txtBodega" placeholder="Bodega"
+                                        searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
+                                        [overlaySettings]="overlaySettings"
+                                        (selectionChanging)="v_Select_Bodega($event)" (keyup)="v_Enter_Bodega($event);">
+                                        <label igxLabel>Bodega</label>
+                                        <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                                        <igx-suffix>
+                                            
+                                        </igx-suffix>
+                                    </igx-combo>
+
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-4 mb-1 contenedor-boton">
+                                    <button type="button" class="btn btn-secundario"
+                                    id="btnRefrescar-RegtransferenciaCuenta" (click)="v_CargarDatos();"><i
+                                        class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                                    Refrescar</button>
+        
+                                </div>
+                           
+                            </div>
+
+
+
+
+                        </div>
+
+
+                       
+
+
+
+                    </div>
+                </form>
+            </div>
+
+
+      
+        </div>
+
+    </div>
+
+
+    <div class="mat-elevation-z8">
+        <table class="table table-hover  table-sm tabla-layout" mat-table [dataSource]="lstTransferencia">
+
+
+            <ng-container matColumnDef="Fecha">
+                <th mat-header-cell *matHeaderCellDef> <span class="texto">Fecha</span> </th>
+                <td mat-cell *matCellDef="let det" class="mobile-col">
+                    <div class="texto">
+                        <div class="mobile-label">Fecha:</div>
+                        <div>{{det.Fecha | date : "dd/MM/yyyy"}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+                
+            <ng-container matColumnDef="CuentaBancaria">
+                <th mat-header-cell *matHeaderCellDef> <span class="texto">Cuenta</span> </th>
+                <td mat-cell *matCellDef="let det" class="mobile-col"> 
+                    <div class="texto">
+                        <span class="mobile-label">Cuenta:</span>
+                        <div>{{det.CuentaBancaria}}</div>
+                    </div> 
+                </td>
+            </ng-container>
+
+           
+
+
+            <ng-container matColumnDef="NoTransferencia">
+                <th mat-header-cell *matHeaderCellDef> <span class="texto">No Transferencia</span> </th>
+                <td mat-cell *matCellDef="let det" class="mobile-col">
+                    <div class="texto">
+                        <div class="mobile-label">No Transferencia:</div>
+                        <div>{{det.NoTransferencia}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Beneficiario">
+                <th mat-header-cell *matHeaderCellDef> <span class="texto">Beneficiario</span> </th>
+                <td mat-cell *matCellDef="let det" class="mobile-col">
+                    <div class="texto">
+                        <div class="mobile-label">Beneficiario:</div>
+                        <div>{{det.Beneficiario}}</div>
+ 
+                    </div>
+
+                </td>
+            </ng-container>
+
+
+         
+
+
+            <ng-container matColumnDef="Concepto">
+                <th mat-header-cell *matHeaderCellDef> <span class="texto">Concepto</span> </th>
+                <td mat-cell *matCellDef="let det" class="mobile-col"> 
+                    <div class="texto">
+                        <span class="mobile-label">Concepto:</span>
+                        <div>{{det.Concepto}}</div>
+                    </div> 
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="TotalDolar">
+                <th mat-header-cell *matHeaderCellDef> <span class="numero">Total Dolar</span> </th>
+                <td mat-cell *matCellDef="let det" class="mobile-col debe">
+                    <div class="numero">
+                        <div class="mobile-label">Total Dolar</div>
+                        <div class="mobile-label">Total Cordoba</div>
+                        <div>{{det.TotalDolar | number : '1.2-2'}}</div>
+                        <div>{{det.TotalCordoba | number : '1.2-2'}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="TotalCordoba">
+                <th mat-header-cell *matHeaderCellDef> <span class="numero">Total Cordoba</span> </th>
+                <td mat-cell *matCellDef="let det" class="mobile-col haber">
+                    <div class="numero">
+                        <div>{{det.TotalCordoba | number : '1.2-2'}}</div>
+                    </div>
+                </td>
+            </ng-container>
+
+           
+
+
+
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="columna-titulo"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed">
+            </tr>
+
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[100, 200]" class="mat-paginator-sticky"></mat-paginator>
+
+
+    </div>
+</div>
