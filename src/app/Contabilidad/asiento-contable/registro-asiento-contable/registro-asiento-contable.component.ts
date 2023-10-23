@@ -238,12 +238,17 @@ export class RegistroAsientoContableComponent {
               else {
     
     
-                let Datos: iDatos[] = _json["d"];
+                let Datos: iDatos = _json["d"];
      
-                this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                  data: "<p><b class='bold'>" + Datos[0].d + "</b></p>"
+               let dialogAuto = this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  data: "<p><b class='bold'>" + Datos.d + "</b></p>"
                 });
     
+
+                
+                dialogAuto.afterClosed().subscribe(s =>{
+                  this.v_CargarDatos();
+                });
     
                
     

@@ -85,10 +85,10 @@ export class AnularComponent {
             }
           } else {
 
-            let Datos: iDatos[] = _json["d"];
+            let Datos: iDatos = _json["d"];
     
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              data: "<p><b class='bold'>" + Datos[0].d + "</b></p>"
+              data: "<p><b class='bold'>" + Datos.d + "</b></p>"
             });
 
             this.Anulado = true;

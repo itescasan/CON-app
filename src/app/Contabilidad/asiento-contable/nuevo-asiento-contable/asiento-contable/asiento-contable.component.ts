@@ -710,7 +710,7 @@ export class AsientoContableComponent {
 
   private V_POST(): void {
     this.FILA.IdSerie = this.val.Get("cmbSerie").value[0];
-    this.FILA.NoAsiento = this.val.Get("txtNoAsiento").value[0];
+    this.FILA.NoAsiento = this.val.Get("txtNoAsiento").value;
     this.FILA.Bodega = this.val.Get("txtBodega").value[0];
     this.FILA.Fecha = this.val.Get("txtFecha").value;
     this.FILA.Referencia = this.val.Get("txtReferencia").value;
