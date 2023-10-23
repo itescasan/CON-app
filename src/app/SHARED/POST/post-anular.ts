@@ -22,7 +22,7 @@ export class postAnular{
 
 
     Anular(IdDoc : string, Motivo: string, Tipo : string, Usuario: string) : Observable<string> { 
-        return this.http.post<any>(this._Cnx.Url() + "Factura/Anular?IdDoc=" + IdDoc + "&Motivo=" + Motivo + "&Tipo=" + Tipo + "&Usuario=" + Usuario, { headers: { 'content-type': 'application/text' } });
+        return this.http.post<any>(this._Cnx.Url() + "Documento/Anular?IdDoc=" + IdDoc + "&Motivo=" + Motivo + "&Tipo=" + Tipo + "&Usuario=" + Usuario, { headers: { 'content-type': 'application/text' } });
 
     }
  
