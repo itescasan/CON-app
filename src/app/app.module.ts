@@ -45,6 +45,7 @@ import { RegistroTrasnferenciaComponent } from './Contabilidad/Operaciones-banca
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NuevoChequeComponent } from './nuevo-cheque/nuevo-cheque.component';
 import { RegistroChequesComponent } from './registro-cheques/registro-cheques.component';
+import { TransferenciaSaldoComponent } from './Contabilidad/Operaciones-bancarias/transferencia-saldo/transferencia-saldo.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { RegistroChequesComponent } from './registro-cheques/registro-cheques.co
     TransferenciaCuentaComponent,
     RegistroTrasnferenciaComponent,
     NuevoChequeComponent,
-    RegistroChequesComponent
+    RegistroChequesComponent,
+    TransferenciaSaldoComponent
   ],
   imports: [
     BrowserModule,

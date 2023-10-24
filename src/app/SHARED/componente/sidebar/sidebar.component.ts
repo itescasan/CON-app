@@ -20,6 +20,7 @@ import { TransferenciaCuentaComponent } from 'src/app/Contabilidad/Operaciones-b
 import { RegistroTrasnferenciaComponent } from 'src/app/Contabilidad/Operaciones-bancarias/registro-trasnferencia/registro-trasnferencia.component';
 import { NuevoChequeComponent } from 'src/app/nuevo-cheque/nuevo-cheque.component';
 import { RegistroChequesComponent } from 'src/app/registro-cheques/registro-cheques.component';
+import { TransferenciaSaldoComponent } from 'src/app/Contabilidad/Operaciones-bancarias/transferencia-saldo/transferencia-saldo.component';
 
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
@@ -171,6 +172,16 @@ export class SidebarComponent {
       let TransfCuenta: ComponentRef<TransferenciaCuentaComponent> = this.DynamicFrom.viewContainerRef.createComponent(TransferenciaCuentaComponent);
 
     }
+
+     
+    if(id == "aNewTransferenciaSaldo"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let TransfCuenta: ComponentRef<TransferenciaSaldoComponent> = this.DynamicFrom.viewContainerRef.createComponent(TransferenciaSaldoComponent);
+
+    }
+
 
 
     if(id == "aRegTransferencia"){
