@@ -196,7 +196,7 @@ export class RegistroTrasnferenciaComponent {
 
           
           dialogRef.close();
-
+          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",

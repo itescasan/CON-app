@@ -190,11 +190,6 @@ export class TransferenciaCuentaComponent {
 
 
 
-  public v_Anulado(event: any): void {
-    this.val.Get("chkAnulado").setValue(event.target.checked);
-  }
-
-
 
 
   
@@ -275,7 +270,7 @@ export class TransferenciaCuentaComponent {
 
 
           dialogRef.close();
-
+          document.getElementById("btnRefrescar-Transferencia")?.removeAttribute("disabled");
 
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -821,8 +816,6 @@ export class TransferenciaCuentaComponent {
     }
 
 
-    let chk: any = document.querySelector("#chkAnulado");
-    if (chk != undefined) chk.bootstrapToggle();
 
 
     

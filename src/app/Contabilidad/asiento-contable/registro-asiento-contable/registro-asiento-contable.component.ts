@@ -258,6 +258,7 @@ export class RegistroAsientoContableComponent {
             error: (err) => {
               dialogRef.close();
     
+              document.getElementById("btnRefrescar-RegAsiento")?.removeAttribute("disabled");
               if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
                 this.cFunciones.DIALOG.open(DialogErrorComponent, {
                   id: "error-servidor",

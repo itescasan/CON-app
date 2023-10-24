@@ -19,7 +19,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
                         <igx-combo #cmbCuentaBancaria [data]="lstCuentabancaria" valueKey="IdCuentaBanco"
                             displayKey="DisplayKey" id="cmbCuentaBancaria" formControlName="cmbCuentaBancaria"
-                            placeholder="No Cuenta" searchPlaceholder="Seleccione una serie..." [autoFocusSearch]="true"
+                            placeholder="No Cuenta" searchPlaceholder="Seleccione una cuenta bancaria..." [autoFocusSearch]="true"
                             [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CuentaBanco($event)"
                             (keyup)="v_Enter_CuentaBanco($event);">
                             <label igxLabel>Cuenta Bancaria</label>
