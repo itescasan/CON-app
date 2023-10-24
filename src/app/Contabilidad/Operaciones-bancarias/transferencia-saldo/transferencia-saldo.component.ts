@@ -68,7 +68,7 @@ export class TransferenciaSaldoComponent {
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
     this.val.add("cmbProveedor", "1", "LEN>", "0", "Proveedor", "Seleccione un proveedor.");
     this.val.add("txtMoneda", "1", "LEN>", "0", "Moneda", "No se ha especificado la moneda de la cuenta.");
-    this.val.add("TxtTC", "1", "DEC>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
+    this.val.add("TxtTC", "1", "NUM>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
@@ -236,28 +236,25 @@ export class TransferenciaSaldoComponent {
   public v_ConvertirTotal(event: any): void {
 
     let valor: number = 0;
-    let id : String = "";
+    let id: String = "";
 
-    if(event != "")
-    {
+    if (event != "") {
       if (event.target.value == "") return;
-       valor = Number(String(event.target.value).replaceAll(",", ""));
+      valor = Number(String(event.target.value).replaceAll(",", ""));
 
-       id = event.target.id;
+      id = event.target.id;
     }
-    else
-    {
-       valor = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
-       id = "txtTotalDolar";
-      if(this.IdMoneda == this.cFunciones.MonedaLocal)
-      {
+    else {
+      valor = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
+      id = "txtTotalDolar";
+      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
         valor = Number(String(this.val.Get("txtTotalCordoba").value).replaceAll(",", ""));
         id = "txtTotalCordoba";
       }
-      
+
     }
-    
-    
+
+
 
     if (id == "txtTotalCordoba") {
       valor = valor / this.TC;
@@ -412,13 +409,13 @@ export class TransferenciaSaldoComponent {
 
 
 
-  
+
   public v_BuscarDocumentos(): void {
 
-    if(this.esModal) return;
+    if (this.esModal) return;
 
 
-    this.val.ItemValido("cmbProveedor");
+    this.val.ItemValido(["cmbProveedor", "TxtTC"]);
 
     if (this.val.Errores != "") {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -473,13 +470,63 @@ export class TransferenciaSaldoComponent {
             let datos: iDatos = _json["d"];
 
 
+            this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
             this.lstDetalle.data = datos.d;
 
-            this.lstDetalle.data.forEach(f =>{
-              f.Saldo = this.cFunciones.NumFormat(Number(f.Saldo), "2");
-              f.NuevoSaldo = f.Saldo;
+            this.lstDetalle.data.forEach(f => {
+
+              let saldo: number = 0
+              let saldoDolar: number = 0
+              let saldoCordoba: number = 0
+
+
+              if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+
+               
+                saldo = f.SaldoCordoba;
+                saldoCordoba = saldo;
+                saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
+
+
+                if (f.IdMoneda != this.cFunciones.MonedaLocal)
+                {
+                  saldo = f.SaldoDolar;
+                  saldoDolar = saldo;
+                  saldoCordoba = this.cFunciones.Redondeo(saldoDolar * this.TC, "2");
+                  
+                }
+
+                saldo = this.cFunciones.Redondeo(saldoCordoba, "2");
+
+              }
+
+              else
+              {
+
+                saldo = f.SaldoDolar;
+                saldoDolar = saldo;
+                saldoCordoba = this.cFunciones.Redondeo(saldo * this.TC, "2");
+
+                if (f.IdMoneda == this.cFunciones.MonedaLocal)
+                {
+                  saldo = f.SaldoCordoba;
+                  saldoCordoba = saldo;
+                  saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
+                }
+
+                saldo = this.cFunciones.Redondeo(saldoDolar, "2");
+              }
+
+              f.Importe = "0.00";
+              f.Saldo = this.cFunciones.NumFormat(saldo, "2");
+              f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
+              f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
+
+              
+
             });
 
+            this.V_Calcular();
 
           }
 
@@ -513,7 +560,7 @@ export class TransferenciaSaldoComponent {
   public V_Calcular(): void {
 
     if (this.IdMoneda != "undefined" && this.IdMoneda != "") {
-   
+
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
         this.val.Get("txtTotalCordoba").enable();
         this.dec_Disponible = Number(this.val.Get("txtTotalCordoba").value.toString().replaceAll(",", ""));
@@ -532,10 +579,31 @@ export class TransferenciaSaldoComponent {
 
     this.lstDetalle.data.forEach(f => {
 
-      let Importe = Number(String(f.Importe).replaceAll(",", ""));
+      f.Operacion = "";
+
+      let Importe : number = Number(String(f.Importe).replaceAll(",", ""));
+      let Saldo : number = Number(String(f.Saldo).replaceAll(",", ""));
+     
+      
+      let NuevoSaldo : number = Saldo;
+
+      if(Importe < 0) Importe = 0;
+      if(Importe > 0){
+        NuevoSaldo = this.cFunciones.Redondeo(Saldo - Importe, "2");
+        f.Operacion = "Abono";
+      }
+
+      if(NuevoSaldo < 0)
+      {
+        NuevoSaldo = 0;
+        Importe = Saldo;
+      }
+
+      if(NuevoSaldo == 0) f.Operacion = "Cancelación";
 
 
-
+      f.Importe = this.cFunciones.NumFormat(Importe, "2");
+      f.NuevoSaldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
       this.dec_Aplicado += Importe;
 
     });
@@ -592,7 +660,7 @@ export class TransferenciaSaldoComponent {
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
     //this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
     //this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
-   // this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    // this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
     this.FILA.UsuarioReg = this.cFunciones.User;
     if (!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoTransferencia = "C";

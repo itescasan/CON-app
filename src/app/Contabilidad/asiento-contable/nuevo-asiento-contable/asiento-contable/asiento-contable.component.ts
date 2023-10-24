@@ -62,7 +62,7 @@ export class AsientoContableComponent {
     this.val.add("txtReferencia", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.val.add("txtObservaciones", "1", "LEN>", "0", "Observaciones", "Ingrese una observacion.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
-    this.val.add("TxtTC", "1", "LEN>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
+    this.val.add("TxtTC", "1", "NUM>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
 
    this.v_Evento("Iniciar");
   }

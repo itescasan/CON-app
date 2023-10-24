@@ -6,7 +6,10 @@ export interface iTransferenciaDocumento{
     Serie : string;
     TipoDocumento: string;
     Fecha: Date,
+    IdMoneda: string,
     Saldo: string;
+    SaldoDolar: number;
+    SaldoCordoba: number;
     Importe : string;
     NuevoSaldo : string;
 }

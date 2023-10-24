@@ -250,15 +250,15 @@ export class Validacion {
   }
 
   public EsValido(): boolean {
-    return this._EsValido("");
+    return this._EsValido([]);
   }
 
-  public ItemValido(formControlName : string)
+  public ItemValido(formControlName : string[])
   {
     return this._EsValido(formControlName);
   }
 
-  private _EsValido(formControlName : string) : boolean
+  private _EsValido(formControlName : string[]) : boolean
   {
     this.Errores = "";
 
@@ -266,10 +266,11 @@ export class Validacion {
     let er: string = "";
     let esError : boolean = false;
 
-    this.lstReglas.filter(f => f.Id == (formControlName == "" ? f.Id : formControlName)).sort((a, b) => a.Index.localeCompare(b.Index));
+    this.lstReglas.sort((a, b) => a.Index.localeCompare(b.Index));
+    
 
 
-    this.lstReglas.filter(f => f.Id == (formControlName == "" ? f.Id : formControlName)).forEach((f) => {
+    this.lstReglas.filter(f => (formControlName.includes(f.Id)) ||  formControlName.length ==  0).forEach((f) => {
       let retorno = "0";
       let errores = "";
       let frm: any = this.Get(f.Id);
