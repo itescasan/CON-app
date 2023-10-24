@@ -251,7 +251,7 @@
                             <div class="row">
                              
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control" id="txtOperacion{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                    <input type="text" class="form-control blue blod" id="txtOperacion{{det.Index}}" [ngModelOptions]="{standalone: true}"
                                          [ngModel]="det.Operacion" disabled>
                                 </form>
 
@@ -322,7 +322,7 @@
                             <div class="row">
 
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero" id="txtImporte{{det.Index}}"  [ngModelOptions]="{standalone: true}"
+                                    <input type="text" class="form-control numero blue blod" id="txtImporte{{det.Index}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Importe"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
                                     (change)="V_Calcular();" autocomplete="off">
@@ -341,7 +341,7 @@
                             <div class="row">
 
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero" id="txtNuevoSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                    <input type="text" class="form-control numero opcional bold" id="txtNuevoSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
                                          [ngModel]="det.NuevoSaldo" disabled>
                                 </form>
 

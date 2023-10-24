@@ -158,7 +158,8 @@ export class TransferenciaCuentaComponent {
 
   public v_Enter_CuentaBanco(event: any) {
     if (event.key == "Enter") {
-      let _Item: iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
+      let cmb : any = this.cmbCuentaBancaria.dropdown;
+      let _Item: iCuentaBancaria = cmb._focusedItem.value;
       this.cmbCuentaBancaria.setSelectedItem(_Item.IdCuentaBanco);
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
     }
@@ -181,7 +182,8 @@ export class TransferenciaCuentaComponent {
 
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
-      let _Item: iBodega = this.cmbBodega.dropdown.focusedItem.value;
+      let cmb : any = this.cmbBodega.dropdown;
+      let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
       this.val.Get("cmbBodega").setValue([_Item.Codigo]);
 
@@ -391,8 +393,9 @@ export class TransferenciaCuentaComponent {
 
     if (event.key == "Enter") {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
+      let cmb : any = txtCuenta.dropdown;
 
-      let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
+      let _Item: iCuenta = cmb._focusedItem.value;
       if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
       this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;

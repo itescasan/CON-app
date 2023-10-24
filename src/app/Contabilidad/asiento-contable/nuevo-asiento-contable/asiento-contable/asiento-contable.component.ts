@@ -127,7 +127,8 @@ export class AsientoContableComponent {
 
   public v_Enter_Serie(event: any) {
     if (event.key == "Enter") {
-      let _Item: iSerie = this.cmbSerie.dropdown.focusedItem.value;
+      let cmb : any = this.cmbSerie.dropdown;
+      let _Item: iSerie = cmb._focusedItem.value;
       this.cmbSerie.setSelectedItem(_Item);
       this.val.Get("cmbSerie").setValue([_Item]);
 
@@ -150,7 +151,8 @@ export class AsientoContableComponent {
 
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
-      let _Item: iBodega = this.cmbBodega.dropdown.focusedItem.value;
+      let cmb : any = this.cmbBodega.dropdown;
+      let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
       this.val.Get("txtBodega").setValue([_Item.Codigo]);
 
@@ -215,7 +217,9 @@ export class AsientoContableComponent {
     if (event.key == "Enter") {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
 
-      let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
+      let cmb : any = txtCuenta.dropdown;
+
+      let _Item: iCuenta = cmb._focusedItem.value;
       if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
       this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;

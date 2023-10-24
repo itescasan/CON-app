@@ -146,7 +146,9 @@ export class TransferenciaSaldoComponent {
 
     this.val.Get("txtTotalDolar").disable();
     this.val.Get("txtTotalCordoba").disable();
-
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.lstDetalle.filter = "";
+    
     this.val.Get("cmbCuentaBancaria").setValue("");
     if (event.added.length == 1) {
       if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
@@ -166,7 +168,8 @@ export class TransferenciaSaldoComponent {
 
   public v_Enter_CuentaBanco(event: any) {
     if (event.key == "Enter") {
-      let _Item: iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
+      let cmb : any = this.cmbCuentaBancaria.dropdown;
+      let _Item: iCuentaBancaria = cmb._focusedItem.value;
       this.cmbCuentaBancaria.setSelectedItem(_Item.IdCuentaBanco);
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
     }
@@ -189,7 +192,8 @@ export class TransferenciaSaldoComponent {
 
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
-      let _Item: iBodega = this.cmbBodega.dropdown.focusedItem.value;
+      let cmb : any = this.cmbBodega.dropdown;
+      let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
       this.val.Get("cmbBodega").setValue([_Item.Codigo]);
 
@@ -206,6 +210,9 @@ export class TransferenciaSaldoComponent {
 
   public v_Select_Proveedor(event: any) {
 
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.lstDetalle.filter = "";
+
     if (event.added.length == 1) {
       if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
       let _Item = this.lstProveedor.find(f => f.Codigo == event.added);
@@ -218,7 +225,8 @@ export class TransferenciaSaldoComponent {
 
   public v_Enter_Proveedor(event: any) {
     if (event.key == "Enter") {
-      let _Item: iProveedor = this.cmbProveedor.dropdown.focusedItem.value;
+      let cmb : any = this.cmbProveedor.dropdown;
+      let _Item: iProveedor = cmb._focusedItem.value;
       this.cmbProveedor.setSelectedItem(_Item.Codigo);
       this.val.Get("cmbProveedor").setValue([_Item.Codigo]);
     }
