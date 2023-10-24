@@ -178,7 +178,7 @@ export class SidebarComponent {
       $("#btnMenu").trigger("click");
       this.DynamicFrom.viewContainerRef.clear();
 
-      let TransfCuenta: ComponentRef<TransferenciaSaldoComponent> = this.DynamicFrom.viewContainerRef.createComponent(TransferenciaSaldoComponent);
+      let TransfSaldo: ComponentRef<TransferenciaSaldoComponent> = this.DynamicFrom.viewContainerRef.createComponent(TransferenciaSaldoComponent);
 
     }
 
