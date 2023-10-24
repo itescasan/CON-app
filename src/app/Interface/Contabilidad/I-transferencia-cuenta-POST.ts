@@ -1,7 +1,7 @@
 import { iAsiento } from "./i-Asiento";
-import { iTransferenciaCunta } from "./i-Transferencia-cuenta";
+import { iTransferenciaCuenta } from "./i-Transferencia-cuenta";
 
 export interface iTransferenciaCuentaPOST{
-    T: iTransferenciaCunta;
+    T: iTransferenciaCuenta;
     A: iAsiento;
 }

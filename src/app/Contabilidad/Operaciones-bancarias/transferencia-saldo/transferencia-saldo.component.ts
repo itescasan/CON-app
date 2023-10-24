@@ -12,11 +12,12 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { getTransferencia } from '../CRUD/GET/get-Transferencia';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
-import { iTransferenciaCunta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
+
 import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
 import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
 import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
 import { iTransferenciaDocumento } from 'src/app/Interface/Contabilidad/i-Transferencia-Documento';
+import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
 
 @Component({
   selector: 'app-transferencia-saldo',
@@ -42,7 +43,7 @@ export class TransferenciaSaldoComponent {
   public lstDetalle = new MatTableDataSource<iTransferenciaDocumento>;
 
 
-  public FILA: iTransferenciaCunta = {} as iTransferenciaCunta;
+  public FILA: iTransferenciaCuenta = {} as iTransferenciaCuenta;
 
 
   public esModal: boolean = false;
@@ -473,6 +474,11 @@ export class TransferenciaSaldoComponent {
 
 
             this.lstDetalle.data = datos.d;
+
+            this.lstDetalle.data.forEach(f =>{
+              f.Saldo = this.cFunciones.NumFormat(Number(f.Saldo), "2");
+              f.NuevoSaldo = f.Saldo;
+            });
 
 
           }

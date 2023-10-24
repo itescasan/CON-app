@@ -14,9 +14,9 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { getTransferencia } from '../CRUD/GET/get-Transferencia';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
-import { iTransferenciaCunta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
 import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
 import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
+import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
 
 @Component({
   selector: 'app-transferencia-cuenta',
@@ -42,7 +42,7 @@ export class TransferenciaCuentaComponent {
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
 
-  public FILA: iTransferenciaCunta = {} as iTransferenciaCunta;
+  public FILA: iTransferenciaCuenta = {} as iTransferenciaCuenta;
 
 
   public esModal: boolean = false;

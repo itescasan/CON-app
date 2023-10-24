@@ -25,7 +25,7 @@ export class getTransferencia {
     }
 
     public GetDocumentos(CodProveedor : string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GerDocumentos?CodProveedor=" + CodProveedor);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDocumentos?CodProveedor=" + CodProveedor);
     }
 
 

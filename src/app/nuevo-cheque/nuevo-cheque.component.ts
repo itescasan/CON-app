@@ -13,7 +13,7 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
-import { iTransferenciaCunta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
+import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
 import { postTrasnferencia } from '../Contabilidad/Operaciones-bancarias/CRUD/POST/post-Transferencia';
 import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
 import { getCheques } from '../Contabilidad/Operaciones-bancarias/CRUD/GET/get-Cheques';
@@ -46,7 +46,7 @@ export class NuevoChequeComponent {
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
 
-  public FILA: iTransferenciaCunta = {} as iTransferenciaCunta;
+  public FILA: iTransferenciaCuenta = {} as iTransferenciaCuenta;
 
   filteredCuenta: Observable<iCuenta[]> | undefined;
 

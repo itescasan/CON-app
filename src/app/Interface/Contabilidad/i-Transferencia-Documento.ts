@@ -3,6 +3,7 @@ export interface iTransferenciaDocumento{
     Index : number;
     Operacion: string;
     Documento: string;
+    Serie : string;
     TipoDocumento: string;
     Fecha: Date,
     Saldo: string;
