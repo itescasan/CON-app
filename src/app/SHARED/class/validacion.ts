@@ -250,23 +250,26 @@ export class Validacion {
   }
 
   public EsValido(): boolean {
+    return this._EsValido("");
+  }
+
+  public ItemValido(formControlName : string)
+  {
+    return this._EsValido(formControlName);
+  }
+
+  private _EsValido(formControlName : string) : boolean
+  {
     this.Errores = "";
 
     let i: number = 0;
     let er: string = "";
     let esError : boolean = false;
 
-    this.lstReglas.sort((a, b) => a.Index.localeCompare(b.Index));
-/*
-    let contenedorSpan  = document.getElementsByClassName("info-validacion");
+    this.lstReglas.filter(f => f.Id == (formControlName == "" ? f.Id : formControlName)).sort((a, b) => a.Index.localeCompare(b.Index));
 
-    for (let i = 0; i < contenedorSpan.length; i++) {
-      let elemnt = contenedorSpan[i] as HTMLElement;
-      elemnt.remove();
-  }
-*/
 
-    this.lstReglas.forEach((f) => {
+    this.lstReglas.filter(f => f.Id == (formControlName == "" ? f.Id : formControlName)).forEach((f) => {
       let retorno = "0";
       let errores = "";
       let frm: any = this.Get(f.Id);
@@ -345,6 +348,7 @@ export class Validacion {
 
     return true;
   }
+
 
   private Cls_Validaciones(id: string): ValidatorFn {
     return (control: AbstractControl): { [key: string]: string } | null => {

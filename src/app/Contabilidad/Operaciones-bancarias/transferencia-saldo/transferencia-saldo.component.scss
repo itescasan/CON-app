@@ -16,9 +16,10 @@
 
 }
 
-
-
-
+#btn-Documentos-proveedor
+{
+    width: 100%;
+}
 
 
   
@@ -100,12 +101,67 @@
     background-color: var(--escan-fondo);
     padding: 10px;
 
-  
+    .totales,
     .botones{
         margin-right: 20px;
     }
  
 
+    .totales {
+
+        width: 100%;
+        text-align: right;
+
+
+        .disponible {
+            width: 60%;
+        }
+
+        .aplicado {
+            width: 20%;
+        }
+
+        .diferencia {
+            width: 20%;
+        }
+
+
+        .valores {
+            background-color: var(--escan-opcional);
+            color: var(--escan-fondo);
+        }
+
+        .valores.dif{
+            background-color: var(--escan-primario);
+        }
+
+        .etiqueta,
+        .valores {
+            display: inline-block;
+            width: 250px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 5px;
+        }
+
+        @include Tamano_Menor(lg) {
+
+
+            .etiqueta {
+                width: 30%;
+            }
+
+
+            .valores {
+                width: 70%;
+            }
+
+
+
+        }
+
+    }
 
     .botones {
 

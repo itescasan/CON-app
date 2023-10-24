@@ -101,19 +101,31 @@
                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
 
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-8 mb-1">
-                                <igx-combo #cmbProveedor [data]="lstProveedor" valueKey="Codigo"
-                                displayKey="Proveedor" id="cmbProveedor" formControlName="cmbProveedor"
-                                placeholder="Proveedor" searchPlaceholder="Seleccione una proveedor..." [autoFocusSearch]="true"
-                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Proveedor($event)"
-                                (keyup)="v_Enter_Proveedor($event);">
-                                <label igxLabel>Proveedor</label>
-                                <igx-prefix><i class="fa-solid fa-user-tie fa-lg"></i></igx-prefix>
-                            </igx-combo>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-8">
+
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-9 col-lg-9 mb-1">
+                                        <igx-combo #cmbProveedor [data]="lstProveedor" valueKey="Codigo"
+                                        displayKey="Proveedor" id="cmbProveedor" formControlName="cmbProveedor"
+                                        placeholder="Proveedor" searchPlaceholder="Seleccione una proveedor..." [autoFocusSearch]="true"
+                                        [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Proveedor($event)"
+                                        (keyup)="v_Enter_Proveedor($event);">
+                                        <label igxLabel>Proveedor</label>
+                                        <igx-prefix><i class="fa-solid fa-user-tie fa-lg"></i></igx-prefix>
+                                    </igx-combo>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
+                                        <button type="button" class="btn btn-opcional" id="btn-Documentos-proveedor"
+                                        (click)="v_BuscarDocumentos();"><i class="fa-solid fa-magnifying-glass fa-beat-fade fa-lg"></i>
+                                        Documentos</button>
+                                    </div>
+                                </div>
+                              
                             </div>
-    
-    
-                            
+               
+                           
                         <div class="col-12 col-sm-12 col-md-3 col-lg-4 mb-1">
                             <div class="input-group">
                                 <div class="form-floating">
@@ -161,7 +173,10 @@
                                     <span class="input-group-text">C$</span>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Total Cordoba"
-                                            id="txtTotalCordoba" formControlName="txtTotalCordoba">
+                                            id="txtTotalCordoba" formControlName="txtTotalCordoba"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                             (change)="v_ConvertirTotal($event);"
+                                            (focusout)="v_FocusOut('txtTotalCordoba');">
                                         <label for="txtTotalCordoba">Total</label>
                                     </div>
                                 </div>
@@ -172,7 +187,10 @@
                                     <span class="input-group-text">U$</span>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
-                                            formControlName="txtTotalDolar">
+                                            formControlName="txtTotalDolar"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                             (change)="v_ConvertirTotal($event);"
+                                            (focusout)="v_FocusOut('txtTotalDolar');">
                                         <label for="txtTotalDolar">Total</label>
                                     </div>
                                 </div>
@@ -202,16 +220,17 @@
     <div class="row g-1 header">
 
 
-        <div class="col-8 col-lg-2"><span>Cuenta</span></div>
+        <div class="col-8 col-lg-2"><span>Operacion</span></div>
 
-        <div class="col-12 col-lg-3"><span>Descripción</span></div>
+        <div class="col-12 col-lg-2"><span>Documento</span></div>
 
-        <div class="col-12 col-lg-3"><span>Referencia</span></div>
+        <div class="col-12 col-lg-2"><span>Fecha</span></div>
 
-        <div class="col-6 col-lg-2 numero"><span>Débito</span></div>
+        <div class="col-6 col-lg-2 numero"><span>Saldo</span></div>
 
+        <div class="col-6 col-lg-2 numero"><span>Importe</span></div>
 
-        <div class="col-6 col-lg-2 numero"><span>Crédito</span></div>
+        <div class="col-6 col-lg-2 numero"><span>Nuevo Saldo</span></div>
 
     </div>
 
@@ -225,25 +244,17 @@
                 <td mat-cell *matCellDef="let det">
                     <div class="row">
 
-                        <div class="col-12 col-lg-5">
+                        <div class="col-12 col-lg-2">
                             <div class="row">
-                                <div class="header-cell"><span>Cuenta</span></div>
+                                <div class="header-cell"><span>Operacion</span></div>
                             </div>
                             <div class="row">
-
-<!--
+                             
                                 <form autocomplete="off">
-                                    <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable" [ngModelOptions]="{standalone: true}"
-                                        valueKey="CuentaContable" displayKey="NombreCuenta"
-                                        id="txtCuenta{{det.NoLinea}}" 
-                                        [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
-                                        (selectionChanging)="v_Select_Cuenta($event, det)"
-                                        (keyup)="v_Enter_Cuenta($event, det);">
-
-                                    </igx-combo>
+                                    <input type="text" class="form-control" id="txtOperacion{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                         [ngModel]="det.Operacion" disabled>
                                 </form>
 
--->
                             </div>
 
 
@@ -253,19 +264,18 @@
 
 
 
-                        <div class="col-12 col-lg-3">
+                        <div class="col-12 col-lg-2">
                             <div class="row">
-                                <div class="header-cell"><span>Referencia</span></div>
+                                <div class="header-cell"><span>Documento</span></div>
                             </div>
                             <div class="row">
-                                <!--
+                        
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
-                                         [(ngModel)]="det.Referencia"
-                                        (keydown.Enter)="V_Focus('Debito/Credito', det);">
+                                    <input type="text" class="form-control" id="txtDocumento{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                         [ngModel]="det.Documento" disabled>
                                 </form>
 
--->
+
                             </div>
 
                         </div>
@@ -273,18 +283,15 @@
                         <div class="col-6 col-lg-2">
 
                             <div class="row">
-                                <div class="header-cell"><span>Débito</span></div>
+                                <div class="header-cell"><span>Fecha</span></div>
                             </div>
                             <div class="row">
-<!--
+
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="det.Debito"
-                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
-                                    (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
-                                    (change)="V_Calcular();" autocomplete="off">
+                                    <input type="text" class="form-control" id="txtFecha{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                         [ngModel]="det.Fecha |date:'yyyy-MM-dd'" disabled>
                                 </form>
-                               -->
+
 
                             </div>
 
@@ -294,18 +301,49 @@
 
                         <div class="col-6 col-lg-2">
                             <div class="row">
-                                <div class="header-cell"><span>Crédito</span></div>
+                                <div class="header-cell"><span>Saldo</span></div>
                             </div>
                             <div class="row">
-<!--
+
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="det.Credito"
+                                    <input type="text" class="form-control numero" id="txtSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                         [ngModel]="det.Saldo" disabled>
+                                </form>
+                               
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-6 col-lg-2">
+                            <div class="row">
+                                <div class="header-cell"><span>Importe</span></div>
+                            </div>
+                            <div class="row">
+
+                                <form autocomplete="off">
+                                    <input type="text" class="form-control numero" id="txtImporte{{det.Index}}"  [ngModelOptions]="{standalone: true}"
+                                    [(ngModel)]="det.Importe"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                    (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
                                     (change)="V_Calcular();" autocomplete="off">
                                 </form>
-                               -->
+                             
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6 col-lg-2">
+                            <div class="row">
+                                <div class="header-cell"><span>Nuevo Saldo</span></div>
+                            </div>
+                            <div class="row">
+
+                                <form autocomplete="off">
+                                    <input type="text" class="form-control numero" id="txtNuevoSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                         [ngModel]="det.NuevoSaldo" disabled>
+                                </form>
 
                             </div>
 
@@ -340,6 +378,15 @@
 
 <div class="contenedor-pie">
     <div class="pie-transferencia">
+
+        <div class="totales">
+            <span class="disponible"><span class="etiqueta">Disponible:</span><span class="valores">{{dec_Disponible | number :
+                    "1.2-2"}}</span></span>
+            <span class="aplicado"><span class="etiqueta">Aplicado:</span><span class="valores">{{dec_Aplicado | number
+                    : "1.2-2"}}</span></span>
+            <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
+                    "1.2-2"}}</span></span>
+        </div>
 
         <div class="botones" *ngIf="!Anulado">
             <div>
