@@ -207,7 +207,7 @@ export class RegistroAsientoContableComponent {
     dialogRef.afterOpened().subscribe(s => {
       dialogRef.componentInstance.textBoton1 = "SI";
       dialogRef.componentInstance.textBoton2 = "NO";
-      dialogRef.componentInstance.mensaje = "<p>Esta seguro de Autorizar? <br>Asiento: <b> " + item.NoAsiento+"</b><br>Bodega: <b> " + item.Bodega +"</b><br>Referencia: <b>"+item.Referencia+"</b></p>";
+      dialogRef.componentInstance.mensaje = "<p><b>Esta seguro de Autorizar?</b> <br>Asiento: <b> " + item.NoAsiento+"</b><br>Bodega: <b> " + item.Bodega +"</b><br>Referencia: <b>"+item.Referencia+"</b></p>";
     });
 
 
