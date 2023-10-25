@@ -69,6 +69,7 @@ export class TransferenciaSaldoComponent {
     this.val.add("cmbProveedor", "1", "LEN>", "0", "Proveedor", "Seleccione un proveedor.");
     this.val.add("txtMoneda", "1", "LEN>", "0", "Moneda", "No se ha especificado la moneda de la cuenta.");
     this.val.add("TxtTC", "1", "NUM>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
+    this.val.add("txtComision", "1", "LEN>", "0", "Banco", "Revisar la comisión bancaria");
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
@@ -146,8 +147,8 @@ export class TransferenciaSaldoComponent {
 
     this.val.Get("txtTotalDolar").disable();
     this.val.Get("txtTotalCordoba").disable();
-    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
-    this.lstDetalle.filter = "";
+
+
     
     this.val.Get("cmbCuentaBancaria").setValue("");
     if (event.added.length == 1) {
@@ -159,7 +160,18 @@ export class TransferenciaSaldoComponent {
       this.val.Get("txtBanco").setValue(_Item?.Banco);
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
+
+
+      if(this.IdMoneda != _Item?.IdMoneda)
+      {
+        this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+        this.lstDetalle.filter = "";
+      }
+      
+
+
       this.IdMoneda = String(_Item?.IdMoneda);
+      
 
     }
 

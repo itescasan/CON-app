@@ -36,7 +36,19 @@
     font-weight: bold;
 }
 
-  
+
+
+.center,
+input.center{
+    text-align: center;
+}
+
+.importe{
+
+    background-color: #a0e698; // #D9F5D6
+    color: var(--escan-opcional);
+    font-weight: bold;
+}
 
 //████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
 
@@ -46,7 +58,7 @@
 
 .header,
 .header-cell {
-    background-color: var(--escan-primario);
+    background-color: var(--escan-opcional);
     padding: 5px;
 
     span {
@@ -72,9 +84,12 @@
 
     table {
 
-        textarea {
-            height: 31px;
+        input:disabled{
+            background-color: transparent;
+            border: 0;
         }
+
+
 
         .header-cell {
 

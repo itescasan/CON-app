@@ -50,6 +50,8 @@ class ReglasValidacion {
   public valor: string = "";
   public Mensaje: string = "";
   public Index: string = "";
+  public Etiqueta : string = "";
+  public ErrorMensaje : string = "";
 }
 
 interface I_Frm {
@@ -124,6 +126,7 @@ export class Validacion {
     _Regla.valor = valor;
     _Regla.Mensaje = msj;
     _Regla.Index = this.Index + "_" + id;
+    _Regla.Etiqueta = etiqueta;
 
     this.lstReglas.push(_Regla);
     if (this.Get(id) == undefined)
@@ -263,14 +266,13 @@ export class Validacion {
     this.Errores = "";
 
     let i: number = 0;
-    let er: string = "";
     let esError : boolean = false;
 
-    this.lstReglas.sort((a, b) => a.Index.localeCompare(b.Index));
-    
+    //this.lstReglas.sort((a, b) => a.Index.localeCompare(b.Index));
 
+    let reglas : ReglasValidacion[]  = JSON.parse(JSON.stringify(this.lstReglas.filter(f => (formControlName.includes(f.Id)) ||  formControlName.length ==  0).sort((a, b) => a.Etiqueta.localeCompare(b.Etiqueta)))); 
 
-    this.lstReglas.filter(f => (formControlName.includes(f.Id)) ||  formControlName.length ==  0).forEach((f) => {
+    reglas.forEach((f) => {
       let retorno = "0";
       let errores = "";
       let frm: any = this.Get(f.Id);
@@ -289,6 +291,7 @@ export class Validacion {
      }
   
       let r: string[] = this._Validar(f.Id, f, frm, retorno, errores);
+      reglas[i].ErrorMensaje = "";
 
       if (r[1] != "" && f.Mensaje != "") {
 
@@ -298,27 +301,10 @@ export class Validacion {
           esError = true;
         }
 
-        
+        reglas[i].ErrorMensaje = "<li class='error-mensaje'>" + f.Mensaje + "</li>";
 
-        er += "<li class='error-mensaje'>" + f.Mensaje + "</li>";
+       
 
-        if (i + 1 < this.lstReglas.length) {
-          if (this.lstReglas[i + 1].Id != f.Id) {
-            if(!this.Errores.includes(etiqueta))
-            {
-              this.Errores += "<li class='error-etiqueta'>" + etiqueta + "<ul>" + er + "</ul></li>";
-              er = "";
-            }
-          
-          }
-        } else {
-          if(!this.Errores.includes(etiqueta))
-          {
-            this.Errores += "<li class='error-etiqueta'>" + etiqueta + "<ul>" + er + "</ul></li>";
-            er = "";
-          }
-          
-        }
       }
 
 
@@ -341,6 +327,29 @@ export class Validacion {
       
       i++;
     });
+    
+
+    this.Errores = "";
+    let er : string = "";
+    let lst  = JSON.parse(JSON.stringify(reglas.filter(f => f.ErrorMensaje != "").sort((a, b) => a.Etiqueta.localeCompare(b.Etiqueta))));
+     i  = 0;
+     lst.forEach((f : ReglasValidacion) =>{
+
+      er += f.ErrorMensaje;
+
+
+      if(i < lst.length - 1 && f.Etiqueta != "")
+      {
+        if( lst[i + 1].Etiqueta != f.Etiqueta){
+          this.Errores += "<li class='error-etiqueta'>" + f.Etiqueta + "<ul>" + er + "</ul></li>";
+          er = "";
+        }
+      }
+
+      i++;
+
+    });
+
 
     if (this.Errores != "") {
       this.Errores = "<ul>" + this.Errores + "</ul>";
