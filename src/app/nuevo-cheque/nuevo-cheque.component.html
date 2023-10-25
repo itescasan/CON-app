@@ -180,7 +180,7 @@
                                     <span class="input-group-text">IR</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="IR en la fuente"
-                                            id="txtIrFuente" formControlName="txtIrFuente" ((keypress))="HabiliarValor($event)">
+                                            id="txtIrFuente" formControlName="txtIrFuente" (keypress)="HabiliarValor($event)">
                                         <label for="txtIrFuente">IR en la fuente</label>
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@
                                     <span class="input-group-text">SP</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtServP" 
-                                            formControlName="txtServP" ((keypress))="HabiliarValor($event)">
+                                            formControlName="txtServP" (keypress)="HabiliarValor($event)">
                                         <label for="txtServP">Servicios Profesionales</label>
                                     </div>
                                 </div>
@@ -201,7 +201,7 @@
                                     <span class="input-group-text">AL</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtAlcaldias"
-                                            formControlName="txtAlcaldias" ((keypress))="HabiliarValor($event)">
+                                            formControlName="txtAlcaldias" (keypress)="HabiliarValor($event)">
                                         <label for="txtAlcaldias">Alcaldia</label>
                                     </div>
                                 </div>
@@ -211,8 +211,8 @@
                                 <div class="input-group">
                                     <span class="input-group-text">IVA</span>
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtIva"
-                                            formControlName="txtIva" ((keypress))="HabiliarValor($event)">
+                                        <input type="number" class="form-control" placeholder="IVA" id="txtIva"
+                                            formControlName="txtIva" (keypress)="HabiliarValor($event)">
                                         <label for="txtIva">Ingrese el Valor</label>
                                     </div>
                                 </div>                                    
@@ -223,7 +223,7 @@
                                     <span class="input-group-text">TC</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="TC Compra Divisa" id="txtTcCompraD"
-                                            formControlName="txtTcCompraD" ((keypress))="HabiliarValor($event)">
+                                            formControlName="txtTcCompraD" (keypress)="HabiliarValor($event)">
                                         <label for="txtTcCompraD">TC Compra Divisa</label>
                                     </div>
                                 </div>
@@ -232,7 +232,7 @@
                             <div class="col-12 col-md-12 col-lg-6 mb-1">
                                 <div class="row mt-3 ">
                                     <div class="botones-edicion col-12 col-md-12 col-lg-6 mb-1">
-                                        <button type="button" class="btn btn-primario" id="btnContabilizar-Cheques" (click)="v_Guardar();" [disabled]="!this.val.EsValido()"><i class="fa-solid fa-file-invoice"></i>
+                                        <button type="button" class="btn btn-primario" id="btnContabilizar-Cheques" (click)="v_Contabilizar();" [disabled]="!this.val.EsValido()"><i class="fa-solid fa-file-invoice"></i>
                                             Contabilizar</button> 
                                     </div>
                                     <div class="botones-edicion col-12 col-md-12 col-lg-6 mb-1">
