@@ -67,7 +67,7 @@ export class TransferenciaCuentaComponent {
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
     this.val.add("txtBeneficiario", "1", "LEN>", "0", "Beneficiario", "No se ha especificado el beneficiario de la transferencia.");
     this.val.add("txtMoneda", "1", "LEN>", "0", "Moneda", "No se ha especificado la moneda de la cuenta.");
-    this.val.add("TxtTC", "1", "DEC>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
+    this.val.add("TxtTC", "1", "NUM>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
@@ -158,7 +158,8 @@ export class TransferenciaCuentaComponent {
 
   public v_Enter_CuentaBanco(event: any) {
     if (event.key == "Enter") {
-      let _Item: iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
+      let cmb : any = this.cmbCuentaBancaria.dropdown;
+      let _Item: iCuentaBancaria = cmb._focusedItem.value;
       this.cmbCuentaBancaria.setSelectedItem(_Item.IdCuentaBanco);
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
     }
@@ -181,7 +182,8 @@ export class TransferenciaCuentaComponent {
 
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
-      let _Item: iBodega = this.cmbBodega.dropdown.focusedItem.value;
+      let cmb : any = this.cmbBodega.dropdown;
+      let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
       this.val.Get("cmbBodega").setValue([_Item.Codigo]);
 
@@ -391,8 +393,9 @@ export class TransferenciaCuentaComponent {
 
     if (event.key == "Enter") {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
+      let cmb : any = txtCuenta.dropdown;
 
-      let _Item: iCuenta = txtCuenta.dropdown.focusedItem.value;
+      let _Item: iCuenta = cmb._focusedItem.value;
       if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
       this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;

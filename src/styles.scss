@@ -189,15 +189,18 @@ i {
     color: var(--escan-secundario);
 }
 
-.primario{
+.primario,
+.primario:disabled{
     color: var(--escan-primario);
 }
 
-.secundario{
+.secundario,
+.secundario:disabled{
     color: var(--escan-secundario);
 }
 
-.opcional{
+.opcional,
+.opcional:disabled{
     color: var(--escan-opcional);
 }
 
@@ -544,7 +547,23 @@ button:active {
 
 
 //████████████████████████████████████████████SIMBOLO VALIDACION██████████████████████████████████████████████████████████████████████
+li.error-etiqueta{
+    list-style-position: inside;
+    list-style-type:disc;
+}
+li.error-etiqueta::marker {
+    font-weight: bold;
+  }
 
+li.error-mensaje
+{
+    list-style-position: inside;
+    list-style-type:decimal;
+}
+
+li.error-mensaje::marker {
+    font-weight: bold;
+  }
 
 .contenedor-info-validacion{
   position: relative;
