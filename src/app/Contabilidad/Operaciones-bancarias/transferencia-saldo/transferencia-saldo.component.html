@@ -7,7 +7,7 @@
             </button>
         </div>
     </div>
-    
+
     <form autocomplete="off" [formGroup]="val.ValForm">
 
 
@@ -118,50 +118,52 @@
 
                                     <div class="col-12 col-sm-12 col-md-9 col-lg-9 mb-1">
                                         <igx-combo #cmbProveedor [data]="lstProveedor" valueKey="Codigo"
-                                        displayKey="DisplayKey" id="cmbProveedor" formControlName="cmbProveedor"
-                                        placeholder="Proveedor" searchPlaceholder="Seleccione una proveedor..." [autoFocusSearch]="true"
-                                        [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Proveedor($event)"
-                                        (keyup)="v_Enter_Proveedor($event);">
-                                        <label igxLabel>Proveedor</label>
-                                        <igx-prefix><i class="fa-solid fa-user-tie fa-lg"></i></igx-prefix>
-                                    </igx-combo>
+                                            displayKey="DisplayKey" id="cmbProveedor" formControlName="cmbProveedor"
+                                            placeholder="Proveedor" searchPlaceholder="Seleccione una proveedor..."
+                                            [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
+                                            (selectionChanging)="v_Select_Proveedor($event)"
+                                            (keyup)="v_Enter_Proveedor($event);">
+                                            <label igxLabel>Proveedor</label>
+                                            <igx-prefix><i class="fa-solid fa-user-tie fa-lg"></i></igx-prefix>
+                                        </igx-combo>
                                     </div>
 
                                     <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
                                         <button type="button" class="btn btn-opcional" id="btn-Documentos-proveedor"
-                                        (click)="v_BuscarDocumentos();"><i class="fa-solid fa-magnifying-glass fa-beat-fade fa-lg"></i>
-                                        Documentos</button>
+                                            (click)="v_BuscarDocumentos();"><i
+                                                class="fa-solid fa-magnifying-glass fa-beat-fade fa-lg"></i>
+                                            Documentos</button>
                                     </div>
                                 </div>
-                              
-                            </div>
-               
-                           
-                        <div class="col-12 col-sm-12 col-md-3 col-lg-4 mb-1">
-                            <div class="input-group">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" placeholder="Beneficiario" id="txtMoneda"
-                                        formControlName="txtMoneda">
-                                    <label for="txtMoneda">Moneda</label>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="col-12  mb-1">
-                            <div class="concepto">
-                                <div class="form-floating">
-                                    <textarea type="textarea" class="form-control" placeholder="Concepto" id="txtConcepto"
-                                        formControlName="txtConcepto"></textarea>
-                                    <label for="txtConcepto">Concepto</label>
-                                </div>
-                            </div>
-    
-                        </div>
-    
-                        </div>
-                      
 
-                        
+                            </div>
+
+
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-4 mb-1">
+                                <div class="input-group">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Beneficiario"
+                                            id="txtMoneda" formControlName="txtMoneda">
+                                        <label for="txtMoneda">Moneda</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12  mb-1">
+                                <div class="concepto">
+                                    <div class="form-floating">
+                                        <textarea type="textarea" class="form-control" placeholder="Concepto"
+                                            id="txtConcepto" formControlName="txtConcepto"></textarea>
+                                        <label for="txtConcepto">Concepto</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -169,7 +171,8 @@
                         <div class="row">
                             <div class="col-12  mb-1">
                                 <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
+                                    <span class="input-group-text"><i
+                                            class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Comición" id="txtComision"
                                             formControlName="txtComision">
@@ -177,46 +180,46 @@
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="col-12 mb-1">
-    
+
                                 <div class="input-group">
                                     <span class="input-group-text">C$</span>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Total Cordoba"
                                             id="txtTotalCordoba" formControlName="txtTotalCordoba"
                                             (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                             (change)="v_ConvertirTotal($event);"
+                                            (change)="v_ConvertirTotal($event);"
                                             (focusout)="v_FocusOut('txtTotalCordoba');">
                                         <label for="txtTotalCordoba">Total</label>
                                     </div>
                                 </div>
                             </div>
-        
+
                             <div class="col-12 mb-1">
                                 <div class="input-group">
                                     <span class="input-group-text">U$</span>
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
-                                            formControlName="txtTotalDolar"
+                                        <input type="text" class="form-control" placeholder="Total Dolar"
+                                            id="txtTotalDolar" formControlName="txtTotalDolar"
                                             (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                             (change)="v_ConvertirTotal($event);"
+                                            (change)="v_ConvertirTotal($event);"
                                             (focusout)="v_FocusOut('txtTotalDolar');">
                                         <label for="txtTotalDolar">Total</label>
                                     </div>
                                 </div>
                             </div>
-                        
+
                         </div>
 
-                     
 
-                        
+
+
                     </div>
 
                 </div>
 
-              
+
             </div>
         </div>
 
@@ -261,10 +264,11 @@
                                 <div class="header-cell"><span>Operacion</span></div>
                             </div>
                             <div class="row">
-                             
+
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control center blue blod" id="txtOperacion{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                         [ngModel]="det.Operacion" disabled>
+                                    <input type="text" class="form-control center blue blod"
+                                        id="txtOperacion{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                        [ngModel]="det.Operacion" disabled>
                                 </form>
 
                             </div>
@@ -274,16 +278,16 @@
                         </div>
 
 
-                        
+
                         <div class="col-6 col-lg-1">
                             <div class="row">
                                 <div class="header-cell"><span>Tipo Documento</span></div>
                             </div>
                             <div class="row">
-                             
+
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control center" id="txtTipoDocumento{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                         [ngModel]="det.TipoDocumento" disabled>
+                                    <input type="text" class="form-control center" id="txtTipoDocumento{{det.Index}}"
+                                        [ngModelOptions]="{standalone: true}" [ngModel]="det.TipoDocumento" disabled>
                                 </form>
 
                             </div>
@@ -299,10 +303,10 @@
                                 <div class="header-cell"><span>Documento</span></div>
                             </div>
                             <div class="row">
-                        
+
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control center" id="txtDocumento{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                         [ngModel]="det.Documento" disabled>
+                                    <input type="text" class="form-control center" id="txtDocumento{{det.Index}}"
+                                        [ngModelOptions]="{standalone: true}" [ngModel]="det.Documento" disabled>
                                 </form>
 
 
@@ -318,8 +322,9 @@
                             <div class="row">
 
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                         [ngModel]="det.Fecha |date:'dd MMM yyyy'" disabled>
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                        [ngModelOptions]="{standalone: true}" [ngModel]="det.Fecha |date:'dd MMM yyyy'"
+                                        disabled>
                                 </form>
 
 
@@ -336,10 +341,11 @@
                             <div class="row">
 
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero  secundario" id="txtSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                         [ngModel]="det.Saldo" disabled>
+                                    <input type="text" class="form-control numero  secundario"
+                                        id="txtSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                        [ngModel]="det.Saldo" disabled>
                                 </form>
-                               
+
 
                             </div>
 
@@ -352,12 +358,12 @@
                             <div class="row">
 
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero importe" id="txtImporte{{det.Index}}"  [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="det.Importe"
-                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                    (change)="V_Calcular();" autocomplete="off">
+                                    <input type="text" class="form-control numero importe" id="txtImporte{{det.Index}}"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Importe"
+                                        (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                        (change)="V_Calcular();" autocomplete="off">
                                 </form>
-                             
+
 
                             </div>
 
@@ -371,8 +377,9 @@
                             <div class="row">
 
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero blue blod" id="txtNuevoSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                         [ngModel]="(det.NuevoSaldo == det.Saldo? '': det.NuevoSaldo)" disabled>
+                                    <input type="text" class="form-control numero blue blod"
+                                        id="txtNuevoSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
+                                        [ngModel]="(det.NuevoSaldo == det.Saldo? '': det.NuevoSaldo)" disabled>
                                 </form>
 
                             </div>
@@ -398,7 +405,7 @@
 
         </table>
 
-  
+
     </div>
 
 </div>
@@ -410,7 +417,9 @@
     <div class="pie-transferencia">
 
         <div class="totales">
-            <span class="disponible"><span class="etiqueta">Disponible:</span><span class="valores">{{dec_Disponible | number :
+
+            <span class="disponible"><span class="etiqueta">Disponible:</span><span class="valores">{{dec_Disponible |
+                    number :
                     "1.2-2"}}</span></span>
             <span class="aplicado"><span class="etiqueta">Aplicado:</span><span class="valores">{{dec_Aplicado | number
                     : "1.2-2"}}</span></span>
@@ -423,15 +432,19 @@
                 <button type="button" class="btn btn-secundario" id="btnRefrescar-Transferencia"
                     (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
                     Refrescar</button>
+                <button type="button" class="btn btn-opcional" id="btn-Documentos-proveedor-Contabilizacion"
+                    (click)="V_Contabilizacion();"><i class="fa-solid fa-book fa-beat fa-lg"></i>
+                    Contabilización</button>
             </div>
+
 
             <div class="botones-edicion">
                 <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia" (click)="v_Guardar();"><i
                         class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
                     Guardar</button>
 
-                    <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento" (click)="v_Evento('Limpiar');"
-                    [disabled]="esModal"  ><i class="fa-solid fa-arrow-left fa-beat fa-lg"  ></i> Cancelar</button>
+                <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento" (click)="v_Evento('Limpiar');"
+                    [disabled]="esModal"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
             </div>
         </div>
 
