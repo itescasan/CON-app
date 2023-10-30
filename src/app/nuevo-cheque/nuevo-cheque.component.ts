@@ -34,6 +34,7 @@ export class NuevoChequeComponent {
   public valTabla = new Validacion();
 
   private IdMoneda : string = "";
+  private Valor : number = 0.0;
 
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria : iCuentaBancaria[] = [];
@@ -471,7 +472,7 @@ public v_Enter_Cuenta2(event: any) {
 
   V_Agregar() {
 
-    if(this.cmbCuenta == undefined) return;
+    //if(this.cmbCuenta == undefined) return;
 
     let det: iAsientoDetalle = {} as iAsientoDetalle;
     let i: number = 1;
@@ -529,7 +530,7 @@ public v_Enter_Cuenta2(event: any) {
     
     this.lstDetalle.data.push(det);
 
-    this.V_OrdenarCiclo(i);
+    this.V_OrdenarCiclo2(i);
 
 
     setTimeout(() => {
@@ -538,7 +539,7 @@ public v_Enter_Cuenta2(event: any) {
       if(!txtCuenta.selection.includes(cuenta)) txtCuenta.setSelectedItem(cuenta);
       det.Referencia = Concepto;
       if(Tipo == "D") det.Debito = Valor.toString();
-      if(Tipo == "C") det.Debito = Valor.toString();
+      if(Tipo == "C") det.Credito = Valor.toString();
     });
   }
 
@@ -579,8 +580,6 @@ public v_Enter_Cuenta2(event: any) {
 
 
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
-
-
       if (x > 1) txtCuenta.open();
 
 
@@ -593,11 +592,45 @@ public v_Enter_Cuenta2(event: any) {
 
   private V_OrdenarCiclo(x: number) {
 
-    this.lstDetalle.data = this.lstDetalle.data.sort((a, b) => b.NoLinea - a.NoLinea);
+    this.lstDetalle.data = this.lstDetalle.data.sort((a, b) => a.NoLinea - b.NoLinea);
 
     this.lstDetalle.data = [...this.lstDetalle.data];
 
     this.V_Calcular();
+
+    if (x == -1) return;
+
+
+
+
+    setTimeout(() => {
+      document?.getElementById("txtCuenta" + x)?.focus();
+      document.getElementById("txtDescripcion" + x)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+
+
+
+      let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+
+      
+      //if (x > 1) txtCuenta.open();
+
+
+
+
+    }, 250);
+
+
+  }
+
+  private V_OrdenarCiclo2(x: number) {
+
+    //this.lstDetalle.data = this.lstDetalle.data.sort((a, b) => a.NoLinea - b.NoLinea);
+
+    this.lstDetalle.data = [...this.lstDetalle.data];
+
+    //this.V_Calcular();
 
     if (x == -1) return;
 
@@ -824,35 +857,46 @@ public v_Enter_Cuenta2(event: any) {
 
 
   public v_Contabilizar(): void{
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
 
-    //  if(this.val.ItemValido(["cmbCuentaC"])) {
-    //   this.V_Add(this.cmbCuentaC.value, this.val.Get("txtConcepto").value,(this.val.Get("txtMoneda").value == "Cordobas"? this.val.Get("txtTotalCordoba").value:this.val.Get("txtTotalDolar").value),"D");
-    //  }
+    if (this.val.Get("txtMoneda").value == "Cordobas") {
+      this.Valor = Number(this.val.Get("txtTotalCordoba").value)
+    } else {
+      this.Valor = Number(this.val.Get("txtTotalDolar").value) 
+    }
+   
+
+     if(this.val.ItemValido(["cmbCuentaC"])) {
+      let cuenta : iCuenta = this.cmbCuentaC.dropdown.focusedItem.value; 
+      this.V_Add(cuenta.CuentaContable, this.val.Get("txtConcepto").value,this.Valor,"D");
+     }
     
       if (this.val.Get("txtIrFuente").value > 0 ) {
               
-        this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,(this.val.Get("txtMoneda").value == "Cordobas"? this.val.Get("txtTotalCordoba").value:this.val.Get("txtTotalDolar").value),"C");
+        this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtIrFuente").value)/100),"C");
       }
       if (this.val.Get("txtServP").value > 0 ) { 
 
-        this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,(this.val.Get("txtMoneda").value == "Cordobas"? this.val.Get("txtTotalCordoba").value:this.val.Get("txtTotalDolar").value),"C");
+        this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtServP").value)/100),"C");
       }
       if (this.val.Get("txtAlcaldias").value > 0 ) {
         
-        this.V_Add("1123-25","Ret. " + this.val.Get("txtBeneficiario").value,(this.val.Get("txtMoneda").value == "Cordobas"? this.val.Get("txtTotalCordoba").value:this.val.Get("txtTotalDolar").value),"D");
+        this.V_Add("1123-25","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100),"C");
       }
       if (this.val.Get("txtIva").value > 0 ) {
         
-        this.V_Add("1123-25",this.val.Get("txtBeneficiario").value,(this.val.Get("txtMoneda").value == "Cordobas"? this.val.Get("txtTotalCordoba").value:this.val.Get("txtTotalDolar").value),"C");
+        this.V_Add("1142-05",this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtIva").value)/100),"D");
       }
       if (this.val.Get("txtTcCompraD").value > 0 ) {
         
-        this.V_Add("6115-01",this.val.Get("txtBeneficiario").value,(this.val.Get("txtMoneda").value == "Cordobas"? this.val.Get("txtTotalCordoba").value:this.val.Get("txtTotalDolar").value),"D");
+        this.V_Add("6115-01",this.val.Get("txtBeneficiario").value,this.Valor,"D");
       }
-
-      if(this.cmbCuentaBancaria.selection.length != 0) {
-        this.V_Add(this.cmbCuentaBancaria.value,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,(this.val.Get("txtMoneda").value == "Cordobas"? this.val.Get("txtTotalCordoba").value:this.val.Get("txtTotalDolar").value),"C");
+      if(this.val.ItemValido(["cmbCuentaBancaria"])) {
+        let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
+        //let  a :iCuentaBancaria = this.lstCuentabancaria.find(f => f.IdCuentaBanco ==  this.val.Get("txtBeneficiario").value[0])!
+        this.V_Add(item.CuentaBancaria,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,this.Valor,"C");
        }
+     
   }
   
   private v_Visualizar()
