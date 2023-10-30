@@ -76,8 +76,7 @@
                         <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
                             formControlName="cmbBodega" placeholder="Bodega"
                             searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
-                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
-                            (keyup)="v_Enter_Bodega($event);">
+                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)">
                             <label igxLabel>Bodega</label>
                             <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
                         </igx-combo>
@@ -140,8 +139,7 @@
                                 <igx-combo #cmbCuentaC [data]="lstCuenta" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbCuentaC"
                                     formControlName="cmbCuentaC" placeholder="Cuenta Contable"
                                     searchPlaceholder="Seleccione una Cuenta contable..." [autoFocusSearch]="true"
-                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Cuenta2($event)"
-                                    (keyup)="v_Enter_Bodega($event);">
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Cuenta2($event)">
                                     <label igxLabel>Cuenta</label>
                                     <igx-prefix><i class="fa-solid fa-list"></i></igx-prefix>
                                 </igx-combo>
@@ -180,7 +178,8 @@
                                     <span class="input-group-text">IR</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="IR en la fuente"
-                                            id="txtIrFuente" formControlName="txtIrFuente" (keypress)="HabiliarValor($event)">
+                                            id="txtIrFuente" formControlName="txtIrFuente" (keypress)="HabiliarValor($event)"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
                                         <label for="txtIrFuente">IR en la fuente</label>
                                     </div>
                                 </div>
@@ -190,7 +189,8 @@
                                     <span class="input-group-text">SP</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtServP" 
-                                            formControlName="txtServP" (keypress)="HabiliarValor($event)">
+                                            formControlName="txtServP" (keypress)="HabiliarValor($event)"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
                                         <label for="txtServP">Servicios Profesionales</label>
                                     </div>
                                 </div>
@@ -201,7 +201,8 @@
                                     <span class="input-group-text">AL</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtAlcaldias"
-                                            formControlName="txtAlcaldias" (keypress)="HabiliarValor($event)">
+                                            formControlName="txtAlcaldias" (keypress)="HabiliarValor($event)"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
                                         <label for="txtAlcaldias">Alcaldia</label>
                                     </div>
                                 </div>
@@ -212,7 +213,8 @@
                                     <span class="input-group-text">IVA</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="IVA" id="txtIva"
-                                            formControlName="txtIva" (keypress)="HabiliarValor($event)">
+                                            formControlName="txtIva" (keypress)="HabiliarValor($event)"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
                                         <label for="txtIva">Ingrese el Valor</label>
                                     </div>
                                 </div>                                    
@@ -223,7 +225,8 @@
                                     <span class="input-group-text">TC</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="TC Compra Divisa" id="txtTcCompraD"
-                                            formControlName="txtTcCompraD" (keypress)="HabiliarValor($event)">
+                                            formControlName="txtTcCompraD" (keypress)="HabiliarValor($event)"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
                                         <label for="txtTcCompraD">TC Compra Divisa</label>
                                     </div>
                                 </div>
@@ -340,7 +343,7 @@
                                         [(ngModel)]="det.Debito"
                                         (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
                                         (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
-                                        (change)="V_Calcular();" autocomplete="off">
+                                        (change)="V_Calcular(); this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" autocomplete="off">
                                 </form>
                             </div>
 
@@ -358,7 +361,7 @@
                                         [(ngModel)]="det.Credito"
                                         (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
                                         (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
-                                        (change)="V_Calcular();" autocomplete="off">
+                                        (change)="V_Calcular(); this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" autocomplete="off">
                                 </form>        
                             </div>
 

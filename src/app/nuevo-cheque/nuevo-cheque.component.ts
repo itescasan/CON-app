@@ -538,9 +538,16 @@ public v_Enter_Cuenta2(event: any) {
       
       if(!txtCuenta.selection.includes(cuenta)) txtCuenta.setSelectedItem(cuenta);
       det.Referencia = Concepto;
-      if(Tipo == "D") det.Debito = Valor.toString();
-      if(Tipo == "C") det.Credito = Valor.toString();
+      if(Tipo == "D") {
+        det.Debito = Valor.toString();
+        det.Credito = "0";
+      }
+      if(Tipo == "C"){
+        det.Credito = Valor.toString();     
+        det.Debito = "0"
+      }
     });
+    
   }
 
   V_Eliminar(item: iAsientoDetalle) {
@@ -614,7 +621,7 @@ public v_Enter_Cuenta2(event: any) {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
 
       
-      //if (x > 1) txtCuenta.open();
+      if (x > 1) txtCuenta.open();
 
 
 
@@ -630,7 +637,7 @@ public v_Enter_Cuenta2(event: any) {
 
     this.lstDetalle.data = [...this.lstDetalle.data];
 
-    //this.V_Calcular();
+  
 
     if (x == -1) return;
 
@@ -651,10 +658,8 @@ public v_Enter_Cuenta2(event: any) {
       //if (x > 1) txtCuenta.open();
 
 
-
-
     }, 250);
-
+    this.V_Calcular();
 
   }
   public V_Calcular(): void {
