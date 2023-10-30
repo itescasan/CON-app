@@ -41,6 +41,7 @@ export class TransferenciaSaldoComponent {
 
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iTransferenciaDocumento>;
+  private lstDetalleAsiento : iAsientoDetalle[] = [];
 
 
   public FILA: iTransferenciaCuenta = {} as iTransferenciaCuenta;
@@ -634,6 +635,21 @@ export class TransferenciaSaldoComponent {
   }
 
 
+
+  public V_Contabilizacion() : void
+  {
+    this.lstDetalleAsiento.splice(0, this.lstDetalleAsiento.length);
+    let i_Prov  = this.cmbProveedor.dropdown.focusedItem;
+
+    let TotalProvedor : number =  this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Importe).replaceAll(",", "")), 0);
+    let Comision : number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
+
+    
+
+
+
+
+  }
 
   public v_Guardar(): void {
 

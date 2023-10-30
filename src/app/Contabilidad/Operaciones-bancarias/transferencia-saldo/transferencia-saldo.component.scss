@@ -16,7 +16,7 @@
 
 }
 
-#btn-Documentos-proveedor
+#btn-Documentos-Proveedor
 {
     width: 100%;
 }
@@ -202,8 +202,15 @@ input.center{
             text-align: left;
             width: 50%;
             display: inline-block;
+
+        
         }
 
+        div:first-child{
+            button:first-child{
+                margin-right: 20px;
+            }
+        }
 
 
         div:last-child {
@@ -236,7 +243,7 @@ input.center{
             div:first-child{
 
                 button{
-                    width: 100%;
+                    width: 50%;
                 }
                
             }
