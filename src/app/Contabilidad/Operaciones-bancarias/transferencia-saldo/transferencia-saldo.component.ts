@@ -18,6 +18,9 @@ import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-trans
 import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
 import { iTransferenciaDocumento } from 'src/app/Interface/Contabilidad/i-Transferencia-Documento';
 import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
+import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
+import { AsientoContableComponent } from '../../asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
+import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 
 @Component({
   selector: 'app-transferencia-saldo',
@@ -32,6 +35,7 @@ export class TransferenciaSaldoComponent {
   private IdMoneda: string = "";
 
   lstProveedor: iProveedor[] = [];
+  lstCuenta: iCuenta[] = [];
   public lstCuentabancaria: iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
 
@@ -41,10 +45,11 @@ export class TransferenciaSaldoComponent {
 
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iTransferenciaDocumento>;
-  private lstDetalleAsiento : iAsientoDetalle[] = [];
+  private lstDetalleAsiento: iAsientoDetalle[] = [];
 
 
   public FILA: iTransferenciaCuenta = {} as iTransferenciaCuenta;
+  public Asiento: iAsiento = {} as iAsiento;
 
 
   public esModal: boolean = false;
@@ -117,6 +122,7 @@ export class TransferenciaSaldoComponent {
         this.val.Get("txtConcepto").setValue("");
         this.val.Get("txtTotalDolar").setValue("0.00");
         this.val.Get("txtTotalCordoba").setValue("0.00");
+        this.val.Get("txtComision").setValue("0.00");
 
 
         this.val.Get("txtNombreCuenta").disable();
@@ -126,6 +132,7 @@ export class TransferenciaSaldoComponent {
         this.val.Get("TxtTC").disable();
         this.val.Get("txtTotalDolar").disable();
         this.val.Get("txtTotalCordoba").disable();
+        this.val.Get("txtComision").disable();
 
 
         if (this.lstBodega.length > 0) this.cmbBodega?.setSelectedItem(this.lstBodega[0].Codigo);
@@ -148,9 +155,9 @@ export class TransferenciaSaldoComponent {
 
     this.val.Get("txtTotalDolar").disable();
     this.val.Get("txtTotalCordoba").disable();
+    this.val.Get("txtComision").disable();
 
 
-    
     this.val.Get("cmbCuentaBancaria").setValue("");
     if (event.added.length == 1) {
       if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
@@ -163,16 +170,15 @@ export class TransferenciaSaldoComponent {
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
 
 
-      if(this.IdMoneda != _Item?.IdMoneda)
-      {
+      if (this.IdMoneda != _Item?.IdMoneda) {
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
         this.lstDetalle.filter = "";
       }
-      
+
 
 
       this.IdMoneda = String(_Item?.IdMoneda);
-      
+
 
     }
 
@@ -181,7 +187,7 @@ export class TransferenciaSaldoComponent {
 
   public v_Enter_CuentaBanco(event: any) {
     if (event.key == "Enter") {
-      let cmb : any = this.cmbCuentaBancaria.dropdown;
+      let cmb: any = this.cmbCuentaBancaria.dropdown;
       let _Item: iCuentaBancaria = cmb._focusedItem.value;
       this.cmbCuentaBancaria.setSelectedItem(_Item.IdCuentaBanco);
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
@@ -205,7 +211,7 @@ export class TransferenciaSaldoComponent {
 
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
-      let cmb : any = this.cmbBodega.dropdown;
+      let cmb: any = this.cmbBodega.dropdown;
       let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
       this.val.Get("cmbBodega").setValue([_Item.Codigo]);
@@ -238,7 +244,7 @@ export class TransferenciaSaldoComponent {
 
   public v_Enter_Proveedor(event: any) {
     if (event.key == "Enter") {
-      let cmb : any = this.cmbProveedor.dropdown;
+      let cmb: any = this.cmbProveedor.dropdown;
       let _Item: iProveedor = cmb._focusedItem.value;
       this.cmbProveedor.setSelectedItem(_Item.Codigo);
       this.val.Get("cmbProveedor").setValue([_Item.Codigo]);
@@ -251,6 +257,7 @@ export class TransferenciaSaldoComponent {
   public v_FocusOut(id: string): void {
     this.val.Get(id).setValue(this.cFunciones.NumFormat(this.val.Get(id).value.replaceAll(",", ""), "2"));
   }
+
 
 
 
@@ -336,8 +343,10 @@ export class TransferenciaSaldoComponent {
           } else {
 
             let datos: iDatos[] = _json["d"];
+
             this.lstCuentabancaria = datos[0].d;
             this.lstBodega = datos[1].d;
+            this.lstCuenta = datos[2].d;
             this.lstProveedor = datos[3].d;
 
 
@@ -352,6 +361,7 @@ export class TransferenciaSaldoComponent {
               this.val.Get("txtNoDoc").setValue(i_C?.Consecutivo);
               this.IdMoneda = String(i_C?.IdMoneda);
               this.V_Calcular();
+              this.V_Contabilizacion();
             }
 
 
@@ -494,42 +504,44 @@ export class TransferenciaSaldoComponent {
             this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
             this.lstDetalle.data = datos.d;
 
+      
             this.lstDetalle.data.forEach(f => {
 
               let saldo: number = 0
               let saldoDolar: number = 0
               let saldoCordoba: number = 0
 
+              f.SaldoAnt = (f.IdMoneda == this.cFunciones.MonedaLocal ? f.SaldoCordoba : f.SaldoDolar);
+              f.SaldoAntML = f.SaldoCordoba;
+              f.SaldoAntMS = f.SaldoDolar;
+
 
               if (this.IdMoneda == this.cFunciones.MonedaLocal) {
 
-               
+
                 saldo = f.SaldoCordoba;
                 saldoCordoba = saldo;
                 saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
 
 
-                if (f.IdMoneda != this.cFunciones.MonedaLocal)
-                {
+                if (f.IdMoneda != this.cFunciones.MonedaLocal) {
                   saldo = f.SaldoDolar;
                   saldoDolar = saldo;
                   saldoCordoba = this.cFunciones.Redondeo(saldoDolar * this.TC, "2");
-                  
+
                 }
 
                 saldo = this.cFunciones.Redondeo(saldoCordoba, "2");
 
               }
 
-              else
-              {
+              else {
 
                 saldo = f.SaldoDolar;
                 saldoDolar = saldo;
                 saldoCordoba = this.cFunciones.Redondeo(saldo * this.TC, "2");
 
-                if (f.IdMoneda == this.cFunciones.MonedaLocal)
-                {
+                if (f.IdMoneda == this.cFunciones.MonedaLocal) {
                   saldo = f.SaldoCordoba;
                   saldoCordoba = saldo;
                   saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
@@ -542,8 +554,6 @@ export class TransferenciaSaldoComponent {
               f.Saldo = this.cFunciones.NumFormat(saldo, "2");
               f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
               f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
-
-              
 
             });
 
@@ -582,6 +592,8 @@ export class TransferenciaSaldoComponent {
 
     if (this.IdMoneda != "undefined" && this.IdMoneda != "") {
 
+      this.val.Get("txtComision").enable();
+
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
         this.val.Get("txtTotalCordoba").enable();
         this.dec_Disponible = Number(this.val.Get("txtTotalCordoba").value.toString().replaceAll(",", ""));
@@ -602,32 +614,115 @@ export class TransferenciaSaldoComponent {
 
       f.Operacion = "";
 
-      let Importe : number = Number(String(f.Importe).replaceAll(",", ""));
-      let Saldo : number = Number(String(f.Saldo).replaceAll(",", ""));
-     
-      
-      let NuevoSaldo : number = Saldo;
+      let Importe: number = Number(String(f.Importe).replaceAll(",", ""));
+      let Saldo: number = Number(String(f.Saldo).replaceAll(",", ""));
 
-      if(Importe < 0) Importe = 0;
-      if(Importe > 0){
+
+      let NuevoSaldo: number = Saldo;
+
+      if (Importe < 0) Importe = 0;
+      if (Importe > 0) {
         NuevoSaldo = this.cFunciones.Redondeo(Saldo - Importe, "2");
         f.Operacion = "Abono";
       }
 
-      if(NuevoSaldo < 0)
-      {
+      if (NuevoSaldo < 0) {
         NuevoSaldo = 0;
         Importe = Saldo;
       }
 
-      if(NuevoSaldo == 0) f.Operacion = "Cancelación";
+      if (NuevoSaldo == 0) f.Operacion = "Cancelación";
 
 
       f.Importe = this.cFunciones.NumFormat(Importe, "2");
       f.NuevoSaldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
+      f.NuevoSaldoML = 0;
+      f.NuevoSaldoMS = 0;
       this.dec_Aplicado += Importe;
 
+
+      if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+        f.ImporteML = this.cFunciones.Redondeo(Importe, "2");
+        f.ImporteMS = this.cFunciones.Redondeo(f.ImporteML / this.TC, "2");
+      }
+      else {
+        f.ImporteMS = this.cFunciones.Redondeo(Importe, "2");
+        f.ImporteML = this.cFunciones.Redondeo(f.ImporteMS * this.TC, "2");
+      }
+
+
+      //DIFERENCIAL CAMBIARIO (ANTERIOR - ACTUAL)
+
+
+      if (f.IdMoneda == this.cFunciones.MonedaLocal) {
+        f.DiferencialMS = this.cFunciones.Redondeo(Importe / f.TasaCambioDoc, "2") - f.ImporteMS;
+        f.DiferencialMS = this.cFunciones.Redondeo(f.DiferencialMS, "2");
+        f.DiferencialML = 0;
+
+        if (this.IdMoneda != this.cFunciones.MonedaLocal) {
+          f.DiferencialMS = this.cFunciones.Redondeo(f.ImporteML / f.TasaCambioDoc, "2") - f.ImporteMS;
+          f.DiferencialMS = this.cFunciones.Redondeo(f.DiferencialMS, "2");
+        }
+
+      }
+      else {
+
+        f.DiferencialML = this.cFunciones.Redondeo(Importe * f.TasaCambioDoc, "2") - f.ImporteML;
+        f.DiferencialML = this.cFunciones.Redondeo(f.DiferencialML, "2");
+        f.DiferencialMS = 0;
+
+        if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+          f.DiferencialML = this.cFunciones.Redondeo(f.ImporteMS * f.TasaCambioDoc, "2") - f.ImporteML;
+          f.DiferencialML = this.cFunciones.Redondeo(f.DiferencialML, "2");
+        }
+
+      }
+
+      f.NuevoSaldoML = this.cFunciones.Redondeo((f.SaldoAntML - f.ImporteML), "2") - f.DiferencialML;
+      f.NuevoSaldoMS = this.cFunciones.Redondeo((f.SaldoAntMS - f.ImporteMS), "2") - f.DiferencialMS;
+
+
+
+
+
+      if (NuevoSaldo == 0) {
+
+
+        if (f.NuevoSaldoMS != 0) f.DiferencialMS += f.NuevoSaldoMS;
+        if (f.NuevoSaldoML != 0) f.DiferencialML += f.NuevoSaldoML;
+
+        /*if (f.IdMoneda == this.cFunciones.MonedaLocal) {
+          f.NuevoSaldoML = 0;
+
+          if (f.NuevoSaldoMS != 0) f.DiferencialMS += f.NuevoSaldoMS;
+
+        }
+        else {
+          f.NuevoSaldoMS = 0;
+
+          if (f.NuevoSaldoML != 0) f.DiferencialML += f.NuevoSaldoML;
+        }*/
+      }
+
+
+      f.NuevoSaldoML = this.cFunciones.Redondeo((f.SaldoAntML - f.ImporteML), "2") - f.DiferencialML;
+      f.NuevoSaldoMS = this.cFunciones.Redondeo((f.SaldoAntMS - f.ImporteMS), "2") - f.DiferencialMS;
+
+
+
+      if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+        f.NuevoSaldoML = this.cFunciones.Redondeo(NuevoSaldo, "2");
+        f.NuevoSaldoMS = this.cFunciones.Redondeo(f.NuevoSaldoML / this.TC, "2");
+      }
+      else {
+        f.NuevoSaldoMS = this.cFunciones.Redondeo(NuevoSaldo, "2");
+        f.NuevoSaldoML = this.cFunciones.Redondeo(f.NuevoSaldoMS * this.TC, "2");
+      }
+
+
     });
+
+
 
     this.dec_Dif = this.cFunciones.Redondeo(this.dec_Disponible - this.dec_Aplicado, "2");
 
@@ -635,19 +730,261 @@ export class TransferenciaSaldoComponent {
   }
 
 
+  public V_Mostrar_Asiento() {
+    this.V_Contabilizacion();
 
-  public V_Contabilizacion() : void
-  {
+    let Asiento: iAsiento = JSON.parse(JSON.stringify(this.Asiento));
+
+
+    let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+      DialogoConfirmarComponent,
+      {
+        panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+        disableClose: true
+      }
+    );
+
+
+    dialogRef.afterOpened().subscribe(s => {
+      dialogRef.componentInstance.textBoton1 = "Cordobas";
+      dialogRef.componentInstance.textBoton2 = "Dolares";
+      dialogRef.componentInstance.mensaje = "<p><b>Contabilización</b></p>";
+    });
+
+
+    dialogRef.afterClosed().subscribe(s => {
+
+
+      if (dialogRef.componentInstance.retorno == "1") {
+        Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(Asiento.AsientosContablesDetalle.filter(f => (Math.abs(f.DebitoML) + Math.abs(f.CreditoML)) != 0)));
+
+      }
+      else {
+        Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(Asiento.AsientosContablesDetalle.filter(f => (Math.abs(f.DebitoMS) + Math.abs(f.CreditoMS)) != 0)));
+
+      }
+
+      let i: number = 1;
+
+      Asiento.AsientosContablesDetalle.forEach(f => {
+
+        f.NoLinea = i;
+
+        if (dialogRef.componentInstance.retorno == "1") {
+          f.Debito = String(f.DebitoML);
+          f.Credito = String(f.CreditoML);
+        }
+        else {
+          f.Debito = String(f.DebitoMS);
+          f.Credito = String(f.CreditoMS);
+        }
+
+        i++;
+
+      });
+
+
+
+
+
+
+
+      let dialogAsiento: MatDialogRef<AsientoContableComponent> = this.cFunciones.DIALOG.open(
+        AsientoContableComponent,
+        {
+          panelClass: "escasan-dialog-full",
+          disableClose: true,
+        }
+      );
+      dialogAsiento.componentInstance.esModal = true;
+
+      dialogAsiento.afterOpened().subscribe(s => {
+
+
+
+        dialogAsiento.componentInstance.FILA = Asiento;
+        dialogAsiento.componentInstance.esAuxiliar = false;
+
+      });
+
+    });
+
+
+
+
+
+  }
+
+  private V_Contabilizacion(): void {
     this.lstDetalleAsiento.splice(0, this.lstDetalleAsiento.length);
-    let i_Prov  = this.cmbProveedor.dropdown.focusedItem;
-
-    let TotalProvedor : number =  this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Importe).replaceAll(",", "")), 0);
-    let Comision : number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
-
-    
 
 
 
+    let i_Prov: iProveedor = this.lstProveedor.find(f => f.Codigo == this.val.Get("cmbProveedor").value[0])!;
+    let i_Banco: any = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.val.Get("cmbCuentaBancaria").value[0])!;
+
+    let TotalBanco: number = (this.IdMoneda == this.cFunciones.MonedaLocal ? Number(this.val.Get("txtTotalCordoba").value.replaceAll(",", "")) : Number(this.val.Get("txtTotalDolar").value.replaceAll(",", "")));
+    let Comision: number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
+
+
+    if(i_Banco == undefined) return;
+
+
+
+    this.Asiento.NoDocOrigen = this.val.Get("txtNoDoc").value;
+    this.Asiento.IdSerieDocOrigen = i_Banco.IdSerie;
+    this.Asiento.TipoDocOrigen = "TRANSFERENCIA A DOCUMENTO";
+
+    this.Asiento.IdSerie = this.Asiento.IdSerieDocOrigen;
+    this.Asiento.Bodega = this.val.Get("cmbBodega").value[0];
+    this.Asiento.Fecha = this.val.Get("txtFecha").value;
+    this.Asiento.Referencia = i_Banco.CuentaBancaria;
+    this.Asiento.Concepto = this.val.Get("txtConcepto").value;
+    this.Asiento.IdMoneda = this.IdMoneda;
+    this.Asiento.TasaCambio = this.TC;
+
+    this.Asiento.Total = this.FILA.Total;
+    this.Asiento.TotalML = this.FILA.TotalCordoba;
+    this.Asiento.TotalMS = this.FILA.TotalDolar;
+    this.Asiento.UsuarioReg = this.FILA.UsuarioReg;
+    this.Asiento.FechaReg = new Date();
+    this.Asiento.Estado = "";
+
+    this.Asiento.IdPeriodo = 0;
+    this.Asiento.Estado = "Autorizado";
+    this.Asiento.TipoAsiento = "ASIENTO BASE";
+    this.Asiento.NoAsiento = "";
+
+
+
+    this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "C", "");
+    this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "C", "");
+
+
+    this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
+
+
+      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+        this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, "D", "");
+      }
+      else {
+        this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, "D", "");
+
+      }
+
+
+      if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, "D", "ML");
+      if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, "D", "MS");
+
+      if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, "C", "ML");
+      if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, "C", "MS");
+
+    });
+
+
+    this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
+
+  }
+
+  private Nueva_Linea_Asiento(Monto: number, Cuenta: string, Referencia: string, Naturaleza: string, Columna: string): void {
+
+    if (Monto == 0) return;
+    Monto = this.cFunciones.Redondeo(Monto, "2");
+
+
+    let i: number = 1;
+    let det: iAsientoDetalle = {} as iAsientoDetalle;
+    let i_Cuenta = this.lstCuenta.find(f => f.CuentaContable == Cuenta);
+
+    if (this.lstDetalleAsiento.length > 0) i = Math.max(...this.lstDetalleAsiento.map(o => o.NoLinea)) + 1
+
+
+    det.IdAsiento = -1;
+    det.NoLinea = i;
+    det.CuentaContable = Cuenta;
+    det.Modulo = "CON";
+    det.Descripcion = i_Cuenta?.NombreCuenta!;
+    det.Referencia = Referencia;
+
+
+
+    if (Naturaleza == "D") {
+
+      switch (Columna) {
+        case "ML":
+          det.Debito = String(Monto);
+          det.DebitoML = Monto;
+          det.DebitoMS = 0;
+          break;
+        case "MS":
+          det.Debito = String(Monto);
+          det.DebitoMS = Monto;
+          det.DebitoML = 0;
+          break;
+        default:
+
+          if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+            det.Debito = String(Monto);
+            det.DebitoML = Monto;
+            det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+          }
+          else {
+            det.Debito = String(Monto);
+            det.DebitoMS = Monto;
+            det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+          }
+
+
+          break;
+
+      }
+
+
+      det.Credito = "0";
+      det.CreditoML = 0;
+      det.CreditoMS = 0;
+
+    }
+    else {
+      switch (Columna) {
+        case "ML":
+          det.Credito = String(Monto);
+          det.CreditoML = Monto;
+          det.CreditoMS = 0;
+          break;
+        case "MS":
+          det.Credito = String(Monto);
+          det.CreditoMS = Monto;
+          det.CreditoML = 0;
+          break;
+        default:
+
+          if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+            det.Credito = String(Monto);
+            det.CreditoML = Monto;
+            det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+          }
+          else {
+            det.Credito = String(Monto);
+            det.CreditoMS = Monto;
+            det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+          }
+
+
+          break;
+
+      }
+
+
+      det.Debito = "0";
+      det.DebitoML = 0;
+      det.DebitoMS = 0;
+    }
+
+
+
+
+    this.lstDetalleAsiento.push(det);
 
   }
 
@@ -703,38 +1040,10 @@ export class TransferenciaSaldoComponent {
 
 
 
-    let Asiento: iAsiento = {} as iAsiento;
-    let CuentaBancaria = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.FILA.IdCuentaBanco);
+    this.V_Contabilizacion();
 
 
-    Asiento.NoDocOrigen = this.FILA.NoTransferencia;
-    Asiento.IdSerieDocOrigen = this.FILA.IdSerie;
-    Asiento.TipoDocOrigen = "TRANSFERENCIA A CUENTA";
 
-    Asiento.IdSerie = Asiento.IdSerieDocOrigen;
-    Asiento.Bodega = this.FILA.CodBodega;
-    Asiento.Fecha = this.FILA.Fecha;
-    Asiento.Referencia = this.FILA.Beneficiario;
-    Asiento.Concepto = this.FILA.Concepto;
-    Asiento.IdMoneda = String(CuentaBancaria?.IdMoneda);
-    Asiento.TasaCambio = this.val.Get("TxtTC").value;
-    Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalle.data));
-    Asiento.Total = this.FILA.Total;
-    Asiento.TotalML = this.FILA.TotalCordoba;
-    Asiento.TotalMS = this.FILA.TotalDolar;
-    Asiento.UsuarioReg = this.FILA.UsuarioReg;
-    Asiento.FechaReg = new Date();
-    Asiento.Estado = "";
-
-    Asiento.AsientosContablesDetalle.forEach(f => {
-      f.CuentaContable = f.CuentaContable[0];
-    });
-
-
-    Asiento.IdPeriodo = 0;
-    Asiento.Estado = "Solicitado";
-    Asiento.TipoAsiento = "ASIENTO BASE";
-    Asiento.NoAsiento = "";
 
 
     let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
@@ -750,7 +1059,7 @@ export class TransferenciaSaldoComponent {
 
     let Datos: iTransferenciaCuentaPOST = {} as iTransferenciaCuentaPOST;
     Datos.T = this.FILA;
-    Datos.A = Asiento;
+    Datos.A = this.Asiento;
 
     this.POST.GuardarTransferencia(Datos).subscribe(
       {
@@ -856,6 +1165,19 @@ export class TransferenciaSaldoComponent {
     this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
     this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
 
+   
+   
+  }
 
+  ngDoCheck(){
+    this.val.addNumberFocusIn();
+
+    let i : number = 0;
+    this.lstDetalle.data.forEach(f => {
+      this.val.addFocusOut("txtImporte" + i, 2);
+      i++;
+    });
+
+      
   }
 }

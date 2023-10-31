@@ -7,6 +7,7 @@ export interface iCuentaBancaria{
     Moneda : string,
     CuentaC : string,
     CuentaD : string;
+    IdSerie : string;
     Consecutivo : string,
     Activo : boolean,
     DisplayKey : string,
