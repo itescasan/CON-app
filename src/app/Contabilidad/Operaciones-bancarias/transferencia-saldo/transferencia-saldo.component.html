@@ -129,7 +129,7 @@
                                     </div>
 
                                     <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
-                                        <button type="button" class="btn btn-opcional" id="btn-Documentos-proveedor"
+                                        <button type="button" class="btn btn-opcional" id="btn-Documentos-Proveedor"
                                             (click)="v_BuscarDocumentos();"><i
                                                 class="fa-solid fa-magnifying-glass fa-beat-fade fa-lg"></i>
                                             Documentos</button>
@@ -169,17 +169,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
 
                         <div class="row">
-                            <div class="col-12  mb-1">
-                                <div class="input-group">
-                                    <span class="input-group-text"><i
-                                            class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Comición" id="txtComision"
-                                            formControlName="txtComision">
-                                        <label for="txtComision">Comisión</label>
-                                    </div>
-                                </div>
-                            </div>
+                           
 
                             <div class="col-12 mb-1">
 
@@ -206,6 +196,19 @@
                                             (change)="v_ConvertirTotal($event);"
                                             (focusout)="v_FocusOut('txtTotalDolar');">
                                         <label for="txtTotalDolar">Total</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12  mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i
+                                            class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Comición" id="txtComision"
+                                            formControlName="txtComision"
+                                            (focusout)="v_FocusOut('txtComision');">
+                                        <label for="txtComision">Comisión</label>
                                     </div>
                                 </div>
                             </div>
@@ -433,7 +436,7 @@
                     (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
                     Refrescar</button>
                 <button type="button" class="btn btn-opcional" id="btn-Documentos-proveedor-Contabilizacion"
-                    (click)="V_Contabilizacion();"><i class="fa-solid fa-book fa-beat fa-lg"></i>
+                    (click)="V_Mostrar_Asiento();"><i class="fa-solid fa-book fa-beat fa-lg"></i>
                     Contabilización</button>
             </div>
 

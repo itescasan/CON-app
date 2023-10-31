@@ -9,23 +9,26 @@ import {
 } from "@angular/forms";
 import { ErrorStateMatcher } from "@angular/material/core";
 
-import { formatDate } from "@angular/common";
+import { formatDate, formatNumber } from "@angular/common";
 import { IgxComboComponent } from "igniteui-angular";
 import { QueryList } from "@angular/core";
 
 
-function getRectArea(elmento : HTMLElement) {
 
-  let _element_next  = lstFocus.find(f => f.Id == elmento.id)!;
-  if(_element_next == undefined) return elmento;
+function getRectArea(elmento: HTMLElement) {
 
-  elmento  = document?.getElementById(_element_next.IdNext)!;
+  let _element_next = lstFocus.find(f => f.Id == elmento.id)!;
+  if (_element_next == undefined) return elmento;
 
-  if(elmento.getAttribute("disabled") == undefined) return elmento;
-  
+  elmento = document?.getElementById(_element_next.IdNext)!;
+
+  if (elmento.getAttribute("disabled") == undefined) return elmento;
+
   return getRectArea(elmento)
 
 }
+
+
 
 
 /** Error when invalid control is dirty, touched, or submitted. */
@@ -50,8 +53,8 @@ class ReglasValidacion {
   public valor: string = "";
   public Mensaje: string = "";
   public Index: string = "";
-  public Etiqueta : string = "";
-  public ErrorMensaje : string = "";
+  public Etiqueta: string = "";
+  public ErrorMensaje: string = "";
 }
 
 interface I_Frm {
@@ -63,35 +66,40 @@ interface I_Frm {
 interface iFocus {
   Id: string;
   IdNext: string;
-  Evento : any;
+  Evento: any;
+}
+
+interface iFormat {
+  Id: string;
+  Decimal: number;
 }
 
 
 const lstFocus: iFocus[] = [];
+const lstFormat: iFormat[] = [];
 let cmb: QueryList<IgxComboComponent>;
 
 export class Validacion {
 
- 
-  
+
+
   private fb = new FormBuilder();
   public Iniciar: boolean = false;
   public Errores: string = "";
   private Index: string = "-1";
-  public IsTable : boolean = false;
+  public IsTable: boolean = false;
 
   private lstReglas: ReglasValidacion[] = [];
   private lstFrm: I_Frm[] = [];
- 
-  
+
+
 
   constructor() {
   }
 
   public ValForm = this.fb.nonNullable.group({});
 
-  public Combo(c : any)
-  {
+  public Combo(c: any) {
     cmb = c;
   }
   public CambioRegla(id: string, r: string): string {
@@ -133,67 +141,96 @@ export class Validacion {
       this.lstFrm.push({ Id: id, Frm: _frm, Etiqueta: etiqueta });
   }
 
-  public addFocus(id : string, idNext : string, evento : any){
-    let i : number = lstFocus.findIndex(f => f.Id == id);
+  public addFocus(id: string, idNext: string, evento: any) {
+    let i: number = lstFocus.findIndex(f => f.Id == id);
 
-    if(i != -1){
+    if (i != -1) {
       lstFocus[i].IdNext == idNext;
     }
-    else{
-      lstFocus.push({Id: id, IdNext : idNext, Evento : evento});
+    else {
+      lstFocus.push({ Id: id, IdNext: idNext, Evento: evento });
     }
 
 
     document.querySelector('#' + id)?.addEventListener('keypress', this.onKeyEnter);
-   
+
   }
 
-   onKeyEnter(event: any){
+  public addNumberFocusIn() {
 
-    if(event.key !== "Enter") return;
+    var inputs, index;
 
-    
-    let id : string = event.target.id;
-
-    if(id == "" && event.target.name == "comboInput")
-    {
-      id = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id;
-       event.target.setAttribute("id", id);
+    inputs = document.getElementsByTagName('input');
+    for (index = 0; index < inputs.length; ++index) {
+      if(inputs[index].id != "")
+      {
+        document.querySelector('#' + inputs[index].id)?.removeEventListener("focusin", this.onFocusIn);
+        document.querySelector('#' + inputs[index].id)?.addEventListener('focusin', this.onFocusIn);
+      }
+      
     }
 
 
-    let _element_next  = lstFocus.find(f => f.Id == id);
+  }
 
-    if(_element_next == undefined) return;
-    if(_element_next.IdNext == "") return;
-    
+  public addFocusOut(id: string, decimal : number) {
 
-    let elmento :HTMLElement = document?.getElementById(_element_next.Id)!;
+    let i: number = lstFormat.findIndex(f => f.Id == id);
+
+    if (i != -1) return;
+
+    lstFormat.push({ Id: id, Decimal: decimal });
+
+    document.querySelector('#' + id)?.addEventListener('focusout', this.onFocusOut);
+
+  }
+
+
+
+  onKeyEnter(event: any) {
+
+    if (event.key !== "Enter") return;
+
+
+    let id: string = event.target.id;
+
+    if (id == "" && event.target.name == "comboInput") {
+      id = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+      event.target.setAttribute("id", id);
+    }
+
+
+    let _element_next = lstFocus.find(f => f.Id == id);
+
+    if (_element_next == undefined) return;
+    if (_element_next.IdNext == "") return;
+
+
+    let elmento: HTMLElement = document?.getElementById(_element_next.Id)!;
     elmento = getRectArea(elmento);
 
-   
+
 
 
 
     elmento?.focus();
 
-   
 
-    if(cmb != undefined && elmento.localName == "igx-combo")
-    {
-      let input  : HTMLElement = elmento.getElementsByTagName("input")[0];
+
+    if (cmb != undefined && elmento.localName == "igx-combo") {
+      let input: HTMLElement = elmento.getElementsByTagName("input")[0];
       input?.setAttribute("id", _element_next?.IdNext);
-      
-      let elment : IgxComboComponent = cmb.find(f => f.id == _element_next?.IdNext)!;
 
-      if(elment != undefined) elment.open();
+      let elment: IgxComboComponent = cmb.find(f => f.id == _element_next?.IdNext)!;
 
- 
-    
+      if (elment != undefined) elment.open();
+
+
+
     }
 
-     if(_element_next.Evento != undefined) $("#" + _element_next.IdNext)?.trigger(_element_next.Evento);
- 
+    if (_element_next.Evento != undefined) $("#" + _element_next.IdNext)?.trigger(_element_next.Evento);
+
 
     /*
     if(String(event.target.value) == "") {
@@ -207,25 +244,54 @@ export class Validacion {
 
   }
 
+  onFocusIn(event: any) {
+
+
+    let id: string = event.target.id;
+
+    let elmento: any = document?.getElementById(id)!;
+
+    if (!isNaN(parseFloat(elmento.value.replaceAll(",", "")))) {
+      if (Number(elmento.value.replaceAll(",", "")) == 0) elmento.value = "";
+
+
+    }
+
+  }
+
+  onFocusOut(event: any) {
+
+
+    let id: string = event.target.id;
+    let iform = lstFormat.find(f => f.Id == id);
+
+    let elmento: any = document?.getElementById(id)!;
+
+    let numero : number = Number(elmento.value.replaceAll(",", ""));
+ 
+
+    elmento.value = formatNumber(numero, "en-IN",  "1."+iform?.Decimal+"-"+iform?.Decimal);
+
+
+  }
+
   public del(id: string): void {
     let i: number = this.lstReglas.findIndex((f) => f.Id == id);
 
-    if (i != -1) 
-    {
+    if (i != -1) {
       this.ValForm.removeControl(id);
       this.lstReglas.splice(i, 1);
     }
 
-    
+
 
     i = lstFocus.findIndex((f) => f.Id == id);
 
-    if (i != -1)
-    {
+    if (i != -1) {
       lstFocus.splice(i, 1);
     }
 
-    
+
   }
 
   public delRule(id: string, regla: string): void {
@@ -256,62 +322,58 @@ export class Validacion {
     return this._EsValido([]);
   }
 
-  public ItemValido(formControlName : string[])
-  {
+  public ItemValido(formControlName: string[]) {
     return this._EsValido(formControlName);
   }
 
-  private _EsValido(formControlName : string[]) : boolean
-  {
+  private _EsValido(formControlName: string[]): boolean {
     this.Errores = "";
 
     let i: number = 0;
-    let esError : boolean = false;
+    let esError: boolean = false;
 
     //this.lstReglas.sort((a, b) => a.Index.localeCompare(b.Index));
 
-    let reglas : ReglasValidacion[]  = JSON.parse(JSON.stringify(this.lstReglas.filter(f => (formControlName.includes(f.Id)) ||  formControlName.length ==  0).sort((a, b) => a.Etiqueta.localeCompare(b.Etiqueta)))); 
+    let reglas: ReglasValidacion[] = JSON.parse(JSON.stringify(this.lstReglas.filter(f => (formControlName.includes(f.Id)) || formControlName.length == 0).sort((a, b) => a.Etiqueta.localeCompare(b.Etiqueta))));
 
     reglas.forEach((f) => {
       let retorno = "0";
       let errores = "";
       let frm: any = this.Get(f.Id);
       let etiqueta: string = this.lstFrm.find((ff) => ff.Id == f.Id)?.Etiqueta!;
-      let _Id : string = "";
+      let _Id: string = "";
 
-      let elemnto =  document.getElementById(f.Id);
+      let elemnto = document.getElementById(f.Id);
       elemnto?.parentElement?.classList.remove("contenedor-info-validacion");
-      
+
       let span = document.getElementById("info-validacion-" + f.Id);
       span?.remove();
 
 
-     if(this.IsTable && (String(frm.value) == "undefined" || String(frm.value) == "")){
-      frm.setValue((<HTMLInputElement>document.getElementById(f.Id)).value);
-     }
-  
+      if (this.IsTable && (String(frm.value) == "undefined" || String(frm.value) == "")) {
+        frm.setValue((<HTMLInputElement>document.getElementById(f.Id)).value);
+      }
+
       let r: string[] = this._Validar(f.Id, f, frm, retorno, errores);
       reglas[i].ErrorMensaje = "";
 
       if (r[1] != "" && f.Mensaje != "") {
 
-        if(_Id != f.Id)
-        {
+        if (_Id != f.Id) {
           _Id = f.Id;
           esError = true;
         }
 
         reglas[i].ErrorMensaje = "<li class='error-mensaje'>" + f.Mensaje + "</li>";
 
-       
+
 
       }
 
 
-       //AGREGANDO ICONO DE VALIDACION
-      span  = document.getElementById("-info-validacion-" + f.Id);
-       if(span == undefined && esError)
-       {
+      //AGREGANDO ICONO DE VALIDACION
+      span = document.getElementById("-info-validacion-" + f.Id);
+      if (span == undefined && esError) {
         esError = false;
         span = document.createElement("span");
         span.id = "info-validacion-" + f.Id;
@@ -322,25 +384,24 @@ export class Validacion {
         elemnto?.parentNode?.insertBefore(span, elemnto);
         elemnto?.parentElement?.classList.add("contenedor-info-validacion");
 
- 
-       }
-      
+
+      }
+
       i++;
     });
-    
+
 
     this.Errores = "";
-    let er : string = "";
-    let lst  = JSON.parse(JSON.stringify(reglas.filter(f => f.ErrorMensaje != "").sort((a, b) => a.Etiqueta.localeCompare(b.Etiqueta))));
-     i  = 0;
-     lst.forEach((f : ReglasValidacion) =>{
+    let er: string = "";
+    let lst = JSON.parse(JSON.stringify(reglas.filter(f => f.ErrorMensaje != "").sort((a, b) => a.Etiqueta.localeCompare(b.Etiqueta))));
+    i = 0;
+    lst.forEach((f: ReglasValidacion) => {
 
       er += f.ErrorMensaje;
 
 
-      if(i < lst.length - 1 && f.Etiqueta != "")
-      {
-        if( lst[i + 1].Etiqueta != f.Etiqueta){
+      if (i < lst.length - 1 && f.Etiqueta != "") {
+        if (lst[i + 1].Etiqueta != f.Etiqueta) {
           this.Errores += "<li class='error-etiqueta'>" + f.Etiqueta + "<ul>" + er + "</ul></li>";
           er = "";
         }
