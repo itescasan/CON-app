@@ -19,6 +19,7 @@ import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-trans
 import { getCheques } from '../Contabilidad/Operaciones-bancarias/CRUD/GET/get-Cheques';
 import { Observable, catchError, iif, map, startWith, tap } from 'rxjs';
 import { reference } from '@popperjs/core';
+import { ideaGeneration } from '@igniteui/material-icons-extended';
 
 
 
@@ -35,6 +36,9 @@ export class NuevoChequeComponent {
 
   private IdMoneda : string = "";
   private Valor : number = 0.0;
+  private Cuenta : string = "";
+  private suma : number = 0.0;
+  private sumaDebito : number = 0.0;
 
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria : iCuentaBancaria[] = [];
@@ -179,6 +183,12 @@ export class NuevoChequeComponent {
       this.val.Get("txtAlcaldias").setValue("");
       this.val.Get("txtIva").setValue("");
       this.val.Get("txtTcCompraD").setValue("");
+
+      
+      this.val.Get("txtTotalDolar").disable();
+      this.val.Get("txtTotalCordoba").disable();
+      this.val.Get("txtTotalDolar").setValue("0.00");
+      this.val.Get("txtTotalCordoba").setValue("0.00");
     }
   }
 
@@ -543,6 +553,7 @@ public v_Enter_Cuenta2(event: any) {
         det.Credito = "0";
       }
       if(Tipo == "C"){
+        //this.suma += Number(Valor.toString());
         det.Credito = Valor.toString();     
         det.Debito = "0"
       }
@@ -656,10 +667,10 @@ public v_Enter_Cuenta2(event: any) {
 
       
       //if (x > 1) txtCuenta.open();
-
+      this.V_Calcular2();
 
     }, 250);
-    this.V_Calcular();
+   
 
   }
   public V_Calcular(): void {
@@ -697,6 +708,56 @@ public v_Enter_Cuenta2(event: any) {
    
   
   }
+
+  public V_Calcular2(): void {
+
+    this.dec_TotalDebe = 0;
+    this.dec_TotalHaber = 0;
+    this.dec_Dif = 0;
+
+    this.lstDetalle.data.forEach(f => {
+
+      let Debe = Number(String(f.Debito).replaceAll(",", ""));
+      let Haber = Number(String(f.Credito).replaceAll(",", ""));
+
+      if (this.IdMoneda == this.cFunciones.MonedaLocal) {  
+        f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
+        f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML / this.TC, "2");
+
+        f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
+        f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML / this.TC, "2");
+      }else{
+        f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
+        f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML , "2");
+
+        f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
+        f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML , "2");
+      }
+
+      
+     
+
+      this.dec_TotalDebe += Debe;
+      this.dec_TotalHaber += Haber;
+    });
+
+    this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2");
+
+    let TotalCordoba : number = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+    let TotalDolar : number  = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    if (this.IdMoneda == this.cFunciones.MonedaLocal) { 
+    }else{
+      TotalCordoba = TotalCordoba * this.TC
+      }
+      
+    
+
+    this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(TotalCordoba, "2"));
+    this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(TotalDolar, "2"));
+   
+  
+  }
+
   public v_Guardar() : void{
 
     this.val.EsValido();
@@ -862,44 +923,66 @@ public v_Enter_Cuenta2(event: any) {
 
 
   public v_Contabilizar(): void{
-    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
 
-    if (this.val.Get("txtMoneda").value == "Cordobas") {
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.suma = 0.0;
+
+    if ( this.IdMoneda == this.cFunciones.MonedaLocal) {      
+     
+      if (Number(this.Valor) == 0 ) {
+        this.val.add("txtTotalCordoba", "1", "NUM>", "0", "Total Cordoba", "Escriba el Valor en Córdobas");
+        if(!this.val.ItemValido(["txtTotalCordoba"])) return;      
+      }
       this.Valor = Number(this.val.Get("txtTotalCordoba").value)
     } else {
-      this.Valor = Number(this.val.Get("txtTotalDolar").value) 
+      if (Number(this.Valor) == 0) {
+        this.val.add("txtTotalDolar", "1", "NUM>", "0", "Total Dolar", "Escriba el Valor en Dolares");
+        if(!this.val.ItemValido(["txtTotalDolar"])) return;
+          
+      }      
+      this.Valor = Number(this.val.Get("txtTotalDolar").value)
     }
-   
+    
+    
+    if (this.val.Errores != "") {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+        data: this.val.Errores,
+      });
+
+      return;
+    }
+
 
      if(this.val.ItemValido(["cmbCuentaC"])) {
       let cuenta : iCuenta = this.cmbCuentaC.dropdown.focusedItem.value; 
       this.V_Add(cuenta.CuentaContable, this.val.Get("txtConcepto").value,this.Valor,"D");
      }
     
-      if (this.val.Get("txtIrFuente").value > 0 ) {
-              
+      if (this.val.Get("txtIrFuente").value > 0 ) {              
         this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtIrFuente").value)/100),"C");
+        this.suma += this.Valor * (Number(this.val.Get("txtIrFuente").value)/100);
       }
       if (this.val.Get("txtServP").value > 0 ) { 
-
         this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtServP").value)/100),"C");
+        this.suma += this.Valor * (Number(this.val.Get("txtServP").value)/100)
       }
-      if (this.val.Get("txtAlcaldias").value > 0 ) {
-        
+      if (this.val.Get("txtAlcaldias").value > 0 ) {        
         this.V_Add("1123-25","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100),"C");
+        this.suma += this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100)
       }
-      if (this.val.Get("txtIva").value > 0 ) {
-        
+      if (this.val.Get("txtIva").value > 0 ) {              
         this.V_Add("1142-05",this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtIva").value)/100),"D");
+        this.sumaDebito = this.Valor * (Number(this.val.Get("txtIva").value)/100)
       }
       if (this.val.Get("txtTcCompraD").value > 0 ) {
         
         this.V_Add("6115-01",this.val.Get("txtBeneficiario").value,this.Valor,"D");
+        this.suma = this.Valor
       }
       if(this.val.ItemValido(["cmbCuentaBancaria"])) {
-        let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
-        //let  a :iCuentaBancaria = this.lstCuentabancaria.find(f => f.IdCuentaBanco ==  this.val.Get("txtBeneficiario").value[0])!
-        this.V_Add(item.CuentaBancaria,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,this.Valor,"C");
+        let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;       
+        this.V_Add(item.CuentaBancaria,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,(this.Valor - this.suma) +  this.sumaDebito ,"C");
+        
        }
      
   }
