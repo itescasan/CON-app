@@ -1170,6 +1170,7 @@ export class TransferenciaSaldoComponent {
   }
 
   ngDoCheck(){
+
     this.val.addNumberFocusIn();
 
     let i : number = 0;

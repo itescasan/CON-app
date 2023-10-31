@@ -164,6 +164,7 @@ export class Validacion {
     for (index = 0; index < inputs.length; ++index) {
       if(inputs[index].id != "")
       {
+        document.querySelector('#' + inputs[index].id)?.removeEventListener("focusin", this.onFocusIn);
         document.querySelector('#' + inputs[index].id)?.addEventListener('focusin', this.onFocusIn);
       }
       
@@ -176,13 +177,9 @@ export class Validacion {
 
     let i: number = lstFormat.findIndex(f => f.Id == id);
 
-    if (i != -1) {
-      lstFormat[i].Id == id;
-    }
-    else {
-      lstFormat.push({ Id: id, Decimal: decimal });
-    }
+    if (i != -1) return;
 
+    lstFormat.push({ Id: id, Decimal: decimal });
 
     document.querySelector('#' + id)?.addEventListener('focusout', this.onFocusOut);
 
