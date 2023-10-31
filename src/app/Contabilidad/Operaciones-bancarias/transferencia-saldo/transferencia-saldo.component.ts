@@ -1174,7 +1174,8 @@ export class TransferenciaSaldoComponent {
 
     let i : number = 0;
     this.lstDetalle.data.forEach(f => {
-      this.val.addFocusOut("txtImporte" + i, 2);
+      this.valTabla.addFocusOut("txtImporte" + i, 2);
+      this.valTabla.addFocus("txtImporte" + i, "txtImporte" + (i + 1) , undefined);
       i++;
     });
 
