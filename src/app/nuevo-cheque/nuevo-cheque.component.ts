@@ -1057,14 +1057,14 @@ public v_Enter_Cuenta2(event: any) {
 
   ngDoCheck(){
 
-    this.val.addNumberFocusIn();
-    this.val.addFocusOut("txtTotalCordoba", 2);
-    this.val.addFocusOut("txtTotalDolar", 2);
+ 
+    this.val.addNumberFocus("txtTotalCordoba", 2);
+    this.val.addNumberFocus("txtTotalDolar", 2);
 
     let i : number = 0;
     this.lstDetalle.data.forEach(f => {
-      this.valTabla.addFocusOut("txtImporte" + i, 2);
-      this.valTabla.addFocus("txtImporte" + i, "txtImporte" + (i + 1) , undefined);
+      this.val.addNumberFocus("txtImporte" + f.NoLinea, 2);
+      this.val.addFocus("txtImporte" + f.NoLinea, "txtImporte" + (f.NoLinea + 1) , undefined);
       i++;
     });
 
