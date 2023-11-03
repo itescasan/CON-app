@@ -1171,13 +1171,15 @@ export class TransferenciaSaldoComponent {
 
   ngDoCheck(){
 
-    this.val.addNumberFocusIn();
+    this.val.addNumberFocus("TxtTC", 2);
+    this.val.addNumberFocus("txtComision", 2);
+    this.val.addNumberFocus("txtTotalCordoba", 2);
+    this.val.addNumberFocus("txtTotalDolar", 2);
 
-    let i : number = 0;
+
     this.lstDetalle.data.forEach(f => {
-      this.valTabla.addFocusOut("txtImporte" + i, 2);
-      this.valTabla.addFocus("txtImporte" + i, "txtImporte" + (i + 1) , undefined);
-      i++;
+      this.val.addNumberFocus("txtImporte" + f.Index, 2);
+      this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1) , undefined);
     });
 
       

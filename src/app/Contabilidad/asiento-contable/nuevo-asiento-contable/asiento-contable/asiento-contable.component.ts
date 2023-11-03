@@ -873,13 +873,10 @@ export class AsientoContableComponent {
 
   ngDoCheck(){
 
-    this.val.addNumberFocusIn();
 
-    let i : number = 0;
     this.lstDetalle.data.forEach(f => {
-      this.valTabla.addFocusOut("txtDebito" + i, 2);
-      this.valTabla.addFocusOut("txtCredito" + i, 2);
-      i++;
+      this.valTabla.addNumberFocus("txtDebito" + f.NoLinea, 2);
+      this.valTabla.addNumberFocus("txtCredito" + f.NoLinea, 2);
     });
 
       

@@ -155,8 +155,8 @@ export class Validacion {
     document.querySelector('#' + id)?.addEventListener('keypress', this.onKeyEnter);
 
   }
-
-  public addNumberFocusIn() {
+/*
+  public addNumberFocus() {
 
     var inputs, index;
 
@@ -165,22 +165,26 @@ export class Validacion {
       if(inputs[index].id != "")
       {
         document.querySelector('#' + inputs[index].id)?.removeEventListener("focusin", this.onFocusIn);
-        document.querySelector('#' + inputs[index].id)?.addEventListener('focusin', this.onFocusIn);
+        document.querySelector('#' + inputs[index].id)?.removeEventListener("focusout", this.onFocusOut);
       }
       
     }
 
 
-  }
+  }*/
 
-  public addFocusOut(id: string, decimal : number) {
+  public addNumberFocus(id: string, decimal : number) {
 
     let i: number = lstFormat.findIndex(f => f.Id == id);
 
-    if (i != -1) return;
+    if (i != -1)
+    {
+      lstFormat.splice(i, 1);
+    }
 
     lstFormat.push({ Id: id, Decimal: decimal });
 
+    document.querySelector('#' + id)?.addEventListener('focusin', this.onFocusIn);
     document.querySelector('#' + id)?.addEventListener('focusout', this.onFocusOut);
 
   }
@@ -248,12 +252,14 @@ export class Validacion {
 
 
     let id: string = event.target.id;
+    let i: number = lstFormat.findIndex(f => f.Id == id);
 
+   
     let elmento: any = document?.getElementById(id)!;
+
 
     if (!isNaN(parseFloat(elmento.value.replaceAll(",", "")))) {
       if (Number(elmento.value.replaceAll(",", "")) == 0) elmento.value = "";
-
 
     }
 
@@ -267,7 +273,13 @@ export class Validacion {
 
     let elmento: any = document?.getElementById(id)!;
 
-    let numero : number = Number(elmento.value.replaceAll(",", ""));
+
+
+    let numero : number =  0
+    
+    if(elmento.value != "") numero = Number(elmento.value.replaceAll(",", ""));
+
+
  
 
     elmento.value = formatNumber(numero, "en-IN",  "1."+iform?.Decimal+"-"+iform?.Decimal);
