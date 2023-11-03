@@ -121,7 +121,7 @@
                             <span class="input-group-text">U$</span>
                             <div class="form-floating">
                                 <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
-                                    formControlName="txtTotalDolar">
+                                    formControlName="txtTotalDolar" >
                                 <label for="txtTotalDolar">Valor</label>
                             </div>
                         </div>
@@ -360,7 +360,7 @@
                                     <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
                                         [(ngModel)]="det.Credito"
                                         (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                        (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
+                                        (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);" 
                                         (change)="V_Calcular(); this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" autocomplete="off">
                                 </form>        
                             </div>
