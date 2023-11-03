@@ -232,17 +232,7 @@ export class AsientoContableComponent {
   }
 
 
-  public V_FocusOut(det: iAsientoDetalle): void {
 
-
-    det.Debito = this.cFunciones.NumFormat(Number(det.Debito.replaceAll(",", "")), "2");
-    det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
-    det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
-    det.Credito = this.cFunciones.NumFormat(Number(det.Credito.replaceAll(",", "")), "2");
-    det.CreditoML = this.cFunciones.Redondeo(det.CreditoML, "2");
-    det.CreditoMS = this.cFunciones.Redondeo(det.CreditoMS, "2");
-
-  }
 
   public V_Focus(columna: string, det: iAsientoDetalle) {
 
