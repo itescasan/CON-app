@@ -1063,8 +1063,8 @@ public v_Enter_Cuenta2(event: any) {
 
     let i : number = 0;
     this.lstDetalle.data.forEach(f => {
-      this.val.addNumberFocus("txtImporte" + f.NoLinea, 2);
-      this.val.addFocus("txtImporte" + f.NoLinea, "txtImporte" + (f.NoLinea + 1) , undefined);
+      this.val.addNumberFocus("txtDebito" + f.NoLinea, 2);
+      this.val.addFocus("txtCredito" + f.NoLinea, "txtImporte" + (f.NoLinea + 1) , undefined);
       i++;
     });
 
