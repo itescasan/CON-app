@@ -614,7 +614,7 @@ export class TransferenciaSaldoComponent {
 
       f.Operacion = "";
 
-      let Importe: number = Number(String(f.Importe).replaceAll(",", ""));
+      let Importe: number = this.cFunciones.Redondeo(Number(String(f.Importe).replaceAll(",", "")), "2");
       let Saldo: number = Number(String(f.Saldo).replaceAll(",", ""));
 
 
