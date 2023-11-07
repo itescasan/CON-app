@@ -13,13 +13,13 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
-import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
-import { postTrasnferencia } from '../Contabilidad/Operaciones-bancarias/CRUD/POST/post-Transferencia';
-import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
 import { getCheques } from '../Contabilidad/Operaciones-bancarias/CRUD/GET/get-Cheques';
 import { Observable, catchError, iif, map, startWith, tap } from 'rxjs';
 import { reference } from '@popperjs/core';
 import { ideaGeneration } from '@igniteui/material-icons-extended';
+import { iCheque } from '../Interface/Contabilidad/i-Cheque';
+import { iChequePOST } from '../Interface/Contabilidad/i-Cheque-POST';
+import { postCheque } from '../Contabilidad/Operaciones-bancarias/CRUD/POST/post-Cheque';
 
 
 
@@ -55,7 +55,7 @@ export class NuevoChequeComponent {
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
 
-  public FILA: iTransferenciaCuenta = {} as iTransferenciaCuenta;
+  public FILA: iCheque = {} as iCheque;
 
   filteredCuenta: Observable<iCuenta[]> | undefined;
 
@@ -67,7 +67,7 @@ export class NuevoChequeComponent {
 
 
 
-  constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postTrasnferencia) {
+  constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postCheque) {
 
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una Cuenta de Banco.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "Nombre Cuenta", "No se ha definido el nombre de la cuenta.");
@@ -102,7 +102,7 @@ export class NuevoChequeComponent {
 
       case "Limpiar":
 
-      this.FILA.IdTransferencia = "00000000-0000-0000-0000-000000000000";
+      this.FILA.IdCheque = "00000000-0000-0000-0000-000000000000";
 
       this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
       this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
@@ -810,16 +810,20 @@ public v_Enter_Cuenta2(event: any) {
     }
 
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
+    this.FILA.CuentaContable = this.val.Get("cmbCuentaC").value[0];
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
     this.FILA.IdSerie = "CK"
-    this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
+    this.FILA.NoCheque = this.val.Get("txtNoDoc").value;
     this.FILA.Fecha = this.val.Get("txtFecha").value;
     this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
+    this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
+    this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+    this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
     this.FILA.UsuarioReg = this.cFunciones.User;
     if(!this.esModal) this.FILA.Anulado = false;
-    this.FILA.TipoTransferencia = "C";
+    this.FILA.TipoCheque = "C";
 
 
 
@@ -827,9 +831,9 @@ public v_Enter_Cuenta2(event: any) {
     let CuentaBancaria = this.lstCuentabancaria.find(f=> f.IdCuentaBanco == this.FILA.IdCuentaBanco);
 
 
-    Asiento.NoDocOrigen = this.FILA.NoTransferencia;
+    Asiento.NoDocOrigen = this.FILA.NoCheque;
     Asiento.IdSerieDocOrigen = this.FILA.IdSerie;
-    Asiento.TipoDocOrigen = "TRANSFERENCIA A CUENTA";
+    Asiento.TipoDocOrigen = "CHEQUE";
 
     Asiento.IdSerie = Asiento.IdSerieDocOrigen;
     if(!this.esModal) Asiento.NoAsiento = "";
@@ -870,11 +874,11 @@ public v_Enter_Cuenta2(event: any) {
     document.getElementById("btnGuardar-Asiento")?.setAttribute("disabled", "disabled");
 
 
-    let Datos : iTransferenciaCuentaPOST = {} as iTransferenciaCuentaPOST;
-    Datos.T = this.FILA;
+    let Datos : iChequePOST = {} as iChequePOST;
+    Datos.C = this.FILA;
     Datos.A = Asiento;
 
-    this.POST.GuardarTransferencia(Datos).subscribe(
+    this.POST.GuardarCheque(Datos).subscribe(
       {
         next: (data) => {
 
