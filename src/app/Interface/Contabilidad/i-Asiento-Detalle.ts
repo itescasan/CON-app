@@ -13,4 +13,5 @@ export interface iAsientoDetalle{
     Descripcion: string;
     Referencia: string;
     Naturaleza: string;
+    CentroCosto: string;
 }

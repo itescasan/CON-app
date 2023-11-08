@@ -162,11 +162,12 @@
     <div class="row g-1 header">
 
 
-        <div class="col-8 col-lg-2"><span>Cuenta</span></div>
+        <div class="col-8 col-lg-4"><span>Cuenta</span></div>
 
-        <div class="col-12 col-lg-3"><span>Descripción</span></div>
 
-        <div class="col-12 col-lg-3"><span>Referencia</span></div>
+        <div class="col-12 col-lg-2"><span>Referencia</span></div>
+
+        <div class="col-12 col-lg-2"><span>Centro Costo</span></div>
 
         <div class="col-6 col-lg-2 numero"><span>Débito</span></div>
 
@@ -185,7 +186,7 @@
                 <td mat-cell *matCellDef="let det" (contextmenu)="V_Popup($event, det)">
                     <div class="row">
 
-                        <div class="col-12 col-lg-5">
+                        <div class="col-12 col-lg-4">
                             <div class="row">
                                 <div class="header-cell"><span>Cuenta</span></div>
                             </div>
@@ -211,17 +212,38 @@
 
 
 
-                        <div class="col-12 col-lg-3">
+                        <div class="col-12 col-lg-2">
                             <div class="row">
                                 <div class="header-cell"><span>Referencia</span></div>
                             </div>
                             <div class="row">
                                 <form autocomplete="off">
                                     <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}"  
-                                      [(ngModel)]="det.Referencia"    (keydown.Enter)="V_Focus('Debito/Credito', det);"   [ngModelOptions]="{standalone: true}"
+                                      [(ngModel)]="det.Referencia"    [ngModelOptions]="{standalone: true}"
                                         >
                                 </form>
                                
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 col-lg-2">
+                            <div class="row">
+                                <div class="header-cell"><span>Centro Costo</span></div>
+                            </div>
+                            <div class="row">
+
+                                
+                                <form autocomplete="off">
+                                    <igx-combo [data]="lstCentroCosto"  [(ngModel)]="det.CentroCosto" valueKey="Codigo" displayKey="CentroCosto"
+                                        id="txtCentroCosto{{det.NoLinea}}"   [ngModelOptions]="{standalone: true}"
+                                        [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
+                                        (selectionChanging)="v_Select_CentroCosto($event, det)"
+                                        (keyup)="v_Enter_CentroCosto($event, det);" >
+
+                                    </igx-combo>
+                                </form>
 
                             </div>
 

@@ -21,6 +21,7 @@ import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transfere
 import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { AsientoContableComponent } from '../../asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
+import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 
 @Component({
   selector: 'app-transferencia-saldo',
@@ -38,6 +39,7 @@ export class TransferenciaSaldoComponent {
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria: iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
+  lstCentroCosto: iCentroCosto[] = [];
 
 
   @ViewChildren(IgxComboComponent)
@@ -67,7 +69,7 @@ export class TransferenciaSaldoComponent {
   constructor(public cFunciones: Funciones, private GET: getTransferencia, private POST: postTrasnferencia) {
 
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una cuenta bancaria.");
-    this.val.add("txtNombreCuenta", "1", "LEN>", "0", "Nombre Cuenta", "No se ha definido el nombre de la cuenta.");
+    this.val.add("txtNombreCuenta", "1", "LEN>", "0", "No Cuenta", "No se ha definido el nombre de la cuenta.");
     this.val.add("txtBanco", "1", "LEN>", "0", "Banco", "No se ha definido el banco.");
     this.val.add("cmbBodega", "1", "LEN>", "0", "Sucursal", "Seleccione una sucursal.");
     this.val.add("txtNoDoc", "1", "LEN>", "0", "No Doc", "No se ha definido el número de consecutivo.");
@@ -347,7 +349,8 @@ export class TransferenciaSaldoComponent {
             this.lstCuentabancaria = datos[0].d;
             this.lstBodega = datos[1].d;
             this.lstCuenta = datos[2].d;
-            this.lstProveedor = datos[3].d;
+            this.lstCentroCosto = datos[3].d;
+            this.lstProveedor = datos[4].d;
 
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
@@ -731,6 +734,21 @@ export class TransferenciaSaldoComponent {
 
 
   public V_Mostrar_Asiento() {
+
+
+    this.val.ItemValido(["cmbCuentaBancaria", "cmbProveedor"]);
+
+    
+    if (this.val.Errores != "") {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+        data: this.val.Errores,
+      });
+
+      return;
+    }
+
+
+
     this.V_Contabilizacion();
 
     let Asiento: iAsiento = JSON.parse(JSON.stringify(this.Asiento));
@@ -905,6 +923,7 @@ export class TransferenciaSaldoComponent {
     det.Modulo = "CON";
     det.Descripcion = i_Cuenta?.NombreCuenta!;
     det.Referencia = Referencia;
+    det.CentroCosto = "";
 
 
 
