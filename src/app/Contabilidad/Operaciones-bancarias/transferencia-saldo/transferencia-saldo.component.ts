@@ -70,6 +70,7 @@ export class TransferenciaSaldoComponent {
 
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una cuenta bancaria.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "No Cuenta", "No se ha definido el nombre de la cuenta.");
+    this.val.add("cmbCentroCosto", "1", "LEN>", "0", "Centro Costo", "Seleccione un centro costo.");
     this.val.add("txtBanco", "1", "LEN>", "0", "Banco", "No se ha definido el banco.");
     this.val.add("cmbBodega", "1", "LEN>", "0", "Sucursal", "Seleccione una sucursal.");
     this.val.add("txtNoDoc", "1", "LEN>", "0", "No Doc", "No se ha definido el número de consecutivo.");
@@ -81,7 +82,7 @@ export class TransferenciaSaldoComponent {
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
-
+    
     this.valTabla.IsTable = true;
 
     this.v_Evento("Iniciar");
@@ -193,6 +194,29 @@ export class TransferenciaSaldoComponent {
       let _Item: iCuentaBancaria = cmb._focusedItem.value;
       this.cmbCuentaBancaria.setSelectedItem(_Item.IdCuentaBanco);
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
+    }
+  }
+
+
+
+  @ViewChild("cmbCentroCosto", { static: false })
+  public cmbCentroCosto: IgxComboComponent;
+
+  public v_Select_CentroCosto(event: any) {
+
+    if (event.added.length == 1) {
+      if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
+      this.val.Get("cmbCentroCosto").setValue([event.added]);
+    }
+  }
+
+  public v_Enter_CentroCosto(event: any) {
+    if (event.key == "Enter") {
+      let cmb: any = this.cmbCentroCosto.dropdown;
+      let _Item: iCentroCosto = cmb._focusedItem.value;
+      this.cmbCentroCosto.setSelectedItem(_Item.Codigo);
+      this.val.Get("cmbCentroCosto").setValue([_Item.Codigo]);
+
     }
   }
 
@@ -736,7 +760,7 @@ export class TransferenciaSaldoComponent {
   public V_Mostrar_Asiento() {
 
 
-    this.val.ItemValido(["cmbCuentaBancaria", "cmbProveedor"]);
+    this.val.ItemValido(["cmbCuentaBancaria", "cmbCentroCosto", "cmbProveedor"]);
 
     
     if (this.val.Errores != "") {
@@ -923,7 +947,7 @@ export class TransferenciaSaldoComponent {
     det.Modulo = "CON";
     det.Descripcion = i_Cuenta?.NombreCuenta!;
     det.Referencia = Referencia;
-    det.CentroCosto = "";
+    det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
 
 
 
@@ -1180,12 +1204,11 @@ export class TransferenciaSaldoComponent {
   ngAfterViewInit(): void {
     ///CAMBIO DE FOCO
     this.val.Combo(this.cmbCombo);
-    this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
+    this.val.addFocus("cmbCuentaBancaria", "cmbCentroCosto", undefined);
+    this.val.addFocus("cmbCentroCosto", "cmbBodega", undefined);
     this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
     this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
 
-   
-   
   }
 
   ngDoCheck(){
