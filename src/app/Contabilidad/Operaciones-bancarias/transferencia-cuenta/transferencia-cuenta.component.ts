@@ -17,6 +17,7 @@ import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
 import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
 import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
+import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 
 @Component({
   selector: 'app-transferencia-cuenta',
@@ -33,6 +34,7 @@ export class TransferenciaCuentaComponent {
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria : iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
+  lstCentroCosto: iCentroCosto[] = [];
 
 
   @ViewChildren(IgxComboComponent)
@@ -243,7 +245,7 @@ export class TransferenciaCuentaComponent {
             this.lstCuentabancaria = datos[0].d;
             this.lstBodega = datos[1].d;
             this.lstCuenta = datos[2].d.filter((f: any) => f.ClaseCuenta == "D");
-        
+            this.lstCentroCosto = datos[3].d;
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
 
@@ -354,6 +356,7 @@ export class TransferenciaCuentaComponent {
       det.Naturaleza = i_Cuenta.Naturaleza;
 
       document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
+      document.getElementById("txtCentroCosto" + det.NoLinea)?.removeAttribute("disabled");
       document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
 
@@ -402,10 +405,36 @@ export class TransferenciaCuentaComponent {
       det.Naturaleza = _Item.Naturaleza;
 
       txtCuenta.close();
-      this.V_Focus("Referencia", det);
+
     }
 
   }
+
+
+    public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
+ 
+    if (event.added.length == 1) {
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
+      det.CentroCosto = event.added[0];
+    }
+
+
+  }
+  public v_Enter_CentroCosto(event: any, det: iAsientoDetalle) {
+
+    if (event.key == "Enter") {
+      let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + det.NoLinea);
+
+      let cmb : any = txtCentro.dropdown;
+
+      let _Item: iCentroCosto = cmb._focusedItem.value;
+      if(!txtCentro.selection.includes(det.CentroCosto)) txtCentro.setSelectedItem(_Item.Codigo);
+      this.valTabla.Get("txtCentroCosto" + det.NoLinea).setValue([_Item.Codigo]);
+      txtCentro.close();
+    }
+
+  }
+
 
 
   public V_FocusOut(det: iAsientoDetalle): void {
@@ -471,6 +500,7 @@ export class TransferenciaCuentaComponent {
 
     this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
 
     det.IdAsiento = -1;
     det.NoLinea = i;
@@ -484,6 +514,7 @@ export class TransferenciaCuentaComponent {
     det.Modulo = "CON";
     det.Descripcion = "";
     det.Referencia = "";
+    det.CentroCosto = "";
     this.lstDetalle.data.push(det);
 
     this.V_Ordenar(i);
@@ -503,6 +534,7 @@ export class TransferenciaCuentaComponent {
 
     this.valTabla.del("txtCuenta" + item.NoLinea);
     this.valTabla.del("txtReferencia" + item.NoLinea);
+    this.valTabla.del("txtCentroCosto" + item.NoLinea);
     this.valTabla.del("txtDebito" + item.NoLinea);
     this.valTabla.del("txtCredito" + item.NoLinea);
 
@@ -524,6 +556,7 @@ export class TransferenciaCuentaComponent {
     setTimeout(() => {
       document?.getElementById("txtCuenta" + x)?.focus();
       document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 
@@ -531,7 +564,8 @@ export class TransferenciaCuentaComponent {
       if (x > 1) txtCuenta.open();
 
       this.val.addFocus("txtCuenta" + x , "txtReferencia" + x, undefined);
-      this.val.addFocus("txtReferencia" + x, "txtDebito" + x, undefined);
+      this.val.addFocus("txtReferencia" + x, "txtCentroCosto" + x, undefined);
+      this.val.addFocus("txtCentroCosto" + x, "txtDebito" + x, undefined);
       this.val.addFocus("txtDebito" + x, "txtCredito" + x, undefined);
 
     }, 250);
@@ -768,6 +802,7 @@ export class TransferenciaCuentaComponent {
       this.lstDetalle.data.forEach(f => {
         this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
         this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+        this.valTabla.add("txtCentroCosto" + x, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
 
         f.Debito = this.cFunciones.NumFormat(Number(String(f.Debito).replaceAll(",", "")), "2");
         f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");
@@ -782,8 +817,12 @@ export class TransferenciaCuentaComponent {
         this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
         this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
 
+        
+        let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + x);
+        if(!txtCentro.selection.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
        
   
+        document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
         document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
         document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
   
@@ -835,5 +874,21 @@ export class TransferenciaCuentaComponent {
 
 
   }
+
+
+  ngDoCheck(){
+
+    this.valTabla.Combo(this.cmbCombo);
+
+    this.lstDetalle.data.forEach(f => {
+
+      this.valTabla.addFocus("txtCuenta" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);
+      this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);
+
+    });
+
+      
+  }
+
 
 }

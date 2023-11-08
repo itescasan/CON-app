@@ -21,6 +21,7 @@ import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transfere
 import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { AsientoContableComponent } from '../../asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
+import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 
 @Component({
   selector: 'app-transferencia-saldo',
@@ -38,6 +39,7 @@ export class TransferenciaSaldoComponent {
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria: iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
+  lstCentroCosto: iCentroCosto[] = [];
 
 
   @ViewChildren(IgxComboComponent)
@@ -347,7 +349,8 @@ export class TransferenciaSaldoComponent {
             this.lstCuentabancaria = datos[0].d;
             this.lstBodega = datos[1].d;
             this.lstCuenta = datos[2].d;
-            this.lstProveedor = datos[3].d;
+            this.lstCentroCosto = datos[3].d;
+            this.lstProveedor = datos[4].d;
 
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
