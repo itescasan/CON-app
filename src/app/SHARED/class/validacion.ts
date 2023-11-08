@@ -417,6 +417,10 @@ export class Validacion {
           this.Errores += "<li class='error-etiqueta'>" + f.Etiqueta + "<ul>" + er + "</ul></li>";
           er = "";
         }
+
+      }
+      else{
+        this.Errores +=  "<li class='error-etiqueta'>" + f.Etiqueta + "<ul>" + er + "</ul></li>";
       }
 
       i++;
