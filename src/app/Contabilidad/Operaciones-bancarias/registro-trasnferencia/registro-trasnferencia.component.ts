@@ -15,6 +15,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { TransferenciaCuentaComponent } from '../transferencia-cuenta/transferencia-cuenta.component';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 
+
+
 @Component({
   selector: 'app-registro-trasnferencia',
   templateUrl: './registro-trasnferencia.component.html',
