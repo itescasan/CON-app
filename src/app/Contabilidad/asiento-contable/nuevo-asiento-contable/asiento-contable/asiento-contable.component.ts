@@ -15,6 +15,7 @@ import { iSerie } from 'src/app/Interface/Sistema/i-Serie';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { postAsientoContable } from '../../CRUD/POST/post-Asiento-contable';
+import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 
 @Component({
   selector: 'app-asiento-contable',
@@ -29,7 +30,7 @@ export class AsientoContableComponent {
   public FILA: iAsiento = {} as iAsiento;
 
   @ViewChildren(IgxComboComponent)
-  public cmbCuenta: QueryList<IgxComboComponent>;
+  public lstCmb: QueryList<IgxComboComponent>;
 
 
   displayedColumns: string[] = ["col1"];
@@ -38,6 +39,7 @@ export class AsientoContableComponent {
   lstSerie: iSerie[] = [];
   lstBodega: iBodega[] = [];
   lstCuenta: iCuenta[] = [];
+  lstCentroCosto: iCentroCosto[] = [];
 
   public esModal: boolean = false;
   public esAuxiliar : boolean = false;
@@ -179,6 +181,7 @@ export class AsientoContableComponent {
       det.Naturaleza = i_Cuenta.Naturaleza;
 
       document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
+      document.getElementById("txtCentroCosto" + det.NoLinea)?.removeAttribute("disabled");
       document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
 
@@ -208,6 +211,7 @@ export class AsientoContableComponent {
 
     }
 
+    this.V_Focus("txtReferencia", det);
     this.V_Calcular();
 
 
@@ -215,7 +219,7 @@ export class AsientoContableComponent {
   public v_Enter_Cuenta(event: any, det: iAsientoDetalle) {
 
     if (event.key == "Enter") {
-      let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
+      let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta" + det.NoLinea);
 
       let cmb : any = txtCuenta.dropdown;
 
@@ -226,7 +230,33 @@ export class AsientoContableComponent {
       det.Naturaleza = _Item.Naturaleza;
 
       txtCuenta.close();
-      this.V_Focus("Referencia", det);
+    }
+
+  }
+
+
+
+  
+  public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
+ 
+    if (event.added.length == 1) {
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
+      det.CentroCosto = event.added[0];
+    }
+
+
+  }
+  public v_Enter_CentroCosto(event: any, det: iAsientoDetalle) {
+
+    if (event.key == "Enter") {
+      let txtCentro: any = this.lstCmb.find(f => f.id == "txtCentroCosto" + det.NoLinea);
+
+      let cmb : any = txtCentro.dropdown;
+
+      let _Item: iCentroCosto = cmb._focusedItem.value;
+      if(!txtCentro.selection.includes(det.CentroCosto[0])) txtCentro.setSelectedItem(_Item.Codigo);
+      this.valTabla.Get("txtCentroCosto" + det.NoLinea).setValue([_Item.Codigo]);
+      txtCentro.close();
     }
 
   }
@@ -287,6 +317,7 @@ export class AsientoContableComponent {
 
     this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
 
     det.IdDetalleAsiento = -1;
     det.IdAsiento = this.FILA.IdAsiento;
@@ -301,6 +332,7 @@ export class AsientoContableComponent {
     det.Modulo = "CON";
     det.Descripcion = "";
     det.Referencia = "";
+    det.CentroCosto = "";
     this.lstDetalle.data.push(det);
 
     this.V_Ordenar(i);
@@ -320,6 +352,7 @@ export class AsientoContableComponent {
 
     this.valTabla.del("txtCuenta" + item.NoLinea);
     this.valTabla.del("txtReferencia" + item.NoLinea);
+    this.valTabla.del("txtCentroCosto" + item.NoLinea);
     this.valTabla.del("txtDebito" + item.NoLinea);
     this.valTabla.del("txtCredito" + item.NoLinea);
 
@@ -342,15 +375,17 @@ export class AsientoContableComponent {
     setTimeout(() => {
       document?.getElementById("txtCuenta" + x)?.focus();
       document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 
-      let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+      let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta" + x);
       if (x > 1) txtCuenta.open();
 
       
       this.val.addFocus("txtCuenta" + x , "txtReferencia" + x, undefined);
-      this.val.addFocus("txtReferencia" + x, "txtDebito" + x, undefined);
+      this.val.addFocus("txtReferencia" + x, "txtCentroCosto" + x, undefined);
+      this.val.addFocus("txtCentroCosto" + x, "txtDebito" + x, undefined);
       this.val.addFocus("txtDebito" + x, "txtCredito" + x, undefined);
 
 
@@ -393,6 +428,7 @@ export class AsientoContableComponent {
       this.lstDetalle.data.forEach(f => {
         this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
         this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+        this.valTabla.add("txtCentroCosto" + x, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
 
        
   
@@ -402,11 +438,16 @@ export class AsientoContableComponent {
   
 
         
-        let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+        let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta" + x);
         if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
 
         this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
         this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
+
+
+        let txtCentro: any = this.lstCmb.find(f => f.id == "txtCentroCosto" + x);
+        if(!txtCentro.selection.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+
   
   
         if(!this.esAuxiliar)
@@ -425,6 +466,7 @@ export class AsientoContableComponent {
           txtCuenta.disabled = true;
           document.getElementById("txtCuenta" + x)?.setAttribute("disabled", "disabled");
           document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
           document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
           document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
         
@@ -493,6 +535,7 @@ export class AsientoContableComponent {
             let datos: iDatos[] = _json["d"];
             this.lstBodega = datos[0].d;
             this.lstCuenta = datos[1].d.filter((f: any) => f.ClaseCuenta == "D");
+            this.lstCentroCosto = datos[2].d;
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
 
@@ -863,8 +906,13 @@ export class AsientoContableComponent {
 
   ngDoCheck(){
 
+    this.valTabla.Combo(this.lstCmb);
 
     this.lstDetalle.data.forEach(f => {
+
+      this.valTabla.addFocus("txtCuenta" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);
+      this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);
+
       this.valTabla.addNumberFocus("txtDebito" + f.NoLinea, 2);
       this.valTabla.addNumberFocus("txtCredito" + f.NoLinea, 2);
     });
