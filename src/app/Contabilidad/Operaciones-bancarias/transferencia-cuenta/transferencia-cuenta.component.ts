@@ -657,6 +657,7 @@ export class TransferenciaCuentaComponent {
     }
 
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
+    this.FILA.IdMoneda = this.IdMoneda;
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
     this.FILA.IdSerie = "TBan"
     this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
@@ -791,6 +792,7 @@ export class TransferenciaCuentaComponent {
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+    this.IdMoneda = this.FILA.IdMoneda;
 
     this.TC = this.FILA.TasaCambio;
     this.Anulado = this.FILA.Anulado;

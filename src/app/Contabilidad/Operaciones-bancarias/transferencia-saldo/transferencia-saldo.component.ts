@@ -643,6 +643,7 @@ export class TransferenciaSaldoComponent {
 
       f.Operacion = "";
       f.IdTransferencia = this.FILA.IdTransferencia;
+      if(f.IdDetTrasnfDoc == undefined) f.IdDetTrasnfDoc = "00000000-0000-0000-0000-000000000000";
 
       let Importe: number = this.cFunciones.Redondeo(Number(String(f.Importe).replaceAll(",", "")), "2");
       let Saldo: number = Number(String(f.Saldo).replaceAll(",", ""));
@@ -951,6 +952,7 @@ export class TransferenciaSaldoComponent {
     det.Descripcion = i_Cuenta?.NombreCuenta!;
     det.Referencia = Referencia;
     det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
+    det.Naturaleza =  i_Cuenta?.Naturaleza!;
 
 
 
@@ -1089,10 +1091,11 @@ export class TransferenciaSaldoComponent {
 
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
+    this.FILA.IdMoneda = this.IdMoneda;
     this.FILA.IdSerie = "TBan"
     this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
     this.FILA.Fecha = this.val.Get("txtFecha").value;
-    this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
+    this.FILA.Beneficiario = this.val.Get("cmbProveedor").value[0];
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
     this.FILA.Comision = Comision;
@@ -1104,7 +1107,7 @@ export class TransferenciaSaldoComponent {
     this.FILA.UsuarioReg = this.cFunciones.User;
     if (!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoTransferencia = "S";
-    this.FILA.TransferenciaDocumento = this.lstDetalle.data;
+    this.FILA.TransferenciaDocumento =  JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
 
 
     this.V_Contabilizacion();
@@ -1192,6 +1195,7 @@ export class TransferenciaSaldoComponent {
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+    this.IdMoneda = this.FILA.IdMoneda;
 
     this.TC = this.FILA.TasaCambio;
     this.Anulado = this.FILA.Anulado;

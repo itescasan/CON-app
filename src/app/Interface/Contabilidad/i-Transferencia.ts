@@ -3,6 +3,7 @@ import { iTransferenciaDocumento } from "./i-Transferencia-Documento";
 export interface iTransferencia{
     IdTransferencia: any;
     IdCuentaBanco: number;
+    IdMoneda: string;
     CodBodega: string;
     IdSerie: string;
     NoTransferencia: string;
