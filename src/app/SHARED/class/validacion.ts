@@ -95,6 +95,8 @@ export class Validacion {
 
 
   constructor() {
+    lstFocus.splice(0, lstFocus.length);
+    lstFormat.splice(0, lstFocus.length);
   }
 
   public ValForm = this.fb.nonNullable.group({});
@@ -123,22 +125,36 @@ export class Validacion {
     etiqueta: string,
     msj: string
   ) {
+
+
+    let NuevoItem : boolean = false;
+    let NuevaRegla : boolean = false;
     this.Index = String(Number.parseInt(this.Index) + 1);
 
     const _frm = new FormControl("", this.Cls_Validaciones(id));
-    this.ValForm.addControl(id, _frm);
-    const _Regla: ReglasValidacion = new ReglasValidacion();
-    _Regla.Id = id;
-    _Regla.Regla = regla;
-    _Regla.Condicon = condicion;
-    _Regla.valor = valor;
-    _Regla.Mensaje = msj;
-    _Regla.Index = this.Index + "_" + id;
-    _Regla.Etiqueta = etiqueta;
 
-    this.lstReglas.push(_Regla);
-    if (this.Get(id) == undefined)
-      this.lstFrm.push({ Id: id, Frm: _frm, Etiqueta: etiqueta });
+    if (this.Get(id) == undefined) 
+    {
+      this.ValForm.addControl(id, _frm);
+      NuevoItem = true;
+    }
+    
+
+    if(this.lstReglas.findIndex(f => f.Id == id && f.Regla == regla) == -1)
+    {
+      const _Regla: ReglasValidacion = new ReglasValidacion();
+      _Regla.Id = id;
+      _Regla.Regla = regla;
+      _Regla.Condicon = condicion;
+      _Regla.valor = valor;
+      _Regla.Mensaje = msj;
+      _Regla.Index = this.Index + "_" + id;
+      _Regla.Etiqueta = etiqueta;
+      this.lstReglas.push(_Regla);
+    }
+
+    if(NuevoItem) this.lstFrm.push({ Id: id, Frm: _frm, Etiqueta: etiqueta });
+
   }
 
   public addFocus(id: string, idNext: string, evento: any) {
@@ -355,15 +371,28 @@ export class Validacion {
       let etiqueta: string = this.lstFrm.find((ff) => ff.Id == f.Id)?.Etiqueta!;
       let _Id: string = "";
 
-      let elemnto = document.getElementById(f.Id);
-      elemnto?.parentElement?.classList.remove("contenedor-info-validacion");
+      let elmento = document.getElementById(f.Id);
+      elmento?.parentElement?.classList.remove("contenedor-info-validacion");
 
       let span = document.getElementById("info-validacion-" + f.Id);
       span?.remove();
 
 
       if (this.IsTable && (String(frm.value) == "undefined" || String(frm.value) == "")) {
-        frm.setValue((<HTMLInputElement>document.getElementById(f.Id)).value);
+
+        if (elmento?.localName == "igx-combo") {
+          let combo: IgxComboComponent = cmb.find(w => w.id == f.Id)!;
+          frm.setValue(combo.selection);
+
+        }
+        else
+        {
+          frm.setValue((<HTMLInputElement>document.getElementById(f.Id)).value);
+        }
+
+
+     
+        
       }
 
       let r: string[] = this._Validar(f.Id, f, frm, retorno, errores);
@@ -393,8 +422,8 @@ export class Validacion {
         let ei = document.createElement("i");
         ei.className = "fa-solid fa-info fa-fade fa-xl opcional";
         span.appendChild(ei);
-        elemnto?.parentNode?.insertBefore(span, elemnto);
-        elemnto?.parentElement?.classList.add("contenedor-info-validacion");
+        elmento?.parentNode?.insertBefore(span, elmento);
+        elmento?.parentElement?.classList.add("contenedor-info-validacion");
 
 
       }
@@ -409,7 +438,7 @@ export class Validacion {
     i = 0;
     lst.forEach((f: ReglasValidacion) => {
 
-      er += f.ErrorMensaje;
+      if(!er.includes(f.ErrorMensaje))er += f.ErrorMensaje;
 
 
       if (i < lst.length - 1 && f.Etiqueta != "") {

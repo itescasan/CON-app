@@ -1,7 +1,7 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
-import { iTransferenciaCuentaPOST } from "src/app/Interface/Contabilidad/I-transferencia-cuenta-POST";
+import { iTransferenciaPOST } from "src/app/Interface/Contabilidad/I-transferencia-POST";
 import { iChequePOST } from "src/app/Interface/Contabilidad/i-Cheque-POST";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 

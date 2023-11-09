@@ -1,4 +1,6 @@
-export interface iTransferenciaCuenta{
+import { iTransferenciaDocumento } from "./i-Transferencia-Documento";
+
+export interface iTransferencia{
     IdTransferencia: any;
     IdCuentaBanco: number;
     CodBodega: string;
@@ -9,9 +11,14 @@ export interface iTransferenciaCuenta{
     TasaCambio: number;
     Concepto : string;
     TipoTransferencia : string;
+    Comision: number;
+    ComisionCordoba: number;
+    ComisionDolar: number;
     Total: number;
     TotalCordoba: number;
     TotalDolar: number;
+    CentroCosto: string;
     Anulado : boolean;
     UsuarioReg : string;
+    TransferenciaDocumento: iTransferenciaDocumento[];
 }

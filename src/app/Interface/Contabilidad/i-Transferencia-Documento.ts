@@ -1,5 +1,6 @@
 export interface iTransferenciaDocumento{
     IdDetTrasnfDoc: any;
+    IdTransferencia : any;
     Index : number;
     Operacion: string;
     Documento: string;
