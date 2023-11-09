@@ -1,7 +1,7 @@
 @import "/src/assets/scss/media.scss";
 
 
-.contenedor-cheques{
+.contenedor-transferencia{
     background-color: var(--escan-fondo);
 }
 
@@ -15,31 +15,6 @@
     }
 
 }
-
-
-.anulado {
-
-    display: flex;
-    justify-content: center;
-    
-    
-    .contenedor{
-        text-align: center;
-
-        label{
-            font-weight: bold;
-            display: block;
-            margin-bottom: 2px;
-        }
-    }
-
-    
-  @include Tamano_Menor(lg) {
-    justify-content: right;
-  }
-   
-  }
-
 
 
 
@@ -75,7 +50,7 @@
 }
 
 .contenedor-tabla {
-    margin-bottom: 100px;
+    margin-bottom: 250px;
 
 
     table {
@@ -114,7 +89,7 @@
     
 }
 
-.pie-cheques {
+.pie-transferencia {
     position: fixed;
     bottom: 0;
     left: 0;

@@ -20,7 +20,7 @@ import { ideaGeneration } from '@igniteui/material-icons-extended';
 import { iCheque } from '../Interface/Contabilidad/i-Cheque';
 import { iChequePOST } from '../Interface/Contabilidad/i-Cheque-POST';
 import { postCheque } from '../Contabilidad/Operaciones-bancarias/CRUD/POST/post-Cheque';
-
+import { iCentroCosto } from '../Interface/Contabilidad/i-Centro-Costo';
 
 
 @Component({
@@ -46,10 +46,12 @@ export class NuevoChequeComponent {
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria : iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
-
+  lstCentroCosto: iCentroCosto[] = [];
 
   @ViewChildren(IgxComboComponent)
   public cmbCuenta: QueryList<IgxComboComponent>;
+
+  public cmbCombo: QueryList<IgxComboComponent>;
 
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
@@ -62,9 +64,9 @@ export class NuevoChequeComponent {
   public esModal: boolean = false;
   public dec_TotalDebe: number = 0;
   public dec_TotalHaber: number = 0;
-  public dec_Dif: number = 0;
+  public dec_Dif: number = 0; 
   public TC: number;
-
+  public Anulado : boolean = false;
 
 
   constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postCheque) {
@@ -303,6 +305,7 @@ public v_Enter_Cuenta2(event: any) {
             this.lstCuentabancaria = datos[0].d;
             this.lstBodega = datos[1].d;
             this.lstCuenta = datos[2].d.filter((f: any) => f.ClaseCuenta == "D");
+            this.lstCentroCosto = datos[3].d;
 
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
@@ -443,6 +446,30 @@ public v_Enter_Cuenta2(event: any) {
   // public v_FocusOut2(id: string): void {
   //   this.val.Get(id).setValue(this.cFunciones.NumFormat(this.val.Get(id).value.replaceAll(",", ""), "2"));
   // }
+
+  public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
+ 
+    if (event.added.length == 1) {
+      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
+      det.CentroCosto = event.added[0];
+    }
+
+
+  }
+  public v_Enter_CentroCosto(event: any, det: iAsientoDetalle) {
+
+    if (event.key == "Enter") {
+      let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + det.NoLinea);
+
+      let cmb : any = txtCentro.dropdown;
+
+      let _Item: iCentroCosto = cmb._focusedItem.value;
+      if(!txtCentro.selection.includes(det.CentroCosto)) txtCentro.setSelectedItem(_Item.Codigo);
+      this.valTabla.Get("txtCentroCosto" + det.NoLinea).setValue([_Item.Codigo]);
+      txtCentro.close();
+    }
+
+  }
 
   public V_FocusOut(det: iAsientoDetalle): void {
 
@@ -1027,7 +1054,73 @@ public v_Enter_Cuenta2(event: any) {
   private v_Visualizar()
   {
 
+
+    this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
+    this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
+    this.val.Get("txtNoDoc").setValue(this.FILA.NoCheque);
+    this.val.Get("txtFecha").setValue( this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
+    this.val.Get("txtBeneficiario").setValue(this.FILA.Beneficiario);
+    this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
+    this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
+    this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
+    this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+
+    this.TC = this.FILA.TasaCambio;
+    this.Anulado = this.FILA.Anulado;
+
+
+
+
+   let x: number = 1;
+   
+
+    setTimeout(() => {
+
+      this.lstDetalle.data.forEach(f => {
+        this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+        this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+        this.valTabla.add("txtCentroCosto" + x, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
+
+        f.Debito = this.cFunciones.NumFormat(Number(String(f.Debito).replaceAll(",", "")), "2");
+        f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");
+        
+        let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+
+        
+
+        if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
+
+        
+        this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
+        this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
+
+        
+        let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + x);
+        if(!txtCentro.selection.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+       
+  
+        document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
+        document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
+        document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+  
+        if (f.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
+  
+        if (f.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
+
+  
+
+        x++;
+      });
+  
+
+
+      let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+      if(dialogRef != undefined) dialogRef.close();
+
+     
+    });
   }
+  
 
   ngOnInit(): void {
 
@@ -1050,7 +1143,7 @@ public v_Enter_Cuenta2(event: any) {
   }
   ngAfterViewInit(): void {
     ///CAMBIO DE FOCO
-
+    this.val.Combo(this.cmbCombo);
     this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
     this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
     this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
@@ -1061,7 +1154,7 @@ public v_Enter_Cuenta2(event: any) {
 
   ngDoCheck(){
 
- 
+    this.valTabla.Combo(this.cmbCombo);
     this.val.addNumberFocus("txtTotalCordoba", 2);
     this.val.addNumberFocus("txtTotalDolar", 2);
 
