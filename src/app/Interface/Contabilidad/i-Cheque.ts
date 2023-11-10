@@ -2,6 +2,7 @@ export interface iCheque {
     IdCheque: any;
     IdCuentaBanco: number;
     CuentaContable: string;
+    CentroCosto: string;
     CodBodega: string;
     IdSerie: string;
     NoCheque: string;

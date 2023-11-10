@@ -839,6 +839,7 @@ public v_Enter_Cuenta2(event: any) {
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.CuentaContable = this.val.Get("cmbCuentaC").value[0];
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
+    //this.FILA.CentroCosto = this.val.Get("cmbCombo").value[0];
     this.FILA.IdSerie = "CK"
     this.FILA.NoCheque = this.val.Get("txtNoDoc").value;
     this.FILA.Fecha = this.val.Get("txtFecha").value;
@@ -879,6 +880,7 @@ public v_Enter_Cuenta2(event: any) {
 
     Asiento.AsientosContablesDetalle.forEach(f =>{
       f.CuentaContable = f.CuentaContable[0];
+      f.CentroCosto = f.CentroCosto[0];
     });
 
 
@@ -1141,20 +1143,22 @@ public v_Enter_Cuenta2(event: any) {
 
 
   }
-  ngAfterViewInit(): void {
-    ///CAMBIO DE FOCO
-    this.val.Combo(this.cmbCombo);
-    this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
-    this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
-    this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
+  // ngAfterViewInit(): void {
+  //   ///CAMBIO DE FOCO
+  //   this.val.Combo(this.cmbCombo);
+  //   this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
+  //   this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
+  //   this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
 
 
 
-  }
+  // }
 
   ngDoCheck(){
 
     this.valTabla.Combo(this.cmbCombo);
+
+    this.val.Combo(this.cmbCombo);
     this.val.addNumberFocus("txtTotalCordoba", 2);
     this.val.addNumberFocus("txtTotalDolar", 2);
 
