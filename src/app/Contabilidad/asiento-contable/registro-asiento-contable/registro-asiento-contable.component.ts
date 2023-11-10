@@ -284,7 +284,7 @@ export class RegistroAsientoContableComponent {
 
   
 
-  ngAfterViewInit(): void{
+  ngDoCheck(): void{
     ///CAMBIO DE FOCO
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBuscar-Asiento", undefined);

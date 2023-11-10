@@ -15,8 +15,8 @@ import { getTransferencia } from '../CRUD/GET/get-Transferencia';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
-import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
-import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
+import { iTransferenciaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-POST';
+import { iTransferencia } from 'src/app/Interface/Contabilidad/i-Transferencia';
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 
 @Component({
@@ -44,7 +44,7 @@ export class TransferenciaCuentaComponent {
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
 
-  public FILA: iTransferenciaCuenta = {} as iTransferenciaCuenta;
+  public FILA: iTransferencia = {} as iTransferencia;
 
 
   public esModal: boolean = false;
@@ -657,6 +657,7 @@ export class TransferenciaCuentaComponent {
     }
 
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
+    this.FILA.IdMoneda = this.IdMoneda;
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
     this.FILA.IdSerie = "TBan"
     this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
@@ -664,6 +665,9 @@ export class TransferenciaCuentaComponent {
     this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
+    this.FILA.Comision = 0;
+    this.FILA.ComisionCordoba = 0;
+    this.FILA.ComisionDolar = 0;
     this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
     this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
     this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
@@ -698,6 +702,7 @@ export class TransferenciaCuentaComponent {
 
     Asiento.AsientosContablesDetalle.forEach(f =>{
       f.CuentaContable = f.CuentaContable[0];
+      f.CentroCosto = f.CentroCosto[0];
     });
 
 
@@ -715,10 +720,10 @@ export class TransferenciaCuentaComponent {
       }
     );
 
-    document.getElementById("btnGuardar-Asiento")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnGuardar-Transferencia-Cuenta")?.setAttribute("disabled", "disabled");
 
 
-    let Datos : iTransferenciaCuentaPOST = {} as iTransferenciaCuentaPOST;
+    let Datos : iTransferenciaPOST = {} as iTransferenciaPOST;
     Datos.T = this.FILA;
     Datos.A = Asiento;
 
@@ -756,7 +761,7 @@ export class TransferenciaCuentaComponent {
         error: (err) => {
           dialogRef.close();
 
-          document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
+          document.getElementById("btnGuardar-Transferencia-Cuenta")?.removeAttribute("disabled");
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
@@ -765,7 +770,7 @@ export class TransferenciaCuentaComponent {
           }
         },
         complete: () => {
-          document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
+          document.getElementById("btnGuardar-Transferencia-Cuenta")?.removeAttribute("disabled");
         }
       }
     );
@@ -787,6 +792,7 @@ export class TransferenciaCuentaComponent {
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+    this.IdMoneda = this.FILA.IdMoneda;
 
     this.TC = this.FILA.TasaCambio;
     this.Anulado = this.FILA.Anulado;
@@ -865,20 +871,17 @@ export class TransferenciaCuentaComponent {
 
 
 
-  ngAfterViewInit(): void {
-    ///CAMBIO DE FOCO
-    this.val.Combo(this.cmbCombo);
-    this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
-    this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
-    this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
-
-
-  }
 
 
   ngDoCheck(){
 
     this.valTabla.Combo(this.cmbCombo);
+
+     ///CAMBIO DE FOCO
+     this.val.Combo(this.cmbCombo);
+     this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
+     this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
+     this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
 
     this.lstDetalle.data.forEach(f => {
 

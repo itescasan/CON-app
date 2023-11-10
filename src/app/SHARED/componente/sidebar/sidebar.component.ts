@@ -225,7 +225,7 @@ export class SidebarComponent {
     this.ErrorServidor = false;
 
 
-    this.Conexion.FechaServidor(this.cFunciones.User).subscribe(
+    this.Conexion.DatosServidor(this.cFunciones.User).subscribe(
       {
         next : (data) => {
           
@@ -246,7 +246,10 @@ export class SidebarComponent {
           this.cFunciones.FechaServidor(Datos[0].d);
           this.cFunciones.SetTiempoDesconexion(Number(Datos[1].d));
           this._SrvLogin.UpdFecha(String(Datos[0].d));
-          this.cFunciones.TC = Datos[2].d;
+          if(Datos[2].d != undefined)this.cFunciones.MonedaLocal = Datos[2].d;
+          this.cFunciones.TC = Datos[3].d;
+          
+
         }
 
           if(this.cFunciones.DIALOG.getDialogById("error-servidor") != undefined) 

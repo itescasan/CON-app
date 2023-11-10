@@ -368,7 +368,7 @@ export class RegistroTrasnferenciaComponent {
 
 
 
-  ngAfterViewInit(): void {
+  ngDoCheck(): void {
     ///CAMBIO DE FOCO
     this.val.Combo(this.cmbCombo);
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);

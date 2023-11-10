@@ -14,10 +14,10 @@ import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detall
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 
 import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
-import { iTransferenciaCuentaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-cuenta-POST';
+import { iTransferenciaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-POST';
 import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
 import { iTransferenciaDocumento } from 'src/app/Interface/Contabilidad/i-Transferencia-Documento';
-import { iTransferenciaCuenta } from 'src/app/Interface/Contabilidad/i-Transferencia-cuenta';
+import { iTransferencia } from 'src/app/Interface/Contabilidad/i-Transferencia';
 import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { AsientoContableComponent } from '../../asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
@@ -50,7 +50,7 @@ export class TransferenciaSaldoComponent {
   private lstDetalleAsiento: iAsientoDetalle[] = [];
 
 
-  public FILA: iTransferenciaCuenta = {} as iTransferenciaCuenta;
+  public FILA: iTransferencia = {} as iTransferencia;
   public Asiento: iAsiento = {} as iAsiento;
 
 
@@ -68,6 +68,8 @@ export class TransferenciaSaldoComponent {
 
   constructor(public cFunciones: Funciones, private GET: getTransferencia, private POST: postTrasnferencia) {
 
+
+    
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una cuenta bancaria.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "No Cuenta", "No se ha definido el nombre de la cuenta.");
     this.val.add("cmbCentroCosto", "1", "LEN>", "0", "Centro Costo", "Seleccione un centro costo.");
@@ -640,6 +642,8 @@ export class TransferenciaSaldoComponent {
     this.lstDetalle.data.forEach(f => {
 
       f.Operacion = "";
+      f.IdTransferencia = this.FILA.IdTransferencia;
+      if(f.IdDetTrasnfDoc == undefined) f.IdDetTrasnfDoc = "00000000-0000-0000-0000-000000000000";
 
       let Importe: number = this.cFunciones.Redondeo(Number(String(f.Importe).replaceAll(",", "")), "2");
       let Saldo: number = Number(String(f.Saldo).replaceAll(",", ""));
@@ -948,6 +952,7 @@ export class TransferenciaSaldoComponent {
     det.Descripcion = i_Cuenta?.NombreCuenta!;
     det.Referencia = Referencia;
     det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
+    det.Naturaleza =  i_Cuenta?.Naturaleza!;
 
 
 
@@ -1066,21 +1071,43 @@ export class TransferenciaSaldoComponent {
     }
 
 
+    let Comision : number = Number(String(this.val.Get("txtComision").value).replaceAll(",", ""));
+    let ComisionDolar: number = 0;
+    let ComisionCordoba : number = 0;
+
+
+    if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+      ComisionCordoba = this.cFunciones.Redondeo(Comision, "2");
+      ComisionDolar = this.cFunciones.Redondeo(ComisionCordoba / this.TC, "2");
+    }
+    else {
+      ComisionDolar = this.cFunciones.Redondeo(Comision, "2");
+      ComisionCordoba = this.cFunciones.Redondeo(ComisionDolar * this.TC, "2");
+    }
+
+
+
+
+
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
+    this.FILA.IdMoneda = this.IdMoneda;
     this.FILA.IdSerie = "TBan"
     this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
     this.FILA.Fecha = this.val.Get("txtFecha").value;
-    this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
+    this.FILA.Beneficiario = this.val.Get("cmbProveedor").value[0];
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
-    //this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
-    //this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
-    // this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    this.FILA.Comision = Comision;
+    this.FILA.ComisionCordoba = ComisionCordoba;
+    this.FILA.ComisionDolar = ComisionDolar;
+    this.FILA.TotalCordoba = Number(String(this.val.Get("txtTotalCordoba").value).replaceAll(",", ""));
+    this.FILA.TotalDolar = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
+    this.FILA.Total = (this.cFunciones.MonedaLocal == this.IdMoneda? this.FILA.TotalCordoba : this.FILA.TotalDolar );
     this.FILA.UsuarioReg = this.cFunciones.User;
     if (!this.esModal) this.FILA.Anulado = false;
-    this.FILA.TipoTransferencia = "C";
-
+    this.FILA.TipoTransferencia = "S";
+    this.FILA.TransferenciaDocumento =  JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
 
 
     this.V_Contabilizacion();
@@ -1097,10 +1124,10 @@ export class TransferenciaSaldoComponent {
       }
     );
 
-    document.getElementById("btnGuardar-Asiento")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnGuardar-Transferencia-Saldo")?.setAttribute("disabled", "disabled");
 
 
-    let Datos: iTransferenciaCuentaPOST = {} as iTransferenciaCuentaPOST;
+    let Datos: iTransferenciaPOST = {} as iTransferenciaPOST;
     Datos.T = this.FILA;
     Datos.A = this.Asiento;
 
@@ -1138,7 +1165,7 @@ export class TransferenciaSaldoComponent {
         error: (err) => {
           dialogRef.close();
 
-          document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
+          document.getElementById("btnGuardar-Transferencia-Saldo")?.removeAttribute("disabled");
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
@@ -1147,7 +1174,7 @@ export class TransferenciaSaldoComponent {
           }
         },
         complete: () => {
-          document.getElementById("btnGuardar-Asiento")?.removeAttribute("disabled");
+          document.getElementById("btnGuardar-Transferencia-Saldo")?.removeAttribute("disabled");
         }
       }
     );
@@ -1168,6 +1195,7 @@ export class TransferenciaSaldoComponent {
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+    this.IdMoneda = this.FILA.IdMoneda;
 
     this.TC = this.FILA.TasaCambio;
     this.Anulado = this.FILA.Anulado;
