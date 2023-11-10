@@ -317,7 +317,7 @@ export class AsientoContableComponent {
 
     this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
+    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
 
     det.IdDetalleAsiento = -1;
     det.IdAsiento = this.FILA.IdAsiento;

@@ -78,8 +78,18 @@ input.center{
 
 }
 
+@include Tamano_Menor(lg) {
+
+    .contenedor-tabla {
+        margin-bottom: 220px;
+}
+    }
+    
+
+
+
 .contenedor-tabla {
-    margin-bottom: 250px;
+  
 
 
     table {
