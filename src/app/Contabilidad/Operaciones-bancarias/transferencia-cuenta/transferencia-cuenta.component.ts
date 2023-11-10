@@ -702,7 +702,7 @@ export class TransferenciaCuentaComponent {
 
     Asiento.AsientosContablesDetalle.forEach(f =>{
       f.CuentaContable = f.CuentaContable[0];
-      f.CentroCosto = f.CentroCosto[0];
+      if(f.CentroCosto != undefined) f.CentroCosto = f.CentroCosto[0];
     });
 
 

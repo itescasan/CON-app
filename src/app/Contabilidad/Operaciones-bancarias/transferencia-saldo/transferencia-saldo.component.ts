@@ -1061,6 +1061,9 @@ export class TransferenciaSaldoComponent {
     }
 
 
+    
+ 
+
 
     if (this.dec_Dif != 0) {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -1111,6 +1114,15 @@ export class TransferenciaSaldoComponent {
 
 
     this.V_Contabilizacion();
+
+
+    if (this.Asiento.AsientosContablesDetalle.findIndex(f => f.CuentaContable == "" || (f.Naturaleza == undefined  || f.Naturaleza == "")) != -1) {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+        data: "<span><b>Por favor revisar el asiento contable. (CUENTA / NATURALEZA)</b></span>",
+      });
+
+      return;
+    }
 
 
 
@@ -1188,13 +1200,20 @@ export class TransferenciaSaldoComponent {
 
     this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
     this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
+    this.cmbProveedor.setSelectedItem(this.FILA.Beneficiario);
+    this.cmbCentroCosto.setSelectedItem(this.FILA.CentroCosto);
     this.val.Get("txtNoDoc").setValue(this.FILA.NoTransferencia);
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
-    this.val.Get("txtBeneficiario").setValue(this.FILA.Beneficiario);
     this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+    this.val.Get("txtComision").setValue(this.cFunciones.NumFormat(this.FILA.Comision, "2"));
+
+    this.lstDetalle.data = this.FILA.TransferenciaDocumento;
+
+   
+
     this.IdMoneda = this.FILA.IdMoneda;
 
     this.TC = this.FILA.TasaCambio;

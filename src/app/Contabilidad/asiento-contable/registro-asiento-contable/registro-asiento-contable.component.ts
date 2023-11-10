@@ -39,7 +39,7 @@ export class RegistroAsientoContableComponent {
     this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
     this.val.add("txtBuscar-Asiento", "1", "LEN>=", "0", "Buscar", "");
 
-    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), 0, 1)), "yyyy-MM-dd"));
+    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
 
     this.v_CargarDatos();

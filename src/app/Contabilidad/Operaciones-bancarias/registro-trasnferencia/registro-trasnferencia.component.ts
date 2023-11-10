@@ -14,6 +14,7 @@ import { AnularComponent } from 'src/app/SHARED/anular/anular.component';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TransferenciaCuentaComponent } from '../transferencia-cuenta/transferencia-cuenta.component';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
+import { TransferenciaSaldoComponent } from '../transferencia-saldo/transferencia-saldo.component';
 
 
 
@@ -46,7 +47,7 @@ export class RegistroTrasnferenciaComponent {
     this.val.add("txtBodega", "1", "LEN>=", "0", "Bodega", "");
 
 
-    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth() - 1, 1)), "yyyy-MM-dd"));
+    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
 
    this.v_BODEGA();
@@ -148,7 +149,7 @@ export class RegistroTrasnferenciaComponent {
 
   public v_CargarDatos(): void {
 
-    document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnRefrescar-Regtransferencia")?.setAttribute("disabled", "disabled");
 
 
 
@@ -199,7 +200,7 @@ export class RegistroTrasnferenciaComponent {
 
           
           dialogRef.close();
-          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
+          document.getElementById("btnRefrescar-Regtransferencia")?.removeAttribute("disabled");
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
@@ -209,7 +210,7 @@ export class RegistroTrasnferenciaComponent {
 
         },
         complete: () => {
-          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
+          document.getElementById("btnRefrescar-Regtransferencia")?.removeAttribute("disabled");
 
 
         }
@@ -242,82 +243,165 @@ export class RegistroTrasnferenciaComponent {
       }
 
 
-      
-    this.GET.GetDetalleCuenta(det.IdTransferencia).subscribe(
+      if(det.TipoTransferencia == "C")
       {
-        next: (data) => {
-
-
-          dialogRef.close();
-          let _json: any = data;
-
-          if (_json["esError"] == 1) {
-            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                id: "error-servidor-msj",
-                data: _json["msj"].Mensaje,
-              });
-            }
-          } else {
-
-            let datos: iDatos[] = _json["d"];
-
-          
-              let dialogTransf: MatDialogRef<TransferenciaCuentaComponent> = this.cFunciones.DIALOG.open(
-                TransferenciaCuentaComponent,
-                {
-                  panelClass: "escasan-dialog-full",
-                  disableClose: true
+        this.GET.GetDetalleCuenta(det.IdTransferencia).subscribe(
+          {
+            next: (data) => {
+    
+    
+              dialogRef.close();
+              let _json: any = data;
+    
+              if (_json["esError"] == 1) {
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    id: "error-servidor-msj",
+                    data: _json["msj"].Mensaje,
+                  });
                 }
-              );
+              } else {
+    
+                let datos: iDatos[] = _json["d"];
+    
               
-              
-                
-              dialogTransf.afterOpened().subscribe(s =>{
-                dialogTransf.componentInstance.FILA = det;
-                dialogTransf.componentInstance.esModal = true;
-
-
-                dialogTransf.componentInstance.lstDetalle.data = JSON.parse(JSON.stringify(datos[0].d));
-
-
-                dialogTransf.componentInstance.v_CargarDatos();
-
-              });
-
-              dialogTransf.afterClosed().subscribe(s =>{
-                this.v_CargarDatos();
-              });
-
-
-     
-
+                  let dialogTransf: MatDialogRef<TransferenciaCuentaComponent> = this.cFunciones.DIALOG.open(
+                    TransferenciaCuentaComponent,
+                    {
+                      panelClass: "escasan-dialog-full",
+                      disableClose: true
+                    }
+                  );
+                  
+                  
+                    
+                  dialogTransf.afterOpened().subscribe(s =>{
+                    dialogTransf.componentInstance.FILA = det;
+                    dialogTransf.componentInstance.esModal = true;
+    
+    
+                    dialogTransf.componentInstance.lstDetalle.data = JSON.parse(JSON.stringify(datos[0].d));
+    
+    
+                    dialogTransf.componentInstance.v_CargarDatos();
+    
+                  });
+    
+                  dialogTransf.afterClosed().subscribe(s =>{
+                    this.v_CargarDatos();
+                  });
+    
+    
+         
+    
+              }
+    
+            },
+            error: (err) => {
+    
+              document.getElementById("btnRefrescar-Regtransferencia")?.removeAttribute("disabled");
+              dialogRef.close();
+    
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  id: "error-servidor",
+                  data: "<b class='error'>" + err.message + "</b>",
+                });
+              }
+    
+            },
+            complete: () => {
+              document.getElementById("btnRefrescar-Regtransferencia")?.removeAttribute("disabled");
+    
+    
+            }
           }
-
-        },
-        error: (err) => {
-
-          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
-          dialogRef.close();
-
-          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              id: "error-servidor",
-              data: "<b class='error'>" + err.message + "</b>",
-            });
-          }
-
-        },
-        complete: () => {
-          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
-
-
-        }
+        );
+    
+    
+    
       }
-    );
 
+      else
+      {
+        this.GET.GetDetalleDocumentos(det.IdTransferencia).subscribe(
+          {
+            next: (data) => {
+    
+    
+              dialogRef.close();
+              let _json: any = data;
+    
+              if (_json["esError"] == 1) {
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    id: "error-servidor-msj",
+                    data: _json["msj"].Mensaje,
+                  });
+                }
+              } else {
+    
+                let datos: iDatos[] = _json["d"];
+    
+              
+                  let dialogTransf: MatDialogRef<TransferenciaSaldoComponent> = this.cFunciones.DIALOG.open(
+                    TransferenciaSaldoComponent,
+                    {
+                      panelClass: "escasan-dialog-full",
+                      disableClose: true
+                    }
+                  );
+                  
+                  
+                    
+                  dialogTransf.afterOpened().subscribe(s =>{
+                    dialogTransf.componentInstance.FILA = det;
+                    dialogTransf.componentInstance.esModal = true;
+    
+    
+                    dialogTransf.componentInstance.FILA.TransferenciaDocumento = JSON.parse(JSON.stringify(datos[0].d));
+                    dialogTransf.componentInstance.Asiento = JSON.parse(JSON.stringify(datos[1].d));
+    
+    
+                    dialogTransf.componentInstance.v_CargarDatos();
+    
+                  });
+    
+                  dialogTransf.afterClosed().subscribe(s =>{
+                    this.v_CargarDatos();
+                  });
+    
+    
+         
+    
+              }
+    
+            },
+            error: (err) => {
+    
+              document.getElementById("btnRefrescar-Regtransferencia")?.removeAttribute("disabled");
+              dialogRef.close();
+    
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  id: "error-servidor",
+                  data: "<b class='error'>" + err.message + "</b>",
+                });
+              }
+    
+            },
+            complete: () => {
+              document.getElementById("btnRefrescar-Regtransferencia")?.removeAttribute("disabled");
+    
+    
+            }
+          }
+        );
+    
+      }
 
-
+      
+  
 
 
 
@@ -373,7 +457,7 @@ export class RegistroTrasnferenciaComponent {
     this.val.Combo(this.cmbCombo);
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBodega", undefined);
-    this.val.addFocus("txtBodega", "btnRefrescar-RegtransferenciaCuenta", "click");
+    this.val.addFocus("txtBodega", "btnRefrescar-Regtransferencia", "click");
 
 
   }

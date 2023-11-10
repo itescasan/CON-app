@@ -38,5 +38,9 @@ export class getTransferencia {
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDetalleCuenta?IdTransferencia=" + IdTransferencia);
     }
 
+    public GetDetalleDocumentos(IdTransferencia: string) {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDetalleDocumentos?IdTransferencia=" + IdTransferencia);
+    }
+
 
 }
