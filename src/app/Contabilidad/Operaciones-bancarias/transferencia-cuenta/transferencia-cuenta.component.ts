@@ -871,20 +871,17 @@ export class TransferenciaCuentaComponent {
 
 
 
-  ngAfterViewInit(): void {
-    ///CAMBIO DE FOCO
-    this.val.Combo(this.cmbCombo);
-    this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
-    this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
-    this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
-
-
-  }
 
 
   ngDoCheck(){
 
     this.valTabla.Combo(this.cmbCombo);
+
+     ///CAMBIO DE FOCO
+     this.val.Combo(this.cmbCombo);
+     this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
+     this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
+     this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
 
     this.lstDetalle.data.forEach(f => {
 
