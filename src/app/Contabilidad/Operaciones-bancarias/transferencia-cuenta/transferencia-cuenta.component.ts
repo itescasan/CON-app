@@ -146,10 +146,10 @@ export class TransferenciaCuentaComponent {
   public v_Select_CuentaBanco(event: any) {
     this.val.Get("cmbCuentaBancaria").setValue("");
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-      let _Item  = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.added);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      let _Item  = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.newValue[0]);
 
-      this.val.Get("cmbCuentaBancaria").setValue([event.added]);
+      this.val.Get("cmbCuentaBancaria").setValue(event.newValue[0]);
       this.val.Get("txtNombreCuenta").setValue(_Item?.NombreCuenta);
       this.val.Get("txtBanco").setValue(_Item?.Banco);
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
@@ -178,8 +178,8 @@ export class TransferenciaCuentaComponent {
   public v_Select_Bodega(event: any) {
     this.val.Get("cmbBodega").setValue("");
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-      this.val.Get("cmbBodega").setValue([event.added]);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbBodega").setValue(event.newValue);
     }
   }
 
@@ -346,12 +346,13 @@ export class TransferenciaCuentaComponent {
     this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
     
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+   
 
       let txtCuenta: IgxComboComponent = event.owner
 
 
-      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
+      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0])!;
    
       det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
       det.Naturaleza = i_Cuenta.Naturaleza;
@@ -415,8 +416,8 @@ export class TransferenciaCuentaComponent {
     public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
  
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-      det.CentroCosto = event.added[0];
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      det.CentroCosto = event.newValue[0];
     }
 
 
@@ -818,7 +819,7 @@ export class TransferenciaCuentaComponent {
 
         
 
-        if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
+        if(!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
 
         
         this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
@@ -826,7 +827,7 @@ export class TransferenciaCuentaComponent {
 
         
         let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + x);
-        if(!txtCentro.selection.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+        if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
        
   
         document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");

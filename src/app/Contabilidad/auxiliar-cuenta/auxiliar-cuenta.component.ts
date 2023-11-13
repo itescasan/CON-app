@@ -64,8 +64,8 @@ export class AuxiliarCuentaComponent {
 
   public v_Select_Bodega(event: any) {
     if (event.added.length) {
-      event.newSelection = event.added;
-      this.val.Get("txtBodega").setValue([event.added]);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("txtBodega").setValue(event.newValue);
     }
   }
 
