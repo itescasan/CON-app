@@ -63,8 +63,8 @@ export class RegistroTrasnferenciaComponent {
 
   public v_Select_Bodega(event: any) {
     if (event.added.length) {
-      event.newSelection = event.added;
-      this.val.Get("txtBodega").setValue([event.added]);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("txtBodega").setValue(event.newValue);
     }
   }
 
@@ -361,7 +361,7 @@ export class RegistroTrasnferenciaComponent {
     
     
                     dialogTransf.componentInstance.FILA.TransferenciaDocumento = JSON.parse(JSON.stringify(datos[0].d));
-                    dialogTransf.componentInstance.Asiento = JSON.parse(JSON.stringify(datos[1].d));
+                    dialogTransf.componentInstance.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(datos[1].d));
     
     
                     dialogTransf.componentInstance.v_CargarDatos();

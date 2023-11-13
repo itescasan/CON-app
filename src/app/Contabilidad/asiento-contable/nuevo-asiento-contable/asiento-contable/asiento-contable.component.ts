@@ -122,8 +122,8 @@ export class AsientoContableComponent {
   public v_Select_Serie(event: any) {
     this.val.Get("cmbSerie").setValue("");
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-      this.val.Get("cmbSerie").setValue([event.added]);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbSerie").setValue(event.newValue);
       this.v_Consecutivo();
     }
   }
@@ -147,8 +147,8 @@ export class AsientoContableComponent {
   public v_Select_Bodega(event: any) {
     this.val.Get("txtBodega").setValue("");
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-      this.val.Get("txtBodega").setValue([event.added]);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("txtBodega").setValue(event.newValue);
     }
   }
 
@@ -171,12 +171,12 @@ export class AsientoContableComponent {
     this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
     
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
 
       let txtCuenta: IgxComboComponent = event.owner
       
 
-      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
+      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.newValue)!;
    
       det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
       det.Naturaleza = i_Cuenta.Naturaleza;
@@ -225,7 +225,7 @@ export class AsientoContableComponent {
       let cmb : any = txtCuenta.dropdown;
 
       let _Item: iCuenta = cmb._focusedItem.value;
-      if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
+      if(!txtCuenta.selection[0]?.CuentaContable.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
       this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;
       det.Naturaleza = _Item.Naturaleza;
@@ -255,7 +255,7 @@ export class AsientoContableComponent {
       let cmb : any = txtCentro.dropdown;
 
       let _Item: iCentroCosto = cmb._focusedItem.value;
-      if(!txtCentro.selection.includes(det.CentroCosto[0])) txtCentro.setSelectedItem(_Item.Codigo);
+      if(!txtCentro.selection[0]?.Codigo.includes(det.CentroCosto[0])) txtCentro.setSelectedItem(_Item.Codigo);
       this.valTabla.Get("txtCentroCosto" + det.NoLinea).setValue([_Item.Codigo]);
       txtCentro.close();
     }
@@ -440,14 +440,14 @@ export class AsientoContableComponent {
 
         
         let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta" + x);
-        if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
+        if(!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
 
         this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
         this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
 
 
         let txtCentro: any = this.lstCmb.find(f => f.id == "txtCentroCosto" + x);
-        if(!txtCentro.selection.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+        if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
 
   
   

@@ -166,10 +166,10 @@ export class TransferenciaSaldoComponent {
 
     this.val.Get("cmbCuentaBancaria").setValue("");
     if (event.added.length == 1) {
-      if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
-      let _Item = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.added);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      let _Item = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.newValue[0]);
 
-      this.val.Get("cmbCuentaBancaria").setValue([event.added]);
+      this.val.Get("cmbCuentaBancaria").setValue(event.newValue[0]);
       this.val.Get("txtNombreCuenta").setValue(_Item?.NombreCuenta);
       this.val.Get("txtBanco").setValue(_Item?.Banco);
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
@@ -208,8 +208,8 @@ export class TransferenciaSaldoComponent {
   public v_Select_CentroCosto(event: any) {
 
     if (event.added.length == 1) {
-      if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
-      this.val.Get("cmbCentroCosto").setValue([event.added]);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbCentroCosto").setValue(event.newValue);
     }
   }
 
@@ -233,8 +233,8 @@ export class TransferenciaSaldoComponent {
   public v_Select_Bodega(event: any) {
     this.val.Get("cmbBodega").setValue("");
     if (event.added.length == 1) {
-      if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
-      this.val.Get("cmbBodega").setValue([event.added]);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbBodega").setValue(event.newValue);
     }
   }
 
@@ -262,10 +262,11 @@ export class TransferenciaSaldoComponent {
     this.lstDetalle.filter = "";
 
     if (event.added.length == 1) {
-      if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
-      let _Item = this.lstProveedor.find(f => f.Codigo == event.added);
+  
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      
 
-      this.val.Get("cmbProveedor").setValue([event.added]);
+      this.val.Get("cmbProveedor").setValue(event.newValue);
 
 
     }
@@ -390,8 +391,8 @@ export class TransferenciaSaldoComponent {
               this.val.Get("txtMoneda").setValue(i_C?.Moneda);
               this.val.Get("txtNoDoc").setValue(i_C?.Consecutivo);
               this.IdMoneda = String(i_C?.IdMoneda);
-              this.V_Calcular();
-              this.V_Contabilizacion();
+              if (!this.esModal) this.V_Calcular();
+              if (!this.esModal) this.V_Contabilizacion();
             }
 
 
@@ -1211,7 +1212,8 @@ export class TransferenciaSaldoComponent {
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
     this.val.Get("txtComision").setValue(this.cFunciones.NumFormat(this.FILA.Comision, "2"));
 
-    this.lstDetalle.data = this.FILA.TransferenciaDocumento;
+
+    this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.TransferenciaDocumento));
 
    
 
