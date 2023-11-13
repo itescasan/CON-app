@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RegistroEjercicioFiscalComponent } from '../registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
-import { PeriodosFiscalComponent } from '../periodos-fiscal/periodos-fiscal.component';
 import { FormsModule, UntypedFormBuilder } from '@angular/forms';
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';

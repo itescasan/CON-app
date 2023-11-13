@@ -1,5 +1,6 @@
 import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings, scaleInCenter, scaleOutCenter } from 'igniteui-angular';
+import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
+import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
 import { getBodega } from 'src/app/Inventario/Bodega/CRUD/GET/get-Bodega';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';

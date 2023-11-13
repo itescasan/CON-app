@@ -31,7 +31,6 @@ import { IConfig, NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask
 import { RegistroCatalogoCuentaComponent } from './Contabilidad/catalogo-cuenta/registro-catalogo-cuenta/registro-catalogo-cuenta.component';
 import { EjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/nuevo-ejercicio-fiscal/ejercicio-fiscal.component';
 import { RegistroEjercicioFiscalComponent } from './Contabilidad/ejercicio-fiscal/registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
-import { PeriodosFiscalComponent } from './Contabilidad/ejercicio-fiscal/periodos-fiscal/periodos-fiscal.component';
 import {MatTableModule} from '@angular/material/table';
 import { CustomMatPaginatorIntl } from 'src/app/SHARED/class/CustomMatPaginatorIntl ';
 import { DialogoConfirmarComponent } from './SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
@@ -60,7 +59,6 @@ import { TransferenciaSaldoComponent } from './Contabilidad/Operaciones-bancaria
     CatalogoCuentaComponent,
     RegistroCatalogoCuentaComponent,
     RegistroEjercicioFiscalComponent,
-    PeriodosFiscalComponent,
     DialogoConfirmarComponent,
     AsientoContableComponent,
     RegistroAsientoContableComponent,

@@ -1,7 +1,8 @@
 import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings, scaleInCenter, scaleOutCenter } from 'igniteui-angular';
+import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
+import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 import { iCuentaBancaria } from 'src/app/Interface/Contabilidad/i-Cuenta-Bancaria';
 import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
