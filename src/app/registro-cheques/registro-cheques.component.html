@@ -64,7 +64,7 @@
 
                                 <div class="col-12 col-md-12 col-lg-4 mb-1 contenedor-boton">
                                     <button type="button" class="btn btn-secundario"
-                                        id="btnRefrescar-RegtransferenciaCuenta" (click)="v_CargarDatos();"><i
+                                        id="btnRefrescar-RegCheque" (click)="v_CargarDatos();"><i
                                             class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
                                         Refrescar</button>
 
@@ -126,7 +126,7 @@
                 <td mat-cell *matCellDef="let det" class="mobile-col">
                     <div class="texto">
                         <div class="mobile-label">No Cheque:</div>
-                        <div>{{det.NoChe}}</div>
+                        <div>{{det.NoCheque}}</div>
                     </div>
                 </td>
             </ng-container>
@@ -184,7 +184,7 @@
                 <th mat-header-cell *matHeaderCellDef> <span class="texto"></span> </th>
                 <td mat-cell *matCellDef="let det" class="mobile-col">
                     <div class="edicion">
-                        <button type="button" class="btn" (click)="V_EditarTransCuenta(det)"><i
+                        <button type="button" class="btn" (click)="V_EditarCheque(det)"><i
                                 class="fa-solid fa-eye fa-beat-fade fa-lg primario"></i>
                         </button>
 

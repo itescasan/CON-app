@@ -293,15 +293,24 @@ public v_Enter_Cuenta2(event: any) {
   public v_CargarDatos(): void {
 
 
-    document.getElementById("btnRefrescar-Transferencia")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnRefrescar-Cheques")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
-      WaitComponent,
-      {
-        panelClass: "escasan-dialog-full-blur",
-        data: "",
-      }
-    );
+  
+    let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+     
+
+    if(dialogRef == undefined)
+    {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id : "wait"
+        }
+      );
+
+    }
 
 
 
@@ -356,7 +365,7 @@ public v_Enter_Cuenta2(event: any) {
         error: (err) => {
 
 
-          document.getElementById("btnRefrescar-Transferencia")?.removeAttribute("disabled");
+          document.getElementById("btnRefrescar-Cheque")?.removeAttribute("disabled");
           dialogRef.close();
 
 
@@ -368,7 +377,7 @@ public v_Enter_Cuenta2(event: any) {
           }
 
         },
-        complete: () => { document.getElementById("btnRefrescar-Transferencia")?.removeAttribute("disabled"); }
+        complete: () => { document.getElementById("btnRefrescar-Cheque")?.removeAttribute("disabled"); }
       }
     );
 
@@ -832,54 +841,54 @@ public v_Enter_Cuenta2(event: any) {
 
   }
 
-  public V_Calcular2(): void {
+  // public V_Calcular2(): void {
 
-    this.dec_TotalDebe = 0;
-    this.dec_TotalHaber = 0;
-    this.dec_Dif = 0;
+  //   this.dec_TotalDebe = 0;
+  //   this.dec_TotalHaber = 0;
+  //   this.dec_Dif = 0;
 
-    this.lstDetalle.data.forEach(f => {
+  //   this.lstDetalle.data.forEach(f => {
 
-      let Debe = Number(String(f.Debito).replaceAll(",", ""));
-      let Haber = Number(String(f.Credito).replaceAll(",", ""));
+  //     let Debe = Number(String(f.Debito).replaceAll(",", ""));
+  //     let Haber = Number(String(f.Credito).replaceAll(",", ""));
 
-      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
-        f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML / this.TC, "2");
+  //     if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+  //       f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
+  //       f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML / this.TC, "2");
 
-        f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
-        f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML / this.TC, "2");
-      }else{
-        f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
-        f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML , "2");
+  //       f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
+  //       f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML / this.TC, "2");
+  //     }else{
+  //       f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
+  //       f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML , "2");
 
-        f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
-        f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML , "2");
-      }
-
-
-
-
-      this.dec_TotalDebe += Debe;
-      this.dec_TotalHaber += Haber;
-    });
-
-    this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2");
-
-    let TotalCordoba : number = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
-    let TotalDolar : number  = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
-    if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-    }else{
-      TotalCordoba = TotalCordoba * this.TC
-      }
+  //       f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
+  //       f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML , "2");
+  //     }
 
 
 
-    this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(TotalCordoba, "2"));
-    this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(TotalDolar, "2"));
+
+  //     this.dec_TotalDebe += Debe;
+  //     this.dec_TotalHaber += Haber;
+  //   });
+
+  //   this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2");
+
+  //   let TotalCordoba : number = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+  //   let TotalDolar : number  = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+  //   if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+  //   }else{
+  //     TotalCordoba = TotalCordoba * this.TC
+  //     }
 
 
-  }
+
+  //   this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(TotalCordoba, "2"));
+  //   this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(TotalDolar, "2"));
+
+
+  // }
 
   public v_Guardar() : void{
 
@@ -1176,6 +1185,7 @@ public v_Enter_Cuenta2(event: any) {
 
     this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
     this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
+    this.cmbCuentaC.setSelectedItem(this.FILA.CuentaContable)
     this.val.Get("txtNoDoc").setValue(this.FILA.NoCheque);
     this.val.Get("txtFecha").setValue( this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
     this.val.Get("txtBeneficiario").setValue(this.FILA.Beneficiario);
@@ -1207,15 +1217,15 @@ public v_Enter_Cuenta2(event: any) {
 
         
 
-        if(!txtCuenta.selection.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
+        if(!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
 
         
-        this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
-        this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
+        this.valTabla.Get("txtCuenta" + f.NoLinea).setValue(f.CuentaContable);
+        this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
 
         
         let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + x);
-        if(!txtCentro.selection.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+        if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
        
   
         document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
@@ -1235,7 +1245,6 @@ public v_Enter_Cuenta2(event: any) {
 
       let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
       if(dialogRef != undefined) dialogRef.close();
-
      
     });
   }

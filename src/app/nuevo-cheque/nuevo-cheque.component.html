@@ -1,7 +1,13 @@
 <div class="contenedor-cheques">
+    <div class="escasan-dialog" *ngIf="esModal">
+        <div class="btn-contenedor-custom">
+            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+            </button>
+        </div>
+    </div>
+    
     <form autocomplete="off" [formGroup]="val.ValForm">
-
-
         <div class="card">
             <div class="card-header card-escasan-header opcional">Cheques</div>
             <div class="card-body">

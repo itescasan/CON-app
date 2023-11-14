@@ -159,7 +159,7 @@ export class RegistroChequesComponent {
 
   public v_CargarDatos(): void {
 
-    document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnRefrescar-RegCheque")?.setAttribute("disabled", "disabled");
 
 
 
@@ -210,7 +210,7 @@ export class RegistroChequesComponent {
 
           
           dialogRef.close();
-          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
+          document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
@@ -220,7 +220,7 @@ export class RegistroChequesComponent {
 
         },
         complete: () => {
-          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
+          document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
 
 
         }
@@ -231,7 +231,7 @@ export class RegistroChequesComponent {
   }
 
 
-  public V_EditarTransCuenta(det : any) : void{
+  public V_EditarCheque(det : any) : void{
 
 
     
@@ -308,7 +308,7 @@ export class RegistroChequesComponent {
         },
         error: (err) => {
 
-          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
+          document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
           dialogRef.close();
 
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
@@ -320,7 +320,7 @@ export class RegistroChequesComponent {
 
         },
         complete: () => {
-          document.getElementById("btnRefrescar-RegtransferenciaCuenta")?.removeAttribute("disabled");
+          document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
 
 
         }
@@ -346,12 +346,12 @@ export class RegistroChequesComponent {
     );
 
     dialogRef.afterOpened().subscribe(s => {
-      dialogRef.componentInstance.val.Get("txtNoDoc").setValue(det.NoTransferencia);
+      dialogRef.componentInstance.val.Get("txtNoDoc").setValue(det.NoCheque);
       dialogRef.componentInstance.val.Get("txtSerie").setValue(det.IdSerie);
       dialogRef.componentInstance.val.Get("txtBodega").setValue(det.CodBodega);
       dialogRef.componentInstance.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(det.Fecha, "yyyy-MM-dd"));
-      dialogRef.componentInstance.IdDoc = det.IdTransferencia;
-      dialogRef.componentInstance.Tipo = "Transferencia";
+      dialogRef.componentInstance.IdDoc = det.IdCheque;
+      dialogRef.componentInstance.Tipo = "Cheque";
     });
 
 
@@ -379,16 +379,15 @@ export class RegistroChequesComponent {
 
 
 
-  ngAfterViewInit(): void {
+  ngDoCheck(): void {
     ///CAMBIO DE FOCO
     this.val.Combo(this.cmbCombo);
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBodega", undefined);
-    this.val.addFocus("txtBodega", "btnRefrescar-RegtransferenciaCuenta", "click");
+    this.val.addFocus("txtBodega", "btnRefrescar-RegCheque", "click");
 
 
   }
-
   
 
 }
