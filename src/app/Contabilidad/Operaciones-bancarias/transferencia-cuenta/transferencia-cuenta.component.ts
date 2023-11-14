@@ -822,8 +822,8 @@ export class TransferenciaCuentaComponent {
         if(!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
 
         
-        this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
-        this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
+        this.valTabla.Get("txtCuenta" + f.NoLinea).setValue(f.CuentaContable);
+        this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
 
         
         let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + x);
