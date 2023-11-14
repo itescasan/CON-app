@@ -877,7 +877,6 @@ export class TransferenciaCuentaComponent {
 
   ngDoCheck(){
 
-    this.valTabla.Combo(this.cmbCombo);
 
      ///CAMBIO DE FOCO
      this.val.Combo(this.cmbCombo);
