@@ -191,6 +191,7 @@
                         <button type="button" class="btn"><i class="fa-solid fa-ban fa-beat-fade fa-lg"
                                 (click)="V_Anular(det)" *ngIf="!det.Anulado"></i>
                         </button>
+                        <span *ngIf="det.Anulado"><b>Anulado</b></span>
                     </div>
                 </td>
             </ng-container>
