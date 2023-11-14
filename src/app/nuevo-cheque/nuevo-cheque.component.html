@@ -76,7 +76,8 @@
                         <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
                             formControlName="cmbBodega" placeholder="Bodega"
                             searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
-                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)">
+                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
+                            (keyup)="v_Enter_Bodega($event);">
                             <label igxLabel>Bodega</label>
                             <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
                         </igx-combo>
@@ -139,9 +140,10 @@
                                 <igx-combo #cmbCuentaC [data]="lstCuenta" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbCuentaC"
                                     formControlName="cmbCuentaC" placeholder="Cuenta Contable"
                                     searchPlaceholder="Seleccione una Cuenta contable..." [autoFocusSearch]="true"
-                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Cuenta2($event)">
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Cuenta2($event)"
+                                    (keyup)="v_Enter_Cuenta2($event);">
                                     <label igxLabel>Cuenta</label>
-                                    <igx-prefix><i class="fa-solid fa-list"></i></igx-prefix>
+                                    <igx-prefix><i class="fa-solid fa-list"></i></igx-prefix> 
                                 </igx-combo>
                             </div>
         
@@ -429,12 +431,13 @@
     <div class="pie-cheques">
 
         <div class="totales">
+            <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
+                "1.2-2"}}</span></span>
             <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
                     "1.2-2"}}</span></span>
             <span class="credito"><span class="etiqueta">Crédito:</span><span class="valores">{{dec_TotalHaber | number
                     : "1.2-2"}}</span></span>
-            <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
-                    "1.2-2"}}</span></span>
+           
         </div>
 
         <div class="botones" *ngIf="!esModal">

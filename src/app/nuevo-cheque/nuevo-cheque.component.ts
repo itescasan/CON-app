@@ -53,7 +53,9 @@ export class NuevoChequeComponent {
   @ViewChildren(IgxComboComponent)
   public cmbCuenta: QueryList<IgxComboComponent>;
 
+  @ViewChildren(IgxComboComponent) //esta variable es una vista para este componente
   public cmbCombo: QueryList<IgxComboComponent>;
+
 
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
@@ -172,8 +174,8 @@ export class NuevoChequeComponent {
   public v_Select_CuentaBanco(event: any) {
     this.val.Get("cmbCuentaBancaria").setValue("");
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-      let _Item  = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.added);
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      let _Item  = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.newValue[0]);
 
       this.val.Get("cmbCuentaBancaria").setValue([event.added]);
       this.val.Get("txtNombreCuenta").setValue(_Item?.NombreCuenta);
@@ -207,8 +209,17 @@ export class NuevoChequeComponent {
     }
   }
 
-  public v_Enter_CuentaBanco(event: any) {
+  // public v_Enter_CuentaBanco(event: any) {
 
+  //   if (event.key == "Enter") {
+  //     let cmb : any = this.cmbCuentaBancaria.dropdown;
+  //     let _Item: iCuentaBancaria = cmb._focusedItem.value;
+  //     this.cmbCuentaBancaria.setSelectedItem(_Item.IdCuentaBanco);
+  //     this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
+  //   }
+  // }
+
+  public v_Enter_CuentaBanco(event: any) {
     if (event.key == "Enter") {
       let cmb : any = this.cmbCuentaBancaria.dropdown;
       let _Item: iCuentaBancaria = cmb._focusedItem.value;
@@ -216,6 +227,7 @@ export class NuevoChequeComponent {
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
     }
   }
+
 
   // let _Item: iCuenta = cmb._focusedItem.value;
   //     if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
@@ -226,15 +238,18 @@ export class NuevoChequeComponent {
   public cmbBodega: IgxComboComponent;
 
   public v_Select_Bodega(event: any) {
-    if (event.added.length) {
-      event.newSelection = event.added;
-      this.val.Get("cmbBodega").setValue([event.added]);
+   
+    this.val.Get("cmbBodega").setValue("");
+    if (event.added.length == 1) {
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbBodega").setValue(event.newValue);
     }
   }
 
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
-      let _Item: iBodega = this.cmbBodega.dropdown.focusedItem.value;
+      let cmb : any = this.cmbBodega.dropdown;
+      let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
       this.val.Get("cmbBodega").setValue([_Item.Codigo]);
 
@@ -245,20 +260,25 @@ export class NuevoChequeComponent {
  public cmbCuentaC: IgxComboComponent;
 
  public v_Select_Cuenta2(event: any) {
-  if (event.added.length) {
-    event.newSelection = event.added;
-    this.val.Get("cmbCuentaC").setValue([event.added]);
-  }
+  this.val.Get("cmbCuentaC").setValue("");
+  if (event.added.length == 1) {  
+    if(event.newValue.length > 1) event.newValue.splice(0, 1);
+    let _Item  = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0]);
+
+
+   }
 }
 
 public v_Enter_Cuenta2(event: any) {
   if (event.key == "Enter") {
-    let _Item: iCuenta = this.cmbBodega.dropdown.focusedItem.value;
-    this.cmbBodega.setSelectedItem(_Item.NombreCuenta);
+    let cmb : any = this.cmbCuentaC.dropdown;
+    let _Item: iCuenta = cmb._focusedItem.value;
+    this.cmbCuentaC.setSelectedItem(_Item.CuentaContable);
     this.val.Get("cmbCuentaC").setValue([_Item.CuentaContable]);
 
   }
 }
+
 
   public v_Anulado(event: any): void {
     this.val.Get("chkAnulado").setValue(event.target.checked);
@@ -399,39 +419,90 @@ public v_Enter_Cuenta2(event: any) {
 
 
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
-
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-
-
+    this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
+    
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+   
 
       let txtCuenta: IgxComboComponent = event.owner
 
 
-      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
-
+      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0])!;
+   
       det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
       det.Naturaleza = i_Cuenta.Naturaleza;
 
+      document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
+      document.getElementById("txtCentroCosto" + det.NoLinea)?.removeAttribute("disabled");
       document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
 
-      if (i_Cuenta.Naturaleza == "D") document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+      if (i_Cuenta.Naturaleza == "D")
+      {
+        document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+        if(Number(det.Credito.replaceAll(",", "")) != 0)
+        {
+          det.Debito = det.Credito;
+          det.Credito = "0.00";
+        }
 
-      if (i_Cuenta.Naturaleza == "C") document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+
+        
+      }
+
+      if (i_Cuenta.Naturaleza == "C")
+      {
+        document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+        if(Number(det.Debito.replaceAll(",", "")) != 0)
+        {
+          det.Credito  = det.Debito;
+          det.Debito = "0.00";
+        }
+        
+      }
+
 
     }
 
+    this.V_Calcular();
 
 
   }
+  // public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
+
+
+  //   if (event.added.length == 1) {
+  //     // if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
+  //     if(event.newValue.length > 1) event.newValue.splice(0, 1);
+
+  //     let txtCuenta: IgxComboComponent = event.owner
+
+
+  //     // let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
+  //     let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0])!;
+
+  //     det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
+  //     det.Naturaleza = i_Cuenta.Naturaleza;
+
+  //     document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+  //     document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+
+  //     if (i_Cuenta.Naturaleza == "D") document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+
+  //     if (i_Cuenta.Naturaleza == "C") document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+
+  //   }
+
+
+
+  // }
 
   public v_Enter_Cuenta(event: any, det: iAsientoDetalle) {
 
     if (event.key == "Enter") {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
-
       let cmb : any = txtCuenta.dropdown;
 
       let _Item: iCuenta = cmb._focusedItem.value;
@@ -441,7 +512,7 @@ public v_Enter_Cuenta2(event: any) {
       det.Naturaleza = _Item.Naturaleza;
 
       txtCuenta.close();
-      this.V_Focus("Referencia", det);
+
     }
 
   }
@@ -452,8 +523,8 @@ public v_Enter_Cuenta2(event: any) {
   public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
  
     if (event.added.length == 1) {
-      if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-      det.CentroCosto = event.added[0];
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      det.CentroCosto = event.newValue[0];
     }
 
 
@@ -618,7 +689,9 @@ public v_Enter_Cuenta2(event: any) {
 
     this.valTabla.del("txtCuenta" + item.NoLinea);
     this.valTabla.del("txtReferencia" + item.NoLinea);
-
+    this.valTabla.del("txtCentroCosto" + item.NoLinea);
+    this.valTabla.del("txtDebito" + item.NoLinea);
+    this.valTabla.del("txtCredito" + item.NoLinea);
 
   }
 
@@ -638,15 +711,18 @@ public v_Enter_Cuenta2(event: any) {
 
     setTimeout(() => {
       document?.getElementById("txtCuenta" + x)?.focus();
-      document.getElementById("txtDescripcion" + x)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
+      document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
-
-
 
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
       if (x > 1) txtCuenta.open();
 
+      this.val.addFocus("txtCuenta" + x , "txtReferencia" + x, undefined);
+      this.val.addFocus("txtReferencia" + x, "txtCentroCosto" + x, undefined);
+      this.val.addFocus("txtCentroCosto" + x, "txtDebito" + x, undefined);
+      this.val.addFocus("txtDebito" + x, "txtCredito" + x, undefined);
 
 
 
@@ -714,7 +790,7 @@ public v_Enter_Cuenta2(event: any) {
 
 
       //if (x > 1) txtCuenta.open();
-      this.V_Calcular2();
+      this.V_Calcular();
 
     }, 250);
 
@@ -881,8 +957,8 @@ public v_Enter_Cuenta2(event: any) {
     Asiento.FechaReg = new Date();
 
     Asiento.AsientosContablesDetalle.forEach(f =>{
-      f.CuentaContable = f.CuentaContable[0];
-      f.CentroCosto = f.CentroCosto[0];
+      f.CuentaContable = f.CuentaContable[0]      
+      if(f.CentroCosto != undefined) f.CentroCosto = f.CentroCosto[0];
     });
 
 
@@ -983,6 +1059,7 @@ public v_Enter_Cuenta2(event: any) {
     this.ret2 = 0.0;
     this.ret3 = 0.0;
     this.ValorC = 0.0;
+    this.sumaDebito = 0.0;
 
     if ( this.IdMoneda == this.cFunciones.MonedaLocal) {
 
@@ -1020,7 +1097,7 @@ public v_Enter_Cuenta2(event: any) {
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
         this.V_Add(cuenta.CuentaContable, this.val.Get("txtConcepto").value,this.Valor - this.cFunciones.Redondeo(this.ret3, "2"),"D");
       }else{
-        this.ValorC = (this.val.Get("txtConcepto").value,this.Valor * this.TC) - this.cFunciones.Redondeo(this.ret3, "2");
+        this.ValorC = this.cFunciones.Redondeo((this.val.Get("txtConcepto").value,this.Valor * this.TC),"2") - this.cFunciones.Redondeo(this.ret3, "2");
         this.V_Add(cuenta.CuentaContable, this.val.Get("txtConcepto").value,this.ValorC,"D");
       }
       
@@ -1030,7 +1107,7 @@ public v_Enter_Cuenta2(event: any) {
           this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtIrFuente").value)/100),"C");
           this.suma += this.Valor * (Number(this.val.Get("txtIrFuente").value)/100);
         }else{
-          this.ValorC = (this.Valor * (Number(this.val.Get("txtIrFuente").value)/100) * this.TC);
+          this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC ),"2") * this.cFunciones.Redondeo((Number(this.val.Get("txtIrFuente").value ) / 100),"2");
           this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,this.ValorC,"C");
           this.suma += this.ValorC
         }
@@ -1041,7 +1118,7 @@ public v_Enter_Cuenta2(event: any) {
           this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtServP").value)/100),"C");
         this.suma += this.Valor * (Number(this.val.Get("txtServP").value)/100)
         } else {
-          this.ValorC = (this.Valor * (Number(this.val.Get("txtServP").value)/100) * this.TC)
+          this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2") * this.cFunciones.Redondeo((Number(this.val.Get("txtServP").value)/100),"2")
           this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,this.ValorC,"C");
           this.suma += this.ValorC;
         }
@@ -1052,7 +1129,7 @@ public v_Enter_Cuenta2(event: any) {
           this.V_Add("1123-25","Ret. " + this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100),"C");
           this.suma += this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100)
         } else {
-          this.ValorC = (this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100) * this.TC)
+          this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2") * this.cFunciones.Redondeo((Number(this.val.Get("txtAlcaldias").value)/100),"2")
           this.V_Add("1123-25","Ret. " + this.val.Get("txtBeneficiario").value,this.ValorC,"C");
           this.suma += this.ValorC
         }
@@ -1063,7 +1140,7 @@ public v_Enter_Cuenta2(event: any) {
           this.V_Add("1142-05",this.val.Get("txtBeneficiario").value,this.Valor * (Number(this.val.Get("txtIva").value)/100),"D");
           this.sumaDebito = this.Valor * (Number(this.val.Get("txtIva").value)/100)
         } else {
-          this.ValorC = (this.Valor * (Number(this.val.Get("txtIva").value)/100)) * this.TC
+          this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  * this.cFunciones.Redondeo((Number(this.val.Get("txtIva").value)/100),"2")
           this.V_Add("1142-05",this.val.Get("txtBeneficiario").value,this.ValorC,"D");
           this.sumaDebito = this.ValorC 
         }
@@ -1075,7 +1152,7 @@ public v_Enter_Cuenta2(event: any) {
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
           this.V_Add(item.CuentaBancaria,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,(this.Valor - this.suma) +  this.sumaDebito ,"C");
         } else {
-          this.ValorC = ((this.Valor - this.suma) +  this.sumaDebito) * this.TC
+          this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  - this.cFunciones.Redondeo(this.suma,"2") +  this.cFunciones.Redondeo(this.sumaDebito,"2")
           this.V_Add(item.CuentaBancaria,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,this.ValorC ,"C");
         }
         
@@ -1178,27 +1255,16 @@ public v_Enter_Cuenta2(event: any) {
     }
 
 
-    let chk: any = document.querySelector("#chkAnulado");
-    if (chk != undefined) chk.bootstrapToggle();
+    // let chk: any = document.querySelector("#chkAnulado");
+    // if (chk != undefined) chk.bootstrapToggle();
 
 
   }
-  // ngAfterViewInit(): void {
-  //   ///CAMBIO DE FOCO
-  //   this.val.Combo(this.cmbCombo);
-  //   this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
-  //   this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
-  //   this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
-
-
-
-  // }
 
   ngDoCheck(){
 
     this.valTabla.Combo(this.cmbCombo);
 
-    this.val.Combo(this.cmbCombo);
     this.val.addNumberFocus("txtTotalCordoba", 2);
     this.val.addNumberFocus("txtTotalDolar", 2);
 
@@ -1206,6 +1272,7 @@ public v_Enter_Cuenta2(event: any) {
     this.lstDetalle.data.forEach(f => {
       this.val.addNumberFocus("txtDebito" + f.NoLinea, 2);
       this.val.addFocus("txtCredito" + f.NoLinea, "txtImporte" + (f.NoLinea + 1) , undefined);
+      this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);
       i++;
     });
 
