@@ -421,15 +421,13 @@ export class AsientoContableComponent {
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.AsientosContablesDetalle));
 
 
-   let x: number = 1;
-   
 
     setTimeout(() => {
 
       this.lstDetalle.data.forEach(f => {
-        this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
-        this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-        this.valTabla.add("txtCentroCosto" + x, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
+        this.valTabla.add("txtCuenta" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+        this.valTabla.add("txtReferencia" + f.NoLinea, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+        this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
 
        
   
@@ -439,42 +437,41 @@ export class AsientoContableComponent {
   
 
         
-        let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta" + x);
+        let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta" + f.NoLinea);
         if(!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
 
-        this.valTabla.Get("txtCuenta" + x).setValue(f.CuentaContable);
-        this.valTabla.Get("txtReferencia" + x).setValue(f.Referencia);
+        this.valTabla.Get("txtCuenta" + f.NoLinea).setValue(f.CuentaContable);
+        this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
 
 
-        let txtCentro: any = this.lstCmb.find(f => f.id == "txtCentroCosto" + x);
+        let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + f.NoLinea);
         if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
 
   
   
         if(!this.esAuxiliar)
         {
-          document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCredito" + f.NoLinea)?.setAttribute("disabled", "disabled");
     
-          if (f.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
+          if (f.Naturaleza == "D") document.getElementById("txtDebito" + f.NoLinea)?.removeAttribute("disabled");
     
-          if (f.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
+          if (f.Naturaleza == "C") document.getElementById("txtCredito" + f.NoLinea)?.removeAttribute("disabled");
   
           
         }
         else
         {
           txtCuenta.disabled = true;
-          document.getElementById("txtCuenta" + x)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCuenta" + f.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtReferencia" + f.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCredito" + f.NoLinea)?.setAttribute("disabled", "disabled");
         
         }
   
 
-        x++;
       });
   
 
