@@ -330,10 +330,14 @@
                                 <div class="header-cell"><span>Referencia</span></div>
                             </div>
                             <div class="row">
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
+                                <!-- <form autocomplete="off" [formGroup]="valTabla.ValForm">
                                     <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}" 
                                         formControlName="txtReferencia{{det.NoLinea}}" [(ngModel)]="det.Referencia"
                                         (keydown.Enter)="V_Focus('Debito/Credito', det);">
+                                </form> -->
+                                <form autocomplete="off">
+                                    <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
+                                         [(ngModel)]="det.Referencia">
                                 </form>
 
 

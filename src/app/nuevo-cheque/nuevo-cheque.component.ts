@@ -96,7 +96,7 @@ export class NuevoChequeComponent {
     this.val.add("txtTcCompraD", "1", "LEN>=", "0", "Compra Divisa", "Compra Divisa.")
 
 
-    this.valTabla.IsTable = true;
+
   }
 
   public v_Evento(e: string): void {
@@ -1200,20 +1200,20 @@ public v_Enter_Cuenta2(event: any) {
 
 
 
-   let x: number = 1;
+   //let x: number = 1;
    
 
     setTimeout(() => {
 
       this.lstDetalle.data.forEach(f => {
-        this.valTabla.add("txtCuenta" + x, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
-        this.valTabla.add("txtReferencia" + x, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-        this.valTabla.add("txtCentroCosto" + x, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
+        this.valTabla.add("txtCuenta" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+        this.valTabla.add("txtReferencia" + f.NoLinea, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+        this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
 
         f.Debito = this.cFunciones.NumFormat(Number(String(f.Debito).replaceAll(",", "")), "2");
         f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");
         
-        let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
 
         
 
@@ -1224,21 +1224,18 @@ public v_Enter_Cuenta2(event: any) {
         this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
 
         
-        let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + x);
+        let txtCentro: any = this.cmbCombo.find(y => y.id == "txtCentroCosto" + f.NoLinea);
         if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
        
   
-        document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
-        document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
-        document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+        document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
+        document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
+        document.getElementById("txtCredito" + f.NoLinea)?.setAttribute("disabled", "disabled");
   
-        if (f.Naturaleza == "D") document.getElementById("txtDebito" + x)?.removeAttribute("disabled");
+        if (f.Naturaleza == "D") document.getElementById("txtDebito" + f.NoLinea)?.removeAttribute("disabled");
   
-        if (f.Naturaleza == "C") document.getElementById("txtCredito" + x)?.removeAttribute("disabled");
+        if (f.Naturaleza == "C") document.getElementById("txtCredito" + f.NoLinea)?.removeAttribute("disabled");
 
-  
-
-        x++;
       });
   
 
