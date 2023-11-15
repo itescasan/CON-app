@@ -333,12 +333,14 @@
     <div class="pie-asiento">
 
         <div class="totales">
+            <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
+                "1.2-2"}}</span></span>
+                
             <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
                     "1.2-2"}}</span></span>
             <span class="credito"><span class="etiqueta">Crédito:</span><span class="valores">{{dec_TotalHaber | number
                     : "1.2-2"}}</span></span>
-            <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
-                    "1.2-2"}}</span></span>
+          
         </div>
 
         <div class="botones" *ngIf="!esAuxiliar">

@@ -101,6 +101,8 @@
                 <th mat-header-cell *matHeaderCellDef> <span class="texto">Fecha</span> </th>
                 <td mat-cell *matCellDef="let det" class="mobile-col">
                     <div class="texto">
+                        <span><i  class="{{det.TipoTransferencia == 'C' ? 'fa-solid fa-c fa-lg' : 'fa-solid fa-d fa-lg'}}"></i></span>
+
                         <div class="mobile-label">Fecha:</div>
                         <div>{{det.Fecha | date : "dd/MM/yyyy"}}</div>
                     </div>

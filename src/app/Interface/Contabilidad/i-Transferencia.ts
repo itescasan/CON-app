@@ -9,6 +9,7 @@ export interface iTransferencia{
     NoTransferencia: string;
     Fecha: Date,
     Beneficiario: string;
+    CodProveedor: string;
     TasaCambio: number;
     Concepto : string;
     TipoTransferencia : string;

@@ -1100,7 +1100,8 @@ export class TransferenciaSaldoComponent {
     this.FILA.IdSerie = "TBan"
     this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
     this.FILA.Fecha = this.val.Get("txtFecha").value;
-    this.FILA.Beneficiario = this.val.Get("cmbProveedor").value[0];
+    this.FILA.Beneficiario = this.cmbProveedor.displayValue;
+    this.FILA.CodProveedor = this.val.Get("cmbProveedor").value[0];
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
     this.FILA.Comision = Comision;
