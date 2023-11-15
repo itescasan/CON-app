@@ -86,7 +86,7 @@ export class TransferenciaSaldoComponent {
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
     
-    this.valTabla.IsTable = true;
+
 
     this.v_Evento("Iniciar");
 

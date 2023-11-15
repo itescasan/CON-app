@@ -87,7 +87,7 @@ export class Validacion {
   public Iniciar: boolean = false;
   public Errores: string = "";
   private Index: string = "-1";
-  public IsTable: boolean = false;
+
 
   private lstReglas: ReglasValidacion[] = [];
   private lstFrm: I_Frm[] = [];
@@ -378,7 +378,7 @@ export class Validacion {
       span?.remove();
 
 
-      if (this.IsTable && (String(frm.value) == "undefined" || String(frm.value) == "")) {
+      if ( (String(frm.value) == "undefined" || String(frm.value) == "")) {
 
         if (elmento?.localName == "igx-combo") {
           let combo: IgxComboComponent = cmb.find(w => w.id == f.Id)!;
