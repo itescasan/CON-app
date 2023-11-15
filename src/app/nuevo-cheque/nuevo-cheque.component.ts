@@ -73,7 +73,7 @@ export class NuevoChequeComponent {
   public Anulado : boolean = false;
 
 
-  constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postCheque) {
+  constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postCheque) {  
 
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una Cuenta de Banco.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "Nombre Cuenta", "No se ha definido el nombre de la cuenta.");
