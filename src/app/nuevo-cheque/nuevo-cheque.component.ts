@@ -44,6 +44,7 @@ export class NuevoChequeComponent {
   private ret2 : number = 0.0;
   private ret3 : number = 0.0;
   private ValorC : number = 0.0;
+  private ValorCheque : number = 0.0;
 
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria : iCuentaBancaria[] = [];
@@ -479,34 +480,7 @@ public v_Enter_Cuenta2(event: any) {
 
 
   }
-  // public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-
-
-  //   if (event.added.length == 1) {
-  //     // if(event.oldSelection[0] != event.added[0]) event.newSelection =   event.added;
-  //     if(event.newValue.length > 1) event.newValue.splice(0, 1);
-
-  //     let txtCuenta: IgxComboComponent = event.owner
-
-
-  //     // let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.added)!;
-  //     let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0])!;
-
-  //     det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
-  //     det.Naturaleza = i_Cuenta.Naturaleza;
-
-  //     document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-  //     document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-
-  //     if (i_Cuenta.Naturaleza == "D") document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
-
-  //     if (i_Cuenta.Naturaleza == "C") document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
-
-  //   }
-
-
-
-  // }
+ 
 
   public v_Enter_Cuenta(event: any, det: iAsientoDetalle) {
 
@@ -841,54 +815,7 @@ public v_Enter_Cuenta2(event: any) {
 
   }
 
-  // public V_Calcular2(): void {
-
-  //   this.dec_TotalDebe = 0;
-  //   this.dec_TotalHaber = 0;
-  //   this.dec_Dif = 0;
-
-  //   this.lstDetalle.data.forEach(f => {
-
-  //     let Debe = Number(String(f.Debito).replaceAll(",", ""));
-  //     let Haber = Number(String(f.Credito).replaceAll(",", ""));
-
-  //     if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-  //       f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
-  //       f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML / this.TC, "2");
-
-  //       f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
-  //       f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML / this.TC, "2");
-  //     }else{
-  //       f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
-  //       f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML , "2");
-
-  //       f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
-  //       f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML , "2");
-  //     }
-
-
-
-
-  //     this.dec_TotalDebe += Debe;
-  //     this.dec_TotalHaber += Haber;
-  //   });
-
-  //   this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2");
-
-  //   let TotalCordoba : number = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
-  //   let TotalDolar : number  = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
-  //   if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-  //   }else{
-  //     TotalCordoba = TotalCordoba * this.TC
-  //     }
-
-
-
-  //   this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(TotalCordoba, "2"));
-  //   this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(TotalDolar, "2"));
-
-
-  // }
+  
 
   public v_Guardar() : void{
 
@@ -933,9 +860,12 @@ public v_Enter_Cuenta2(event: any) {
     this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
-    this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
-    this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
-    this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    // this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
+    // this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+    // this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    this.FILA.Total = this.ValorCheque
+    this.FILA.TotalCordoba = this.ValorCheque
+    this.FILA.TotalDolar = this.cFunciones.Redondeo(Number(this.ValorCheque / this.TC),"2");
     this.FILA.UsuarioReg = this.cFunciones.User;
     if(!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoCheque = "C";
@@ -1069,6 +999,7 @@ public v_Enter_Cuenta2(event: any) {
     this.ret3 = 0.0;
     this.ValorC = 0.0;
     this.sumaDebito = 0.0;
+    this.ValorCheque = 0.0;
 
     if ( this.IdMoneda == this.cFunciones.MonedaLocal) {
 
@@ -1104,10 +1035,10 @@ public v_Enter_Cuenta2(event: any) {
         this.ret3 = Math.abs((this.ret2 - this.ret1) * this.TC)
       }
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        this.V_Add(cuenta.CuentaContable, this.val.Get("txtConcepto").value,this.Valor - this.cFunciones.Redondeo(this.ret3, "2"),"D");
+        this.V_Add(cuenta.CuentaContable, this.val.Get("txtConcepto").value,this.Valor - this.cFunciones.Redondeo(this.ret3, "2"),"D");        
       }else{
         this.ValorC = this.cFunciones.Redondeo((this.val.Get("txtConcepto").value,this.Valor * this.TC),"2") - this.cFunciones.Redondeo(this.ret3, "2");
-        this.V_Add(cuenta.CuentaContable, this.val.Get("txtConcepto").value,this.ValorC,"D");
+        this.V_Add(cuenta.CuentaContable, this.val.Get("txtConcepto").value,this.ValorC,"D");       
       }
       
      }
@@ -1160,9 +1091,11 @@ public v_Enter_Cuenta2(event: any) {
         let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
           this.V_Add(item.CuentaBancaria,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,(this.Valor - this.suma) +  this.sumaDebito ,"C");
+          this.ValorCheque = (this.Valor - this.suma) +  this.sumaDebito
         } else {
           this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  - this.cFunciones.Redondeo(this.suma,"2") +  this.cFunciones.Redondeo(this.sumaDebito,"2")
           this.V_Add(item.CuentaBancaria,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,this.ValorC ,"C");
+          this.ValorCheque = this.ValorC 
         }
         
 
