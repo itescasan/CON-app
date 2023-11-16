@@ -301,13 +301,12 @@
                             <div class="row">
                                 <div class="header-cell"><span>Cuenta</span></div>
                             </div>
-                            <div class="row">
+                            <div class="row">                             
 
-
-                                <form autocomplete="off" [formGroup]="valTabla.ValForm">
-                                    <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable"
+                                <form autocomplete="off">
+                                    <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable" [ngModelOptions]="{standalone: true}"
                                         valueKey="CuentaContable" displayKey="NombreCuenta"
-                                        id="txtCuenta{{det.NoLinea}}" formControlName="txtCuenta{{det.NoLinea}}"
+                                        id="txtCuenta{{det.NoLinea}}" 
                                         [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
                                         (selectionChanging)="v_Select_Cuenta($event, det)"
                                         (keyup)="v_Enter_Cuenta($event, det);">

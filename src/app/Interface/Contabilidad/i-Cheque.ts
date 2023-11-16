@@ -1,8 +1,10 @@
+import { SimpleRNG } from "pdf-lib/cjs/utils/rng";
+
 export interface iCheque {
     IdCheque: any;
     IdCuentaBanco: number;
     CuentaContable: string;
-    CentroCosto: string;
+    IdMoneda: string;
     CodBodega: string;
     IdSerie: string;
     NoCheque: string;
