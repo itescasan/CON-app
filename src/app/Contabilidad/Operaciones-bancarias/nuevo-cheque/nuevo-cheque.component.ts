@@ -14,14 +14,14 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
-import { getCheques } from '../Contabilidad/Operaciones-bancarias/CRUD/GET/get-Cheques';
+import { getCheques } from '../CRUD/GET/get-Cheques';
 import { Observable, catchError, iif, map, startWith, tap } from 'rxjs';
 import { reference } from '@popperjs/core';
 import { ideaGeneration } from '@igniteui/material-icons-extended';
-import { iCheque } from '../Interface/Contabilidad/i-Cheque';
-import { iChequePOST } from '../Interface/Contabilidad/i-Cheque-POST';
-import { postCheque } from '../Contabilidad/Operaciones-bancarias/CRUD/POST/post-Cheque';
-import { iCentroCosto } from '../Interface/Contabilidad/i-Centro-Costo';
+import { iCheque } from '../../../Interface/Contabilidad/i-Cheque';
+import { iChequePOST } from '../../../Interface/Contabilidad/i-Cheque-POST';
+import { postCheque } from '../CRUD/POST/post-Cheque';
+import { iCentroCosto } from '../../../Interface/Contabilidad/i-Centro-Costo';
 
 
 @Component({

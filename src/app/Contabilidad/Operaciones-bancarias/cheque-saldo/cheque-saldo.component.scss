@@ -1,0 +1,277 @@
+@import "/src/assets/scss/media.scss";
+
+
+.contenedor-Cheque{
+    background-color: var(--escan-fondo);
+}
+
+
+
+.concepto {
+
+    textarea {
+        height: 120px;
+
+    }
+
+}
+
+#btn-Documentos-Proveedor
+{
+    width: 100%;
+}
+
+.blue,
+.blue:disabled{
+    color: blue;
+}
+
+.opcional
+.opcional:disabled{
+    color: var(--escan-opcional);
+}
+
+
+.bold{
+    font-weight: bold;
+}
+
+
+
+.center,
+input.center{
+    text-align: center;
+}
+
+.importe{
+
+    background-color: #a0e698; // #D9F5D6
+    color: var(--escan-opcional);
+    font-weight: bold;
+}
+
+//████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
+
+.numero {
+    text-align: right;
+}
+
+.header,
+.header-cell {
+    background-color: var(--escan-opcional);
+    padding: 5px;
+
+    span {
+        color: var(--escan-fondo);
+        font-weight: bold;
+        text-align: center;
+        font-size: 1.1em;
+    }
+}
+
+.header {
+
+    @include Tamano_Menor(lg) {
+        display: none;
+    }
+
+
+}
+
+@include Tamano_Menor(lg) {
+
+    .contenedor-tabla {
+        margin-bottom: 220px;
+}
+    }
+    
+
+
+
+.contenedor-tabla {
+  
+
+
+    table {
+
+        input:disabled{
+            background-color: transparent;
+            border: 0;
+        }
+
+
+
+        .header-cell {
+
+            display: none;
+
+            @include Tamano_Menor(lg) {
+                display: initial;
+                text-align: center;
+                background-color: var(--escan-fondo);
+
+                span {
+                    color: var(--escan-opcional);
+                }
+
+            }
+
+        }
+
+    }
+}
+
+
+
+
+//████████████████████████████████████████████PIE████████████████████████████████████████████████████████████████████████
+
+.contenedor-pie {
+    position: relative;
+    
+}
+
+.pie-Cheque {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 2;
+    background-color: var(--escan-fondo);
+    padding: 10px;
+
+    .totales,
+    .botones{
+        margin-right: 20px;
+        padding-right: 10px;
+    }
+ 
+
+    .totales {
+
+        width: 100%;
+        text-align: right;
+
+
+        .disponible {
+            width: 60%;
+        }
+
+        .aplicado {
+            width: 20%;
+        }
+
+        .diferencia {
+            width: 20%;
+        }
+
+
+        .valores {
+            background-color: var(--escan-opcional);
+            color: var(--escan-fondo);
+        }
+
+        .valores.dif{
+            background-color: var(--escan-primario);
+        }
+
+        .etiqueta,
+        .valores {
+            display: inline-block;
+            width: 250px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 5px;
+        }
+
+        @include Tamano_Menor(lg) {
+
+
+            .etiqueta {
+                width: 30%;
+            }
+
+
+            .valores {
+                width: 70%;
+            }
+
+
+
+        }
+
+    }
+
+    .botones {
+
+        position: relative;
+        width: 100%;
+
+
+        div {
+            text-align: left;
+            width: 50%;
+            display: inline-block;
+
+        
+        }
+
+        div:first-child{
+            button:first-child{
+                margin-right: 20px;
+            }
+        }
+
+
+        div:last-child {
+            text-align: right;
+            position: flex;
+            right: 0;
+            bottom: 0;
+        }
+
+        .botones-edicion{
+            margin-top: 5px;
+            button:last-child{
+                margin-left: 20px;
+            }
+
+        }
+
+        
+
+        @include Tamano_Menor(lg) {
+
+
+            div {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+    
+
+            div:first-child{
+
+                button{
+                    width: 50%;
+                }
+               
+            }
+        
+        }
+
+
+    }
+
+
+
+}
+
+
+
+
+.btn-contenedor-custom {
+    display: flex;
+    justify-content: flex-end;
+}

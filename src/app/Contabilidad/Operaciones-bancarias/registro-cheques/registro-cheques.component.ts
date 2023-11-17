@@ -25,7 +25,7 @@ import { AnularComponent } from 'src/app/SHARED/anular/anular.component';
 import { MatDialogRef } from '@angular/material/dialog';
 //import { TransferenciaCuentaComponent } from '../transferencia-cuenta/transferencia-cuenta.component';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
-import { getCheques } from '../Contabilidad/Operaciones-bancarias/CRUD/GET/get-Cheques';
+import { getCheques } from '../CRUD/GET/get-Cheques';
 import { NuevoChequeComponent } from '../nuevo-cheque/nuevo-cheque.component'; 
 
 @Component({
