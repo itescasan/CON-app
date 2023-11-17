@@ -765,7 +765,7 @@ export class TransferenciaSaldoComponent {
 
   public V_Mostrar_Asiento() {
 
-
+    this.val.Combo(this.cmbCombo);
     this.val.ItemValido(["cmbCuentaBancaria", "cmbCentroCosto", "cmbProveedor"]);
 
     
