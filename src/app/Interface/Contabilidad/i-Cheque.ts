@@ -18,7 +18,7 @@ export interface iCheque {
     TipoCheque : string;
     Total: number;
     TotalCordoba: number;
-    TotalDolar: number;
+    TotalDolar: number; 
     Anulado : boolean;
     UsuarioReg : string;
     ChequeDocumento: iChequeDocumento[];
