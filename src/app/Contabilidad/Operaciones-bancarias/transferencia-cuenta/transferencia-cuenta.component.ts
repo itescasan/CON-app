@@ -154,6 +154,21 @@ export class TransferenciaCuentaComponent {
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
       this.IdMoneda = String(_Item?.IdMoneda);
+
+      let i : number = this.V_Agregar();
+
+
+      setTimeout(() => {
+        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i);
+
+ 
+        txtCuenta.setSelectedItem((this.IdMoneda == this.cFunciones.MonedaLocal ? _Item?.CuentaC : _Item?.CuentaD));
+
+  
+
+      }, 250);
+
+     
       
     }
   }
@@ -407,6 +422,8 @@ export class TransferenciaCuentaComponent {
 
       txtCuenta.close();
 
+   
+
     }
 
   }
@@ -492,7 +509,7 @@ export class TransferenciaCuentaComponent {
   }
 
 
-  V_Agregar() {
+  V_Agregar() : number {
 
     let det: iAsientoDetalle = {} as iAsientoDetalle;
     let i: number = 1;
@@ -521,6 +538,7 @@ export class TransferenciaCuentaComponent {
     this.V_Ordenar(i);
 
 
+    return i;
 
   }
 
