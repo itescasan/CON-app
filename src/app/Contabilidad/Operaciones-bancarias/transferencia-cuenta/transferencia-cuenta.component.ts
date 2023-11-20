@@ -522,7 +522,7 @@ export class TransferenciaCuentaComponent {
       let x = this.lstDetalle.data.findIndex(f => f.NoLinea == 1);
       i  = 1;
 
-      if(x != -1) return 0;
+      if(x != -1) return i;
     }
 
     
