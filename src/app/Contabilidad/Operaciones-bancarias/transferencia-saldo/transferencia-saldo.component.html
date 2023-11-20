@@ -247,8 +247,40 @@
 
 
 
+
+
+
 <div class="contenedor-transferencia mt-2">
 
+
+    <div class="row">
+        <div class="col-6 mb-1 orderby-mobile">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                <div class="form-floating">
+                    <select class="form-select form-select-lg" aria-label="Columna" id="cmbColumna" (change)="V_Ordenar_ColumnaCombo();">
+                        <option *ngFor="let item of orderby" value="{{item.Columna}}" >{{item.Columna}}</option>
+                    </select>
+                    <label for="cmbColumna">Ordenar</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 mb-1 orderby-mobile">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                <div class="form-floating">
+                    <select class="form-select form-select-lg" aria-label="Direccion" (change)="V_Ordenar_ColumnaCombo();" id="cmbDireccion">
+                        <option  value="ASC">ASC</option>
+                        <option  value="DESC">DESC</option>
+                    </select>
+                    <label for="cmbDireccion">Dirección</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+  
 
     <div class="row g-1 header">
 
@@ -267,9 +299,6 @@
         <div class="col-6 col-lg-2 numero"><span>Nuevo Saldo</span></div>
 
     </div>
-
-
- 
 
 
     <div class="mat-elevation-z8 contenedor-tabla">

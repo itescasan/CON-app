@@ -1246,6 +1246,18 @@ export class TransferenciaSaldoComponent {
   }
 
 
+  public V_Ordenar_ColumnaCombo() : void{
+
+    let c = (<HTMLInputElement>document.getElementById("cmbColumna")).value;
+    let d = (<HTMLInputElement>document.getElementById("cmbDireccion")).value;
+
+    let o : iOrderBy = this.orderby.find(f => f.Columna == c)!;
+    if(d == "ASC") o.Direccion = "";
+    if(d == "DESC") o.Direccion = "ASC";
+
+    this.V_Ordenar_Columna(c);
+
+  }
 
 
   public V_Ordenar_Columna(c: string): void {
