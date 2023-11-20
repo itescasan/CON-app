@@ -792,7 +792,7 @@ export class TransferenciaSaldoComponent {
 
 
 
-    this.V_Contabilizacion();
+    if(!this.esModal) this.V_Contabilizacion();
 
     let Asiento: iAsiento = JSON.parse(JSON.stringify(this.Asiento));
 
@@ -1216,7 +1216,7 @@ export class TransferenciaSaldoComponent {
 
     this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
     this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
-    this.cmbProveedor.setSelectedItem(this.FILA.Beneficiario);
+    this.cmbProveedor.setSelectedItem(this.FILA.CodProveedor);
     this.cmbCentroCosto.setSelectedItem(this.FILA.CentroCosto);
     this.val.Get("txtNoDoc").setValue(this.FILA.NoTransferencia);
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
