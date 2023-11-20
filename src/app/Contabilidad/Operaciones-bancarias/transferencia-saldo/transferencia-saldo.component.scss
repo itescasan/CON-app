@@ -1,7 +1,7 @@
 @import "/src/assets/scss/media.scss";
 
 
-.contenedor-transferencia{
+.contenedor-transferencia {
     background-color: var(--escan-fondo);
 }
 
@@ -16,34 +16,32 @@
 
 }
 
-#btn-Documentos-Proveedor
-{
+#btn-Documentos-Proveedor {
     width: 100%;
 }
 
 .blue,
-.blue:disabled{
+.blue:disabled {
     color: blue;
 }
 
-.opcional
-.opcional:disabled{
+.opcional .opcional:disabled {
     color: var(--escan-opcional);
 }
 
 
-.bold{
+.bold {
     font-weight: bold;
 }
 
 
 
 .center,
-input.center{
+input.center {
     text-align: center;
 }
 
-.importe{
+.importe {
 
     background-color: #a0e698; // #D9F5D6
     color: var(--escan-opcional);
@@ -51,6 +49,10 @@ input.center{
 }
 
 //████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
+
+.orderby-mobile {
+    display: none;
+}
 
 .numero {
     text-align: right;
@@ -66,6 +68,10 @@ input.center{
         font-weight: bold;
         text-align: center;
         font-size: 1.1em;
+
+        i {
+            color: var(--escan-fondo);
+        }
     }
 }
 
@@ -80,21 +86,26 @@ input.center{
 
 @include Tamano_Menor(lg) {
 
-    .contenedor-tabla {
-        margin-bottom: 220px;
-}
+    .orderby-mobile {
+        display:unset;
     }
-    
+
+
+    .contenedor-tabla {
+        margin-bottom: 280px;
+    }
+}
+
 
 
 
 .contenedor-tabla {
-  
+
 
 
     table {
 
-        input:disabled{
+        input:disabled {
             background-color: transparent;
             border: 0;
         }
@@ -128,7 +139,7 @@ input.center{
 
 .contenedor-pie {
     position: relative;
-    
+
 }
 
 .pie-transferencia {
@@ -141,11 +152,11 @@ input.center{
     padding: 10px;
 
     .totales,
-    .botones{
+    .botones {
         margin-right: 20px;
         padding-right: 10px;
     }
- 
+
 
     .totales {
 
@@ -171,7 +182,7 @@ input.center{
             color: var(--escan-fondo);
         }
 
-        .valores.dif{
+        .valores.dif {
             background-color: var(--escan-primario);
         }
 
@@ -214,11 +225,11 @@ input.center{
             width: 50%;
             display: inline-block;
 
-        
+
         }
 
-        div:first-child{
-            button:first-child{
+        div:first-child {
+            button:first-child {
                 margin-right: 20px;
             }
         }
@@ -231,15 +242,16 @@ input.center{
             bottom: 0;
         }
 
-        .botones-edicion{
+        .botones-edicion {
             margin-top: 5px;
-            button:last-child{
+
+            button:last-child {
                 margin-left: 20px;
             }
 
         }
 
-        
+
 
         @include Tamano_Menor(lg) {
 
@@ -249,16 +261,16 @@ input.center{
                 justify-content: space-between;
                 width: 100%;
             }
-    
 
-            div:first-child{
 
-                button{
+            div:first-child {
+
+                button {
                     width: 50%;
                 }
-               
+
             }
-        
+
         }
 
 
