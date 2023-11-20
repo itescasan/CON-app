@@ -130,7 +130,7 @@ export class TransferenciaCuentaComponent {
 
         this.V_TasaCambios();
 
-        this.V_Agregar();
+        this.V_Agregar(false);
 
 
         break;
@@ -155,7 +155,7 @@ export class TransferenciaCuentaComponent {
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
       this.IdMoneda = String(_Item?.IdMoneda);
 
-      let i : number = this.V_Agregar();
+      let i : number = this.V_Agregar(true);
 
 
       setTimeout(() => {
@@ -488,7 +488,7 @@ export class TransferenciaCuentaComponent {
 
       if (det.NoLinea != i) return;
 
-      this.V_Agregar();
+      this.V_Agregar(false);
     }
 
   }
@@ -509,12 +509,24 @@ export class TransferenciaCuentaComponent {
   }
 
 
-  V_Agregar() : number {
+  V_Agregar(esBanco : boolean) : number {
 
     let det: iAsientoDetalle = {} as iAsientoDetalle;
-    let i: number = 1;
-
+    let i: number = 2;
+   
     if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
+
+
+    if(esBanco){
+
+      let x = this.lstDetalle.data.findIndex(f => f.NoLinea == 1);
+      i  = 1;
+
+      if(x != -1) return 0;
+    }
+
+    
+
 
     this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
