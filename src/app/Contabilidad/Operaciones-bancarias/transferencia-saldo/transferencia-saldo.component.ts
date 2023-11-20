@@ -23,6 +23,10 @@ import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { AsientoContableComponent } from '../../asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
+import { iOrderBy } from 'src/app/SHARED/interface/i-OrderBy';
+
+
+
 
 @Component({
   selector: 'app-transferencia-saldo',
@@ -67,10 +71,19 @@ export class TransferenciaSaldoComponent {
   public cmbCombo: QueryList<IgxComboComponent>;
 
 
+  public orderby: iOrderBy[] = [
+    { Columna: "Operacion", Direccion: "" },
+    { Columna: "TipoDocumento", Direccion: "" },
+    { Columna: "Documento", Direccion: "" },
+    { Columna: "Fecha", Direccion: "" },
+  ];
+
+
+
   constructor(public cFunciones: Funciones, private GET: getTransferencia, private POST: postTrasnferencia) {
 
 
-    
+
     this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una cuenta bancaria.");
     this.val.add("txtNombreCuenta", "1", "LEN>", "0", "No Cuenta", "No se ha definido el nombre de la cuenta.");
     this.val.add("cmbCentroCosto", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro costo.");
@@ -85,7 +98,7 @@ export class TransferenciaSaldoComponent {
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
-    
+
 
 
     this.v_Evento("Iniciar");
@@ -166,7 +179,7 @@ export class TransferenciaSaldoComponent {
 
     this.val.Get("cmbCuentaBancaria").setValue("");
     if (event.added.length == 1) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
       let _Item = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.newValue[0]);
 
       this.val.Get("cmbCuentaBancaria").setValue(event.newValue[0]);
@@ -208,7 +221,7 @@ export class TransferenciaSaldoComponent {
   public v_Select_CentroCosto(event: any) {
 
     if (event.added.length == 1) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbCentroCosto").setValue(event.newValue);
     }
   }
@@ -233,7 +246,7 @@ export class TransferenciaSaldoComponent {
   public v_Select_Bodega(event: any) {
     this.val.Get("cmbBodega").setValue("");
     if (event.added.length == 1) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
     }
   }
@@ -262,9 +275,9 @@ export class TransferenciaSaldoComponent {
     this.lstDetalle.filter = "";
 
     if (event.added.length == 1) {
-  
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
-      
+
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
+
 
       this.val.Get("cmbProveedor").setValue(event.newValue);
 
@@ -535,7 +548,7 @@ export class TransferenciaSaldoComponent {
             this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
             this.lstDetalle.data = datos.d;
 
-      
+
             this.lstDetalle.data.forEach(f => {
 
               let saldo: number = 0
@@ -645,7 +658,7 @@ export class TransferenciaSaldoComponent {
 
       f.Operacion = "";
       f.IdTransferencia = this.FILA.IdTransferencia;
-      if(f.IdDetTrasnfDoc == undefined) f.IdDetTrasnfDoc = "00000000-0000-0000-0000-000000000000";
+      if (f.IdDetTrasnfDoc == undefined) f.IdDetTrasnfDoc = "00000000-0000-0000-0000-000000000000";
 
       let Importe: number = this.cFunciones.Redondeo(Number(String(f.Importe).replaceAll(",", "")), "2");
       let Saldo: number = Number(String(f.Saldo).replaceAll(",", ""));
@@ -768,7 +781,7 @@ export class TransferenciaSaldoComponent {
     this.val.Combo(this.cmbCombo);
     this.val.ItemValido(["cmbCuentaBancaria", "cmbCentroCosto", "cmbProveedor"]);
 
-    
+
     if (this.val.Errores != "") {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
         data: this.val.Errores,
@@ -875,7 +888,7 @@ export class TransferenciaSaldoComponent {
     let Comision: number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
 
 
-    if(i_Banco == undefined) return;
+    if (i_Banco == undefined) return;
 
 
 
@@ -954,7 +967,7 @@ export class TransferenciaSaldoComponent {
     det.Descripcion = i_Cuenta?.NombreCuenta!;
     det.Referencia = Referencia;
     det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
-    det.Naturaleza =  i_Cuenta?.Naturaleza!;
+    det.Naturaleza = i_Cuenta?.Naturaleza!;
 
 
 
@@ -1063,8 +1076,8 @@ export class TransferenciaSaldoComponent {
     }
 
 
-    
- 
+
+
 
 
     if (this.dec_Dif != 0) {
@@ -1076,9 +1089,9 @@ export class TransferenciaSaldoComponent {
     }
 
 
-    let Comision : number = Number(String(this.val.Get("txtComision").value).replaceAll(",", ""));
+    let Comision: number = Number(String(this.val.Get("txtComision").value).replaceAll(",", ""));
     let ComisionDolar: number = 0;
-    let ComisionCordoba : number = 0;
+    let ComisionCordoba: number = 0;
 
 
     if (this.cFunciones.MonedaLocal == this.IdMoneda) {
@@ -1109,17 +1122,17 @@ export class TransferenciaSaldoComponent {
     this.FILA.ComisionDolar = ComisionDolar;
     this.FILA.TotalCordoba = Number(String(this.val.Get("txtTotalCordoba").value).replaceAll(",", ""));
     this.FILA.TotalDolar = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
-    this.FILA.Total = (this.cFunciones.MonedaLocal == this.IdMoneda? this.FILA.TotalCordoba : this.FILA.TotalDolar );
+    this.FILA.Total = (this.cFunciones.MonedaLocal == this.IdMoneda ? this.FILA.TotalCordoba : this.FILA.TotalDolar);
     this.FILA.UsuarioReg = this.cFunciones.User;
     if (!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoTransferencia = "S";
-    this.FILA.TransferenciaDocumento =  JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
+    this.FILA.TransferenciaDocumento = JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
 
 
     this.V_Contabilizacion();
 
 
-    if (this.Asiento.AsientosContablesDetalle.findIndex(f => f.CuentaContable == "" || (f.Naturaleza == undefined  || f.Naturaleza == "")) != -1) {
+    if (this.Asiento.AsientosContablesDetalle.findIndex(f => f.CuentaContable == "" || (f.Naturaleza == undefined || f.Naturaleza == "")) != -1) {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
         data: "<span><b>Por favor revisar el asiento contable. (CUENTA / NATURALEZA)</b></span>",
       });
@@ -1216,7 +1229,7 @@ export class TransferenciaSaldoComponent {
 
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.TransferenciaDocumento));
 
-   
+
 
     this.IdMoneda = this.FILA.IdMoneda;
 
@@ -1229,6 +1242,60 @@ export class TransferenciaSaldoComponent {
 
     let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
     if (dialogRef != undefined) dialogRef.close();
+
+  }
+
+
+
+
+  public V_Ordenar_Columna(c: string): void {
+
+
+    let o : iOrderBy = this.orderby.find(f => f.Columna == c)!;
+
+    if(o.Direccion == "ASC")
+    {
+      o.Direccion = "DESC";
+    }
+    else
+    {
+      o.Direccion = "ASC";
+    }
+
+    this.lstDetalle.data.sort((a, b) => {
+
+      switch (c) {
+        case "Operacion":
+          return 0 - (a.Operacion > b.Operacion ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
+          break;
+
+        case "TipoDocumento":
+          return 0 - (a.TipoDocumento > b.TipoDocumento ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
+          break;
+
+        case "Documento":
+          return 0 - (a.Documento > b.Documento ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
+          break;
+
+        case "Fecha":
+          return 0 - (a.Fecha > b.Fecha ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
+          break;
+      }
+
+      return 0 - (a.Index > b.Index ? -1 : 1);
+
+    });
+
+
+    this.lstDetalle._updateChangeSubscription()
+
+
+    // Ascending
+    //this.lstDetalle.data.sort((a,b) => 0 - (a > b ? -1 : 1));
+
+    // Descending
+    //this.lstDetalle.data.sort((a, b) => 0 - (a.Fecha > b.Fecha ? 1 : -1));
+    this.lstDetalle._updateChangeSubscription()
 
   }
 
@@ -1262,7 +1329,7 @@ export class TransferenciaSaldoComponent {
 
   }
 
-  ngDoCheck(){
+  ngDoCheck() {
 
     this.val.addNumberFocus("TxtTC", 2);
     this.val.addNumberFocus("txtComision", 2);
@@ -1272,9 +1339,9 @@ export class TransferenciaSaldoComponent {
 
     this.lstDetalle.data.forEach(f => {
       this.val.addNumberFocus("txtImporte" + f.Index, 2);
-      this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1) , undefined);
+      this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1), undefined);
     });
 
-      
+
   }
 }

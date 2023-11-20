@@ -66,6 +66,10 @@ input.center{
         font-weight: bold;
         text-align: center;
         font-size: 1.1em;
+
+        i{
+            color: var(--escan-fondo);
+        }
     }
 }
 

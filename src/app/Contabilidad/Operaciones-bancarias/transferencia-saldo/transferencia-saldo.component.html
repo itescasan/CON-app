@@ -248,23 +248,28 @@
 
 
 <div class="contenedor-transferencia mt-2">
+
+
     <div class="row g-1 header">
 
 
-        <div class="col-8 col-lg-1 center"><span>Operacion</span></div>
-        <div class="col-8 col-lg-1 center"><span>Tipo Documento</span></div>
+        <div class="col-8 col-lg-1 center"><span (click)="V_Ordenar_Columna('Operacion');">Operacion <i  [ngClass]="orderby[0].Direccion == 'ASC' ||  orderby[0].Direccion == '' ? 'fa-solid fa-arrow-down fa-2xs' : 'fa-solid fa-arrow-up fa-2xs'"></i></span></div>
+        <div class="col-8 col-lg-1 center"><span (click)="V_Ordenar_Columna('TipoDocumento');">Tipo Documento <i  [ngClass]="orderby[1].Direccion == 'ASC' ||  orderby[1].Direccion == '' ? 'fa-solid fa-arrow-down fa-2xs' : 'fa-solid fa-arrow-up fa-2xs'"></i></span></div>
 
-        <div class="col-12 col-lg-2 center"><span>Documento</span></div>
+        <div class="col-12 col-lg-2 center" (click)="V_Ordenar_Columna('Documento');"><span>Documento <i  [ngClass]="orderby[2].Direccion == 'ASC' ||  orderby[2].Direccion == '' ? 'fa-solid fa-arrow-down fa-2xs' : 'fa-solid fa-arrow-up fa-2xs'"></i></span></div>
 
-        <div class="col-12 col-lg-2 center"><span>Fecha</span></div>
+        <div class="col-12 col-lg-2 center" (click)="V_Ordenar_Columna('Fecha');"><span>Fecha <i  [ngClass]="orderby[3].Direccion == 'ASC' ||  orderby[3].Direccion == '' ? 'fa-solid fa-arrow-down fa-2xs' : 'fa-solid fa-arrow-up fa-2xs'"></i></span></div>
 
-        <div class="col-6 col-lg-2  numero"><span>Saldo</span></div>
+        <div class="col-6 col-lg-2  numero" ><span>Saldo</span></div>
 
         <div class="col-6 col-lg-2 numero"><span>Importe</span></div>
 
         <div class="col-6 col-lg-2 numero"><span>Nuevo Saldo</span></div>
 
     </div>
+
+
+ 
 
 
     <div class="mat-elevation-z8 contenedor-tabla">
