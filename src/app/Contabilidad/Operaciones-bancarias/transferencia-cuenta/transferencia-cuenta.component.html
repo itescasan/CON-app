@@ -148,7 +148,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="TC" id="TxtTC" (change)="V_Calcular();"
+                                        <input type="text" class="form-control" placeholder="TC" id="TxtTC" (change)="V_Calcular();" (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
                                             formControlName="TxtTC">
                                         <label for="TxtTC">TC</label>
                                     </div>
