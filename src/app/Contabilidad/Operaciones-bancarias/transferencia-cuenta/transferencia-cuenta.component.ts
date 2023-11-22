@@ -530,7 +530,7 @@ export class TransferenciaCuentaComponent {
 
     this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
+    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
 
     det.IdAsiento = -1;
     det.NoLinea = i;
@@ -855,7 +855,7 @@ export class TransferenciaCuentaComponent {
 
         
         let txtCentro: any = this.cmbCombo.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-        if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+        if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0]) && f.CentroCosto != undefined) txtCentro.setSelectedItem(f.CentroCosto);
        
   
         document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
@@ -911,10 +911,18 @@ export class TransferenciaCuentaComponent {
      this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
      this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
 
+
+    
+
     this.lstDetalle.data.forEach(f => {
 
       this.valTabla.addFocus("txtCuenta" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);
       this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);
+
+
+      this.val.addNumberFocus("txtDebito" + f.NoLinea, 2);
+      this.val.addNumberFocus("txtCredito" + f.NoLinea, 2);
+      
 
     });
 
