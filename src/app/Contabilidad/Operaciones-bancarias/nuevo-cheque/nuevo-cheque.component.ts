@@ -149,7 +149,7 @@ export class NuevoChequeComponent {
 
 
 
-       // document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled");
+        document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled");
 
 
 
@@ -184,7 +184,7 @@ export class NuevoChequeComponent {
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
       this.IdMoneda = String(_Item?.IdMoneda);
 
-      //document.getElementById("btnContabilizar-Cheques")?.removeAttribute("disabled");
+      document.getElementById("btnContabilizar-Cheques")?.removeAttribute("disabled");
 
       this.val.Get("txtTotalDolar").setValue("0.00");
       this.val.Get("txtTotalCordoba").setValue("0.00");
@@ -294,6 +294,7 @@ public v_Enter_Cuenta2(event: any) {
 
 
     document.getElementById("btnRefrescar-Cheques")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled");
 
   
     let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
@@ -1227,7 +1228,7 @@ public v_Enter_Cuenta2(event: any) {
 
         
         let txtCentro: any = this.cmbCombo.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-        if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+        if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0]) && f.CentroCosto != undefined) txtCentro.setSelectedItem(f.CentroCosto);
        
   
         document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");

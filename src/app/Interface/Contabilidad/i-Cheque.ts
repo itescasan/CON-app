@@ -6,13 +6,13 @@ export interface iCheque {
     IdCuentaBanco: number;
     CuentaContable: string;
     CentroCosto: string;
+    CodProveedor: string;
     IdMoneda: string;
     CodBodega: string;
     IdSerie: string;
     NoCheque: string;
     Fecha: Date,
-    Beneficiario: string;
-    CodProveedor: string;
+    Beneficiario: string;   
     TasaCambio: number;
     Concepto : string;
     TipoCheque : string;
