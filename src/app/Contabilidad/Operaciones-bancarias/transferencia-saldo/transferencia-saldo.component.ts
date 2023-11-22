@@ -148,7 +148,7 @@ export class TransferenciaSaldoComponent {
         this.val.Get("txtBanco").disable();
         this.val.Get("txtNoDoc").disable();
         this.val.Get("txtMoneda").disable();
-        this.val.Get("TxtTC").disable();
+        //this.val.Get("TxtTC").disable();
         this.val.Get("txtTotalDolar").disable();
         this.val.Get("txtTotalCordoba").disable();
         this.val.Get("txtComision").disable();
@@ -649,6 +649,10 @@ export class TransferenciaSaldoComponent {
     }
 
 
+
+    this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
+    this.val.Get("TxtTC").setValue(this.TC);
+    this.v_ConvertirTotal("");
 
 
     this.dec_Aplicado = 0;

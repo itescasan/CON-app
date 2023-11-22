@@ -120,7 +120,7 @@ export class TransferenciaCuentaComponent {
         this.val.Get("txtBanco").disable();
         this.val.Get("txtNoDoc").disable();
         this.val.Get("txtMoneda").disable();
-        this.val.Get("TxtTC").disable();
+        //this.val.Get("TxtTC").disable();
         this.val.Get("txtTotalDolar").disable();
         this.val.Get("txtTotalCordoba").disable();
 
@@ -614,6 +614,10 @@ export class TransferenciaCuentaComponent {
     this.dec_TotalDebe = 0;
     this.dec_TotalHaber = 0;
     this.dec_Dif = 0;
+
+    this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
+    this.val.Get("TxtTC").setValue(this.TC);
+
 
     this.lstDetalle.data.forEach(f => {
 
