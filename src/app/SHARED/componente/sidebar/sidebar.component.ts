@@ -100,6 +100,14 @@ export class SidebarComponent {
       return;
     }
     
+    if(id == "aNewInicio"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      //this.DynamicFrom.viewContainerRef.createComponent(SidebarComponent);
+
+    }
+
     if(id == "aNewEjercicio"){
       $("#btnMenu").trigger("click");
       this.DynamicFrom.viewContainerRef.clear();
