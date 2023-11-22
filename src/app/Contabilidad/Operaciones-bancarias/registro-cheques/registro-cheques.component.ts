@@ -27,6 +27,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { getCheques } from '../CRUD/GET/get-Cheques';
 import { NuevoChequeComponent } from '../nuevo-cheque/nuevo-cheque.component'; 
+import { ChequesSaldoComponent } from '../cheque-saldo/cheque-saldo.component';
 
 @Component({
   selector: 'app-registro-cheques',
@@ -231,6 +232,110 @@ export class RegistroChequesComponent {
   }
 
 
+  // public V_EditarCheque(det : any) : void{
+
+
+    
+    
+  //   let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+
+
+  //     if(dialogRef == undefined)
+  //     {
+  //       dialogRef = this.cFunciones.DIALOG.open(
+  //         WaitComponent,
+  //         {
+  //           panelClass: "escasan-dialog-full-blur",
+  //           data: "",
+  //           id : "wait"
+  //         }
+  //       );
+  
+  //     }
+
+
+      
+  //   this.GET.GetDetalleCuenta(det.IdCheque).subscribe(
+  //     {
+  //       next: (data) => {
+
+
+  //         dialogRef.close();
+  //         let _json: any = data;
+
+  //         if (_json["esError"] == 1) {
+  //           if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+  //             this.cFunciones.DIALOG.open(DialogErrorComponent, {
+  //               id: "error-servidor-msj",
+  //               data: _json["msj"].Mensaje,
+  //             });
+  //           }
+  //         } else {
+
+  //           let datos: iDatos[] = _json["d"];
+
+          
+  //             let dialogTransf: MatDialogRef<NuevoChequeComponent> = this.cFunciones.DIALOG.open(
+  //               NuevoChequeComponent,
+  //               {
+  //                 panelClass: "escasan-dialog-full",
+  //                 disableClose: true
+  //               }
+  //             );
+              
+              
+                
+  //             dialogTransf.afterOpened().subscribe(s =>{
+  //               dialogTransf.componentInstance.FILA = det;
+  //               dialogTransf.componentInstance.esModal = true;
+
+
+  //               dialogTransf.componentInstance.lstDetalle.data = JSON.parse(JSON.stringify(datos[0].d));
+
+
+  //               dialogTransf.componentInstance.v_CargarDatos();
+
+  //             });
+
+  //             dialogTransf.afterClosed().subscribe(s =>{
+  //               this.v_CargarDatos();
+  //             });
+
+
+     
+
+  //         }
+
+  //       },
+  //       error: (err) => {
+
+  //         document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
+  //         dialogRef.close();
+
+  //         if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+  //           this.cFunciones.DIALOG.open(DialogErrorComponent, {
+  //             id: "error-servidor",
+  //             data: "<b class='error'>" + err.message + "</b>",
+  //           });
+  //         }
+
+  //       },
+  //       complete: () => {
+  //         document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
+
+
+  //       }
+  //     }
+  //   );
+
+
+
+
+
+
+
+
+  // }
   public V_EditarCheque(det : any) : void{
 
 
@@ -253,82 +358,165 @@ export class RegistroChequesComponent {
       }
 
 
-      
-    this.GET.GetDetalleCuenta(det.IdCheque).subscribe(
+      if(det.TipoCheque == "C")
       {
-        next: (data) => {
-
-
-          dialogRef.close();
-          let _json: any = data;
-
-          if (_json["esError"] == 1) {
-            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                id: "error-servidor-msj",
-                data: _json["msj"].Mensaje,
-              });
-            }
-          } else {
-
-            let datos: iDatos[] = _json["d"];
-
-          
-              let dialogTransf: MatDialogRef<NuevoChequeComponent> = this.cFunciones.DIALOG.open(
-                NuevoChequeComponent,
-                {
-                  panelClass: "escasan-dialog-full",
-                  disableClose: true
+        this.GET.GetDetalleCuenta(det.IdCheque).subscribe(
+          {
+            next: (data) => {
+    
+    
+              dialogRef.close();
+              let _json: any = data;
+    
+              if (_json["esError"] == 1) {
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    id: "error-servidor-msj",
+                    data: _json["msj"].Mensaje,
+                  });
                 }
-              );
+              } else {
+    
+                let datos: iDatos[] = _json["d"];
+    
               
-              
-                
-              dialogTransf.afterOpened().subscribe(s =>{
-                dialogTransf.componentInstance.FILA = det;
-                dialogTransf.componentInstance.esModal = true;
-
-
-                dialogTransf.componentInstance.lstDetalle.data = JSON.parse(JSON.stringify(datos[0].d));
-
-
-                dialogTransf.componentInstance.v_CargarDatos();
-
-              });
-
-              dialogTransf.afterClosed().subscribe(s =>{
-                this.v_CargarDatos();
-              });
-
-
-     
-
+                  let dialogTransf: MatDialogRef<NuevoChequeComponent> = this.cFunciones.DIALOG.open(
+                    NuevoChequeComponent,
+                    {
+                      panelClass: "escasan-dialog-full",
+                      disableClose: true
+                    }
+                  );
+                  
+                  
+                    
+                  dialogTransf.afterOpened().subscribe(s =>{
+                    dialogTransf.componentInstance.FILA = det;
+                    dialogTransf.componentInstance.esModal = true;
+    
+    
+                    dialogTransf.componentInstance.lstDetalle.data = JSON.parse(JSON.stringify(datos[0].d));
+    
+    
+                    dialogTransf.componentInstance.v_CargarDatos();
+    
+                  });
+    
+                  dialogTransf.afterClosed().subscribe(s =>{
+                    this.v_CargarDatos();
+                  });
+    
+    
+         
+    
+              }
+    
+            },
+            error: (err) => {
+    
+              document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
+              dialogRef.close();
+    
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  id: "error-servidor",
+                  data: "<b class='error'>" + err.message + "</b>",
+                });
+              }
+    
+            },
+            complete: () => {
+              document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
+    
+    
+            }
           }
-
-        },
-        error: (err) => {
-
-          document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
-          dialogRef.close();
-
-          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              id: "error-servidor",
-              data: "<b class='error'>" + err.message + "</b>",
-            });
-          }
-
-        },
-        complete: () => {
-          document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
-
-
-        }
+        );
+    
+    
+    
       }
-    );
 
+      else
+      {
+        this.GET.GetDetalleDocumentos(det.IdCheque).subscribe(
+          {
+            next: (data) => {
+    
+    
+              dialogRef.close();
+              let _json: any = data;
+    
+              if (_json["esError"] == 1) {
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    id: "error-servidor-msj",
+                    data: _json["msj"].Mensaje,
+                  });
+                }
+              } else {
+    
+                let datos: iDatos[] = _json["d"];
+    
+              
+                  let dialogTransf: MatDialogRef<ChequesSaldoComponent> = this.cFunciones.DIALOG.open(
+                    ChequesSaldoComponent,
+                    {
+                      panelClass: "escasan-dialog-full",
+                      disableClose: true
+                    }
+                  );
+                  
+                  
+                    
+                  dialogTransf.afterOpened().subscribe(s =>{
+                    dialogTransf.componentInstance.FILA = det;
+                    dialogTransf.componentInstance.esModal = true;
+    
+    
+                    dialogTransf.componentInstance.FILA.ChequeDocumento = JSON.parse(JSON.stringify(datos[0].d));
+                    dialogTransf.componentInstance.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(datos[1].d));
+    
+    
+                    dialogTransf.componentInstance.v_CargarDatos();
+    
+                  });
+    
+                  dialogTransf.afterClosed().subscribe(s =>{
+                    this.v_CargarDatos();
+                  });
+    
+    
+         
+    
+              }
+    
+            },
+            error: (err) => {
+    
+              document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
+              dialogRef.close();
+    
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  id: "error-servidor",
+                  data: "<b class='error'>" + err.message + "</b>",
+                });
+              }
+    
+            },
+            complete: () => {
+              document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
+    
+    
+            }
+          }
+        );
+    
+      }
 
-
+      
+  
 
 
 

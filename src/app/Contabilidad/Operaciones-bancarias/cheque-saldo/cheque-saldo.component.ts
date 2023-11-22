@@ -22,6 +22,7 @@ import { AsientoContableComponent } from '../../asiento-contable/nuevo-asiento-c
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 import { iChequePOST } from '../../../Interface/Contabilidad/i-Cheque-POST';
+import { iOrderBy } from 'src/app/SHARED/interface/i-OrderBy';
 
 
 @Component({
@@ -64,6 +65,12 @@ export class ChequesSaldoComponent {
   public dec_Aplicado: number = 0;
   public dec_Dif: number = 0;
 
+  public orderby: iOrderBy[] = [
+    { Columna: "Operacion", Direccion: "" },
+    { Columna: "TipoDocumento", Direccion: "" },
+    { Columna: "Documento", Direccion: "" },
+    { Columna: "Fecha", Direccion: "" },
+  ];
 
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>;
@@ -1096,6 +1103,30 @@ export class ChequesSaldoComponent {
 
 
 
+    // this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
+    // this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
+    // this.FILA.IdMoneda = this.IdMoneda;
+    // this.FILA.IdSerie = "CK"
+    // this.FILA.NoCheque = this.val.Get("txtNoDoc").value;
+    // this.FILA.Fecha = this.val.Get("txtFecha").value;
+    // this.FILA.Beneficiario = this.cmbProveedor.displayValue;
+    // this.FILA.CodProveedor = this.val.Get("cmbProveedor").value[0];
+    // this.FILA.TasaCambio = this.val.Get("TxtTC").value;
+    // this.FILA.Concepto = this.val.Get("txtConcepto").value;
+    // // this.FILA.Comision = Comision;
+    // // this.FILA.ComisionCordoba = ComisionCordoba;
+    // // this.FILA.ComisionDolar = ComisionDolar;
+    // this.FILA.TotalCordoba = Number(String(this.val.Get("txtTotalCordoba").value).replaceAll(",", ""));
+    // this.FILA.TotalDolar = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
+    // this.FILA.Total = (this.cFunciones.MonedaLocal == this.IdMoneda? this.FILA.TotalCordoba : this.FILA.TotalDolar );
+    // this.FILA.UsuarioReg = this.cFunciones.User;
+    // if (!this.esModal) this.FILA.Anulado = false;
+    // this.FILA.TipoCheque = "S";
+    // this.FILA.ChequeDocumento =  JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
+
+
+    // this.V_Contabilizacion();
+
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
     this.FILA.IdMoneda = this.IdMoneda;
@@ -1111,11 +1142,11 @@ export class ChequesSaldoComponent {
     // this.FILA.ComisionDolar = ComisionDolar;
     this.FILA.TotalCordoba = Number(String(this.val.Get("txtTotalCordoba").value).replaceAll(",", ""));
     this.FILA.TotalDolar = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
-    this.FILA.Total = (this.cFunciones.MonedaLocal == this.IdMoneda? this.FILA.TotalCordoba : this.FILA.TotalDolar );
+    this.FILA.Total = (this.cFunciones.MonedaLocal == this.IdMoneda ? this.FILA.TotalCordoba : this.FILA.TotalDolar);
     this.FILA.UsuarioReg = this.cFunciones.User;
     if (!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoCheque = "S";
-    this.FILA.ChequeDocumento =  JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
+    this.FILA.ChequeDocumento = JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
 
 
     this.V_Contabilizacion();
@@ -1231,6 +1262,70 @@ export class ChequesSaldoComponent {
 
     let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
     if (dialogRef != undefined) dialogRef.close();
+
+  }
+
+  public V_Ordenar_ColumnaCombo() : void{
+
+    let c = (<HTMLInputElement>document.getElementById("cmbColumna")).value;
+    let d = (<HTMLInputElement>document.getElementById("cmbDireccion")).value;
+
+    let o : iOrderBy = this.orderby.find(f => f.Columna == c)!;
+    if(d == "ASC") o.Direccion = "";
+    if(d == "DESC") o.Direccion = "ASC";
+
+    this.V_Ordenar_Columna(c);
+
+  }
+
+  public V_Ordenar_Columna(c: string): void {
+
+
+    let o : iOrderBy = this.orderby.find(f => f.Columna == c)!;
+
+    if(o.Direccion == "ASC")
+    {
+      o.Direccion = "DESC";
+    }
+    else
+    {
+      o.Direccion = "ASC";
+    }
+
+    this.lstDetalle.data.sort((a, b) => {
+
+      switch (c) {
+        case "Operacion":
+          return 0 - (a.Operacion > b.Operacion ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
+          break;
+
+        case "TipoDocumento":
+          return 0 - (a.TipoDocumento > b.TipoDocumento ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
+          break;
+
+        case "Documento":
+          return 0 - (a.Documento > b.Documento ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
+          break;
+
+        case "Fecha":
+          return 0 - (a.Fecha > b.Fecha ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
+          break;
+      }
+
+      return 0 - (a.Index > b.Index ? -1 : 1);
+
+    });
+
+
+    this.lstDetalle._updateChangeSubscription()
+
+
+    // Ascending
+    //this.lstDetalle.data.sort((a,b) => 0 - (a > b ? -1 : 1));
+
+    // Descending
+    //this.lstDetalle.data.sort((a, b) => 0 - (a.Fecha > b.Fecha ? 1 : -1));
+    this.lstDetalle._updateChangeSubscription()
 
   }
 
