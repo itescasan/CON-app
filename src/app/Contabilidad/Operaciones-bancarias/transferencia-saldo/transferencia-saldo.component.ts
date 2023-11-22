@@ -682,6 +682,7 @@ export class TransferenciaSaldoComponent {
 
       f.Importe = this.cFunciones.NumFormat(Importe, "2");
       f.NuevoSaldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
+      f.Saldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
       f.NuevoSaldoML = 0;
       f.NuevoSaldoMS = 0;
       this.dec_Aplicado += Importe;
