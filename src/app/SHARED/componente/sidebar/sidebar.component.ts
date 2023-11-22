@@ -72,7 +72,6 @@ export class SidebarComponent {
       }
 
 
-
       
       if (element.tagName.toString().toLocaleLowerCase() == "span") event.preventDefault();
 
@@ -314,6 +313,21 @@ export class SidebarComponent {
 
   ngAfterContentInit() {
     $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
+
+
+    var myOffcanvas = document.getElementById('offcanvas');
+     myOffcanvas!.addEventListener('show.bs.offcanvas', this.V_MostrarBoton);
+     myOffcanvas!.addEventListener('hidden.bs.offcanvas', this.V_OcultarBoton);
+  }
+
+
+  private V_MostrarBoton(){
+    $("#btnMenu").removeClass("start");
+    
+  }
+
+  private V_OcultarBoton(){
+    $("#btnMenu").addClass("start");
   }
 
   ngOnDestroy() {

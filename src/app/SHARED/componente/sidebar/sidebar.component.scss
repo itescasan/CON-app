@@ -1,4 +1,3 @@
-@import '/src/assets/scss/media.scss';
 
 
 .contenedor{
@@ -6,6 +5,9 @@
 
 }
 
+.contenedor-imagen{
+   margin-left: 40px;
+}
 
 img{
     position: relative;
@@ -15,10 +17,12 @@ img{
     padding: 0;
 }
 
+
 .contenedor-boton{
     position: fixed;
     top: 0;
-    right: 0;
+    left: 260px;
+    //right: 0;
     padding-top: 0;
     i{
         color: var(--escan-primario);
@@ -27,21 +31,19 @@ img{
     z-index: 2;
 }
 
+.contenedor-boton.start{
+    left: 0;
+}
+
+
+
 .DynamicFrom{
     z-index: 0;
 }
 
 
 .side-width{
+    width: 250px !important;
 
-
-       @include Tamano_Menor(lg) {
-        width: 50% !important;
-        }
-
-        @include Tamano(lg) {
-            width: 15% !important;
-            }
-     
 
 }
