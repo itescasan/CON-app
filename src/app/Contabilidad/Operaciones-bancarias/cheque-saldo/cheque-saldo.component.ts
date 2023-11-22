@@ -872,6 +872,77 @@ export class ChequesSaldoComponent {
 
   }
 
+  // private V_Contabilizacion(): void {
+  //   this.lstDetalleAsiento.splice(0, this.lstDetalleAsiento.length);
+
+
+
+  //   let i_Prov: iProveedor = this.lstProveedor.find(f => f.Codigo == this.val.Get("cmbProveedor").value[0])!;
+  //   let i_Banco: any = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.val.Get("cmbCuentaBancaria").value[0])!;
+
+  //   let TotalBanco: number = (this.IdMoneda == this.cFunciones.MonedaLocal ? Number(this.val.Get("txtTotalCordoba").value.replaceAll(",", "")) : Number(this.val.Get("txtTotalDolar").value.replaceAll(",", "")));
+  //   let Comision: number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
+
+
+  //   if(i_Banco == undefined) return;
+
+
+
+  //   this.Asiento.NoDocOrigen = this.val.Get("txtNoDoc").value;
+  //   this.Asiento.IdSerieDocOrigen = i_Banco.IdSerie;
+  //   this.Asiento.TipoDocOrigen = "CHEQUE A DOCUMENTO";
+
+  //   this.Asiento.IdSerie = this.Asiento.IdSerieDocOrigen;
+  //   this.Asiento.Bodega = this.val.Get("cmbBodega").value[0];
+  //   this.Asiento.Fecha = this.val.Get("txtFecha").value;
+  //   this.Asiento.Referencia = i_Banco.CuentaBancaria;
+  //   this.Asiento.Concepto = this.val.Get("txtConcepto").value;
+  //   this.Asiento.IdMoneda = this.IdMoneda;
+  //   this.Asiento.TasaCambio = this.TC;
+
+  //   this.Asiento.Total = this.FILA.Total;
+  //   this.Asiento.TotalML = this.FILA.TotalCordoba;
+  //   this.Asiento.TotalMS = this.FILA.TotalDolar;
+  //   this.Asiento.UsuarioReg = this.FILA.UsuarioReg;
+  //   this.Asiento.FechaReg = new Date();
+  //   this.Asiento.Estado = "";
+
+  //   this.Asiento.IdPeriodo = 0;
+  //   this.Asiento.Estado = "Autorizado";
+  //   this.Asiento.TipoAsiento = "ASIENTO BASE";
+  //   this.Asiento.NoAsiento = "";
+
+
+
+  //   this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "C", "");
+  //   this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "C", "");
+
+
+  //   this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
+
+
+  //     if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+  //       this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, "D", "");
+  //     }
+  //     else {
+  //       this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, "D", "");
+
+  //     }
+
+
+  //     if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, "D", "ML");
+  //     if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, "D", "MS");
+
+  //     if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, "C", "ML");
+  //     if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, "C", "MS");
+
+  //   });
+
+
+  //   this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
+
+  // }
+
   private V_Contabilizacion(): void {
     this.lstDetalleAsiento.splice(0, this.lstDetalleAsiento.length);
 
@@ -884,7 +955,7 @@ export class ChequesSaldoComponent {
     let Comision: number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
 
 
-    if(i_Banco == undefined) return;
+    if (i_Banco == undefined) return;
 
 
 
@@ -942,6 +1013,7 @@ export class ChequesSaldoComponent {
     this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
 
   }
+  
 
   private Nueva_Linea_Asiento(Monto: number, Cuenta: string, Referencia: string, Naturaleza: string, Columna: string): void {
 

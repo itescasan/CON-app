@@ -358,7 +358,7 @@ export class RegistroChequesComponent {
       }
 
 
-      if(det.TipoCheque == "C")
+      if(det.TipoCheque== "C")
       {
         this.GET.GetDetalleCuenta(det.IdCheque).subscribe(
           {
@@ -459,7 +459,7 @@ export class RegistroChequesComponent {
                 let datos: iDatos[] = _json["d"];
     
               
-                  let dialogTransf: MatDialogRef<ChequesSaldoComponent> = this.cFunciones.DIALOG.open(
+                  let dialogCheque: MatDialogRef<ChequesSaldoComponent> = this.cFunciones.DIALOG.open(
                     ChequesSaldoComponent,
                     {
                       panelClass: "escasan-dialog-full",
@@ -469,20 +469,21 @@ export class RegistroChequesComponent {
                   
                   
                     
-                  dialogTransf.afterOpened().subscribe(s =>{
-                    dialogTransf.componentInstance.FILA = det;
-                    dialogTransf.componentInstance.esModal = true;
+                  dialogCheque.afterOpened().subscribe(s =>{
+                    dialogCheque.componentInstance.FILA = det;
+                    dialogCheque.componentInstance.esModal = true;
     
     
-                    dialogTransf.componentInstance.FILA.ChequeDocumento = JSON.parse(JSON.stringify(datos[0].d));
-                    dialogTransf.componentInstance.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(datos[1].d));
+                    dialogCheque.componentInstance.FILA.ChequeDocumento = JSON.parse(JSON.stringify(datos[0].d));
+                    dialogCheque.componentInstance.Asiento = JSON.parse(JSON.stringify(datos[1].d));
+                    dialogCheque.componentInstance.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(datos[2].d));
     
     
-                    dialogTransf.componentInstance.v_CargarDatos();
+                    dialogCheque.componentInstance.v_CargarDatos();
     
                   });
     
-                  dialogTransf.afterClosed().subscribe(s =>{
+                  dialogCheque.afterClosed().subscribe(s =>{
                     this.v_CargarDatos();
                   });
     
@@ -524,8 +525,9 @@ export class RegistroChequesComponent {
 
   }
 
+
   public V_Anular(det : any) : void{
-    let dialogRef: MatDialogRef<AnularComponent> = this.cFunciones.DIALOG.open(
+    let dialogRef: MatDialogRef<AnularComponent> = this.cFunciones.DIALOG.open( 
       AnularComponent,
       {
         panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
