@@ -914,6 +914,7 @@ export class TransferenciaCuentaComponent {
      this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
      this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
      this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
+     this.val.addNumberFocus("TxtTC", 4);
 
 
     

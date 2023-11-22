@@ -1348,7 +1348,7 @@ export class TransferenciaSaldoComponent {
 
   ngDoCheck() {
 
-    this.val.addNumberFocus("TxtTC", 2);
+    this.val.addNumberFocus("TxtTC", 4);
     this.val.addNumberFocus("txtComision", 2);
     this.val.addNumberFocus("txtTotalCordoba", 2);
     this.val.addNumberFocus("txtTotalDolar", 2);
