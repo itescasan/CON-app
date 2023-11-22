@@ -20,12 +20,12 @@ img{
 
 .contenedor-boton{
     position: fixed;
-    top: 0;
-    left: 260px;
+    top: 15px;
+    left: 0;
     //right: 0;
     padding-top: 0;
     i{
-        color: var(--escan-primario);
+        color: var(--escan-opcional);
     }
     
     z-index: 2;
