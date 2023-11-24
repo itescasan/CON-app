@@ -545,6 +545,8 @@ export class TransferenciaCuentaComponent {
     det.Descripcion = "";
     det.Referencia = "";
     det.CentroCosto = "";
+    det.NoDocumento = "";
+    det.TipoDocumento = "";
     this.lstDetalle.data.push(det);
 
     this.V_Ordenar(i);
