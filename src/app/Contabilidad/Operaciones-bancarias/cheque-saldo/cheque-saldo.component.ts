@@ -891,7 +891,7 @@ export class ChequesSaldoComponent {
 
 
 
-    this.Asiento.NoDocOrigen = this.val.Get("txtNoDoc").value;
+    this.Asiento.NoDocOrigen = this.val.Get("txtNoDoc").value; 
     this.Asiento.IdSerieDocOrigen = i_Banco.IdSerie;
     this.Asiento.TipoDocOrigen = "CHEQUE A DOCUMENTO";
 
@@ -917,27 +917,27 @@ export class ChequesSaldoComponent {
 
 
  
-    this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "C", "");
-    this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "C", "");
+    this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "", "", "C", "");
+    this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "", "", "C", "");
 
 
     this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
 
 
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, "D", "");
+        this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento,"D", "");
       }
       else {
-        this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, "D", "");
+        this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento,"D", "");
 
       }
 
 
-      if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, "D", "ML");
-      if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, "D", "MS");
+      if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento,f.Documento, f.TipoDocumento, "D", "ML");
+      if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento,f.Documento, f.TipoDocumento, "D", "MS");
 
-      if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, "C", "ML");
-      if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, "C", "MS");
+      if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento,f.Documento, f.TipoDocumento, "C", "ML");
+      if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento,"C", "MS");
 
     });
 
@@ -947,7 +947,7 @@ export class ChequesSaldoComponent {
   }
   
 
-  private Nueva_Linea_Asiento(Monto: number, Cuenta: string, Referencia: string, Naturaleza: string, Columna: string): void {
+  private Nueva_Linea_Asiento(Monto: number, Cuenta: string, Referencia: string, Documento :string, TipoDocumento : string, Naturaleza: string, Columna: string): void {
 
     if (Monto == 0) return;
     Monto = this.cFunciones.Redondeo(Monto, "2");
@@ -968,6 +968,8 @@ export class ChequesSaldoComponent {
     det.Referencia = Referencia;
     det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
     det.Naturaleza =  i_Cuenta?.Naturaleza!;
+    det.NoDocumento = Documento
+    det.TipoDocumento = TipoDocumento;
 
 
 

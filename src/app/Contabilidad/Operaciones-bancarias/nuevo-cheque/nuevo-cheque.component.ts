@@ -636,6 +636,8 @@ public v_Enter_Cuenta2(event: any) {
     det.Modulo = "CON";
     det.Descripcion = "";
     det.Referencia = "";
+    det.NoDocumento = "";
+    det.TipoDocumento = "";
     this.lstDetalle.data.push(det);
 
     this.V_Ordenar(i);
