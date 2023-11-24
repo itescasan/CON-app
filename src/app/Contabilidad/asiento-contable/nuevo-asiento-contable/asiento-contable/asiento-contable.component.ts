@@ -876,6 +876,12 @@ export class AsientoContableComponent {
   }
 
 
+  public v_Filtrar(event : any){
+    this.lstDetalle.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  }
+
+
+
   ngOnInit(): void {
 
 

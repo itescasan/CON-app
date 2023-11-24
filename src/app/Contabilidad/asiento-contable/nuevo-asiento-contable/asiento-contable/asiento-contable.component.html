@@ -332,17 +332,68 @@
 <div class="contenedor-pie">
     <div class="pie-asiento">
 
-        <div class="totales">
-            <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
-                "1.2-2"}}</span></span>
+        <div class="row">
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
                 
-            <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
-                    "1.2-2"}}</span></span>
-            <span class="credito"><span class="etiqueta">Crédito:</span><span class="valores">{{dec_TotalHaber | number
-                    : "1.2-2"}}</span></span>
-          
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+    
+                    <div class="form-floating">
+                        <input type="text" id="txtBuscar-cuenta" class="form-control" placeholder="Buscar"
+                            aria-label="Buscar"  (keyup)="v_Filtrar($event)">
+                        <label for="txtBuscar-Asiento">Buscar</label>
+    
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+
+                <div class="totales">
+                    <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
+                        "1.2-2"}}</span></span>
+                        
+                </div>
+              
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+
+                <div class="totales">
+                   
+                    <span>
+                        <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
+                            "1.2-2"}}</span></span>
+                    </span>
+                   
+                        
+                </div>
+              
+            </div>
+
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+
+                <div class="totales">
+
+                    <span>
+                        <span class="credito"><span class="etiqueta">Crédito:</span><span class="valores">{{dec_TotalHaber | number
+                            : "1.2-2"}}</span></span>
+                    </span>
+                   
+                   
+                </div>
+              
+            </div>
+
+
+
+
+    
         </div>
 
+     
         <div class="botones" *ngIf="!esAuxiliar">
             <div *ngIf="!(['Anulado', 'Autorizado']).includes(Estado)">
                 <button type="button" class="btn btn-secundario" id="btnRefrescar-Asiento" (click)="v_CargarDatos();"><i
