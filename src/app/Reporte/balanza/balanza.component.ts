@@ -129,7 +129,7 @@ export class BalanzaComponent {
 
 
 
-
+return;
 
     if (this.cFunciones.MyBrowser() == "Firefox") {
       let iframe = document.createElement('iframe');
