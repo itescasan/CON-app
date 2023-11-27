@@ -249,6 +249,13 @@ export class Validacion {
 
     }
 
+    if (elmento.localName == "select")
+    {
+
+      //(<any>$("#" + _element_next.IdNext)).selectpicker('toggle');
+
+    }
+
     if (_element_next.Evento != undefined) $("#" + _element_next.IdNext)?.trigger(_element_next.Evento);
 
 

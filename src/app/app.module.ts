@@ -46,6 +46,7 @@ import { NuevoChequeComponent } from './Contabilidad/Operaciones-bancarias/nuevo
 import { RegistroChequesComponent } from './Contabilidad/Operaciones-bancarias/registro-cheques/registro-cheques.component';
 import { TransferenciaSaldoComponent } from './Contabilidad/Operaciones-bancarias/transferencia-saldo/transferencia-saldo.component';
 import { ChequesSaldoComponent } from './Contabilidad/Operaciones-bancarias/cheque-saldo/cheque-saldo.component';
+import { BalanzaComponent } from './Reporte/balanza/balanza.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { ChequesSaldoComponent } from './Contabilidad/Operaciones-bancarias/cheq
     NuevoChequeComponent,
     RegistroChequesComponent,
     TransferenciaSaldoComponent,
-    ChequesSaldoComponent
+    ChequesSaldoComponent,
+    BalanzaComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,74 @@
+<div class="contenedor">
+    <div class="row">
+
+        <div class="contenedor-filtro linea-bottom-primario">
+            <div class="row">
+                <p>Registros de Transferencia</p>
+            </div>
+
+            <div class="row mb-2">
+                <form autocomplete="off" [formGroup]="val.ValForm">
+                    <div class="row">
+
+
+                        <div class="col-12 col-md-12 col-lg-3 mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                <div class="form-floating">
+                                    <input type="date" id="txtFecha1" class="form-control" max="9999-12-31"
+                                        placeholder="Fecha Inicio" aria-label="Fecha Final"
+                                        formControlName="txtFecha1">
+                                    <label for="txtFecha1">Desde</label>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                <div class="form-floating">
+                                    <input type="date" id="txtFecha2" class="form-control" max="9999-12-31"
+                                        placeholder="Fecha Final" aria-label="Fecha Final"
+                                        formControlName="txtFecha2">
+                                    <label for="txtFecha2">Hasta</label>
+
+                                </div>
+                              
+                            </div>
+                           
+                        </div>
+
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Nivel"
+                                    id="cmbNivel" formControlName="cmbNivel">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    <label for="cmbNivel">Nivel</label>
+                                </div>
+                                <span class="input-group-text"> <button type="button" class="btn btn-secundario"
+                                    id="btnReporte-Balanza" (click)="V_Imprimir();"><i
+                                        class="fa-solid fa-print fa-beat-fade fa-xl"></i>
+                                    Imprimir</button></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+</div>
