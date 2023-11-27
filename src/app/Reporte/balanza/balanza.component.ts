@@ -26,11 +26,13 @@ export class BalanzaComponent {
   
       this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
       this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
-      this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "");
-  
+      this.val.add("cmbNivel", "1", "LEN>", "0", "Nivel", "Seleccione un nivel.");
+      this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
+      
   
       this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
       this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
+      this.val.Get("cmbNivel").setValue(1);
       this.val.Get("cmbNivel").setValue(1);
     }
   
@@ -60,7 +62,7 @@ export class BalanzaComponent {
   
   
   
-      this.GET.GetBalanzaComprobacion(this.val.Get("txtFecha1").value, this.val.Get("txtFecha2").value, this.val.Get("cmbNivel").value).subscribe(
+      this.GET.GetBalanzaComprobacion(this.val.Get("txtFecha1").value, this.val.Get("txtFecha2").value, this.val.Get("cmbNivel").value, this.val.Get("cmbMoneda").value).subscribe(
         {
           next: (data) => {
   
@@ -161,10 +163,11 @@ export class BalanzaComponent {
       ///CAMBIO DE FOCO
 
       this.val.addFocus("txtFecha1", "txtFecha2", undefined);
-      this.val.addFocus("txtFecha2", "cmbNivel", undefined);
+      this.val.addFocus("txtFecha2", "cmbMoneda", undefined);
+      this.val.addFocus("cmbMoneda", "cmbNivel", undefined);
       this.val.addFocus("cmbNivel", "btnReporte-Balanza", "click");
   
-  
+      
     }
   
     

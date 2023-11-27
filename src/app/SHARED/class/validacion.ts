@@ -252,7 +252,9 @@ export class Validacion {
     if (elmento.localName == "select")
     {
 
-      //(<any>$("#" + _element_next.IdNext)).selectpicker('toggle');
+      //(<any>$("#" + _element_next.IdNext)).modal("show");
+      //(<any>elmento).size = 50
+      
 
     }
 
