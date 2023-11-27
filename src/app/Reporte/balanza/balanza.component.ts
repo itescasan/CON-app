@@ -126,7 +126,7 @@ export class BalanzaComponent {
 
 
     let iframe = document.createElement('iframe');
-    iframe.id = "fFactura";
+    iframe.id = "frameBalanza";
     iframe.style.display = 'none';
 
     iframe.src = url
