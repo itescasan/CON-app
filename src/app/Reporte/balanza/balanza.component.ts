@@ -121,15 +121,13 @@ export class BalanzaComponent {
 
     let url = URL.createObjectURL(file);
 
-
-    let pdfsToMerge = [url];
-
     let tabOrWindow : any = window.open(url, '_blank');
     tabOrWindow.focus();
 
+    return
+    let pdfsToMerge = [url];
 
-
-return;
+  
 
     if (this.cFunciones.MyBrowser() == "Firefox") {
       let iframe = document.createElement('iframe');
