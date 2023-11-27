@@ -124,33 +124,16 @@ export class BalanzaComponent {
 
     let pdfsToMerge = [url];
 
-
-    let iframe = document.createElement('iframe');
-    iframe.id = "frameBalanza";
-    iframe.style.display = 'none';
-
-    iframe.src = url
-    document.body.appendChild(iframe);
-    iframe.onload = () => {
-      setTimeout(() => {
-        iframe.focus();
-       // iframe.contentWindow?.print();
-
-        let tabOrWindow : any = window.open(url, '_blank');
-        tabOrWindow.focus();
+    let tabOrWindow : any = window.open(url, '_blank');
+    tabOrWindow.focus();
 
 
-      });
-    };
-
-
-    return;
 
 
 
     if (this.cFunciones.MyBrowser() == "Firefox") {
       let iframe = document.createElement('iframe');
-      iframe.id = "fFactura";
+      iframe.id = "frameBalanza";
       iframe.style.display = 'none';
 
       iframe.src = url
@@ -158,10 +141,7 @@ export class BalanzaComponent {
       iframe.onload = () => {
         setTimeout(() => {
           iframe.focus();
-         // iframe.contentWindow?.print();
-
-          let tabOrWindow : any = window.open(url, '_blank');
-          tabOrWindow.focus();
+          iframe.contentWindow?.print();
 
 
         });
