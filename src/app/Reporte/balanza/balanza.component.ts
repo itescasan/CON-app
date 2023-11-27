@@ -163,9 +163,9 @@ export class BalanzaComponent {
       ///CAMBIO DE FOCO
 
       this.val.addFocus("txtFecha1", "txtFecha2", undefined);
-      this.val.addFocus("txtFecha2", "cmbMoneda", undefined);
-      this.val.addFocus("cmbMoneda", "cmbNivel", undefined);
-      this.val.addFocus("cmbNivel", "btnReporte-Balanza", "click");
+      this.val.addFocus("txtFecha2", "cmbNivel", undefined);
+      this.val.addFocus("cmbNivel", "cmbMoneda", undefined);
+      this.val.addFocus("cmbMoneda", "btnReporte-Balanza", "click");
   
       
     }
