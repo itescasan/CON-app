@@ -33,7 +33,7 @@ export class BalanzaComponent {
       this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
       this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
       this.val.Get("cmbNivel").setValue(1);
-      this.val.Get("cmbMoneda").setValue(1);
+      this.val.Get("cmbMoneda").setValue(true);
     }
   
 
