@@ -809,6 +809,7 @@ public v_Enter_Cuenta2(event: any) {
 
 
   }
+
   public V_Calcular(): void {
 
     this.dec_TotalDebe = 0;
@@ -845,55 +846,7 @@ public v_Enter_Cuenta2(event: any) {
 
   }
 
-  // public V_Calcular2(): void {
-
-  //   this.dec_TotalDebe = 0;
-  //   this.dec_TotalHaber = 0;
-  //   this.dec_Dif = 0;
-
-  //   this.lstDetalle.data.forEach(f => {
-
-  //     let Debe = Number(String(f.Debito).replaceAll(",", ""));
-  //     let Haber = Number(String(f.Credito).replaceAll(",", ""));
-
-  //     if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-  //       f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
-  //       f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML / this.TC, "2");
-
-  //       f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
-  //       f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML / this.TC, "2");
-  //     }else{
-  //       f.DebitoML = this.cFunciones.Redondeo(Debe, "2");
-  //       f.DebitoMS = this.cFunciones.Redondeo(f.DebitoML , "2");
-
-  //       f.CreditoML = this.cFunciones.Redondeo(Haber, "2");
-  //       f.CreditoMS = this.cFunciones.Redondeo(f.CreditoML , "2");
-  //     }
-
-
-
-
-  //     this.dec_TotalDebe += Debe;
-  //     this.dec_TotalHaber += Haber;
-  //   });
-
-  //   this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2");
-
-  //   let TotalCordoba : number = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
-  //   let TotalDolar : number  = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
-  //   if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-  //   }else{
-  //     TotalCordoba = TotalCordoba * this.TC
-  //     }
-
-
-
-  //   this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(TotalCordoba, "2"));
-  //   this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(TotalDolar, "2"));
-
-
-  // }
-
+  
   public v_Guardar() : void{
 
     this.val.EsValido();
@@ -1249,6 +1202,15 @@ public v_Enter_Cuenta2(event: any) {
       if(dialogRef != undefined) dialogRef.close();
      
     });
+  }
+
+  public v_ImprimirCheque() {
+    document.getElementById("btnReporte-Balanza")?.setAttribute("disabled", "disabled");
+
+
+
+  
+
   }
   
 
