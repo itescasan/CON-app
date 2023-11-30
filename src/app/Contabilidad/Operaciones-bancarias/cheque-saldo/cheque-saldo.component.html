@@ -434,6 +434,11 @@
     <div class="pie-Cheque">
 
         <div class="totales">
+            <div class="btnImprimir">
+                <button  type="button" class="btn btn-opcional btnImprimirCheque" id="btnImprimir-Cheques" *ngIf="esModal"
+                    (click)="v_ImprimirCheque();" ><i class="fa-solid fa-print fa-beat"></i>
+                    Imprimir</button>
+            </div>            
 
             <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
                 "1.2-2"}}</span></span>
@@ -448,17 +453,18 @@
 
         <div class="botones">
             <div>
-                <button type="button" class="btn btn-secundario" id="btnRefrescar-Cheque"
-                    (click)="v_CargarDatos();" *ngIf="!Anulado"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                <button type="button" class="btn btn-secundario" id="btnRefrescar-Cheque" 
+                    (click)="v_CargarDatos();" *ngIf="!Anulado" ><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
                     Refrescar</button>
                 <button type="button" class="btn btn-opcional" id="btn-Documentos-proveedor-Contabilizacion"
                     (click)="V_Mostrar_Asiento();"><i class="fa-solid fa-book fa-beat fa-lg"></i>
                     Contabilización</button>
                     
+                    
             </div>
 
 
-            <div class="botones-edicion">
+            <div class="botones-edicion" >
                 <button type="button" class="btn btn-primario" id="btnGuardar-Cheque-Saldo" (click)="v_Guardar();" *ngIf="!Anulado"><i
                         class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
                     Guardar</button>

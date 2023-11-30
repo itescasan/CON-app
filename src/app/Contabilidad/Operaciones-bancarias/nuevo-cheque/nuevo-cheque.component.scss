@@ -17,6 +17,9 @@
 }
 
 
+.btnImprimirCheque{
+    margin-left: 2% !important;
+}
 
 
   
@@ -160,6 +163,7 @@
 
     }
 
+
     .botones {
 
         position: relative;
@@ -189,7 +193,7 @@
 
         }
 
-        
+       
 
         @include Tamano_Menor(lg) {
 

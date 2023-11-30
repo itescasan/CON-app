@@ -22,6 +22,8 @@ import { iCheque } from '../../../Interface/Contabilidad/i-Cheque';
 import { iChequePOST } from '../../../Interface/Contabilidad/i-Cheque-POST';
 import { postCheque } from '../CRUD/POST/post-Cheque';
 import { iCentroCosto } from '../../../Interface/Contabilidad/i-Centro-Costo';
+import { PDFDocument } from 'pdf-lib';
+import * as printJS from 'print-js';
 
 
 @Component({
@@ -1205,13 +1207,145 @@ public v_Enter_Cuenta2(event: any) {
   }
 
   public v_ImprimirCheque() {
-    document.getElementById("btnReporte-Balanza")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnImprimir-Cheques")?.setAttribute("disabled", "disabled");
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
 
 
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+
+
+    this.GET.GetRptCheque(this.val.Get("txtNoDoc").value).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos = _json["d"];
+            this.printPDFS(datos.d);
+
+
+
+          }
+
+        },
+        error: (err) => {
+
+
+          dialogRef.close();
+          document.getElementById("btnReporte-Cheque")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnImprimir-Cheques")?.removeAttribute("disabled");
+
+
+        }
+      }
+    );
+
+
+  }
+
+
+  async printPDFS(datos: any) {
+
+
+
+    let byteArray = new Uint8Array(atob(datos).split('').map(char => char.charCodeAt(0)));
+
+    var file = new Blob([byteArray], { type: 'application/pdf' });
+
+    let url = URL.createObjectURL(file);
+
+    let tabOrWindow : any = window.open(url, '_blank');
+    tabOrWindow.focus();
+
+    return
+    let pdfsToMerge = [url];
 
   
 
+    if (this.cFunciones.MyBrowser() == "Firefox") {
+      let iframe = document.createElement('iframe');
+      iframe.id = "frameBalanza";
+      iframe.style.display = 'none';
+
+      iframe.src = url
+      document.body.appendChild(iframe);
+      iframe.onload = () => {
+        setTimeout(() => {
+          iframe.focus();
+          iframe.contentWindow?.print();
+
+
+        });
+      };
+
+    }
+    else {
+      const mergedPdf = await PDFDocument.create();
+      for (const pdfCopyDoc of pdfsToMerge) {
+        const pdfBytes = await fetch(pdfCopyDoc).then(res => res.arrayBuffer())
+
+        const pdf = await PDFDocument.load(pdfBytes);
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        copiedPages.forEach((page: any) => {
+          mergedPdf.addPage(page);
+        });
+      }
+
+
+      const mergedPdfFile = await mergedPdf.save();
+      this.downloadFile(mergedPdfFile);
+    }
+
+
+
+
   }
+
+
+  downloadFile(data: any) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+
+    printJS({
+      printable: url,
+      type: 'pdf',
+      onPdfOpen: undefined,
+      onPrintDialogClose: undefined
+    })
+
+  }
+
   
 
   ngOnInit(): void {

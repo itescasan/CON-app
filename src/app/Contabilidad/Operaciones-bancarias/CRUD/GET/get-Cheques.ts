@@ -41,6 +41,10 @@ export class getCheques{
     public GetDetalleDocumentos(IdCheque: string) {
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Cheques/GetDetalleDocumentos?IdCheque=" + IdCheque); 
     }
+    
+    public GetRptCheque(NoAsiento: string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Cheque?NoAsiento=" + NoAsiento);
+    }
 
 
 }
