@@ -37,6 +37,7 @@ export class TransferenciaSaldoComponent {
   public overlaySettings: OverlaySettings = {};
   public val = new Validacion();
   public valTabla = new Validacion();
+  public load :boolean = false;
 
   private IdMoneda: string = "";
 
@@ -549,58 +550,7 @@ export class TransferenciaSaldoComponent {
             this.lstDetalle.data = datos.d;
 
 
-            this.lstDetalle.data.forEach(f => {
-
-              let saldo: number = 0
-              let saldoDolar: number = 0
-              let saldoCordoba: number = 0
-
-              f.SaldoAnt = (f.IdMoneda == this.cFunciones.MonedaLocal ? f.SaldoCordoba : f.SaldoDolar);
-              f.SaldoAntML = f.SaldoCordoba;
-              f.SaldoAntMS = f.SaldoDolar;
-
-
-              if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-
-
-                saldo = f.SaldoCordoba;
-                saldoCordoba = saldo;
-                saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
-
-
-                if (f.IdMoneda != this.cFunciones.MonedaLocal) {
-                  saldo = f.SaldoDolar;
-                  saldoDolar = saldo;
-                  saldoCordoba = this.cFunciones.Redondeo(saldoDolar * this.TC, "2");
-
-                }
-
-                saldo = this.cFunciones.Redondeo(saldoCordoba, "2");
-
-              }
-
-              else {
-
-                saldo = f.SaldoDolar;
-                saldoDolar = saldo;
-                saldoCordoba = this.cFunciones.Redondeo(saldo * this.TC, "2");
-
-                if (f.IdMoneda == this.cFunciones.MonedaLocal) {
-                  saldo = f.SaldoCordoba;
-                  saldoCordoba = saldo;
-                  saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
-                }
-
-                saldo = this.cFunciones.Redondeo(saldoDolar, "2");
-              }
-
-              f.Importe = "0.00";
-              f.Saldo = this.cFunciones.NumFormat(saldo, "2");
-              f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
-              f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
-
-            });
-
+    
             this.V_Calcular();
 
           }
@@ -630,9 +580,64 @@ export class TransferenciaSaldoComponent {
 
 
 
+private V_CalcularSaldo(){
 
+  this.lstDetalle.data.forEach(f => {
+
+    let saldo: number = 0
+    let saldoDolar: number = 0
+    let saldoCordoba: number = 0
+
+    f.SaldoAnt = (f.IdMoneda == this.cFunciones.MonedaLocal ? f.SaldoCordoba : f.SaldoDolar);
+    f.SaldoAntML = f.SaldoCordoba;
+    f.SaldoAntMS = f.SaldoDolar;
+
+
+    if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+
+
+      saldo = f.SaldoCordoba;
+      saldoCordoba = saldo;
+      saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
+
+
+      if (f.IdMoneda != this.cFunciones.MonedaLocal) {
+        saldo = f.SaldoDolar;
+        saldoDolar = saldo;
+        saldoCordoba = this.cFunciones.Redondeo(saldoDolar * this.TC, "2");
+
+      }
+
+      saldo = this.cFunciones.Redondeo(saldoCordoba, "2");
+
+    }
+
+    else {
+
+      saldo = f.SaldoDolar;
+      saldoDolar = saldo;
+      saldoCordoba = this.cFunciones.Redondeo(saldo * this.TC, "2");
+
+      if (f.IdMoneda == this.cFunciones.MonedaLocal) {
+        saldo = f.SaldoCordoba;
+        saldoCordoba = saldo;
+        saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
+      }
+
+      saldo = this.cFunciones.Redondeo(saldoDolar, "2");
+    }
+
+    f.Importe = "0.00";
+    f.Saldo = this.cFunciones.NumFormat(saldo, "2");
+    f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
+    f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
+
+  });
+
+}
 
   public V_Calcular(): void {
+    if(this.load) return;
 
     if (this.IdMoneda != "undefined" && this.IdMoneda != "") {
 
@@ -652,11 +657,15 @@ export class TransferenciaSaldoComponent {
 
     this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
     this.val.Get("TxtTC").setValue(this.TC);
+    this.load = true;
     this.v_ConvertirTotal("");
+    this.load = false;
 
 
     this.dec_Aplicado = 0;
     this.dec_Dif = 0;
+
+    this.V_CalcularSaldo();
 
     this.lstDetalle.data.forEach(f => {
 
@@ -686,7 +695,6 @@ export class TransferenciaSaldoComponent {
 
       f.Importe = this.cFunciones.NumFormat(Importe, "2");
       f.NuevoSaldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
-      f.Saldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
       f.NuevoSaldoML = 0;
       f.NuevoSaldoMS = 0;
       this.dec_Aplicado += Importe;
