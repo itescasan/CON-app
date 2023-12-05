@@ -306,7 +306,8 @@ export class TransferenciaSaldoComponent {
 
 
   public v_ConvertirTotal(event: any): void {
-
+    if(this.load) return;
+    this.load = true;
     let valor: number = 0;
     let id: String = "";
 
@@ -462,8 +463,7 @@ export class TransferenciaSaldoComponent {
             let datos: iDatos = _json["d"];
             this.TC = Number(datos.d);
             this.val.Get("TxtTC").setValue(this.TC);
-            this.v_ConvertirTotal("");
-            this.V_Calcular();
+            this.V_CalcularSaldo();
           }
 
         },
@@ -550,9 +550,8 @@ export class TransferenciaSaldoComponent {
             this.lstDetalle.data = datos.d;
 
 
-    
-            this.V_Calcular();
-
+            this.V_CalcularSaldo();
+  
           }
 
         },
@@ -580,7 +579,9 @@ export class TransferenciaSaldoComponent {
 
 
 
-private V_CalcularSaldo(){
+public V_CalcularSaldo(){
+
+  this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
 
   this.lstDetalle.data.forEach(f => {
 
@@ -627,17 +628,18 @@ private V_CalcularSaldo(){
       saldo = this.cFunciones.Redondeo(saldoDolar, "2");
     }
 
-    f.Importe = "0.00";
+    if(f.Importe == undefined) f.Importe  = "0.00";
     f.Saldo = this.cFunciones.NumFormat(saldo, "2");
     f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
     f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
 
   });
 
+  this.V_Calcular();
 }
 
   public V_Calcular(): void {
-    if(this.load) return;
+   
 
     if (this.IdMoneda != "undefined" && this.IdMoneda != "") {
 
@@ -657,15 +659,15 @@ private V_CalcularSaldo(){
 
     this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
     this.val.Get("TxtTC").setValue(this.TC);
-    this.load = true;
+   
     this.v_ConvertirTotal("");
-    this.load = false;
+    
 
 
     this.dec_Aplicado = 0;
     this.dec_Dif = 0;
 
-    this.V_CalcularSaldo();
+   
 
     this.lstDetalle.data.forEach(f => {
 
@@ -784,7 +786,7 @@ private V_CalcularSaldo(){
 
 
     this.dec_Dif = this.cFunciones.Redondeo(this.dec_Disponible - this.dec_Aplicado, "2");
-
+    this.load = false;
 
   }
 
@@ -937,21 +939,26 @@ private V_CalcularSaldo(){
 
     this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
 
+      let det : iAsientoDetalle;
 
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+        det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+        det.DebitoMS += f.DiferencialMS;
       }
       else {
-        this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+       det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+       det.DebitoML += f.DiferencialML;
 
       }
+
+      
 
 
       if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
       if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
 
-      if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
-      if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
+      //if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
+      //if (f.DiferencialMS != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), "1113-04-01", "DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
 
     });
 
@@ -960,14 +967,16 @@ private V_CalcularSaldo(){
 
   }
 
-  private Nueva_Linea_Asiento(Monto: number, Cuenta: string, Referencia: string, Documento :string, TipoDocumento : string, Naturaleza: string, Columna: string): void {
+  private Nueva_Linea_Asiento(Monto: number, Cuenta: string, Referencia: string, Documento :string, TipoDocumento : string, Naturaleza: string, Columna: string): iAsientoDetalle {
 
-    if (Monto == 0) return;
+    let det: iAsientoDetalle = {} as iAsientoDetalle;
+
+    if (Monto == 0) return det;
     Monto = this.cFunciones.Redondeo(Monto, "2");
 
 
     let i: number = 1;
-    let det: iAsientoDetalle = {} as iAsientoDetalle;
+   
     let i_Cuenta = this.lstCuenta.find(f => f.CuentaContable == Cuenta);
 
     if (this.lstDetalleAsiento.length > 0) i = Math.max(...this.lstDetalleAsiento.map(o => o.NoLinea)) + 1
@@ -1063,6 +1072,8 @@ private V_CalcularSaldo(){
 
 
     this.lstDetalleAsiento.push(det);
+
+    return det;
 
   }
 
@@ -1348,7 +1359,7 @@ private V_CalcularSaldo(){
 
   ngAfterViewInit(): void {
     ///CAMBIO DE FOCO
-    this.val.Combo(this.cmbCombo);
+   
     this.val.addFocus("cmbCuentaBancaria", "cmbCentroCosto", undefined);
     this.val.addFocus("cmbCentroCosto", "cmbBodega", undefined);
     this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
@@ -1357,7 +1368,7 @@ private V_CalcularSaldo(){
   }
 
   ngDoCheck() {
-
+    this.val.Combo(this.cmbCombo);
     this.val.addNumberFocus("TxtTC", 4);
     this.val.addNumberFocus("txtComision", 2);
     this.val.addNumberFocus("txtTotalCordoba", 2);
