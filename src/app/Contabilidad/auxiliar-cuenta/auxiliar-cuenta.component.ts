@@ -47,7 +47,7 @@ export class AuxiliarCuentaComponent {
     this.val.add("txtBodega", "1", "LEN>=", "0", "Bodega", "");
     this.val.add("txtCuenta-Asiento", "1", "LEN>=", "0", "Cuenta", "");
 
-    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth() - 1, 1)), "yyyy-MM-dd"));
+    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
 
    this.v_BODEGA();
