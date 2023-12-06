@@ -74,7 +74,7 @@ export class ChequesSaldoComponent {
   ];
 
   @ViewChildren(IgxComboComponent)
-  public cmbCombo: QueryList<IgxComboComponent>;
+  public cmbCombo: QueryList<IgxComboComponent>; 
 
 
   constructor(public cFunciones: Funciones, private GET: getCheques, private POST: postCheque) {
@@ -145,7 +145,7 @@ export class ChequesSaldoComponent {
         this.val.Get("txtBanco").disable();
         this.val.Get("txtNoDoc").disable();
         this.val.Get("txtMoneda").disable();
-        this.val.Get("TxtTC").disable();
+        //this.val.Get("TxtTC").disable();
         this.val.Get("txtTotalDolar").disable();
         this.val.Get("txtTotalCordoba").disable();
         this.val.Get("txtComision").disable();
@@ -459,8 +459,10 @@ export class ChequesSaldoComponent {
             let datos: iDatos = _json["d"];
             this.TC = Number(datos.d);
             this.val.Get("TxtTC").setValue(this.TC);
-            this.v_ConvertirTotal("");
-            this.V_Calcular();
+            //this.v_ConvertirTotal("");
+            this.V_CalcularSaldo();
+            //this.V_Calcular();
+
           }
 
         },
@@ -546,61 +548,9 @@ export class ChequesSaldoComponent {
             this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
             this.lstDetalle.data = datos.d;
 
-      
-            this.lstDetalle.data.forEach(f => {
 
-              let saldo: number = 0
-              let saldoDolar: number = 0
-              let saldoCordoba: number = 0
-
-              f.SaldoAnt = (f.IdMoneda == this.cFunciones.MonedaLocal ? f.SaldoCordoba : f.SaldoDolar);
-              f.SaldoAntML = f.SaldoCordoba;
-              f.SaldoAntMS = f.SaldoDolar;
-
-
-              if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-
-
-                saldo = f.SaldoCordoba;
-                saldoCordoba = saldo;
-                saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
-
-
-                if (f.IdMoneda != this.cFunciones.MonedaLocal) {
-                  saldo = f.SaldoDolar;
-                  saldoDolar = saldo;
-                  saldoCordoba = this.cFunciones.Redondeo(saldoDolar * this.TC, "2");
-
-                }
-
-                saldo = this.cFunciones.Redondeo(saldoCordoba, "2");
-
-              }
-
-              else {
-
-                saldo = f.SaldoDolar;
-                saldoDolar = saldo;
-                saldoCordoba = this.cFunciones.Redondeo(saldo * this.TC, "2");
-
-                if (f.IdMoneda == this.cFunciones.MonedaLocal) {
-                  saldo = f.SaldoCordoba;
-                  saldoCordoba = saldo;
-                  saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
-                }
-
-                saldo = this.cFunciones.Redondeo(saldoDolar, "2");
-              }
-
-              f.Importe = "0.00";
-              f.Saldo = this.cFunciones.NumFormat(saldo, "2");
-              f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
-              f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
-
-            });
-
-            this.V_Calcular();
-
+            this.V_CalcularSaldo();
+  
           }
 
         },
@@ -646,6 +596,10 @@ export class ChequesSaldoComponent {
       }
     }
 
+    this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
+    this.val.Get("TxtTC").setValue(this.TC);
+   
+    this.v_ConvertirTotal("");
 
 
 
@@ -1209,6 +1163,66 @@ export class ChequesSaldoComponent {
 
 
   }
+
+  public V_CalcularSaldo(){
+
+    this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
+  
+    this.lstDetalle.data.forEach(f => {
+  
+      let saldo: number = 0
+      let saldoDolar: number = 0
+      let saldoCordoba: number = 0
+  
+      f.SaldoAnt = (f.IdMoneda == this.cFunciones.MonedaLocal ? f.SaldoCordoba : f.SaldoDolar);
+      f.SaldoAntML = f.SaldoCordoba;
+      f.SaldoAntMS = f.SaldoDolar;
+  
+  
+      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+  
+  
+        saldo = f.SaldoCordoba;
+        saldoCordoba = saldo;
+        saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
+  
+  
+        if (f.IdMoneda != this.cFunciones.MonedaLocal) {
+          saldo = f.SaldoDolar;
+          saldoDolar = saldo;
+          saldoCordoba = this.cFunciones.Redondeo(saldoDolar * this.TC, "2");
+  
+        }
+  
+        saldo = this.cFunciones.Redondeo(saldoCordoba, "2");
+  
+      }
+  
+      else {
+  
+        saldo = f.SaldoDolar;
+        saldoDolar = saldo;
+        saldoCordoba = this.cFunciones.Redondeo(saldo * this.TC, "2");
+  
+        if (f.IdMoneda == this.cFunciones.MonedaLocal) {
+          saldo = f.SaldoCordoba;
+          saldoCordoba = saldo;
+          saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
+        }
+  
+        saldo = this.cFunciones.Redondeo(saldoDolar, "2");
+      }
+  
+      if(f.Importe == undefined) f.Importe  = "0.00";
+      f.Saldo = this.cFunciones.NumFormat(saldo, "2");
+      f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
+      f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
+  
+    });
+  
+    this.V_Calcular();
+  }
+  
 
 
   private v_Visualizar() {

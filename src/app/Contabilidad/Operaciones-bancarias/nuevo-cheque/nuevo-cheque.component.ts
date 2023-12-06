@@ -145,7 +145,7 @@ export class NuevoChequeComponent {
         this.val.Get("txtBanco").disable();
         this.val.Get("txtNoDoc").disable();
         this.val.Get("txtMoneda").disable();
-        this.val.Get("TxtTC").disable();
+        //this.val.Get("TxtTC").disable();
         this.val.Get("txtTotalDolar").disable();
         this.val.Get("txtTotalCordoba").disable();
 
