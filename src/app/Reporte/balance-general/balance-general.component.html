@@ -1,0 +1,58 @@
+<div class="contenedor">
+    <div class="row">
+
+        <div class="contenedor-filtro linea-bottom-primario">
+            <div class="row">
+                <p>Balace General</p>
+            </div>
+
+            <div class="row mb-2">
+                <form autocomplete="off" [formGroup]="val.ValForm">
+                    <div class="row">
+
+
+                        <div class="col-12 col-md-12 col-lg-3 mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                <div class="form-floating">
+                                    <input type="date" id="txtFecha" class="form-control" max="9999-12-31"
+                                        placeholder="Fecha Inicio" aria-label="Fecha"
+                                        formControlName="txtFecha">
+                                    <label for="txtFecha">Fecha</label>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Moneda"
+                                    id="cmbMoneda" formControlName="cmbMoneda">
+                                        <option value="true">Cordoba</option>
+                                        <option value="false">Dolar</option>
+                                    </select>
+                                    <label for="cmbMoneda">Moneda</label>
+                                </div>
+                                <span class="input-group-text"> <button type="button" class="btn btn-secundario"
+                                    id="btnReporte-Balance" (click)="V_Imprimir();"><i
+                                        class="fa-solid fa-print fa-beat-fade fa-xl"></i>
+                                    Imprimir</button></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+</div>
