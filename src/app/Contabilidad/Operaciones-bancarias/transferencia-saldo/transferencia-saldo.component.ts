@@ -943,15 +943,14 @@ public V_CalcularSaldo(){
 
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
         det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
-        det.DebitoMS += f.DiferencialMS;
       }
       else {
        det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
-       det.DebitoML += f.DiferencialML;
-
+      
       }
 
-      
+      det.DebitoML += f.DiferencialML;
+      det.DebitoMS += f.DiferencialMS;
 
 
       if (f.DiferencialML != 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), i_Prov.CUENTAXPAGAR, "DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
