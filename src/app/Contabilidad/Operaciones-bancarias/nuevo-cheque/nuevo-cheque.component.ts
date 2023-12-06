@@ -125,7 +125,7 @@ export class NuevoChequeComponent {
         this.val.Get("txtBanco").setValue("");
         this.val.Get("cmbBodega").setValue("");
         this.val.Get("txtNoDoc").setValue("");
-        this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
+        this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor()); 
         this.val.Get("txtBeneficiario").setValue("");
         this.val.Get("txtMoneda").setValue("");
         this.val.Get("txtConcepto").setValue("");
