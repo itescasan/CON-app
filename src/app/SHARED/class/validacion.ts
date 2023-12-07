@@ -219,6 +219,12 @@ export class Validacion {
       event.target.setAttribute("id", id);
     }
 
+    if (id == "" && event.target.localName == "input") {
+      id = event.target.parentElement.parentElement.parentElement.parentElement.id;
+      event.target.setAttribute("id", id);
+    }
+
+
 
     let _element_next = lstFocus.find(f => f.Id == id);
 

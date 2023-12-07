@@ -45,11 +45,29 @@ $custom-drop-down-theme: drop-down-theme($background-color: #d9f5d6,
     );
 
 
+$custom-datepicker-theme: calendar-theme(
+    $header-background: #56a43b,
+    $content-background: #fdfdfd,
+    $header-text-color: #ffffff,
+    $date-current-text-color: #dc7322,
+    $picker-arrow-color: #dc7322,
+    $date-selected-text-color: #fdfdfd,
+    $date-current-bg-color: #fdfdfd,
+    $picker-arrow-hover-color: #56a43b,
+    $year-current-text-color: #dc7322,
+    $year-hover-text-color: #dc7322,
+    $month-current-text-color: #dc7322,
+    $month-hover-text-color: #dc7322,
+    $picker-text-color: #dc7322,
+    $picker-text-hover-color: #56a43b,
+);
+
+
 
 @include css-vars($custom-combo-theme);
 @include css-vars($custom-drop-down-theme);
 @include css-vars($custom-checkbox-theme);
-
+@include css-vars($custom-datepicker-theme);
 
 [class^=igx-] {
 

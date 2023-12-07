@@ -125,7 +125,7 @@ export class BalanceGeneralComponent {
     ///CAMBIO DE FOCO
 
     this.val.addFocus("txtFecha", "cmbMoneda", undefined);
-    this.val.addFocus("cmbMoneda", "btnReporte-Balanza", "click");
+    this.val.addFocus("cmbMoneda", "btnReporte-Balance", "click");
 
 
   }
