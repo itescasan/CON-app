@@ -22,7 +22,7 @@ export class BalanceGeneralComponent {
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
 
 
-    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
+    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
   }
 
