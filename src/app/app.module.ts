@@ -48,7 +48,7 @@ import { TransferenciaSaldoComponent } from './Contabilidad/Operaciones-bancaria
 import { ChequesSaldoComponent } from './Contabilidad/Operaciones-bancarias/cheque-saldo/cheque-saldo.component';
 import { BalanzaComponent } from './Reporte/balanza/balanza.component';
 import { BalanceGeneralComponent } from './Reporte/balance-general/balance-general.component';
-
+import { IgxDatePickerModule } from "igniteui-angular";
 
 @NgModule({
   declarations: [
@@ -75,6 +75,7 @@ import { BalanceGeneralComponent } from './Reporte/balance-general/balance-gener
     ChequesSaldoComponent,
     BalanceGeneralComponent,
     BalanzaComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -97,6 +98,7 @@ import { BalanceGeneralComponent } from './Reporte/balance-general/balance-gener
     NgxMaskPipe,
     MatTableModule,
     CdkDrag,
+    IgxDatePickerModule,
     BackButtonDisableModule.forRoot({
       preserveScroll: true // DISABLE BACK
     })

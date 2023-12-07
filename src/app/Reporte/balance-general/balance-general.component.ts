@@ -50,8 +50,7 @@ export class BalanceGeneralComponent {
     }
 
 
-
-    this.GET.GetBalanceGeneral(this.val.Get("txtFecha").value,  this.val.Get("cmbMoneda").value).subscribe(
+    this.GET.GetBalanceGeneral(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"),  this.val.Get("cmbMoneda").value).subscribe(
       {
         next: (data) => {
 

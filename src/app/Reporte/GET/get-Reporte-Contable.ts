@@ -26,7 +26,7 @@ export class getReporteContable{
     }
 
 
-    public GetBalanceGeneral(Fecha: Date,  EsMonedaLocal : boolean): Observable<string> {
+    public GetBalanceGeneral(Fecha: String,  EsMonedaLocal : boolean): Observable<string> {
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/BalanceGeneral?Fecha=" + Fecha + "&EsMonedaLocal=" + EsMonedaLocal);
     }
 
