@@ -37,7 +37,7 @@ export class ChequesSaldoComponent {
   public overlaySettings: OverlaySettings = {};
   public val = new Validacion();
   public valTabla = new Validacion();
-
+  public load :boolean = false;
   private IdMoneda: string = "";
 
   lstProveedor: iProveedor[] = [];
@@ -302,7 +302,8 @@ export class ChequesSaldoComponent {
 
 
   public v_ConvertirTotal(event: any): void {
-
+    if(this.load) return;
+    this.load = true;
     let valor: number = 0;
     let id: String = "";
 
@@ -582,6 +583,7 @@ export class ChequesSaldoComponent {
 
   public V_Calcular(): void {
 
+
     if (this.IdMoneda != "undefined" && this.IdMoneda != "") {
 
       this.val.Get("txtComision").enable();
@@ -595,6 +597,8 @@ export class ChequesSaldoComponent {
         this.dec_Disponible = Number(this.val.Get("txtTotalDolar").value.toString().replaceAll(",", ""));
       }
     }
+    
+
 
     this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
     this.val.Get("TxtTC").setValue(this.TC);
@@ -610,9 +614,9 @@ export class ChequesSaldoComponent {
 
       f.Operacion = "";
       f.IdCheque = this.FILA.IdCheque;
-      if(f.IdDetChequeDoc == undefined) f.IdDetChequeDoc = "00000000-0000-0000-0000-000000000000";
+      if (f.IdDetChequeDoc == undefined) f.IdDetChequeDoc = "00000000-0000-0000-0000-000000000000";
 
-      let Importe: number = this.cFunciones.Redondeo(Number(String(f.Importe).replaceAll(",", "")), "2");
+      let Importe: number = this.cFunciones.Redondeo(Number(String(f.Importe).replaceAll(",", "")), "4");
       let Saldo: number = Number(String(f.Saldo).replaceAll(",", ""));
 
 

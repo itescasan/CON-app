@@ -103,7 +103,7 @@
                                     formControlName="TxtTC"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
                                     (change)="V_CalcularSaldo();">
-                                <label for="TxtTC">TC</label> 
+                                <label for="TxtTC">TC</label>
                             </div>
                         </div>
                     </div>
@@ -388,7 +388,7 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off">
+                                <form autocomplete="off"> 
                                     <input type="text" class="form-control numero  secundario"
                                         id="txtSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
                                         [ngModel]="det.Saldo" disabled>
