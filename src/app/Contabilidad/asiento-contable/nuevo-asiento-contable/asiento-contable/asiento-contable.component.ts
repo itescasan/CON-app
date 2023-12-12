@@ -418,8 +418,7 @@ export class AsientoContableComponent {
     this.val.Get("cmbSerie").disable();
     this.val.Get("txtNoAsiento").disable();
 
-    console.log(this.FILA.AsientosContablesDetalle)
-
+   
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.AsientosContablesDetalle));
 
 
