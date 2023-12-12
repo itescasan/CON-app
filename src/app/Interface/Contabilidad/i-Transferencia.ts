@@ -1,3 +1,4 @@
+import { iRetencion } from "./i-Retencion";
 import { iTransferenciaDocumento } from "./i-Transferencia-Documento";
 
 export interface iTransferencia{
@@ -23,4 +24,5 @@ export interface iTransferencia{
     Anulado : boolean;
     UsuarioReg : string;
     TransferenciaDocumento: iTransferenciaDocumento[];
+    TranferenciaRetencion: iRetencion[];
 }

@@ -30,15 +30,15 @@
 
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
 
-                        <igx-combo #cmbCentroCosto [data]="lstCentroCosto" valueKey="Codigo"
-                        displayKey="CentroCosto" id="cmbCentroCosto" formControlName="cmbCentroCosto"
-                        placeholder="Centro Costo" searchPlaceholder="Seleccione un centro costo..." [autoFocusSearch]="true"
-                        [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CentroCosto($event)"
-                        (keyup)="v_Enter_CentroCosto($event);">
-                        <label igxLabel>Centro Costo</label>
-                        <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
-                    </igx-combo>
-                        
+                        <igx-combo #cmbCentroCosto [data]="lstCentroCosto" valueKey="Codigo" displayKey="CentroCosto"
+                            id="cmbCentroCosto" formControlName="cmbCentroCosto" placeholder="Centro Costo"
+                            searchPlaceholder="Seleccione un centro costo..." [autoFocusSearch]="true"
+                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CentroCosto($event)"
+                            (keyup)="v_Enter_CentroCosto($event);">
+                            <label igxLabel>Centro Costo</label>
+                            <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
+                        </igx-combo>
+
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-4 col-lg-2 mb-1">
@@ -64,7 +64,7 @@
                         </div>
                     </div>
 
-                  
+
 
                 </div>
 
@@ -112,8 +112,9 @@
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-calendar"></i></span>
                             <div class="form-floating">
-                                <input type="date" id="txtFecha" class="form-control" placeholder="Fecha" max="9999-12-31"
-                                    aria-label="Fecha" formControlName="txtFecha" (change)="V_TasaCambios();">
+                                <input type="date" id="txtFecha" class="form-control" placeholder="Fecha"
+                                    max="9999-12-31" aria-label="Fecha" formControlName="txtFecha"
+                                    (change)="V_TasaCambios();">
                                 <label for="txtFecha">Fecha</label>
 
                             </div>
@@ -185,7 +186,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
 
                         <div class="row">
-                           
+
 
                             <div class="col-12 mb-1">
 
@@ -222,8 +223,7 @@
                                             class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Comición" id="txtComision"
-                                            formControlName="txtComision"
-                                            (focusout)="v_FocusOut('txtComision');">
+                                            formControlName="txtComision" (focusout)="v_FocusOut('txtComision');">
                                         <label for="txtComision">Comisión</label>
                                     </div>
                                 </div>
@@ -260,8 +260,9 @@
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                 <div class="form-floating">
-                    <select class="form-select form-select-lg" aria-label="Columna" id="cmbColumna" (change)="V_Ordenar_ColumnaCombo();">
-                        <option *ngFor="let item of orderby" value="{{item.Columna}}" >{{item.Columna}}</option>
+                    <select class="form-select form-select-lg" aria-label="Columna" id="cmbColumna"
+                        (change)="V_Ordenar_ColumnaCombo();">
+                        <option *ngFor="let item of orderby" value="{{item.Columna}}">{{item.Columna}}</option>
                     </select>
                     <label for="cmbColumna">Ordenar</label>
                 </div>
@@ -272,29 +273,42 @@
             <div class="input-group">
                 <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                 <div class="form-floating">
-                    <select class="form-select form-select-lg" aria-label="Direccion" (change)="V_Ordenar_ColumnaCombo();" id="cmbDireccion">
-                        <option  value="ASC">ASC</option>
-                        <option  value="DESC">DESC</option>
+                    <select class="form-select form-select-lg" aria-label="Direccion"
+                        (change)="V_Ordenar_ColumnaCombo();" id="cmbDireccion">
+                        <option value="ASC">ASC</option>
+                        <option value="DESC">DESC</option>
                     </select>
                     <label for="cmbDireccion">Dirección</label>
                 </div>
             </div>
         </div>
     </div>
-    
-  
+
+
 
     <div class="row g-1 header">
 
 
-        <div class="col-8 col-lg-1 center"><span (click)="V_Ordenar_Columna('Operacion');">Operacion <i *ngIf="orderby[0].Direccion != ''"  [ngClass]="orderby[0].Direccion == 'ASC' ?   'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span></div>
-        <div class="col-8 col-lg-1 center"><span (click)="V_Ordenar_Columna('TipoDocumento');">Tipo Documento <i *ngIf="orderby[1].Direccion != ''"  [ngClass]="orderby[1].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span></div>
+        <div class="col-8 col-lg-1 center"><span (click)="V_Ordenar_Columna('Operacion');">Operacion <i
+                    *ngIf="orderby[0].Direccion != ''"
+                    [ngClass]="orderby[0].Direccion == 'ASC' ?   'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
+        </div>
+        <div class="col-8 col-lg-1 center"><span (click)="V_Ordenar_Columna('TipoDocumento');">Tipo Documento <i
+                    *ngIf="orderby[1].Direccion != ''"
+                    [ngClass]="orderby[1].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
+        </div>
 
-        <div class="col-12 col-lg-2 center" (click)="V_Ordenar_Columna('Documento');"><span>Documento <i *ngIf="orderby[2].Direccion != ''"  [ngClass]="orderby[2].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span></div>
+        <div class="col-12 col-lg-2 center" (click)="V_Ordenar_Columna('Documento');"><span>Documento <i
+                    *ngIf="orderby[2].Direccion != ''"
+                    [ngClass]="orderby[2].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
+        </div>
 
-        <div class="col-12 col-lg-2 center" (click)="V_Ordenar_Columna('Fecha');"><span>Fecha <i *ngIf="orderby[3].Direccion != ''"  [ngClass]="orderby[3].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span></div>
+        <div class="col-12 col-lg-2 center" (click)="V_Ordenar_Columna('Fecha');"><span>Fecha <i
+                    *ngIf="orderby[3].Direccion != ''"
+                    [ngClass]="orderby[3].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
+        </div>
 
-        <div class="col-6 col-lg-2  numero" ><span>Saldo</span></div>
+        <div class="col-6 col-lg-2  numero"><span>Saldo</span></div>
 
         <div class="col-6 col-lg-2 numero"><span>Importe</span></div>
 
@@ -309,7 +323,7 @@
 
 
             <ng-container matColumnDef="col1">
-                <td mat-cell *matCellDef="let det">
+                <td mat-cell *matCellDef="let det" (contextmenu)="V_Popup($event, det)">
                     <div class="row">
 
                         <div class="col-6 col-lg-1">
@@ -319,6 +333,7 @@
                             <div class="row">
 
                                 <form autocomplete="off">
+                                    <span *ngIf="det.Retenido"><i class="fa-solid fa-r"></i></span>
                                     <input type="text" class="form-control center blue blod"
                                         id="txtOperacion{{det.Index}}" [ngModelOptions]="{standalone: true}"
                                         [ngModel]="det.Operacion" disabled>
@@ -458,7 +473,15 @@
 
         </table>
 
-
+        <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+            [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+        </div>
+        <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
+            <ng-template matMenuContent let-item="item">
+                <button mat-menu-item (click)="V_Retener(item)" id="btn-trans-retencion"><i
+                        class="fa-solid fa-sack-dollar primario"></i> Retención</button>
+            </ng-template>
+        </mat-menu>
     </div>
 
 </div>
@@ -472,14 +495,17 @@
         <div class="totales">
 
             <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
-                "1.2-2"}}</span></span>
-                
+                    "1.2-2"}}</span></span>
+
+            <span class="retencion"><span class="etiqueta">Retención:</span><span class="valores">{{dec_Retencion | number :
+                    "1.2-2"}}</span></span>
+
             <span class="disponible"><span class="etiqueta">Disponible:</span><span class="valores">{{dec_Disponible |
                     number :
                     "1.2-2"}}</span></span>
             <span class="aplicado"><span class="etiqueta">Aplicado:</span><span class="valores">{{dec_Aplicado | number
                     : "1.2-2"}}</span></span>
-          
+
         </div>
 
         <div class="botones">
@@ -494,12 +520,13 @@
 
 
             <div class="botones-edicion">
-                <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia-Saldo" (click)="v_Guardar();" *ngIf="!Anulado"><i
-                        class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
+                <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia-Saldo"
+                    (click)="v_Guardar();" *ngIf="!Anulado"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
                     Guardar</button>
 
-                <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento-saldo" (click)="v_Evento('Limpiar');"
-                    [disabled]="esModal" *ngIf="!Anulado"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+                <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento-saldo"
+                    (click)="v_Evento('Limpiar');" [disabled]="esModal" *ngIf="!Anulado"><i
+                        class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
             </div>
         </div>
 

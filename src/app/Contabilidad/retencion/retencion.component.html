@@ -1,0 +1,98 @@
+<div class="escasan-dialog retenciones">
+    <div class="btn-contenedor">
+        <button class="close-button custom-cerrar" (click)="v_Cancelar()" [mat-dialog-close]="true">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+        </button>
+    </div>
+
+    <p class="linea-bottom-primario">RETENCIONES</p>
+
+    <div>
+
+
+
+        <div class="mat-elevation-z8">
+            <table class="table table-hover  table-sm tabla-layout" mat-table [dataSource]="lstRetencion">
+
+
+                <ng-container matColumnDef="col1" >
+                    <td mat-cell  *matCellDef="let det">
+                        <div class="row">
+    
+
+                            <div class="col-12">
+                                <div class="row"><span class="cell">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="chk{{det.Index}}"  [(ngModel)]="det.Seleccionar" (click)="V_Calcular(det.Index)">
+                                        <label class="form-check-label" for="chk{{det.Index}}">
+                                            {{det.Retencion}}
+                                        </label>
+                                      </div>
+
+                                    
+                                </span></div>
+    
+    
+    
+                            </div>
+    
+
+
+                            
+                            <div class="col-6">
+
+                                <div class="row"><span class="center">{{ det.Porcentaje | number : '1.2-2' }} %</span></div>
+    
+    
+    
+                            </div>
+
+
+                            <div class="col-6">
+                                <div class="row"><span class="right">{{det.Monto == "0" ? "" : det.Monto }}</span></div>
+    
+    
+    
+                            </div>
+
+    
+                        </div>
+    
+    
+                    </td>
+                </ng-container>
+
+
+
+
+    
+    
+    
+    
+    
+    
+
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed">
+                </tr>
+    
+    
+            </table>
+    
+    
+        </div>
+
+     
+    </div>
+
+
+    
+    <div class="mb-1 linea-top">
+        <div mat-dialog-actions class="btn-contenedor">
+            <button type="button" class="btn btn-secundario" id="btnCancelarAnular" (click)="v_Cancelar()">
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+</div>

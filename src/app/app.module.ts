@@ -49,6 +49,7 @@ import { ChequesSaldoComponent } from './Contabilidad/Operaciones-bancarias/cheq
 import { BalanzaComponent } from './Reporte/balanza/balanza.component';
 import { BalanceGeneralComponent } from './Reporte/balance-general/balance-general.component';
 import { IgxDatePickerModule } from "igniteui-angular";
+import { RetencionComponent } from './Contabilidad/retencion/retencion.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { IgxDatePickerModule } from "igniteui-angular";
     ChequesSaldoComponent,
     BalanceGeneralComponent,
     BalanzaComponent,
+    RetencionComponent
    
   ],
   imports: [

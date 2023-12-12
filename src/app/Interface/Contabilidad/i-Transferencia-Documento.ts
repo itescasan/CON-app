@@ -23,4 +23,5 @@ export interface iTransferenciaDocumento{
     NuevoSaldoMS : number;
     DiferencialML : number;
     DiferencialMS : number;
+    Retenido : boolean;
 }

@@ -164,19 +164,21 @@ input.center {
         width: 100%;
         text-align: right;
 
-
-        .disponible {
-            width: 60%;
+        span{
+            display: inline-block;
+            width: 25%;
         }
 
-        .aplicado {
-            width: 20%;
+        @include Tamano_Menor(lg){
+            span{
+                display: inline-block;
+                width: 100%;
+            }
         }
 
-        .diferencia {
-            width: 20%;
-        }
+     
 
+      
 
         .valores {
             background-color: var(--escan-opcional);
@@ -187,10 +189,18 @@ input.center {
             background-color: var(--escan-primario);
         }
 
+        .etiqueta{
+            width: 30%;
+            text-overflow: ellipsis;
+        }
+
+        .valores{
+            width: 70%;
+        }
+
         .etiqueta,
         .valores {
             display: inline-block;
-            width: 250px;
             margin-bottom: 5px;
             font-weight: bold;
             font-size: 1.1em;

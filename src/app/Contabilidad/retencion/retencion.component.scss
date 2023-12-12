@@ -1,0 +1,40 @@
+  @import "/src/assets/scss/media.scss";
+
+  .retenciones {
+      width: 500px;
+      height: 500px;
+
+  }
+
+
+  @include Tamano_Menor(lg) {
+      .retenciones {
+          width: 100%;
+          height: 100%;
+
+      }
+
+  }
+
+
+  p {
+      text-align: center;
+      font-weight: bold;
+  }
+
+
+
+
+  //████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
+
+
+
+  .right {
+      text-align: right;
+  }
+
+  .center {
+      text-align: center;
+  }
+
+
