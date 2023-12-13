@@ -16,7 +16,7 @@
             <div class="card-body">
                 <div class="row linea-bottom-primario">
 
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
                         <igx-combo #cmbCuentaBancaria [data]="lstCuentabancaria" valueKey="IdCuentaBanco"
                             displayKey="DisplayKey" id="cmbCuentaBancaria" formControlName="cmbCuentaBancaria"
                             placeholder="No Cuenta" searchPlaceholder="Seleccione una serie..." [autoFocusSearch]="true"
@@ -28,7 +28,7 @@
                     </div>
 
 
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
 
                         <igx-combo #cmbCentroCosto [data]="lstCentroCosto" valueKey="Codigo" displayKey="CentroCosto"
                             id="cmbCentroCosto" formControlName="cmbCentroCosto" placeholder="Centro Costo"
@@ -41,7 +41,7 @@
 
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-2 mb-1">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 mb-1">
                         <div class="input-group">
 
                             <div class="form-floating">
@@ -52,7 +52,7 @@
 
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-2 mb-1">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 mb-1">
                         <div class="input-group">
 
                             <div class="form-floating">
@@ -70,7 +70,7 @@
 
                 <div class="row linea-bottom-secundario mt-2">
 
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
 
                         <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
                             formControlName="cmbBodega" placeholder="Bodega"
@@ -82,7 +82,7 @@
                         </igx-combo>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-4 col-lg-4 mb-1">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-1">
 
                         <div class="input-group">
                             <span class="input-group-text secundario">No</span>
@@ -95,7 +95,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-4 col-lg-2  mb-1">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2  mb-1">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
                             <div class="form-floating">
@@ -108,7 +108,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-4 col-lg-2 mb-1">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-calendar"></i></span>
                             <div class="form-floating">
@@ -129,11 +129,11 @@
                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
 
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-8">
+                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
 
                                 <div class="row">
 
-                                    <div class="col-12 col-sm-12 col-md-9 col-lg-9 mb-1">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-9 mb-1">
                                         <igx-combo #cmbProveedor [data]="lstProveedor" valueKey="Codigo"
                                             displayKey="DisplayKey" id="cmbProveedor" formControlName="cmbProveedor"
                                             placeholder="Proveedor" searchPlaceholder="Seleccione una proveedor..."
@@ -145,7 +145,7 @@
                                         </igx-combo>
                                     </div>
 
-                                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 mb-1">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-3 mb-1">
                                         <button type="button" class="btn btn-opcional" id="btn-Documentos-Proveedor"
                                             (click)="v_BuscarDocumentos();"><i
                                                 class="fa-solid fa-magnifying-glass fa-beat-fade fa-lg"></i>

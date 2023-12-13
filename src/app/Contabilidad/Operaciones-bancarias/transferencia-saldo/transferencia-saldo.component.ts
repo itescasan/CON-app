@@ -1470,7 +1470,7 @@ export class TransferenciaSaldoComponent {
 
           dialogRef.componentInstance.lstRetencion.data.push({
             IdDetRetencion: this.FILA.IdTransferencia,
-            Seleccionar: (f.Monto != "0" ? true : false),
+            Seleccionar: (f.Monto != "0.00" ? true : false),
             Index: i,
             IdRetencion: f.IdRetencion,
             Retencion: f.Retencion,
