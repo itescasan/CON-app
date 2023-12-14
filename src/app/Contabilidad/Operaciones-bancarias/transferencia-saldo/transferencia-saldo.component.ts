@@ -732,8 +732,18 @@ export class TransferenciaSaldoComponent {
       //RETENCIONES
       this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(r => {
 
+        if(Number(r.Monto.replaceAll(",", "")) != 0)
+        {
+          let Porc: number = 1 + r.PorcImpuesto;
+          let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
+          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((r.Porcentaje / 100), "4"), "2");
+          r.Monto = this.cFunciones.NumFormat(Ret, "2");
+        }
+
+
         if (Importe == 0) r.Monto = "0";
-        r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "2")
+        r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "2");
+        
 
         let Retencion: number = Number(r.Monto.replaceAll(",", ""));
           this.dec_Retencion += Retencion;
@@ -1470,7 +1480,7 @@ export class TransferenciaSaldoComponent {
 
           dialogRef.componentInstance.lstRetencion.data.push({
             IdDetRetencion: this.FILA.IdTransferencia,
-            Seleccionar: (f.Monto != "0.00" ? true : false),
+            Seleccionar: (Number(f.Monto.replaceAll(",", "")) != 0 ? true : false),
             Index: i,
             IdRetencion: f.IdRetencion,
             Retencion: f.Retencion,
