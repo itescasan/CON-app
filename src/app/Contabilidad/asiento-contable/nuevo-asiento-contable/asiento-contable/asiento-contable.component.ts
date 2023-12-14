@@ -176,10 +176,10 @@ export class AsientoContableComponent {
       let txtCuenta: IgxComboComponent = event.owner
 
 
-      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.newValue)!;
+      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f?.CuentaContable == event.newValue)!;
 
-      det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
-      det.Naturaleza = i_Cuenta.Naturaleza;
+      det.Descripcion = i_Cuenta?.NombreCuenta.replaceAll(i_Cuenta?.CuentaContable, "");
+      det.Naturaleza = i_Cuenta?.Naturaleza;
 
       document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
       document.getElementById("txtCentroCosto" + det.NoLinea)?.removeAttribute("disabled");
@@ -188,7 +188,7 @@ export class AsientoContableComponent {
 
       if (this.FILA?.NoDocOrigen == undefined) {
       
-        if (i_Cuenta.Naturaleza == "D") {
+        if (i_Cuenta?.Naturaleza == "D") {
           document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
           if (Number(det.Credito.replaceAll(",", "")) != 0) {
             det.Debito = det.Credito;
@@ -199,7 +199,7 @@ export class AsientoContableComponent {
 
         }
 
-        if (i_Cuenta.Naturaleza == "C") {
+        if (i_Cuenta?.Naturaleza == "C") {
           document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
           if (Number(det.Debito.replaceAll(",", "")) != 0) {
             det.Credito = det.Debito;
