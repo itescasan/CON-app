@@ -332,12 +332,12 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off">
+                           
                                     <span *ngIf="det.Retenido"><i class="fa-solid fa-r"></i></span>
                                     <input type="text" class="form-control center blue blod"
                                         id="txtOperacion{{det.Index}}" [ngModelOptions]="{standalone: true}"
                                         [ngModel]="det.Operacion" disabled>
-                                </form>
+                           
 
                             </div>
 
@@ -353,10 +353,10 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off">
+                               
                                     <input type="text" class="form-control center" id="txtTipoDocumento{{det.Index}}"
                                         [ngModelOptions]="{standalone: true}" [ngModel]="det.TipoDocumento" disabled>
-                                </form>
+                          
 
                             </div>
 
@@ -372,10 +372,10 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off">
+                              
                                     <input type="text" class="form-control center" id="txtDocumento{{det.Index}}"
                                         [ngModelOptions]="{standalone: true}" [ngModel]="det.Documento" disabled>
-                                </form>
+                           
 
 
                             </div>
@@ -389,11 +389,11 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off">
+                           
                                     <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
                                         [ngModelOptions]="{standalone: true}" [ngModel]="det.Fecha |date:'dd MMM yyyy'"
                                         disabled>
-                                </form>
+                          
 
 
                             </div>
@@ -408,12 +408,11 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off">
+                             
                                     <input type="text" class="form-control numero  secundario"
                                         id="txtSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
                                         [ngModel]="det.Saldo" disabled>
-                                </form>
-
+                          
 
                             </div>
 
@@ -425,12 +424,11 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off">
                                     <input type="text" class="form-control numero importe" id="txtImporte{{det.Index}}"
                                         [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Importe"
                                         (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
                                         (change)="V_Calcular();" autocomplete="off">
-                                </form>
+                      
 
 
                             </div>
@@ -444,12 +442,11 @@
                             </div>
                             <div class="row">
 
-                                <form autocomplete="off">
+                               
                                     <input type="text" class="form-control numero blue blod"
                                         id="txtNuevoSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
                                         [ngModel]="(det.NuevoSaldo == det.Saldo? '': det.NuevoSaldo)" disabled>
-                                </form>
-
+                          
                             </div>
 
                         </div>
