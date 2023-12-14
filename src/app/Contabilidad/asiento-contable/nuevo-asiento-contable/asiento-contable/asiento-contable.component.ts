@@ -1,4 +1,4 @@
-import { Component, Inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
@@ -21,7 +21,8 @@ import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 @Component({
   selector: 'app-asiento-contable',
   templateUrl: './asiento-contable.component.html',
-  styleUrls: ['./asiento-contable.component.scss']
+  styleUrls: ['./asiento-contable.component.scss'],
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AsientoContableComponent {
 
@@ -49,6 +50,7 @@ export class AsientoContableComponent {
   public dec_Dif: number = 0;
   public TC: number;
   public Estado: string = "Solicitado";
+  public load : boolean = false;
 
   public overlaySettings: OverlaySettings = {};
 
@@ -56,7 +58,7 @@ export class AsientoContableComponent {
 
 
   constructor(public cFunciones: Funciones,
-    private GET: getAsientoContable, private POST: postAsientoContable) {
+    private GET: getAsientoContable, private POST: postAsientoContable, private changeDetectorRef: ChangeDetectorRef) {
 
     this.val.add("cmbSerie", "1", "LEN>", "0", "Serie", "Seleccione una serie.");
     this.val.add("txtNoAsiento", "1", "LEN>", "0", "No Asiento", "No se ha configurado en número de asiento.");
@@ -168,6 +170,7 @@ export class AsientoContableComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
+    
     this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
 
     if (event.added.length == 1) {
@@ -402,8 +405,9 @@ export class AsientoContableComponent {
   public v_Visualizar() {
 
 
+    this.load = true;
 
-
+    
     this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
@@ -418,12 +422,23 @@ export class AsientoContableComponent {
     this.val.Get("cmbSerie").disable();
     this.val.Get("txtNoAsiento").disable();
 
+  
    
+    
+    
+   
+    //this.changeDetectorRef.detach();
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.AsientosContablesDetalle));
+   // this.changeDetectorRef.detectChanges();
+    
 
-
+ 
 
     setTimeout(() => {
+
+
+      
+   
 
       this.lstDetalle.data.forEach(f => {
         this.valTabla.add("txtCuenta" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
@@ -474,14 +489,15 @@ export class AsientoContableComponent {
       });
 
 
-
       let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
       if (dialogRef != undefined) dialogRef.close();
+    
 
+      this.load = false;
 
     });
 
-
+    
 
   }
 
@@ -838,6 +854,8 @@ export class AsientoContableComponent {
 
 
   public V_Calcular(): void {
+    if(this.load) return;
+  
 
     this.dec_TotalDebe = 0;
     this.dec_TotalHaber = 0;

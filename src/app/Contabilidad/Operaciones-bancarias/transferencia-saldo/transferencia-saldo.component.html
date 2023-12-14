@@ -196,7 +196,7 @@
                                         <input type="text" class="form-control" placeholder="Total Cordoba"
                                             id="txtTotalCordoba" formControlName="txtTotalCordoba"
                                             (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                            (change)="v_ConvertirTotal($event);"
+                                            (change)="v_ConvertirTotal($event); V_Calcular();"
                                             (focusout)="v_FocusOut('txtTotalCordoba');">
                                         <label for="txtTotalCordoba">Total</label>
                                     </div>
@@ -210,7 +210,7 @@
                                         <input type="text" class="form-control" placeholder="Total Dolar"
                                             id="txtTotalDolar" formControlName="txtTotalDolar"
                                             (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                            (change)="v_ConvertirTotal($event);"
+                                            (change)="v_ConvertirTotal($event); V_Calcular();"
                                             (focusout)="v_FocusOut('txtTotalDolar');">
                                         <label for="txtTotalDolar">Total</label>
                                     </div>

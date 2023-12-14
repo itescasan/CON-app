@@ -40,7 +40,7 @@ export class TransferenciaSaldoComponent {
   public overlaySettings: OverlaySettings = {};
   public val = new Validacion();
   public valTabla = new Validacion();
-  public load: boolean = false;
+
 
   private IdMoneda: string = "";
 
@@ -317,8 +317,6 @@ export class TransferenciaSaldoComponent {
 
 
   public v_ConvertirTotal(event: any): void {
-    if (this.load) return;
-    this.load = true;
     let valor: number = 0;
     let id: String = "";
 
@@ -350,7 +348,7 @@ export class TransferenciaSaldoComponent {
       this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(valor, "2"));
     }
 
-    this.V_Calcular();
+    
 
   }
 
@@ -840,7 +838,7 @@ export class TransferenciaSaldoComponent {
 
 
     this.dec_Dif = this.cFunciones.Redondeo((this.dec_Disponible + this.dec_Retencion) - this.dec_Aplicado, "2");
-    this.load = false;
+   
 
   }
 
