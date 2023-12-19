@@ -730,7 +730,7 @@ export class TransferenciaSaldoComponent {
       //RETENCIONES
       this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(r => {
 
-        if(Number(r.Monto.replaceAll(",", "")) != 0)
+        if(Number(String(r.Monto).replaceAll(",", "")) != 0)
         {
           let Porc: number = 1 + r.PorcImpuesto;
           let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
