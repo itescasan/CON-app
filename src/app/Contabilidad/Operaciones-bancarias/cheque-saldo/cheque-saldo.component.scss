@@ -1,8 +1,9 @@
 @import "/src/assets/scss/media.scss";
 
 
-.contenedor-Cheque{
+.contenedor-Cheque {
     background-color: var(--escan-fondo);
+    z-index: 0;
 }
 
 
@@ -16,38 +17,32 @@
 
 }
 
-.btnImprimir {
-    text-align: left;
-}
-
-#btn-Documentos-Proveedor
-{
+#btn-Documentos-Proveedor {
     width: 100%;
 }
 
 .blue,
-.blue:disabled{
+.blue:disabled {
     color: blue;
 }
 
-.opcional
-.opcional:disabled{
+.opcional .opcional:disabled {
     color: var(--escan-opcional);
 }
 
 
-.bold{
+.bold {
     font-weight: bold;
 }
 
 
 
 .center,
-input.center{
+input.center {
     text-align: center;
 }
 
-.importe{
+.importe {
 
     background-color: #a0e698; // #D9F5D6
     color: var(--escan-opcional);
@@ -55,6 +50,10 @@ input.center{
 }
 
 //████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
+
+.orderby-mobile {
+    display: none;
+}
 
 .numero {
     text-align: right;
@@ -70,6 +69,10 @@ input.center{
         font-weight: bold;
         text-align: center;
         font-size: 1.1em;
+
+        i {
+            color: var(--escan-fondo);
+        }
     }
 }
 
@@ -84,21 +87,26 @@ input.center{
 
 @include Tamano_Menor(lg) {
 
-    .contenedor-tabla {
-        margin-bottom: 220px;
-}
+    .orderby-mobile {
+        display:unset;
     }
-    
+
+
+    .contenedor-tabla {
+        margin-bottom: 280px;
+    }
+}
+
 
 
 
 .contenedor-tabla {
-  
+
 
 
     table {
 
-        input:disabled{
+        input:disabled {
             background-color: transparent;
             border: 0;
         }
@@ -132,7 +140,7 @@ input.center{
 
 .contenedor-pie {
     position: relative;
-    
+
 }
 
 .pie-Cheque {
@@ -145,44 +153,54 @@ input.center{
     padding: 10px;
 
     .totales,
-    .botones{
+    .botones {
         margin-right: 20px;
         padding-right: 10px;
     }
- 
+
 
     .totales {
 
         width: 100%;
         text-align: right;
 
-
-        .disponible {
-            width: 60%;
+        span{
+            display: inline-block;
+            width: 25%;
         }
 
-        .aplicado {
-            width: 20%;
+        @include Tamano_Menor(lg){
+            span{
+                display: inline-block;
+                width: 100%;
+            }
         }
 
-        .diferencia {
-            width: 20%;
-        }
+     
 
+      
 
         .valores {
             background-color: var(--escan-opcional);
             color: var(--escan-fondo);
         }
 
-        .valores.dif{
+        .valores.dif {
             background-color: var(--escan-primario);
+        }
+
+        .etiqueta{
+            width: 30%;
+            text-overflow: ellipsis;
+        }
+
+        .valores{
+            width: 70%;
         }
 
         .etiqueta,
         .valores {
             display: inline-block;
-            width: 250px;
             margin-bottom: 5px;
             font-weight: bold;
             font-size: 1.1em;
@@ -218,11 +236,11 @@ input.center{
             width: 50%;
             display: inline-block;
 
-        
+
         }
 
-        div:first-child{
-            button:first-child{
+        div:first-child {
+            button:first-child {
                 margin-right: 20px;
             }
         }
@@ -235,15 +253,16 @@ input.center{
             bottom: 0;
         }
 
-        .botones-edicion{
+        .botones-edicion {
             margin-top: 5px;
-            button:last-child{
+
+            button:last-child {
                 margin-left: 20px;
             }
 
         }
 
-        
+
 
         @include Tamano_Menor(lg) {
 
@@ -253,16 +272,16 @@ input.center{
                 justify-content: space-between;
                 width: 100%;
             }
-    
 
-            div:first-child{
 
-                button{
+            div:first-child {
+
+                button {
                     width: 50%;
                 }
-               
+
             }
-        
+
         }
 
 

@@ -1,4 +1,4 @@
-import { SimpleRNG } from "pdf-lib/cjs/utils/rng";
+import { iRetencion } from "./i-Retencion";
 import { iChequeDocumento } from "./i-Cheque-Documento";
 
 export interface iCheque {
@@ -22,4 +22,5 @@ export interface iCheque {
     Anulado : boolean;
     UsuarioReg : string;
     ChequeDocumento: iChequeDocumento[];
+    ChequeRetencion: iRetencion[];
 }

@@ -23,4 +23,5 @@ export interface iChequeDocumento{
     NuevoSaldoMS : number;
     DiferencialML : number;
     DiferencialMS : number;
+    Retenido : boolean;
 }
