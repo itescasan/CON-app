@@ -743,7 +743,7 @@ export class TransferenciaSaldoComponent {
         r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "2");
         
 
-        let Retencion: number = Number(r.Monto.replaceAll(",", ""));
+        let Retencion: number = Number(String(r.Monto).replaceAll(",", ""));
           this.dec_Retencion += Retencion;
 
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
