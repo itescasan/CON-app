@@ -586,65 +586,65 @@ export class ChequesSaldoComponent {
 
 
   }
-  public V_CalcularSaldo(){
+  public V_CalcularSaldo() {
 
-    this.TC =  this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4") ;
-  
+    this.TC = this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4");
+
     this.lstDetalle.data.forEach(f => {
-  
+
       let saldo: number = 0
       let saldoDolar: number = 0
       let saldoCordoba: number = 0
-  
+
       f.SaldoAnt = (f.IdMoneda == this.cFunciones.MonedaLocal ? f.SaldoCordoba : f.SaldoDolar);
       f.SaldoAntML = f.SaldoCordoba;
       f.SaldoAntMS = f.SaldoDolar;
-  
-  
+
+
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-  
-  
+
+
         saldo = f.SaldoCordoba;
         saldoCordoba = saldo;
         saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
-  
-  
+
+
         if (f.IdMoneda != this.cFunciones.MonedaLocal) {
           saldo = f.SaldoDolar;
           saldoDolar = saldo;
           saldoCordoba = this.cFunciones.Redondeo(saldoDolar * this.TC, "2");
-  
+
         }
-  
+
         saldo = this.cFunciones.Redondeo(saldoCordoba, "2");
-  
+
       }
-  
+
       else {
-  
+
         saldo = f.SaldoDolar;
         saldoDolar = saldo;
         saldoCordoba = this.cFunciones.Redondeo(saldo * this.TC, "2");
-  
+
         if (f.IdMoneda == this.cFunciones.MonedaLocal) {
           saldo = f.SaldoCordoba;
           saldoCordoba = saldo;
           saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
         }
-  
+
         saldo = this.cFunciones.Redondeo(saldoDolar, "2");
       }
-  
-      if(f.Importe == undefined) f.Importe  = "0.00";
+
+      if(f.Retenido == undefined) f.Retenido = false;
+      if (f.Importe == undefined) f.Importe = "0.00";
       f.Saldo = this.cFunciones.NumFormat(saldo, "2");
       f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
       f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
-  
+
     });
-  
+
     this.V_Calcular();
   }
-
 
 
   public V_Calcular(): void {
@@ -727,7 +727,7 @@ export class ChequesSaldoComponent {
       //RETENCIONES
       this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(r => {
 
-        if(Number(r.Monto.replaceAll(",", "")) != 0)
+        if(Number(String(r.Monto).replaceAll(",", "")) != 0)
         {
           let Porc: number = 1 + r.PorcImpuesto;
           let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
@@ -740,7 +740,7 @@ export class ChequesSaldoComponent {
         r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "2");
         
 
-        let Retencion: number = Number(r.Monto.replaceAll(",", ""));
+        let Retencion: number = Number(String(r.Monto).replaceAll(",", ""));
           this.dec_Retencion += Retencion;
 
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
@@ -1287,7 +1287,7 @@ export class ChequesSaldoComponent {
 
   private v_Visualizar() {
 
-    this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
+    this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco); 
     this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
     this.cmbProveedor.setSelectedItem(this.FILA.CodProveedor);
     this.cmbCentroCosto.setSelectedItem(this.FILA.CentroCosto);
@@ -1297,21 +1297,14 @@ export class ChequesSaldoComponent {
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
-    // this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
-    // this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
-    // this.cmbProveedor.setSelectedItem(this.FILA.CodProveedor);
-    // this.cmbCentroCosto.setSelectedItem(this.FILA.CentroCosto);
-    // this.val.Get("txtNoDoc").setValue(this.FILA.NoCheque);
-    // this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
-    // this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
-    // this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
-    // this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
-    // this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
-    // this.val.Get("txtComision").setValue(this.cFunciones.NumFormat(this.FILA.Comision, "2"));
 
 
-    this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento));
+
+    this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
     this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.ChequeRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
+
+    // this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento));
+    // this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.ChequeRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
    
 
     this.IdMoneda = this.FILA.IdMoneda;

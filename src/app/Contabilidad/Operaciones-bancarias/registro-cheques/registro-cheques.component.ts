@@ -26,7 +26,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 //import { TransferenciaCuentaComponent } from '../transferencia-cuenta/transferencia-cuenta.component';
 import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detalle';
 import { getCheques } from '../CRUD/GET/get-Cheques';
-import { NuevoChequeComponent } from '../nuevo-cheque/nuevo-cheque.component'; 
+import { NuevoChequeComponent } from '../nuevo-cheque/nuevo-cheque.component';
 import { ChequesSaldoComponent } from '../cheque-saldo/cheque-saldo.component';
 
 @Component({
@@ -336,7 +336,7 @@ export class RegistroChequesComponent {
 
 
   // }
-  public V_EditarCheque(det : any) : void{
+  public V_EditarCheque(det : any) : void{ 
 
 
     
@@ -456,6 +456,7 @@ export class RegistroChequesComponent {
                 }
               } else {
     
+                
                 let datos: iDatos[] = _json["d"];
     
               
@@ -475,8 +476,9 @@ export class RegistroChequesComponent {
     
     
                     dialogCheque.componentInstance.FILA.ChequeDocumento = JSON.parse(JSON.stringify(datos[0].d));
-                    dialogCheque.componentInstance.Asiento = JSON.parse(JSON.stringify(datos[1].d));
-                    dialogCheque.componentInstance.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(datos[2].d));
+                    dialogCheque.componentInstance.FILA.ChequeRetencion = JSON.parse(JSON.stringify(datos[1].d));
+                    dialogCheque.componentInstance.Asiento = JSON.parse(JSON.stringify(datos[2].d));
+                    dialogCheque.componentInstance.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(datos[3].d));
     
     
                     dialogCheque.componentInstance.v_CargarDatos();
