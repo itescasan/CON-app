@@ -396,8 +396,8 @@ export class Validacion {
       if ( (String(frm.value) == "undefined" || String(frm.value) == "")) {
 
         if (elmento?.localName == "igx-combo") {
-          let combo: any = cmb.find(w => w.id == f.Id)!;
-          frm.setValue(combo._value);
+          let combo: any = cmb.?find(w => w.id == f.Id)!;
+          frm.setValue(combo?._value);
         }
         else
         {

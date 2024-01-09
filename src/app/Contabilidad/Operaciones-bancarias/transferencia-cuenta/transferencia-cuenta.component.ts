@@ -919,9 +919,30 @@ export class TransferenciaCuentaComponent {
      this.val.addNumberFocus("TxtTC", 4);
 
 
+
+     if(this.cmbCuentaBancaria != undefined) this.cmbCuentaBancaria.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+     if(this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    
+
     
 
     this.lstDetalle.data.forEach(f => {
+
+
+      if(this.cmbCuenta != undefined)
+      {
+        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
+        if(txtCuenta != undefined) txtCuenta.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+
+        let txtCentroCosto: any = this.cmbCuenta.find(y => y.id == "txtCentroCosto" + f.NoLinea);
+        if(txtCentroCosto != undefined) txtCentroCosto.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    
+      }
+
+
+  
+      
+    
 
       this.valTabla.addFocus("txtCuenta" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);
       this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);

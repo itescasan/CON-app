@@ -1561,6 +1561,13 @@ export class TransferenciaSaldoComponent {
     this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
     this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
 
+
+    if(this.cmbCuentaBancaria != undefined) this.cmbCuentaBancaria.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    if(this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    if(this.cmbCentroCosto != undefined) this.cmbCentroCosto.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    if(this.cmbProveedor != undefined) this.cmbProveedor.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    
+
   }
 
   ngDoCheck() {

@@ -463,6 +463,11 @@ export class RegistroTrasnferenciaComponent {
     this.val.addFocus("txtBodega", "btnRefrescar-Regtransferencia", "click");
 
 
+
+    if(this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+  
+    
+
   }
 
   
