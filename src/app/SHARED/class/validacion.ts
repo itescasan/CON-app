@@ -318,8 +318,12 @@ export class Validacion {
 
   }
 
-  public del(id: string): void {
-    let i: number = this.lstReglas.findIndex((f) => f.Id == id);
+public del(id: string): void {
+
+    this.lstReglas.filter( w=> w.Id == id).forEach( w=>{
+
+      
+    let i: number = this.lstReglas.findIndex((f) => f.Id == id && f.Regla == w.Regla);
 
     if (i != -1) {
       this.ValForm.removeControl(id);
@@ -333,6 +337,10 @@ export class Validacion {
     if (i != -1) {
       lstFocus.splice(i, 1);
     }
+
+
+    });
+
 
 
   }
@@ -392,6 +400,7 @@ export class Validacion {
       let span = document.getElementById("info-validacion-" + f.Id);
       span?.remove();
 
+	  frm.value = this.ValForm.get(f.Id)?.value;
 
       if ( (String(frm.value) == "undefined" || String(frm.value) == "")) {
 
@@ -401,7 +410,7 @@ export class Validacion {
         }
         else
         {
-          frm.setValue((<HTMLInputElement>document.getElementById(f.Id)).value);
+          frm.setValue((<HTMLInputElement>document.getElementById(f.Id))?.value);
         }
 
 
@@ -427,6 +436,7 @@ export class Validacion {
 
 
       //AGREGANDO ICONO DE VALIDACION
+	  esError = reglas.filter(w => w.Id == f.Id && w.ErrorMensaje != "").length > 0 ? true : false;
       span = document.getElementById("-info-validacion-" + f.Id);
       if (span == undefined && esError) {
         esError = false;
@@ -477,6 +487,11 @@ export class Validacion {
     }
 
     return true;
+  }
+
+
+  public ActulizarValores(id : string, value : any){
+    this.ValForm.get(id)?.setValue(value);
   }
 
 
