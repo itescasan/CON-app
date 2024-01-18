@@ -22,6 +22,7 @@ import { iCheque } from '../../../Interface/Contabilidad/i-Cheque';
 import { iChequePOST } from '../../../Interface/Contabilidad/i-Cheque-POST';
 import { postCheque } from '../CRUD/POST/post-Cheque';
 import { iCentroCosto } from '../../../Interface/Contabilidad/i-Centro-Costo';
+import { IReembolsos } from 'src/app/Interface/Contabilidad/i-Reembolsos';
 import { PDFDocument } from 'pdf-lib';
 import * as printJS from 'print-js';
 
@@ -51,6 +52,7 @@ export class NuevoChequeComponent {
   public lstCuentabancaria : iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
   lstCentroCosto: iCentroCosto[] = [];
+  lstReembolsos: IReembolsos[] = [];
 
   @ViewChildren(IgxComboComponent)
   public cmbCuenta: QueryList<IgxComboComponent>;
@@ -58,7 +60,10 @@ export class NuevoChequeComponent {
   @ViewChildren(IgxComboComponent) //esta variable es una vista para este componente
   public cmbCombo: QueryList<IgxComboComponent>;
 
+//   @ViewChildren(IgxComboComponent)
+//  public cmbReembolsoC: IgxComboComponent;
 
+ 
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
@@ -90,7 +95,7 @@ export class NuevoChequeComponent {
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
     this.val.add("cmbCuentaC", "1", "LEN>", "0", "No Cuenta", "Seleccione una Cuenta Contable.");
-
+    this.val.add("cmbReembolsoC", "1", "LEN>=", "0", "No Reembolso", "Seleccione un Reembolso.");
     this.val.add("txtIrFuente", "1", "LEN>=", "0", "IR", "Ir en la fuente.")
     this.val.add("txtServP", "1", "LEN>=", "0", "SP", "Servicios Profecionales.")
     this.val.add("txtAlcaldias", "1", "LEN>=", "0", "Alcaldias", "Alcaldias")
@@ -132,6 +137,8 @@ export class NuevoChequeComponent {
         this.val.Get("txtTotalDolar").setValue("0.00");
         this.val.Get("txtTotalCordoba").setValue("0.00");
         this.val.Get("cmbCuentaC").setValue("");
+        this.val.Get("cmbReembolsoC").setValue("");
+       
 
         this.val.Get("txtIrFuente").setValue("");
         this.val.Get("txtServP").setValue("");
@@ -281,6 +288,31 @@ public v_Enter_Cuenta2(event: any) {
   }
 }
 
+@ViewChild("cmbReembolsoC", { static: false })
+public cmbReembolsoC: IgxComboComponent;
+
+
+ public v_Select_Reembolso(event: any) {
+  this.val.Get("cmbReembolsoC").setValue("");
+  if (event.added.length == 1) {  
+    if(event.newValue.length > 1) event.newValue.splice(0, 1);
+    let _Item  = this.lstReembolsos.find(f => f.Titulo == event.newValue[0]);
+
+
+   }
+}
+
+public v_Enter_Reembolso(event: any) {
+  if (event.key == "Enter") {
+    let cmb : any = this.cmbReembolsoC.dropdown;
+    let _Item: IReembolsos = cmb._focusedItem.value;
+    this.cmbReembolsoC.setSelectedItem(_Item.Titulo);
+    this.val.Get("cmbReembolsoC").setValue([_Item.Titulo]);
+
+  }
+}
+
+
 
   public v_Anulado(event: any): void {
     this.val.Get("chkAnulado").setValue(event.target.checked);
@@ -340,6 +372,7 @@ public v_Enter_Cuenta2(event: any) {
             this.lstBodega = datos[1].d;
             this.lstCuenta = datos[2].d.filter((f: any) => f.ClaseCuenta == "D");
             this.lstCentroCosto = datos[3].d;
+            this.lstReembolsos = datos[5].d;
 
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
@@ -884,6 +917,7 @@ public v_Enter_Cuenta2(event: any) {
 
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.CuentaContable = this.val.Get("cmbCuentaC").value[0];
+    this.FILA.CuentaContable = this.val.Get("cmbReembolsoC").value[0];
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
     this.FILA.IdMoneda = this.IdMoneda;
     //this.FILA.CentroCosto = this.val.Get("cmbCombo").value[0];

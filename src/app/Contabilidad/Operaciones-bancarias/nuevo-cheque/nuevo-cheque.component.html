@@ -154,7 +154,7 @@
                             </div>
         
         
-                            <div class="col-12 col-sm-12 col-md-7 col-lg-7 mb-1">
+                            <div class="col-12 col-sm-12 col-md-7 col-lg-6 mb-1">
                                 <div class="input-group">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="A Nombre de" id="txtBeneficiario"
@@ -163,7 +163,11 @@
                                     </div>
         
                                 </div>
-                            </div>                                   
+                            </div>
+                            <div class="botones-edicion col-12 col-md-12 col-lg-1 mb-1">
+                                <button type="button" class="btn btn-primario" id="btnContabilizar-Cheques" (click)="v_Contabilizar();"><i class="fa-solid fa-file-invoice"></i>
+                                    Cont</button> 
+                            </div>                                
         
                             <div class="col-12 col-md-12 col-lg-12 mb-1">
                                 <div class="concepto">
@@ -242,14 +246,19 @@
                             <!-- Botones reembolsos y contabilizar -->
                             <div class="col-12 col-md-12 col-lg-6 mb-1">
                                 <div class="row mt-3 "> 
-                                    <div class="botones-edicion col-12 col-md-12 col-lg-6 mb-1">
-                                        <button type="button" class="btn btn-primario" id="btnContabilizar-Cheques" (click)="v_Contabilizar();"><i class="fa-solid fa-file-invoice"></i>
-                                            Contabilizar</button> 
-                                    </div>
-                                    <div class="botones-edicion col-12 col-md-12 col-lg-6 mb-1">
-                                        <button type="button" class="btn btn-opcional" id="btnModal-Reembolso"
+                                    
+                                    <div class="botones-edicion col-12 col-md-12 col-lg-12 mb-1">
+                                        <!-- <button type="button" class="btn btn-opcional" id="btnModal-Reembolso"
                                     (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-money-bill-transfer"></i>
-                                    Reembolso</button>
+                                    Reembolso</button> -->
+                                    <igx-combo #cmbReembolsoC [data]="lstReembolsos" valueKey="Titulo" displayKey="Titulo" id="cmbReembolsoC"
+                                    formControlName="cmbReembolsoC" placeholder="Reembolso"
+                                    searchPlaceholder="Seleccione un Reembolso..." [autoFocusSearch]="true"
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Reembolso($event)"
+                                    (keyup)="v_Enter_Reembolso($event);">
+                                    <label igxLabel>Reembolso</label>
+                                    <igx-prefix><i class="fa-solid fa-list"></i></igx-prefix>                                     
+                                </igx-combo>
                                     </div>
                                     
                                 </div>
