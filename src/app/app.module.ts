@@ -50,6 +50,7 @@ import { BalanzaComponent } from './Reporte/balanza/balanza.component';
 import { BalanceGeneralComponent } from './Reporte/balance-general/balance-general.component';
 import { IgxDatePickerModule } from "igniteui-angular";
 import { RetencionComponent } from './Contabilidad/retencion/retencion.component';
+import { EstadoResultadoComponent } from './Reporte/estado-resultado/estado-resultado.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { RetencionComponent } from './Contabilidad/retencion/retencion.component
     ChequesSaldoComponent,
     BalanceGeneralComponent,
     BalanzaComponent,
-    RetencionComponent
+    RetencionComponent,
+    EstadoResultadoComponent
    
   ],
   imports: [
