@@ -65,6 +65,7 @@ export class RegistroTrasnferenciaComponent {
     if (event.added.length) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("txtBodega").setValue(event.newValue);
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
   }
 

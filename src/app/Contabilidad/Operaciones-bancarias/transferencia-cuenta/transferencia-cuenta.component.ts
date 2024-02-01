@@ -168,7 +168,7 @@ export class TransferenciaCuentaComponent {
 
       }, 250);
 
-     
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
       
     }
   }
@@ -194,6 +194,7 @@ export class TransferenciaCuentaComponent {
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
   }
 
@@ -400,6 +401,7 @@ export class TransferenciaCuentaComponent {
         
       }
 
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCuenta.close();
 
     }
 
@@ -432,8 +434,13 @@ export class TransferenciaCuentaComponent {
     public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
  
     if (event.added.length == 1) {
+      let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + det.NoLinea);
+
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       det.CentroCosto = event.newValue[0];
+
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCentro.close();
+
     }
 
 

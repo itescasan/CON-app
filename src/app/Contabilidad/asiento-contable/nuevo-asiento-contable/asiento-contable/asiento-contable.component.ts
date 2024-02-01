@@ -127,6 +127,7 @@ export class AsientoContableComponent {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbSerie").setValue(event.newValue);
       this.v_Consecutivo();
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbSerie.close();
     }
   }
 
@@ -151,6 +152,7 @@ export class AsientoContableComponent {
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("txtBodega").setValue(event.newValue);
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
   }
 
@@ -212,7 +214,7 @@ export class AsientoContableComponent {
         }
       }
 
-
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCuenta.close();
 
     }
 
@@ -245,8 +247,12 @@ export class AsientoContableComponent {
   public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
 
     if (event.added.length == 1) {
+
+      let txtCentroCosto: IgxComboComponent = event.owner
+
       if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
       det.CentroCosto = event.added[0];
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCentroCosto.close();
     }
 
 
