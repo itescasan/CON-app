@@ -20,17 +20,20 @@ export class EstadoResultadoComponent {
 
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
-
+    this.val.add("cmbOpcion", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
+    this.val.add("cmbMeses", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
 
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
+    this.val.Get("cmbOpcion").setValue(true);
+    this.val.Get("cmbMeses").setValue(true);
   }
 
 
   V_Imprimir(): void {
 
 
-    document.getElementById("btnReporte-Balance")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnReporte-Estado-Resultado")?.setAttribute("disabled", "disabled");
 
 
 
@@ -50,7 +53,7 @@ export class EstadoResultadoComponent {
     }
 
 
-    this.GET.GetBalanceGeneral(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"),  this.val.Get("cmbMoneda").value).subscribe(
+    this.GET.GetEstadoResultado(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbOpcion").value,this.val.Get("cmbMoneda").value).subscribe(
       {
         next: (data) => {
 
@@ -79,7 +82,7 @@ export class EstadoResultadoComponent {
 
 
           dialogRef.close();
-          document.getElementById("btnReporte-Balance")?.removeAttribute("disabled");
+          document.getElementById("btnReporte-Estado-Resultado")?.removeAttribute("disabled");
           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
@@ -89,7 +92,7 @@ export class EstadoResultadoComponent {
 
         },
         complete: () => {
-          document.getElementById("btnReporte-Balance")?.removeAttribute("disabled");
+          document.getElementById("btnReporte-Estado-Resultado")?.removeAttribute("disabled");
 
 
         }
@@ -125,7 +128,7 @@ export class EstadoResultadoComponent {
     ///CAMBIO DE FOCO
 
     this.val.addFocus("txtFecha", "cmbMoneda", undefined);
-    this.val.addFocus("cmbMoneda", "btnReporte-Balance", "click");
+    this.val.addFocus("cmbMoneda", "btnReporte-Estado-Resultado", "click");
 
 
   }
