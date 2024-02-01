@@ -204,7 +204,7 @@ export class ChequesSaldoComponent {
 
 
       this.IdMoneda = String(_Item?.IdMoneda);
-
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
 
     }
 
@@ -230,6 +230,7 @@ export class ChequesSaldoComponent {
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbCentroCosto").setValue(event.newValue);
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCentroCosto.close();
     }
   }
 
@@ -255,6 +256,7 @@ export class ChequesSaldoComponent {
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
   }
 
@@ -290,11 +292,11 @@ export class ChequesSaldoComponent {
 
       this.val.Get("cmbProveedor").setValue(event.newValue);
 
-
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbProveedor.close();
     }
   }
 
-  public v_Enter_Proveedor(event: any) {
+  public v_Enter_Proveedor(event: any) { 
     if (event.key == "Enter") {
       let cmb: any = this.cmbProveedor.dropdown;
       let _Item: iProveedor = cmb._focusedItem.value;

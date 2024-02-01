@@ -25,6 +25,7 @@ import { iCentroCosto } from '../../../Interface/Contabilidad/i-Centro-Costo';
 import { IReembolsos } from 'src/app/Interface/Contabilidad/i-Reembolsos';
 import { PDFDocument } from 'pdf-lib';
 import * as printJS from 'print-js';
+import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class NuevoChequeComponent {
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria : iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
-  lstCentroCosto: iCentroCosto[] = [];
+  lstCentroCosto: iCentroCosto[] = [];  
   lstReembolsos: IReembolsos[] = [];
 
   @ViewChildren(IgxComboComponent)
@@ -101,7 +102,6 @@ export class NuevoChequeComponent {
     this.val.add("txtAlcaldias", "1", "LEN>=", "0", "Alcaldias", "Alcaldias")
     this.val.add("txtIva", "1", "LEN>=", "0", "IVA", "IVA.")
     this.val.add("txtTcCompraD", "1", "LEN>=", "0", "Compra Divisa", "Compra Divisa.")
-
 
 
   }
@@ -164,7 +164,7 @@ export class NuevoChequeComponent {
 
 
         if (this.lstBodega.length > 0) this.cmbBodega?.setSelectedItem(this.lstBodega[0].Codigo);
-
+       
 
         this.V_TasaCambios();
 
@@ -215,6 +215,9 @@ export class NuevoChequeComponent {
         this.val.Get("txtTcCompraD").enable();
       }
 
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
+      
+
     }
   }
 
@@ -252,6 +255,7 @@ export class NuevoChequeComponent {
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
   }
 
@@ -274,7 +278,7 @@ export class NuevoChequeComponent {
     if(event.newValue.length > 1) event.newValue.splice(0, 1);
     let _Item  = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0]);
 
-
+    if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaC.close();
    }
 }
 
@@ -298,7 +302,8 @@ public cmbReembolsoC: IgxComboComponent;
     if(event.newValue.length > 1) event.newValue.splice(0, 1);
     let _Item  = this.lstReembolsos.find(f => f.Titulo == event.newValue[0]);
 
-
+    if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
+    
    }
 }
 
@@ -371,7 +376,7 @@ public v_Enter_Reembolso(event: any) {
             this.lstCuentabancaria = datos[0].d;
             this.lstBodega = datos[1].d;
             this.lstCuenta = datos[2].d.filter((f: any) => f.ClaseCuenta == "D");
-            this.lstCentroCosto = datos[3].d;
+            this.lstCentroCosto = datos[3].d;            
             this.lstReembolsos = datos[5].d;
 
 
@@ -507,7 +512,7 @@ public v_Enter_Reembolso(event: any) {
         }
         
       }
-
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCuenta.close();
 
     }
 
@@ -569,10 +574,14 @@ public v_Enter_Reembolso(event: any) {
   public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
  
     if (event.added.length == 1) {
+
+      let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + det.NoLinea);
+
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       det.CentroCosto = event.newValue[0];
-    }
 
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCentro.close();
+    }    
 
   }
   public v_Enter_CentroCosto(event: any, det: iAsientoDetalle) {
