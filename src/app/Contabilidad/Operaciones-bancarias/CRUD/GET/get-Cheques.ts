@@ -46,5 +46,10 @@ export class getCheques{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Cheque?NoAsiento=" + NoAsiento);
     }
 
+    public GetReembolsoD(CC: string, Num: string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Cheques/GetDetalleReembolso?CC=" + CC + "&Numero=" + Num);
+    }
+
+
 
 }
