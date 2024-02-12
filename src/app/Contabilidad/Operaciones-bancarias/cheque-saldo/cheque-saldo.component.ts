@@ -923,12 +923,11 @@ export class ChequesSaldoComponent {
         }
       );
       dialogAsiento.componentInstance.esModal = true;
+      dialogAsiento.componentInstance.FILA = Asiento;
 
       dialogAsiento.afterOpened().subscribe(s => {
 
 
-
-        dialogAsiento.componentInstance.FILA = Asiento;
         dialogAsiento.componentInstance.esAuxiliar = false;
 
       });

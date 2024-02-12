@@ -932,7 +932,7 @@ export class TransferenciaSaldoComponent {
 
       dialogAsiento.afterOpened().subscribe(s => {
 
-
+        
         dialogAsiento.componentInstance.esAuxiliar = false;
 
       });
