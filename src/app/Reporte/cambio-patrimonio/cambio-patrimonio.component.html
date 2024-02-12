@@ -1,0 +1,50 @@
+<div class="contenedor">
+    <div class="row">
+
+        <div class="contenedor-filtro linea-bottom-primario">
+            <div class="row">
+                <p>Estado Cambio Patrimonio</p>
+            </div>
+
+            <div class="row mb-2">
+                <form autocomplete="off" [formGroup]="val.ValForm">
+                    <div class="row">
+
+
+                        <div class="col-12 col-md-12 col-lg-3 mb-1">
+                            <igx-date-picker formControlName="txtFecha" id="txtFecha" [inputFormat]="'MM/yyyy'" >
+                                <label igxLabel>Fecha</label>
+                            </igx-date-picker>
+                        </div>
+
+
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Moneda"
+                                    id="cmbMoneda" formControlName="cmbMoneda">
+                                        <option value="true">Cordoba</option>
+                                        <option value="false">Dolar</option>
+                                    </select>
+                                    <label for="cmbMoneda">Moneda</label>
+                                </div>
+                                <span class="input-group-text"> <button type="button" class="btn btn-secundario"
+                                    id="btnReporte-CambioPAtrimonio" (click)="V_Imprimir();"><i
+                                        class="fa-solid fa-print fa-beat-fade fa-xl"></i>
+                                    Imprimir</button></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+</div>

@@ -25,6 +25,11 @@ import { ChequesSaldoComponent } from 'src/app/Contabilidad/Operaciones-bancaria
 import { BalanzaComponent } from 'src/app/Reporte/balanza/balanza.component';
 import { BalanceGeneralComponent } from 'src/app/Reporte/balance-general/balance-general.component';
 import { EstadoResultadoComponent } from 'src/app/Reporte/estado-resultado/estado-resultado.component';
+import { FlujoEfectivoComponent } from 'src/app/Reporte/flujo-efectivo/flujo-efectivo.component';
+import { CambioPatrimonioComponent } from 'src/app/Reporte/cambio-patrimonio/cambio-patrimonio.component';
+import { GastosAcumuladosComponent } from 'src/app/Reporte/gastos-acumulados/gastos-acumulados.component';
+import { CierreFiscalComponent } from 'src/app/Contabilidad/Cierre-Contable/cierre-fiscal/cierre-fiscal.component';
+import { CierreMensualComponent } from 'src/app/Contabilidad/Cierre-Contable/cierre-mensual/cierre-mensual.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -252,6 +257,47 @@ export class SidebarComponent {
       let BalanceGen: ComponentRef<EstadoResultadoComponent> = this.DynamicFrom.viewContainerRef.createComponent(EstadoResultadoComponent);
 
     }
+
+    if(id == "aFlujoEfectivo"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let FlujoEfec: ComponentRef<FlujoEfectivoComponent> = this.DynamicFrom.viewContainerRef.createComponent(FlujoEfectivoComponent);
+
+    }
+
+    if(id == "aCambioPatrimonio"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let CambioPatr: ComponentRef<CambioPatrimonioComponent> = this.DynamicFrom.viewContainerRef.createComponent(CambioPatrimonioComponent);
+
+    }
+
+    if(id == "aGastosAcumulados"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let GastosAcum: ComponentRef<GastosAcumuladosComponent> = this.DynamicFrom.viewContainerRef.createComponent(GastosAcumuladosComponent);
+
+    }
+
+    if(id == "aCierreFiscal"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let CierreFiscal: ComponentRef<CierreFiscalComponent> = this.DynamicFrom.viewContainerRef.createComponent(CierreFiscalComponent);
+
+    }
+
+    if(id == "aCierreMensual"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let CierreMensual: ComponentRef<CierreMensualComponent> = this.DynamicFrom.viewContainerRef.createComponent(CierreMensualComponent);
+
+    }
+    
 
     
 

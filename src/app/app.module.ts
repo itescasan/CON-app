@@ -51,6 +51,11 @@ import { BalanceGeneralComponent } from './Reporte/balance-general/balance-gener
 import { IgxDatePickerModule } from "igniteui-angular";
 import { RetencionComponent } from './Contabilidad/retencion/retencion.component';
 import { EstadoResultadoComponent } from './Reporte/estado-resultado/estado-resultado.component';
+import { FlujoEfectivoComponent } from './Reporte/flujo-efectivo/flujo-efectivo.component';
+import { CambioPatrimonioComponent } from './Reporte/cambio-patrimonio/cambio-patrimonio.component';
+import { GastosAcumuladosComponent } from './Reporte/gastos-acumulados/gastos-acumulados.component';
+import { CierreMensualComponent } from './Contabilidad/Cierre-Contable/cierre-mensual/cierre-mensual.component';
+import { CierreFiscalComponent } from './Contabilidad/Cierre-Contable/cierre-fiscal/cierre-fiscal.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +83,12 @@ import { EstadoResultadoComponent } from './Reporte/estado-resultado/estado-resu
     BalanceGeneralComponent,
     BalanzaComponent,
     RetencionComponent,
-    EstadoResultadoComponent
+    EstadoResultadoComponent,
+    FlujoEfectivoComponent,
+    CambioPatrimonioComponent,
+    GastosAcumuladosComponent,
+    CierreMensualComponent,
+    CierreFiscalComponent
    
   ],
   imports: [
