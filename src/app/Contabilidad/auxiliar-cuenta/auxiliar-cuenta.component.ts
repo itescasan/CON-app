@@ -133,12 +133,13 @@ export class AuxiliarCuentaComponent {
               }
             );
             dialogAsiento.componentInstance.esModal = true;
+            dialogAsiento.componentInstance.FILA = Asiento;
 
             dialogAsiento.afterOpened().subscribe(s => {
 
 
               
-              dialogAsiento.componentInstance.FILA = Asiento;
+             
               dialogAsiento.componentInstance.esAuxiliar = (e.Editar == 1? false : true);
             
 
