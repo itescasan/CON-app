@@ -519,7 +519,7 @@ export class TransferenciaCuentaComponent {
   V_Agregar(esBanco : boolean) : number {
 
     let det: iAsientoDetalle = {} as iAsientoDetalle;
-    let i: number = 2;
+    let i: number = 1;
    
     if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
 
@@ -564,6 +564,7 @@ export class TransferenciaCuentaComponent {
   }
 
   V_Eliminar(item: iAsientoDetalle) {
+    console.log(item.NoLinea)
 
     let i = this.lstDetalle.data.findIndex(f => f.NoLinea == item.NoLinea);
 
@@ -601,7 +602,7 @@ export class TransferenciaCuentaComponent {
       document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
-      if (x > 1) txtCuenta.open();
+      if (x > 2) txtCuenta.open();
 
       this.val.addFocus("txtCuenta" + x , "txtReferencia" + x, undefined);
       this.val.addFocus("txtReferencia" + x, "txtCentroCosto" + x, undefined);

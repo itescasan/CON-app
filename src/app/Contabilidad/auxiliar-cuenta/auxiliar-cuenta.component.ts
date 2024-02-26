@@ -30,6 +30,8 @@ export class AuxiliarCuentaComponent {
   public lstAuxiliar: MatTableDataSource<iAuxiliarCuenta>;
   public SaldoInicial: number = 0;
   public SaldoFinal: number = 0;
+  public TotalDebe: number = 0;
+  public TotalHaber: number = 0;
 
   lstBodega: iBodega[] = [];
 
@@ -294,6 +296,8 @@ export class AuxiliarCuentaComponent {
 
             this.lstAuxiliar = new MatTableDataSource(datos[0].d.filter((f: any) => f.Serie != "INI"));
             this.SaldoInicial = INI!.DEBE - INI!.HABER;
+            this.TotalDebe = this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE, 0);
+            this.TotalHaber = this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE, 0);
             this.SaldoFinal = (this.SaldoInicial + this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE, 0)) - this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.HABER, 0);
             this.lstAuxiliar.paginator = this.paginator;
 

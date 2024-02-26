@@ -111,123 +111,183 @@
     </div>
 
 
-
-
-    <div class="mat-elevation-z8">
-        <table class="table table-hover  table-sm tabla-layout" mat-table [dataSource]="lstAuxiliar">
-
-
-            <ng-container matColumnDef="Fecha">
-                <th mat-header-cell *matHeaderCellDef> <span class="texto">Fecha</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col">
-                    <div class="texto">
-                        <div class="mobile-label">Fecha:</div>
-                        <div>{{det.Fecha | date : "dd/MM/yyyy"}}</div>
-                    </div>
-                </td>
-            </ng-container>
-
-
-            <ng-container matColumnDef="NoDoc">
-                <th mat-header-cell *matHeaderCellDef> <span class="texto">Documento</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col">
-                    <div class="texto">
-                        <div class="mobile-label">Documento:</div>
-                        <div>{{det.NoDoc}}</div>
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="Cuenta">
-                <th mat-header-cell *matHeaderCellDef> <span class="texto">Cuenta</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col">
-                    <div class="texto">
-                        <div class="mobile-label">Cuenta:</div>
-                        <div>{{det.Cuenta}} - {{det.Concepto}}</div>
- 
-                    </div>
-
-                </td>
-            </ng-container>
-
-
-            <ng-container matColumnDef="Referencia">
-                <th mat-header-cell *matHeaderCellDef> <span class="texto">Referencia</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col"> 
-                    <div class="texto">
-                        <span class="mobile-label">Referencia:</span>
-                        <div>{{det.Referencia}}</div>
-                    </div> 
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="DEBE">
-                <th mat-header-cell *matHeaderCellDef> <span class="numero">Debe</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col debe">
-                    <div class="numero">
-                        <div class="mobile-label">Debe</div>
-                        <div class="mobile-label">Haber</div>
-                        <div>{{det.DEBE | number : '1.2-2'}}</div>
-                        <div>{{det.HABER | number : '1.2-2'}}</div>
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="HABER">
-                <th mat-header-cell *matHeaderCellDef> <span class="numero">Haber</span> </th>
-                <td mat-cell *matCellDef="let det" class="mobile-col haber">
-                    <div class="numero">
-                        <div>{{det.HABER | number : '1.2-2'}}</div>
-                    </div>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="Cuenta_Padre">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let det" class="mobile-col">
-                    <span class="evento">
-
-
-
-                        <button *ngIf="det.NoDoc != ''" type="button" class="btn" (click)="v_Editar(det)"><i
-                                class="fa-solid fa-eye fa-beat-fade fa-lg primario"></i></button>
-
-                        <button *ngIf="det.NoDoc == ''" type="button" class="btn" (click)="v_Buscar(det, 'H')"><i
-                                class="fa-solid fa-diagram-next fa-lg"></i></button>
-                        <button *ngIf="det.Cuenta.toString().length > 1" type="button" class="btn"
-                            (click)="v_Buscar(det, 'P')"><i class="fa-solid fa-arrow-left fa-lg"></i></button>
-                    </span>
-
-                </td>
-            </ng-container>
-
-
-
-
-
-
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="columna-titulo"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed">
-            </tr>
-
-
-        </table>
-        <mat-paginator [pageSizeOptions]="[100, 200]" class="mat-paginator-sticky"></mat-paginator>
-
-
+    <div class="row">
+        <div class="mat-elevation-z8">
+            <table class="table table-hover  table-sm tabla-layout" mat-table [dataSource]="lstAuxiliar">
+    
+    
+                <ng-container matColumnDef="Fecha">
+                    <th mat-header-cell *matHeaderCellDef> <span class="texto">Fecha</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col">
+                        <div class="texto">
+                            <div class="mobile-label">Fecha:</div>
+                            <div>{{det.Fecha | date : "dd/MM/yyyy"}}</div>
+                        </div>
+                    </td>
+                </ng-container>
+    
+    
+                <ng-container matColumnDef="NoDoc">
+                    <th mat-header-cell *matHeaderCellDef> <span class="texto">Documento</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col">
+                        <div class="texto">
+                            <div class="mobile-label">Documento:</div>
+                            <div>{{det.NoDoc}}</div>
+                        </div>
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Cuenta">
+                    <th mat-header-cell *matHeaderCellDef> <span class="texto">Cuenta</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col">
+                        <div class="texto">
+                            <div class="mobile-label">Cuenta:</div>
+                            <div>{{det.Cuenta}} - {{det.Concepto}}</div>
+     
+                        </div>
+    
+                    </td>
+                </ng-container>
+    
+    
+                <ng-container matColumnDef="Referencia">
+                    <th mat-header-cell *matHeaderCellDef> <span class="texto">Referencia</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col"> 
+                        <div class="texto">
+                            <span class="mobile-label">Referencia:</span>
+                            <div>{{det.Referencia}}</div>
+                        </div> 
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="DEBE">
+                    <th mat-header-cell *matHeaderCellDef> <span class="numero">Debe</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col debe">
+                        <div class="numero">
+                            <div class="mobile-label">Debe</div>
+                            <div class="mobile-label">Haber</div>
+                            <div>{{det.DEBE | number : '1.2-2'}}</div>
+                            <div>{{det.HABER | number : '1.2-2'}}</div>
+                        </div>
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="HABER">
+                    <th mat-header-cell *matHeaderCellDef> <span class="numero">Haber</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col haber">
+                        <div class="numero">
+                            <div>{{det.HABER | number : '1.2-2'}}</div>
+                        </div>
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Cuenta_Padre">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col">
+                        <span class="evento">
+    
+    
+    
+                            <button *ngIf="det.NoDoc != ''" type="button" class="btn" (click)="v_Editar(det)"><i
+                                    class="fa-solid fa-eye fa-beat-fade fa-lg primario"></i></button>
+    
+                            <button *ngIf="det.NoDoc == ''" type="button" class="btn" (click)="v_Buscar(det, 'H')"><i
+                                    class="fa-solid fa-diagram-next fa-lg"></i></button>
+                            <button *ngIf="det.Cuenta.toString().length > 1" type="button" class="btn"
+                                (click)="v_Buscar(det, 'P')"><i class="fa-solid fa-arrow-left fa-lg"></i></button>
+                        </span>
+    
+                    </td>
+                </ng-container>
+    
+    
+    
+    
+    
+    
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns" class="columna-titulo"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed">
+                </tr>
+    
+    
+            </table>
+            <mat-paginator [pageSizeOptions]="[100, 200]" class="mat-paginator-sticky"></mat-paginator>
+    
+    
+        </div>
     </div>
 
 
-    <div class="row">
-        <div class="pie">
-            <div class="saldo-final">
-                <span><b>Saldo Final:</b></span>
-                <span>{{SaldoFinal | number : '1.2-2'}}</span>
+</div>
+
+
+
+
+
+<div class="contenedor-pie">
+    <div class="pie-asiento">
+
+        <div class="row">
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+                
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+    
+                    <div class="form-floating">
+                        <input type="text" id="txtBuscar-cuenta" class="form-control" placeholder="Buscar"
+                            aria-label="Buscar"  (keyup)="v_Filtrar($event)">
+                        <label for="txtBuscar-Asiento">Buscar</label>
+    
+                    </div>
+                </div>
             </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+
+                <div class="totales">
+                    <span class="credito"><span class="etiqueta">Debe:</span><span class="valores debito-credito">{{TotalDebe | number :
+                        "1.2-2"}}</span></span>
+                        
+                </div>
+              
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+
+                <div class="totales">
+                   
+                    <span>
+                        <span class="debito"><span class="etiqueta">Haber:</span><span class="valores debito-credito">{{TotalHaber | number :
+                            "1.2-2"}}</span></span>
+                    </span>
+                   
+                        
+                </div>
+              
+            </div>
+
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+
+                <div class="totales">
+
+                    <span>
+                        <span class="saldofinal"><span class="etiqueta">Saldo Final:</span><span class="valores">{{SaldoFinal | number
+                            : "1.2-2"}}</span></span>
+                    </span>
+                   
+                   
+                </div>
+              
+            </div>
+
+
+
+
+    
         </div>
-
-
 
     </div>
 </div>

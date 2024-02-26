@@ -2,6 +2,7 @@
 
 .contenedor-tabla {
     background: var(--escan-fondo);
+    margin-bottom: 250px;
 }
 
 .table-container {
@@ -114,6 +115,9 @@ table {
 
 }
 
+mat-paginator{
+    margin-bottom: 55px;
+}
 
 .mobile-label {
     display: none;
@@ -199,14 +203,78 @@ table {
 
 
 
-.pie {
 
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    background-color: var(--escan-fondo);
-    height: 40px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    z-index: 2;
+
+//████████████████████████████████████████████PIE████████████████████████████████████████████████████████████████████████
+
+.contenedor-pie {
+    position: relative;
+    
 }
+
+.pie-asiento {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 5;
+    background-color: var(--escan-fondo);
+    padding: 10px;
+ 
+    .botones{
+        margin-right: 10px;
+        padding-right: 10px;
+    }
+
+    .totales {
+
+        width: 100%;
+        text-align: right;
+        padding-right: 10px;
+
+    
+
+        .debito,
+        .credito,
+        .saldofinal {
+            width: 100%;
+        }
+
+
+
+        .etiqueta{
+            width: 30%;
+        }
+
+        .valores {
+            background-color: var(--escan-primario);
+            color: var(--escan-fondo);
+            width: 70%;
+        }
+
+        .valores.debito-credito{
+            background-color: var(--escan-opcional);
+            width: 70%;
+        }
+
+        .etiqueta,
+        .valores {
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 5px;
+        }
+
+      
+
+    }
+
+ 
+
+
+}
+
+
+
+
