@@ -15,7 +15,7 @@ import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { check, month } from '@igniteui/material-icons-extended';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import {formatDate} from '@angular/common';
+import {DatePipe, formatDate} from '@angular/common';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 import { DialogRef } from '@angular/cdk/dialog';
 import { iEjercicioFiscal } from 'src/app/Interface/Contabilidad/i-EjercicioFiscal';
@@ -55,6 +55,7 @@ export class EjercicioFiscalComponent {
   filteredCuenta1: Observable<iCuenta[]> | undefined;
   filteredCuenta2: Observable<iCuenta[]> | undefined;
   filteredCuenta3: Observable<iCuenta[]> | undefined;
+  pipe: any;
 
 
   
@@ -303,14 +304,15 @@ export class EjercicioFiscalComponent {
       let Fecha : Date = new Date(this.val.Get("idFechaIni").value, i, 1);
       let FechaFin = new Date(this.cFunciones.LastDay(Fecha));
       let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'short'}).format(new Date(Fecha));
-   
+      //pipe = new DatePipe('en-US');
+
       periodo.IdPeriodo = undefined;
       periodo.IdEjercicio = undefined;
       periodo.NoPeriodo = i + 1;
       periodo.NombrePeriodo = mesActual.toUpperCase() + "-" + this.val.Get("idFechaIni").value;
       periodo.ClasePeriodo = 'Mensuales';
-      periodo.FechaInicio = new Date(Fecha);
-      periodo.FechaFinal = new Date(FechaFin);
+      periodo.FechaInicio = new Date(Fecha).toDateString();
+      periodo.FechaFinal = new Date(FechaFin).toDateString();
       periodo.Estado = 'BLOQUEADO';
       periodo.FechaReg = new Date();      
       periodo.UsuarioReg = this.cFunciones.User;

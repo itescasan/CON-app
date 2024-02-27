@@ -4,8 +4,8 @@ export interface iPeriodo{
     NoPeriodo : number;
     NombrePeriodo: string;
     ClasePeriodo: string;
-    FechaInicio: Date;
-    FechaFinal: Date;
+    FechaInicio: string;
+    FechaFinal: string;
     Estado: string;
     FechaReg : Date;   
     UsuarioReg : string; 
