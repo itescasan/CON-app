@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dialogo-confirmar',
@@ -9,11 +10,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class DialogoConfirmarComponent {
 
   public retorno: string="0";
-  public mensaje: string="";
+  public mensaje: any;
   public textBoton1 : string ="";
   public textBoton2 : string ="";
 
-  constructor(public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogoConfirmarComponent>) { }
+  constructor(private sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogoConfirmarComponent>) { }
 
   public v_Confirmar(){
     this.dialogRef.close();
@@ -25,6 +26,11 @@ export class DialogoConfirmarComponent {
     this.dialogRef.close();
     this.retorno="0";
 
+  }
+  
+   public SetMensajeHtml(mensaje : string)
+  {
+    this.mensaje = this.sanitizer.bypassSecurityTrustHtml(mensaje);
   }
 
 

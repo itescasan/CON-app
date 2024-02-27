@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -9,14 +10,23 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class DialogErrorComponent {
 
-  public str_Error : string = "";
+  public str_Error : any;
 
-  constructor(
+  constructor(private sanitizer: DomSanitizer,
     public dialogRef: MatDialogRef<DialogErrorComponent>,
     @Inject(MAT_DIALOG_DATA) public data: string,
   ) {
 
     this.str_Error = data;
   }
+  
+  
+  
+  public SetMensajeHtml(mensaje : string)
+  {
+    this.str_Error = this.sanitizer.bypassSecurityTrustHtml(mensaje);
+  }
+
+  
 
 }
