@@ -371,10 +371,10 @@ public v_CargarReembolsos(): void {
             if(this.val.ItemValido(["cmbCuentaBancaria"])) {
               let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
               if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-                this.V_Add(item.CuentaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",SumValor,"C");
+                this.V_Add(item.CuentaNuevaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",SumValor,"C");
               } else {
                 this.ValorC = this.cFunciones.Redondeo((SumValor),"2")  
-                this.V_Add(item.CuentaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
+                this.V_Add(item.CuentaNuevaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
               }
              
             }
@@ -1225,10 +1225,10 @@ public v_CargarReembolsos(): void {
       if(this.val.ItemValido(["cmbCuentaBancaria"])) {
         let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          this.V_Add(item.CuentaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",(this.Valor - this.suma) +  this.sumaDebito ,"C");
+          this.V_Add(item.CuentaNuevaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",(this.Valor - this.suma) +  this.sumaDebito ,"C");
         } else {
           this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  - this.cFunciones.Redondeo(this.suma,"2") +  this.cFunciones.Redondeo(this.sumaDebito,"2")
-          this.V_Add(item.CuentaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC ,"C");
+          this.V_Add(item.CuentaNuevaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC ,"C");
         }
         
 

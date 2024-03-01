@@ -188,13 +188,13 @@ export class AsientoContableComponent {
 
       document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
       document.getElementById("txtCentroCosto" + det.NoLinea)?.removeAttribute("disabled");
-      document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-      document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+     // document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+      //document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
 
       if (this.FILA?.NoDocOrigen == undefined) {
       
-        if (i_Cuenta?.Naturaleza == "D") {
-          document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+      //  if (i_Cuenta?.Naturaleza == "D") {
+          //document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
           if (Number(det.Credito.replaceAll(",", "")) != 0) {
             det.Debito = det.Credito;
             det.Credito = "0.00";
@@ -202,16 +202,16 @@ export class AsientoContableComponent {
 
 
 
-        }
+      //  }
 
-        if (i_Cuenta?.Naturaleza == "C") {
-          document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+     //   if (i_Cuenta?.Naturaleza == "C") {
+         // document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
           if (Number(det.Debito.replaceAll(",", "")) != 0) {
             det.Credito = det.Debito;
             det.Debito = "0.00";
           }
 
-        }
+      //  }
       }
 
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCuenta.close();
@@ -282,8 +282,15 @@ export class AsientoContableComponent {
         document?.getElementById("txt" + columna + det.NoLinea)?.focus();
       }
       else {
-        if (det.Naturaleza == "D") document?.getElementById("txtDebito" + det.NoLinea)?.focus();
-        if (det.Naturaleza == "C") document?.getElementById("txtCredito" + det.NoLinea)?.focus();
+      document?.getElementById("txtDebito" + det.NoLinea)?.focus();
+      }
+
+      if(columna == "txtDebito")
+      {
+
+        if (Number(det.Credito.replaceAll(",", ""))) {
+          det.Credito = "0.00";
+        }
 
       }
 
@@ -295,6 +302,10 @@ export class AsientoContableComponent {
       if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea))
 
       if (det.NoLinea != i) return;
+
+      if (Number(det.Debito.replaceAll(",", "")) != 0) {
+        det.Debito = "0.00";
+      }
 
       this.V_Agregar();
     }
@@ -387,8 +398,7 @@ export class AsientoContableComponent {
       document?.getElementById("txtCuenta" + x)?.focus();
       document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
-      document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
-      document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
+
 
       let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta" + x);
       if (x > 1) txtCuenta.open();
@@ -472,16 +482,6 @@ export class AsientoContableComponent {
 
 
         if (!this.esAuxiliar) {
-          document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtCredito" + f.NoLinea)?.setAttribute("disabled", "disabled");
-
-          if (f.Naturaleza == "D") document.getElementById("txtDebito" + f.NoLinea)?.removeAttribute("disabled");
-
-          if (f.Naturaleza == "C") document.getElementById("txtCredito" + f.NoLinea)?.removeAttribute("disabled");
-
-
-        }
-        else {
           txtCuenta.disabled = true;
           document.getElementById("txtCuenta" + f.NoLinea)?.setAttribute("disabled", "disabled");
           document.getElementById("txtReferencia" + f.NoLinea)?.setAttribute("disabled", "disabled");

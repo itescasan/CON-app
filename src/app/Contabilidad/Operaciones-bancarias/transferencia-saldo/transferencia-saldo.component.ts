@@ -840,8 +840,22 @@ export class TransferenciaSaldoComponent {
 
 
 
-    this.dec_Dif = this.cFunciones.Redondeo((this.dec_Disponible + this.dec_Retencion) - this.dec_Aplicado, "2");
-   
+    if (this.IdMoneda != "undefined" && this.IdMoneda != "") {
+
+
+      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+        this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.dec_Aplicado, "2"));
+      }
+      else {
+        this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.dec_Aplicado, "2"));
+
+        this.dec_Disponible = Number(this.val.Get("txtTotalDolar").value.toString().replaceAll(",", ""));
+      }
+
+
+      this.v_ConvertirTotal("");
+    }
+
 
   }
 

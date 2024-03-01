@@ -302,7 +302,7 @@
                                     <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Debito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
-                                    (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
+                                    (keydown.Enter)="V_Focus('txtDebito', det);" 
                                     (change)="V_Calcular();" autocomplete="off">
                                 </form>
                                
@@ -323,7 +323,7 @@
                                     <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
                                     [(ngModel)]="det.Credito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                    (keydown.Enter)="V_Focus('NuevaFila', det);" (focusout)="V_FocusOut(det);"
+                                    (keydown.Enter)="V_Focus('NuevaFila', det);" 
                                     (change)="V_Calcular();" autocomplete="off">
                                 </form>
                                
