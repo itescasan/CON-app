@@ -98,7 +98,7 @@ export class CatalogoCuentaComponent {
 
     let i_Cuenta: iCuenta = this.lstCuentaPadre.find(f => f.CuentaContable == event.option.value)!;
 
-    this.Prefix = i_Cuenta.CuentaContable + (i_Cuenta.Nivel >= 4 ? "-" : "");
+    this.Prefix = i_Cuenta.CuentaContable + (i_Cuenta.Nivel >= 3 ? "-" : "");
     this.val.Get("txtDescripcionPadre").setValue(i_Cuenta.NombreCuenta);
 
     this.val.Get("txtCuenta").setValue("");
@@ -144,27 +144,27 @@ export class CatalogoCuentaComponent {
         break;
 
       case 3:
-        this.Mascara = "0";
+        this.Mascara = "00";
         this.GetCuentaNueva();
         break;
 
       case 4:
-        this.Mascara = "0";
+        this.Mascara = "00";
         this.GetCuentaNueva();
         break;
 
       case 5:
-        this.Mascara = "0000";
+        this.Mascara = "00";
         this.GetCuentaNueva();
         break;
 
       case 6:
-        this.Mascara = "000";
+        this.Mascara = "00";
         this.GetCuentaNueva();
         break;
 
       case 7:
-        this.Mascara = "000";
+        this.Mascara = "00";
         this.GetCuentaNueva();
         break;
     }
