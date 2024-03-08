@@ -23,15 +23,16 @@ import { getBodega } from 'src/app/Inventario/Bodega/CRUD/GET/get-Bodega';
 })
 export class AuxiliarCuentaComponent {
   public val = new Validacion();
-  displayedColumns: string[] = ["Fecha", "Cuenta", "NoDoc", "Referencia", "DEBE", "HABER", "Cuenta_Padre"];
+  displayedColumns: string[] = ["Fecha", "Cuenta", "NoDoc", "Referencia", "DEBE_ML", "HABER_ML", "Cuenta_Padre"];
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
   public lstAuxiliar: MatTableDataSource<iAuxiliarCuenta>;
   public SaldoInicial: number = 0;
   public SaldoFinal: number = 0;
-  public TotalDebe: number = 0;
-  public TotalHaber: number = 0;
+  public TotalDEBE: number = 0;
+  public TotalHABER: number = 0;
+  private ReporteAuxiliar : any;
 
   lstBodega: iBodega[] = [];
 
@@ -125,8 +126,7 @@ export class AuxiliarCuentaComponent {
             let datos : iDatos[] = _json["d"];
 
             let Asiento : iAsiento = datos[0].d[0];
-
-
+           
             let dialogAsiento: MatDialogRef<AsientoContableComponent> = this.cFunciones.DIALOG.open(
               AsientoContableComponent,
               {
@@ -295,11 +295,16 @@ export class AuxiliarCuentaComponent {
             let INI: iAuxiliarCuenta = datos[0].d.find((f: any) => f.Serie == "INI");
 
             this.lstAuxiliar = new MatTableDataSource(datos[0].d.filter((f: any) => f.Serie != "INI"));
-            this.SaldoInicial = INI!.DEBE - INI!.HABER;
-            this.TotalDebe = this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE, 0);
-            this.TotalHaber = this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.HABER, 0);
-            this.SaldoFinal = (this.SaldoInicial + this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE, 0)) - this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.HABER, 0);
+            this.SaldoInicial = INI!.DEBE_ML - INI!.HABER_ML;
+            this.TotalDEBE = this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE_ML, 0);
+            this.TotalHABER = this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.HABER_ML, 0);
+            this.SaldoFinal = (this.SaldoInicial + this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE_ML, 0)) - this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.HABER_ML, 0);
             this.lstAuxiliar.paginator = this.paginator;
+
+
+            this.ReporteAuxiliar = datos[1].d;
+
+
 
           }
 
@@ -333,6 +338,27 @@ export class AuxiliarCuentaComponent {
     this.lstAuxiliar.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
   }
 
+
+
+  public async V_Imprimir() {
+
+
+    if(this.ReporteAuxiliar == undefined) return;
+
+    let byteArray = new Uint8Array(atob(this.ReporteAuxiliar).split('').map(char => char.charCodeAt(0)));
+
+    var file = new Blob([byteArray], { type: 'application/pdf' });
+
+    let url = URL.createObjectURL(file);
+
+    let tabOrWindow : any = window.open(url, '_blank');
+    tabOrWindow.focus();
+
+
+
+
+
+  }
 
 
   ngOnInit(): void {
