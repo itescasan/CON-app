@@ -483,6 +483,7 @@ export class AsientoContableComponent {
 
         if (!this.Editar) {
           txtCuenta.disabled = true;
+          txtCentro.disabled = true;
 
           document.getElementById("txtCuenta-asiento" + f.NoLinea)?.setAttribute("disabled", "disabled");
           document.getElementById("txtReferencia" + f.NoLinea)?.setAttribute("disabled", "disabled");

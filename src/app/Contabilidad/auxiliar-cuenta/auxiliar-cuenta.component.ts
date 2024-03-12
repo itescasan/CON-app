@@ -105,7 +105,7 @@ export class AuxiliarCuentaComponent {
     );
 
 
-    this.GET.GetAsiento(e.IdAsiento).subscribe(
+    this.GET.GetAsiento(e.IdAsiento, e.NoDoc).subscribe(
       {
         next: (data) => {
 
