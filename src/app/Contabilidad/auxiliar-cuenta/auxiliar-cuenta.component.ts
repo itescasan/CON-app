@@ -105,7 +105,7 @@ export class AuxiliarCuentaComponent {
     );
 
 
-    this.GET.GetAsiento(e.NoDoc, e.Serie).subscribe(
+    this.GET.GetAsiento(e.IdAsiento).subscribe(
       {
         next: (data) => {
 
@@ -139,11 +139,8 @@ export class AuxiliarCuentaComponent {
 
             dialogAsiento.afterOpened().subscribe(s => {
 
-
-              
-             
               dialogAsiento.componentInstance.esAuxiliar = (e.Editar == 1? false : true);
-            
+
 
 
             });
@@ -151,7 +148,7 @@ export class AuxiliarCuentaComponent {
 
 
             dialogAsiento.afterClosed().subscribe(s => {
-              //this.v_CargarDatos();
+              dialogAsiento.componentRef?.destroy()
             });
 
 

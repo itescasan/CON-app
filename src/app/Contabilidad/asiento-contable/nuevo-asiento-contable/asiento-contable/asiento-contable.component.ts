@@ -477,7 +477,7 @@ export class AsientoContableComponent {
 
 
         let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-        if (!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+        if(f.CentroCosto != undefined) if (!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
 
 
 
@@ -947,6 +947,8 @@ export class AsientoContableComponent {
 
 
   }
+
+
 
 }
 

@@ -24,8 +24,8 @@ export class getAuxiliarCuenta {
     }
 
 
-    public GetAsiento(NoDoc: string, Serie: string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/GetAsiento?NoDoc=" + NoDoc + "&Serie=" + Serie);
+    public GetAsiento(IdAsiento: number): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/GetAsiento?IdAsiento=" + IdAsiento );
     }
 
 
