@@ -87,8 +87,8 @@
                                     
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Referencia"
-                                            id="txtReferencia" formControlName="txtReferencia" >
-                                        <label for="txtReferencia">Referencia</label>
+                                            id="txtReferenciaDoc" formControlName="txtReferenciaDoc" >
+                                        <label for="txtReferenciaDoc">Referencia</label>
                                     </div>
 
                                 </div>
@@ -196,7 +196,7 @@
                                   
                                     
                                         <igx-combo [data]="lstCuenta"  [(ngModel)]="det.CuentaContable" valueKey="CuentaContable" displayKey="NombreCuenta"
-                                            id="txtCuenta{{det.NoLinea}}"   [ngModelOptions]="{standalone: true}"
+                                            id="txtCuenta-asiento{{det.NoLinea}}"   [ngModelOptions]="{standalone: true}"
                                             [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
                                             (selectionChanging)="v_Select_Cuenta($event, det)"
                                             (keyup)="v_Enter_Cuenta($event, det);" >
@@ -318,7 +318,7 @@
     
             </table>
     
-            <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"  *ngIf="!esAuxiliar"
+            <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"  *ngIf="!Editar"
                 [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
             </div>
             <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
@@ -404,7 +404,7 @@
         </div>
 
      
-        <div class="botones" *ngIf="!esAuxiliar">
+        <div class="botones" *ngIf="Editar">
             <div *ngIf="!(['Anulado', 'Autorizado']).includes(Estado)">
                 <button type="button" class="btn btn-secundario" id="btnRefrescar-Asiento" (click)="v_CargarDatos();"><i
                         class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>

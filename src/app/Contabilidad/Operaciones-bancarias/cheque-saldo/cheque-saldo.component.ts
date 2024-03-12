@@ -928,7 +928,7 @@ export class ChequesSaldoComponent {
       dialogAsiento.afterOpened().subscribe(s => {
 
 
-        dialogAsiento.componentInstance.esAuxiliar = false;
+        dialogAsiento.componentInstance.Editar = false;
 
       });
 

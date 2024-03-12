@@ -44,7 +44,7 @@ export class AsientoContableComponent {
   lstCentroCosto: iCentroCosto[] = [];
 
   public esModal: boolean = false;
-  public esAuxiliar: boolean = false;
+  public Editar: boolean = false;
   public dec_TotalDebe: number = 0;
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
@@ -64,7 +64,7 @@ export class AsientoContableComponent {
     this.val.add("txtNoAsiento", "1", "LEN>", "0", "No Asiento", "No se ha configurado en número de asiento.");
     this.val.add("txtBodega-asiento", "1", "LEN>", "0", "Bodega", "Seleccione una bodega.");
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
-    this.val.add("txtReferencia", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+    this.val.add("txtReferenciaDoc", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.val.add("txtObservaciones", "1", "LEN>", "0", "Observaciones", "Ingrese una observacion.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("TxtTC", "1", "NUM>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
@@ -98,7 +98,7 @@ export class AsientoContableComponent {
         this.val.Get("txtNoAsiento").setValue("");
         this.cmbBodega?.setSelectedItem([]);
         this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
-        this.val.Get("txtReferencia").setValue("");
+        this.val.Get("txtReferenciaDoc").setValue("");
         this.val.Get("txtObservaciones").setValue("");
         this.val.Get("cmbMoneda").setValue("COR");
         this.val.Get("TxtTC").setValue(0);
@@ -173,7 +173,7 @@ export class AsientoContableComponent {
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
     
-    this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
+    this.valTabla.Get("txtCuenta-asiento" + det.NoLinea).setValue("");
 
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
@@ -226,13 +226,13 @@ export class AsientoContableComponent {
   public v_Enter_Cuenta(event: any, det: iAsientoDetalle) {
 
     if (event.key == "Enter") {
-      let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta" + det.NoLinea);
+      let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta-asiento" + det.NoLinea);
 
       let cmb: any = txtCuenta.dropdown;
 
       let _Item: iCuenta = cmb._focusedItem.value;
       if (!txtCuenta.selection[0]?.CuentaContable.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
-      this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
+      this.valTabla.Get("txtCuenta-asiento" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;
       det.Naturaleza = _Item.Naturaleza;
 
@@ -337,7 +337,7 @@ export class AsientoContableComponent {
 
     if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
 
-    this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+    this.valTabla.add("txtCuenta-asiento" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
 
@@ -372,7 +372,7 @@ export class AsientoContableComponent {
     this.lstDetalle.data.splice(i, 1);
     this.V_Ordenar(-1);
 
-    this.valTabla.del("txtCuenta" + item.NoLinea);
+    this.valTabla.del("txtCuenta-asiento" + item.NoLinea);
     this.valTabla.del("txtReferencia" + item.NoLinea);
     this.valTabla.del("txtCentroCosto" + item.NoLinea);
     this.valTabla.del("txtDebito" + item.NoLinea);
@@ -395,16 +395,16 @@ export class AsientoContableComponent {
 
 
     setTimeout(() => {
-      document?.getElementById("txtCuenta" + x)?.focus();
+      document?.getElementById("txtCuenta-asiento" + x)?.focus();
       document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
 
 
-      let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta" + x);
+      let txtCuenta: any = this.lstCmb.find(f => f.id == "txtCuenta-asiento" + x);
       if (x > 1) txtCuenta.open();
 
 
-      this.val.addFocus("txtCuenta" + x, "txtReferencia" + x, undefined);
+      this.val.addFocus("txtCuenta-asiento" + x, "txtReferencia" + x, undefined);
       this.val.addFocus("txtReferencia" + x, "txtCentroCosto" + x, undefined);
       this.val.addFocus("txtCentroCosto" + x, "txtDebito" + x, undefined);
       this.val.addFocus("txtDebito" + x, "txtCredito" + x, undefined);
@@ -428,7 +428,7 @@ export class AsientoContableComponent {
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
-    this.val.Get("txtReferencia").setValue(this.FILA.Referencia);
+    this.val.Get("txtReferenciaDoc").setValue(this.FILA.Referencia);
     this.val.Get("txtObservaciones").setValue(this.FILA.Concepto);
     this.val.Get("cmbMoneda").setValue(this.FILA.IdMoneda);
     this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
@@ -457,7 +457,7 @@ export class AsientoContableComponent {
    
 
       this.lstDetalle.data.forEach(f => {
-        this.valTabla.add("txtCuenta" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+        this.valTabla.add("txtCuenta-asiento" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
         this.valTabla.add("txtReferencia" + f.NoLinea, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
         this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
 
@@ -469,10 +469,10 @@ export class AsientoContableComponent {
 
 
 
-        let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta" + f.NoLinea);
+        let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + f.NoLinea);
         if (!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable);
 
-        this.valTabla.Get("txtCuenta" + f.NoLinea).setValue(f.CuentaContable);
+        this.valTabla.Get("txtCuenta-asiento" + f.NoLinea).setValue(f.CuentaContable);
         this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
 
 
@@ -481,9 +481,10 @@ export class AsientoContableComponent {
 
 
 
-        if (!this.esAuxiliar) {
+        if (!this.Editar) {
           txtCuenta.disabled = true;
-          document.getElementById("txtCuenta" + f.NoLinea)?.setAttribute("disabled", "disabled");
+
+          document.getElementById("txtCuenta-asiento" + f.NoLinea)?.setAttribute("disabled", "disabled");
           document.getElementById("txtReferencia" + f.NoLinea)?.setAttribute("disabled", "disabled");
           document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
           document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
@@ -769,7 +770,7 @@ export class AsientoContableComponent {
     this.FILA.NoAsiento = this.val.Get("txtNoAsiento").value;
     this.FILA.Bodega = this.val.Get("txtBodega-asiento").value[0];
     this.FILA.Fecha = this.val.Get("txtFecha").value;
-    this.FILA.Referencia = this.val.Get("txtReferencia").value;
+    this.FILA.Referencia = this.val.Get("txtReferenciaDoc").value;
     this.FILA.Concepto = this.val.Get("txtObservaciones").value;
     this.FILA.IdMoneda = this.val.Get("cmbMoneda").value;
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
@@ -924,8 +925,8 @@ export class AsientoContableComponent {
     ///CAMBIO DE FOCO
     this.val.addFocus("cmbSerie", "txtBodega-asiento", undefined);
     this.val.addFocus("txtBodega-asiento", "txtFecha", undefined);
-    this.val.addFocus("txtFecha", "txtReferencia", undefined);
-    this.val.addFocus("txtReferencia", "cmbMoneda", undefined);
+    this.val.addFocus("txtFecha", "txtReferenciaDoc", undefined);
+    this.val.addFocus("txtReferenciaDoc", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "txtObservaciones", undefined);
   }
 
@@ -938,7 +939,7 @@ export class AsientoContableComponent {
 
     this.lstDetalle.data.forEach(f => {
 
-      this.valTabla.addFocus("txtCuenta" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);
+      this.valTabla.addFocus("txtCuenta-asiento" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);
       this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);
 
       this.valTabla.addNumberFocus("txtDebito" + f.NoLinea, 2);
