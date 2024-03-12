@@ -62,7 +62,7 @@ export class AsientoContableComponent {
 
     this.val.add("cmbSerie", "1", "LEN>", "0", "Serie", "Seleccione una serie.");
     this.val.add("txtNoAsiento", "1", "LEN>", "0", "No Asiento", "No se ha configurado en número de asiento.");
-    this.val.add("txtBodega", "1", "LEN>", "0", "Bodega", "Seleccione una bodega.");
+    this.val.add("txtBodega-asiento", "1", "LEN>", "0", "Bodega", "Seleccione una bodega.");
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
     this.val.add("txtReferencia", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.val.add("txtObservaciones", "1", "LEN>", "0", "Observaciones", "Ingrese una observacion.");
@@ -148,10 +148,10 @@ export class AsientoContableComponent {
   public cmbBodega: IgxComboComponent;
 
   public v_Select_Bodega(event: any) {
-    this.val.Get("txtBodega").setValue("");
+    this.val.Get("txtBodega-asiento").setValue("");
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
-      this.val.Get("txtBodega").setValue(event.newValue);
+      this.val.Get("txtBodega-asiento").setValue(event.newValue);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
   }
@@ -161,7 +161,7 @@ export class AsientoContableComponent {
       let cmb: any = this.cmbBodega.dropdown;
       let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
-      this.val.Get("txtBodega").setValue([_Item.Codigo]);
+      this.val.Get("txtBodega-asiento").setValue([_Item.Codigo]);
 
     }
   }
@@ -636,7 +636,7 @@ export class AsientoContableComponent {
     if (this.cmbBodega.selection.length == 0) return;
 
 
-    this.cFunciones.GET.Serie(this.val.Get("txtBodega").value, "Contabilidad").subscribe(
+    this.cFunciones.GET.Serie(this.val.Get("txtBodega-asiento").value, "Contabilidad").subscribe(
       {
         next: (data) => {
 
@@ -767,7 +767,7 @@ export class AsientoContableComponent {
 
     this.FILA.IdSerie = this.val.Get("cmbSerie").value[0];
     this.FILA.NoAsiento = this.val.Get("txtNoAsiento").value;
-    this.FILA.Bodega = this.val.Get("txtBodega").value[0];
+    this.FILA.Bodega = this.val.Get("txtBodega-asiento").value[0];
     this.FILA.Fecha = this.val.Get("txtFecha").value;
     this.FILA.Referencia = this.val.Get("txtReferencia").value;
     this.FILA.Concepto = this.val.Get("txtObservaciones").value;
@@ -922,8 +922,8 @@ export class AsientoContableComponent {
 
   ngAfterViewInit(): void {
     ///CAMBIO DE FOCO
-    this.val.addFocus("cmbSerie", "txtBodega", undefined);
-    this.val.addFocus("txtBodega", "txtFecha", undefined);
+    this.val.addFocus("cmbSerie", "txtBodega-asiento", undefined);
+    this.val.addFocus("txtBodega-asiento", "txtFecha", undefined);
     this.val.addFocus("txtFecha", "txtReferencia", undefined);
     this.val.addFocus("txtReferencia", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "txtObservaciones", undefined);
