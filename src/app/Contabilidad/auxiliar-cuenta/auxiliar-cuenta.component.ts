@@ -47,7 +47,7 @@ export class AuxiliarCuentaComponent {
 
     this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
     this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
-    this.val.add("txtBodega", "1", "LEN>=", "0", "Bodega", "");
+    this.val.add("txtBodega-auxiliar", "1", "LEN>=", "0", "Bodega", "");
     this.val.add("txtCuenta-Asiento", "1", "LEN>=", "0", "Cuenta", "");
 
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
@@ -68,7 +68,7 @@ export class AuxiliarCuentaComponent {
   public v_Select_Bodega(event: any) {
     if (event.added.length) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
-      this.val.Get("txtBodega").setValue(event.newValue);
+      this.val.Get("txtBodega-auxiliar").setValue(event.newValue);
     }
   }
 
@@ -77,7 +77,7 @@ export class AuxiliarCuentaComponent {
       let cmb : any = this.cmbBodega.dropdown;
       let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
-      this.val.Get("txtBodega").setValue([_Item.Codigo]);
+      this.val.Get("txtBodega-auxiliar").setValue([_Item.Codigo]);
 
     }
   }
@@ -130,6 +130,7 @@ export class AuxiliarCuentaComponent {
             let dialogAsiento: MatDialogRef<AsientoContableComponent> = this.cFunciones.DIALOG.open(
               AsientoContableComponent,
               {
+                id: "dialog-asiuento",
                 panelClass: "escasan-dialog-full",
                 disableClose: true,
               }
@@ -148,7 +149,7 @@ export class AuxiliarCuentaComponent {
 
 
             dialogAsiento.afterClosed().subscribe(s => {
-              dialogAsiento.componentRef?.destroy()
+              let a = 1;
             });
 
 
@@ -270,7 +271,7 @@ export class AuxiliarCuentaComponent {
 
 
 
-    this.GET.Get(this.val.Get("txtFecha1").value, this.val.Get("txtFecha2").value, this.val.Get("txtBodega").value, this.val.Get("txtCuenta-Asiento").value).subscribe(
+    this.GET.Get(this.val.Get("txtFecha1").value, this.val.Get("txtFecha2").value, this.val.Get("txtBodega-auxiliar").value, this.val.Get("txtCuenta-Asiento").value).subscribe(
       {
         next: (data) => {
 
@@ -379,8 +380,8 @@ export class AuxiliarCuentaComponent {
     ///CAMBIO DE FOCO
     this.val.Combo(this.cmbCombo);
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
-    this.val.addFocus("txtFecha2", "txtBodega", undefined);
-    this.val.addFocus("txtBodega", "txtCuenta-Asiento", undefined);
+    this.val.addFocus("txtFecha2", "txtBodega-auxiliar", undefined);
+    this.val.addFocus("txtBodega-auxiliar", "txtCuenta-Asiento", undefined);
     this.val.addFocus("txtCuenta-Asiento", "btnRefrescar-Auxiliar", "click");
 
   }

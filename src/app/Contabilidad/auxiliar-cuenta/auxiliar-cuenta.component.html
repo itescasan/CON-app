@@ -52,7 +52,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-6 mb-1">
                                     <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega"
-                                        id="txtBodega" formControlName="txtBodega" placeholder="Bodega"
+                                        id="txtBodega-filtro" formControlName="txtBodega-filtro" placeholder="Bodega"
                                         searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
                                         [overlaySettings]="overlaySettings"
                                         (selectionChanging)="v_Select_Bodega($event)" (keyup)="v_Enter_Bodega($event);">

@@ -948,6 +948,13 @@ export class AsientoContableComponent {
 
   }
 
+  ngOnDestroy(){
+    this.lstBodega.splice(0, this.lstBodega.length);
+    this.lstSerie.splice(0, this.lstSerie.length);
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.lstCentroCosto.splice(0, this.lstCentroCosto.length);
+
+  }
 
 
 }

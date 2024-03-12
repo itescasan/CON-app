@@ -1,7 +1,7 @@
 <div class="contenedor-asiento mb-1">
     <div class="escasan-dialog" *ngIf="esModal">
         <div class="btn-contenedor-custom">
-            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+            <button mat-button class="close-button custom-cerrar" [mat-dialog-close]="true">
                 <mat-icon class="close-icon" color="warn">close</mat-icon>
             </button>
         </div>
@@ -48,7 +48,7 @@
 
                     <div class="col-12 col-md-6 col-lg-4 offset-lg-1">
                         <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega"
-                                id="txtBodega" formControlName="txtBodega" placeholder="Bodega"
+                                id="txtBodega-auxiliar" formControlName="txtBodega-auxiliar" placeholder="Bodega"
                                 searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
                                 [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
                                 (keyup)="v_Enter_Bodega($event);">
