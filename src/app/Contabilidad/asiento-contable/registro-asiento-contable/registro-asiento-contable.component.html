@@ -180,7 +180,7 @@
         <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
             <ng-template matMenuContent let-item="item">
                 <button mat-menu-item (click)="V_Autorizar(item)"
-                    *ngIf="!(['ANULADO', 'AUTORIZADO']).includes(item.Estado)"><i
+                    *ngIf="!(['ANULADO', 'AUTORIZADO', 'DESCUADRADO']).includes(item.Estado)"><i
                         class="fas fa-plus fa-lg"></i> Autorizar</button>
                 <button mat-menu-item ><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
             </ng-template>
