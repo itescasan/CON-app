@@ -995,7 +995,7 @@ export class TransferenciaSaldoComponent {
     this.Asiento.Estado = "";
 
     this.Asiento.IdPeriodo = 0;
-    this.Asiento.Estado = "Autorizado";
+    this.Asiento.Estado = "AUTORIZADO";
     this.Asiento.TipoAsiento = "ASIENTO BASE";
     this.Asiento.NoAsiento = "";
 

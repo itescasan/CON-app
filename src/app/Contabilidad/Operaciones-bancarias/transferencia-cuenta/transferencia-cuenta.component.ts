@@ -747,7 +747,7 @@ export class TransferenciaCuentaComponent {
 
 
     Asiento.IdPeriodo = 0;
-    Asiento.Estado = "Solicitado";
+    Asiento.Estado = "AUTORIZADO";
     Asiento.TipoAsiento = "ASIENTO BASE";
     Asiento.NoAsiento = "";
 

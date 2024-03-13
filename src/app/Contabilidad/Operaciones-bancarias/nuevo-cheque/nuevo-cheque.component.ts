@@ -1039,7 +1039,7 @@ public v_CargarReembolsos(): void {
 
     if (!this.esModal) {
       Asiento.IdPeriodo = 0;
-      Asiento.Estado = "Solicitado";
+      Asiento.Estado = "AUTORIZADO";
       Asiento.TipoAsiento = "ASIENTO BASE"
 
     }

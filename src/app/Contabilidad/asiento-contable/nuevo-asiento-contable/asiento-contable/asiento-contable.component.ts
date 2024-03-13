@@ -790,7 +790,7 @@ export class AsientoContableComponent {
 
     if (!this.esModal) {
       this.FILA.IdPeriodo = 0;
-      this.FILA.Estado = "Solicitado";
+      this.FILA.Estado = "SOLICITADO";
       this.FILA.TipoAsiento = "ASIENTO BASE"
 
     }
