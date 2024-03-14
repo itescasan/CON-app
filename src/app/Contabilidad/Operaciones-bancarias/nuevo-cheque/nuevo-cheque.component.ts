@@ -1320,10 +1320,10 @@ public v_CargarReembolsos(): void {
         f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");
         
         let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
-
+        txtCuenta.select([f.CuentaContable]);
         
 
-        if(!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
+        //if(!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
 
         
         this.valTabla.Get("txtCuenta" + f.NoLinea).setValue(f.CuentaContable);
@@ -1332,7 +1332,7 @@ public v_CargarReembolsos(): void {
         
         let txtCentro: any = this.cmbCombo.find(y => y.id == "txtCentroCosto" + f.NoLinea);
         if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0]) && f.CentroCosto != undefined) txtCentro.setSelectedItem(f.CentroCosto);
-       
+        txtCentro.select([f.CentroCosto]);
        
   
         document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");

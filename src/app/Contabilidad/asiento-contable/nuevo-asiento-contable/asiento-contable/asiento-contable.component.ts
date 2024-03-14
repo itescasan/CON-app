@@ -470,15 +470,16 @@ export class AsientoContableComponent {
 
 
         let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + f.NoLinea);
-        if (!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable);
+        //if (!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable);
+        txtCuenta.select([f.CuentaContable]);
 
         this.valTabla.Get("txtCuenta-asiento" + f.NoLinea).setValue(f.CuentaContable);
         this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
 
 
         let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-        if(f.CentroCosto != undefined) if (!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
-
+        //if(f.CentroCosto != undefined) if (!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
+        txtCentro.select([f.CentroCosto]);
 
 
         if (!this.Editar) {
