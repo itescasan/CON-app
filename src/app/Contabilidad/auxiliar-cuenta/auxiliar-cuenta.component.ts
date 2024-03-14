@@ -1,7 +1,7 @@
 import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
+import { GlobalPositionStrategy, IComboSelectionChangingEventArgs, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 import { iAuxiliarCuenta } from 'src/app/Interface/Contabilidad/i-Auxiliar-Cuenta';
 import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
@@ -32,7 +32,7 @@ export class AuxiliarCuentaComponent {
   public SaldoFinal: number = 0;
   public TotalDEBE: number = 0;
   public TotalHABER: number = 0;
-  private ReporteAuxiliar : any;
+  private ReporteAuxiliar: any;
 
   lstBodega: iBodega[] = [];
 
@@ -42,7 +42,7 @@ export class AuxiliarCuentaComponent {
   public cmbCombo: QueryList<IgxComboComponent>;
 
 
-  constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta, private GET_BODEGA : getBodega
+  constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta, private GET_BODEGA: getBodega
   ) {
 
     this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
@@ -53,11 +53,9 @@ export class AuxiliarCuentaComponent {
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
 
-   this.v_BODEGA();
+    this.v_BODEGA();
 
   }
-
-
 
 
 
@@ -65,7 +63,13 @@ export class AuxiliarCuentaComponent {
   @ViewChild("cmbBodega", { static: false })
   public cmbBodega: IgxComboComponent;
 
-  public v_Select_Bodega(event: any) {
+  public v_Select_Bodega(event: IComboSelectionChangingEventArgs) {
+
+   /* if (event.newValue.length > 1) {
+      event.cancel = true;
+      return;
+    }*/
+
     if (event.added.length) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("txtBodega-auxiliar").setValue(event.newValue);
@@ -74,7 +78,7 @@ export class AuxiliarCuentaComponent {
 
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
-      let cmb : any = this.cmbBodega.dropdown;
+      let cmb: any = this.cmbBodega.dropdown;
       let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
       this.val.Get("txtBodega-auxiliar").setValue([_Item.Codigo]);
@@ -110,8 +114,8 @@ export class AuxiliarCuentaComponent {
         next: (data) => {
 
 
-          
-   
+
+
           let _json: any = data;
 
           if (_json["esError"] == 1) {
@@ -123,10 +127,10 @@ export class AuxiliarCuentaComponent {
             }
           } else {
 
-            let datos : iDatos[] = _json["d"];
+            let datos: iDatos[] = _json["d"];
 
-            let Asiento : iAsiento = datos[0].d[0];
-           
+            let Asiento: iAsiento = datos[0].d[0];
+
             let dialogAsiento: MatDialogRef<AsientoContableComponent> = this.cFunciones.DIALOG.open(
               AsientoContableComponent,
               {
@@ -137,19 +141,19 @@ export class AuxiliarCuentaComponent {
             );
             dialogAsiento.componentInstance.esModal = true;
             dialogAsiento.componentInstance.FILA = Asiento;
-            dialogAsiento.componentInstance.Editar = (e.Editar == 1? true : false);
+            dialogAsiento.componentInstance.Editar = (e.Editar == 1 ? true : false);
 
 
             dialogAsiento.afterOpened().subscribe(s => {
 
-             
+
 
             });
 
 
 
             dialogAsiento.afterClosed().subscribe(s => {
-     
+
             });
 
 
@@ -162,8 +166,7 @@ export class AuxiliarCuentaComponent {
 
           dialogRef.close();
 
-          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
-          {
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id: "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
@@ -184,21 +187,20 @@ export class AuxiliarCuentaComponent {
   public v_BODEGA(): void {
 
 
-    let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
 
 
-      if(dialogRef == undefined)
-      {
-        dialogRef = this.cFunciones.DIALOG.open(
-          WaitComponent,
-          {
-            panelClass: "escasan-dialog-full-blur",
-            data: "",
-            id : "wait"
-          }
-        );
-  
-      }
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
 
 
 
@@ -224,7 +226,7 @@ export class AuxiliarCuentaComponent {
             this.lstBodega = datos[0].d;
             this.v_CargarDatos();
 
- 
+
           }
 
         },
@@ -241,7 +243,7 @@ export class AuxiliarCuentaComponent {
           }
 
         },
-        complete: () => {}
+        complete: () => { }
       }
     );
 
@@ -253,21 +255,20 @@ export class AuxiliarCuentaComponent {
 
     document.getElementById("btnRefrescar-Auxiliar")?.setAttribute("disabled", "disabled");
 
-    let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
 
 
-      if(dialogRef == undefined)
-      {
-        dialogRef = this.cFunciones.DIALOG.open(
-          WaitComponent,
-          {
-            panelClass: "escasan-dialog-full-blur",
-            data: "",
-            id : "wait"
-          }
-        );
-  
-      }
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
 
 
 
@@ -341,7 +342,7 @@ export class AuxiliarCuentaComponent {
   public async V_Imprimir() {
 
 
-    if(this.ReporteAuxiliar == undefined) return;
+    if (this.ReporteAuxiliar == undefined) return;
 
     let byteArray = new Uint8Array(atob(this.ReporteAuxiliar).split('').map(char => char.charCodeAt(0)));
 
@@ -349,7 +350,7 @@ export class AuxiliarCuentaComponent {
 
     let url = URL.createObjectURL(file);
 
-    let tabOrWindow : any = window.open(url, '_blank');
+    let tabOrWindow: any = window.open(url, '_blank');
     tabOrWindow.focus();
 
 
@@ -357,6 +358,8 @@ export class AuxiliarCuentaComponent {
 
 
   }
+
+
 
 
   ngOnInit(): void {
