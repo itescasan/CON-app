@@ -44,7 +44,7 @@ export class AsientoContableComponent {
   lstCentroCosto: iCentroCosto[] = [];
 
   public esModal: boolean = false;
-  public Editar: boolean = false;
+  public Editar: boolean = true;
   public dec_TotalDebe: number = 0;
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0;
