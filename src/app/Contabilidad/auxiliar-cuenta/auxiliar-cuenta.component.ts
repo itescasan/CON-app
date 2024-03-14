@@ -71,7 +71,7 @@ export class AuxiliarCuentaComponent {
     }*/
 
     if (event.added.length) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+     if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("txtBodega-auxiliar").setValue(event.newValue);
     }
   }
