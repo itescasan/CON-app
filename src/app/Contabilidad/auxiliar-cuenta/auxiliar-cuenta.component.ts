@@ -15,6 +15,7 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { AsientoContableComponent } from '../asiento-contable/nuevo-asiento-contable/asiento-contable/asiento-contable.component';
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { getBodega } from 'src/app/Inventario/Bodega/CRUD/GET/get-Bodega';
+import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 
 @Component({
   selector: 'app-auxiliar-cuenta',
@@ -33,6 +34,9 @@ export class AuxiliarCuentaComponent {
   public TotalDEBE: number = 0;
   public TotalHABER: number = 0;
   private ReporteAuxiliar: any;
+  private ReporteConsolidado: any;
+  private CuentaContable : string;
+  private TipoCuenta : string;
 
   lstBodega: iBodega[] = [];
 
@@ -300,9 +304,11 @@ export class AuxiliarCuentaComponent {
             this.SaldoFinal = (this.SaldoInicial + this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE_ML, 0)) - this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.HABER_ML, 0);
             this.lstAuxiliar.paginator = this.paginator;
 
-
             this.ReporteAuxiliar = datos[1].d;
-
+            this.CuentaContable = datos[2].d;
+            this.TipoCuenta = datos[3].d;
+            this.ReporteConsolidado = undefined;
+            if(this.TipoCuenta == "D")this.ReporteConsolidado = datos[4].d;
 
 
           }
@@ -342,9 +348,68 @@ export class AuxiliarCuentaComponent {
   public async V_Imprimir() {
 
 
-    if (this.ReporteAuxiliar == undefined) return;
+    if(this.TipoCuenta == "D")
+    {
+      let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+        DialogoConfirmarComponent,
+        {
+          panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+          disableClose: true
+        }
+      );
+  
+  
+  
+      dialogRef.afterOpened().subscribe(s => {
+        dialogRef.componentInstance.textBoton1 = "CONSOLIDADO";
+        dialogRef.componentInstance.textBoton2 = "DETALLE";
+        dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
+        dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
+        dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>IMPRIMIR</b></p><p style='text-align: center'><b style='color: blue'>"+this.CuentaContable+"</b></p>")
 
-    let byteArray = new Uint8Array(atob(this.ReporteAuxiliar).split('').map(char => char.charCodeAt(0)));
+      });
+
+
+       
+    dialogRef.afterClosed().subscribe(s => {
+
+      this.V_Reporte(dialogRef.componentInstance.retorno == "1" ? false :  true);
+      
+      if(dialogRef.componentInstance.retorno == "1")
+      {
+
+      }
+      else
+      {
+        this.V_Reporte(true);
+      }
+
+    });
+
+
+
+      
+  
+    }
+    else
+    {
+      this.V_Reporte(true);
+    }
+
+   
+
+
+
+  }
+
+
+  private V_Reporte(esDetalle : boolean)
+  {
+
+    if (this.ReporteAuxiliar == undefined && esDetalle) return;
+    if (this.ReporteConsolidado == undefined && !esDetalle) return;
+
+    let byteArray = new Uint8Array(atob( esDetalle ? this.ReporteAuxiliar : this.ReporteConsolidado).split('').map(char => char.charCodeAt(0)));
 
     var file = new Blob([byteArray], { type: 'application/pdf' });
 
@@ -352,13 +417,7 @@ export class AuxiliarCuentaComponent {
 
     let tabOrWindow: any = window.open(url, '_blank');
     tabOrWindow.focus();
-
-
-
-
-
   }
-
 
 
 

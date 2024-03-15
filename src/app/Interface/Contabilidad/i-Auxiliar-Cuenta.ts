@@ -1,5 +1,6 @@
 export interface iAuxiliarCuenta{
     IdAsiento : number,
+    Modulo : string,
     Fecha : Date,
     Serie : string,
     NoDoc : string,

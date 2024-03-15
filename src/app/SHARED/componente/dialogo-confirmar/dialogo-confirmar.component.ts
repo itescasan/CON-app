@@ -14,6 +14,7 @@ export class DialogoConfirmarComponent {
   public textBoton1 : string ="";
   public textBoton2 : string ="";
 
+
   constructor(private sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogoConfirmarComponent>) { }
 
   public v_Confirmar(){
@@ -26,6 +27,16 @@ export class DialogoConfirmarComponent {
     this.dialogRef.close();
     this.retorno="0";
 
+  }
+
+  public Set_StyleBtn1(style : string)
+  {
+    document.getElementById("btn-confirmar-1-escasan-dialog")?.setAttribute("style", style);
+  }
+
+  public Set_StyleBtn2(style : string)
+  {
+    document.getElementById("btn-confirmar-2-escasan-dialog")?.setAttribute("style", style);
   }
   
    public SetMensajeHtml(mensaje : string)

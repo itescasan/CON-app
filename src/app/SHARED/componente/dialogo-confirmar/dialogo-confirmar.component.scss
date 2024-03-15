@@ -31,8 +31,9 @@ img{
     width:220px;
     height:60px;
 }
+
 button{
-    width: 100px;
+    min-width: 100px;
 }
 
 button:first-child{
