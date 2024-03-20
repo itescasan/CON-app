@@ -196,26 +196,28 @@ body {
     color: black;
 }
 
+.nav-link,
 a {
   text-decoration: none;
-  color: initial;
+  color: black;
 }
 
+.nav-link:visited,
 a:visited {
   color: black !important;
 }
 
-
+.nav-link:hover,
 a:hover {
     color: var(--escan-primario) !important;
 }
 
 .dropdown{
+  .nav-link:hover,
   span:hover{
     color: var(--escan-primario) !important;
   }
 }
-
 i {
   color: var(--escan-secundario);
 }
