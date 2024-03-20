@@ -21,11 +21,11 @@ export class getServidor{
     }
 
     public DatosServidor(user : string) : Observable<any>{
-      return this.http.get<any>(this._Cnx.Url() + "Sistema/DatosServidor?user="+ user);
+      return this.http.get<any>(this._Cnx.Url() + "Sistema/DatosServidor?user="+ user + "&Modulo=CON");
    }
     
    public Login(user: string, pass : string) : Observable<any>{
-    return this.http.get<any>(this._Cnx.Url() + "Sistema/Login?user=" + user + "&pass=" + pass);
+    return this.http.get<any>(this._Cnx.Url() + "Sistema/Login?user=" + user + "&pass=" + pass + "&Modulo=CON");
  }
 
  public TC(f : Date) : Observable<any>{

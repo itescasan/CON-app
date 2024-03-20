@@ -6,111 +6,56 @@
     </div>
     <div class="offcanvas-body px-0">
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+
             <li class="nav-item">
                 <a href="#" id="aNewInicio" class="nav-link text-truncate">
                     <i class="fs-5 bi-house"></i><span class="ms-1 d-none d-sm-inline">Inicio</span>
                 </a>
             </li>
-            <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate"  data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fa-solid fa-shop fa-lg"></i><span class="ms-1 d-none d-sm-inline">Ejercicio Fiscal</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
-                    <li><a class="dropdown-item" href="#" id="aNewEjercicio"><i class="fa-solid fa-cash-register"></i> Ejercicio Fiscal</a></li>
-                    <li><a class="dropdown-item" href="#" id="aRegEjercicio"><i class="fa-solid fa-cash-register"></i> Registros</a></li>
-                </ul>
-            </li>
-     
-
-            <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate"  data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fab fa-cuttlefish fa-lg"></i><span class="ms-1 d-none d-sm-inline">Cuentas Contables</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
-                    <li><a class="dropdown-item" href="#" id="aNewCuenta"><i class="fab fa-cuttlefish fa-lg"></i> Nueva Cuenta</a></li>
-                    <li><a class="dropdown-item" href="#" id="aRegCuenta"><i class="fa-solid fa-table-cells"></i> Registros</a></li>
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate"  data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fas fa-book fa-lg"></i><span class="ms-1 d-none d-sm-inline">Asiento Contable</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
-                    <li><a class="dropdown-item" href="#" id="aNewAsiento"><i class="fas fa-book fa-lg"></i> Nueva Asiento</a></li>
-                    <li><a class="dropdown-item" href="#" id="aRegAsiento"><i class="fa-solid fa-table-cells"></i> Registros</a></li>
-                </ul>
-            </li>
 
 
-
-            <li class="nav-item">
-                <a href="#" class="nav-link text-truncate" id="aAuxiliar">
-                    <i class="fa-solid fa-list-check fa-lg"  href="#"></i><span class="ms-1 d-none d-sm-inline">Auxiliar Cuenta</span>
-                </a>
-            </li>
-     
-
-            <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate"  data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fa-solid fa-building-columns fa-lg"></i><span class="ms-1 d-none d-sm-inline">Transferencias Bancarias</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
-                    <li><a class="dropdown-item" href="#" id="aNewTransferenciaCuenta"><i class="fa-solid fa-money-bill-transfer fa-lg"></i> Nueva Transferencia (C)</a></li>
-                    <li><a class="dropdown-item" href="#" id="aNewTransferenciaSaldo"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i> Nueva Transferencia (S)</a></li>
-                    <li><a class="dropdown-item" href="#" id="aRegTransferencia"><i class="fa-solid fa-table-cells"></i> Registros Transferencia</a></li>                   
-                </ul>
-            </li>
+              
+            <ng-container *ngFor="let item of Menu(); let i = index">
 
 
-            <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fa-solid fa-money-check-dollar"></i><span class="ms-1 d-none d-sm-inline">Cheques</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">                    
-                    <li><a class="dropdown-item" href="#" id="aNewCheque"><i class="fa-solid fa-money-check"></i> Nuevo Cheque (C)</a></li>
-                    <li><a class="dropdown-item" href="#" id="aNewChequeSaldo"><i class="fa-solid fa-money-check-dollar"></i> Nuevo Cheque (S)</a></li>
-                    <li><a class="dropdown-item" href="#" id="aRegCheques"><i class="fa-solid fa-table-list"></i> Registros Cheques</a></li>
-                </ul>
-            </li>
+                <li class="dropdown" *ngIf="item.EsMenu">
+                    <a href="#" class="nav-link dropdown-toggle  text-truncate" id="{{item.Id}}" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="{{item.Clase}}"></i><span class="ms-1  d-sm-inline">{{item.Caption}}</span>
+                    </a>
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown" class="dropdown-menu">
+                        <li *ngFor="let subItem of SubMenu(item.Id);"><a class="dropdown-item" href="#" id="{{(subItem.Id)}}"><i class="{{subItem.Clase}}"></i> {{subItem.Caption}}</a></li>
+                    </ul>
+                </li>
 
-        
-            <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fa-solid fa-school-lock"></i><span class="ms-1 d-none d-sm-inline">Cierre Contable</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">                    
-                    <li><a class="dropdown-item" href="#" id="aCierreMensual"><i class="fa-solid fa-arrow-down-up-lock"></i> Cierre Mensual (C)</a></li>
-                    <li><a class="dropdown-item" href="#" id="aCierreFiscal"><i class="fa-solid fa-building-lock"></i> Cierre Fiscal (S)</a></li>                    
-                </ul>
-            </li>
+                
 
+      
+  
+                <li class="nav-item" *ngIf="!item.EsMenu">
 
-
-            <li class="dropdown">
-                <a href="#" class="nav-link dropdown-toggle  text-truncate"  data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    <i class="fa-solid fa-print"></i><span class="ms-1 d-none d-sm-inline">Reporte</span>
-                </a>
-                <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">                    
-                    <li><a class="dropdown-item" href="#" id="aBalanzaComprobacion"><i class="fa-solid fa-scale-balanced"></i> Balanza Comprobación</a></li>
-                    <li><a class="dropdown-item" href="#" id="aBalanceGeneral"><i class="fa-solid fa-scale-balanced"></i> Balance General</a></li>
-                    <li><a class="dropdown-item" href="#" id="aEstadoResultado"><i class="fa-solid fa-scale-balanced"></i> Estado Resultdo</a></li>
-
-                    <li><a class="dropdown-item" href="#" id="aFlujoEfectivo"><i class="fa-solid fa-scale-balanced"></i> Flujo Efectivo</a></li>
-                    <li><a class="dropdown-item" href="#" id="aCambioPatrimonio"><i class="fa-solid fa-scale-balanced"></i>Estado Cambio Patrimonio</a></li>
-                    <li><a class="dropdown-item" href="#" id="aGastosAcumulados"><i class="fa-solid fa-scale-balanced"></i> Gastos Acumulados </a></li>
-                </ul>
-            </li>
-
+                    <a href="#" class="nav-link text-truncate" id="{{item.Id}}">
+                        <i class="{{item.Clase}}"></i> {{item.Caption}}
+                    </a>
 
     
+                </li>
+        
+     
+
+
+            
+  
+              </ng-container>
+
+              
+
+     
+
+
+
+
+
     
             <li class="dropdown">
                 <a href="#" class="nav-link dropdown-toggle  text-truncate" id="dropdown" data-bs-toggle="dropdown"

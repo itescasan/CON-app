@@ -30,6 +30,7 @@ import { CambioPatrimonioComponent } from 'src/app/Reporte/cambio-patrimonio/cam
 import { GastosAcumuladosComponent } from 'src/app/Reporte/gastos-acumulados/gastos-acumulados.component';
 import { CierreFiscalComponent } from 'src/app/Contabilidad/Cierre-Contable/cierre-fiscal/cierre-fiscal.component';
 import { CierreMensualComponent } from 'src/app/Contabilidad/Cierre-Contable/cierre-mensual/cierre-mensual.component';
+import { iPerfil } from '../../interface/i-Perfiles';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -43,6 +44,7 @@ export class SidebarComponent {
 
   @ViewChild(DynamicFormDirective, { static: true }) DynamicFrom!: DynamicFormDirective;
   public ErrorServidor : boolean = false;
+  private Perfil : iPerfil[] = [];
   
   subscription: Subscription = {} as Subscription;
 
@@ -53,6 +55,12 @@ export class SidebarComponent {
     private Conexion: getServidor,
     private cFunciones : Funciones
   ) {
+    this.ActualizarDatosServidor();
+
+    /*this.cFunciones.ACCESO.forEach(f => {
+
+      console.log("SELECT NULL," + f.EsMenu + ", '" + f.Id + "','" + f.Caption + "','" + f.MenuPadre + "','" + f.Clase + "', 'jmg', 'CON', 1 UNION ALL");
+    })*/
 }
   
 
@@ -168,7 +176,7 @@ export class SidebarComponent {
     }
 
 
-    if(id == "aAuxiliar"){
+    if(id == "IdNavAuxiliar"){
       $("#btnMenu").trigger("click");
       this.DynamicFrom.viewContainerRef.clear();
 
@@ -336,7 +344,25 @@ export class SidebarComponent {
           this.cFunciones.SetTiempoDesconexion(Number(Datos[1].d));
           this._SrvLogin.UpdFecha(String(Datos[0].d));
           if(Datos[2].d != undefined)this.cFunciones.MonedaLocal = Datos[2].d;
-          this.cFunciones.TC = Datos[3].d;
+         
+          let Perfil : iPerfil[] = Datos[3].d;
+          let index : number = -1;
+
+          this.Perfil.splice(0, this.Perfil.length);
+          this.cFunciones.ACCESO.forEach(f =>{
+
+            index = Perfil.findIndex( w => w.Id == f.Id);
+
+            if(index != -1) this.Perfil.push(f);
+
+            
+          });
+
+
+          this.cFunciones.TC = Datos[4].d;
+
+
+
           
 
         }
@@ -370,6 +396,17 @@ export class SidebarComponent {
     );
     
   }
+
+
+  public Menu() : any[]{
+    return this.Perfil.filter(f => f.MenuPadre == "")
+  }
+
+  public SubMenu(Menu : string) : any[]{
+    return this.Perfil.filter(f => f.MenuPadre == Menu);
+  }
+
+
 
 
   

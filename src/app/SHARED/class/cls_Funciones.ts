@@ -2,6 +2,7 @@ import { DatePipe, formatNumber } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { getServidor } from '../GET/get-servidor';
 import { MatDialog } from '@angular/material/dialog';
+import { iPerfil } from '../interface/i-Perfiles';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,77 @@ export class Funciones {
   public Nombre : string = "";
   public Rol : string = "";
   public TC : number = 0;
+
+
+  
+  public ACCESO: iPerfil[] = [
+
+
+
+    /**************************************EJERCICIO FISCAL************************************* */ 
+
+    {IdAcceso:0,  Seleccionar: false, EsMenu: true,  Id:"IdNavEjercicio", Caption: "Ejercicio Fiscal" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aNewEjercicio", Caption: "Ejercicio Fiscal" , MenuPadre: "IdNavEjercicio", Clase : "fa-solid fa-cash-register", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aRegEjercicio", Caption: "Registros" , MenuPadre: "IdNavEjercicio", Clase : "fa-solid fa-cash-register", Modulo: "CON"},
+
+
+    /**************************************CUENTAS CONTABLES************************************* */ 
+
+    {IdAcceso:0,  Seleccionar: false, EsMenu: true,  Id:"IdNavCuentasContables", Caption: "Cuentas Contables" , MenuPadre: "", Clase : "fab fa-cuttlefish fa-lg", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aNewCuenta", Caption: "Nueva Cuenta" , MenuPadre: "IdNavCuentasContables", Clase : "fab fa-cuttlefish fa-lg", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aRegCuenta", Caption: "Registros" , MenuPadre: "IdNavCuentasContables", Clase : "fa-solid fa-table-cells", Modulo: "CON"},
+
+        
+    /**************************************ASIENTO CONTABLE************************************* */ 
+
+    {IdAcceso:0,  Seleccionar: false, EsMenu: true,  Id:"IdNavAsientoContable", Caption: "Asiento Contable" , MenuPadre: "", Clase : "fas fa-book fa-lg", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aNewAsiento", Caption: "Nueva Asiento" , MenuPadre: "IdNavAsientoContable", Clase : "fas fa-book fa-lg", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aRegAsiento", Caption: "Registros" , MenuPadre: "IdNavAsientoContable", Clase : "fa-solid fa-table-cells", Modulo: "CON"},
+
+        
+
+    /**************************************AUXILIAR CUENTA************************************* */ 
+
+      {IdAcceso:0,  Seleccionar: false, EsMenu: false,  Id:"IdNavAuxiliar", Caption: "Auxiliar Cuenta" , MenuPadre: "", Clase : "fa-solid fa-list-check fa-lg", Modulo: "CON"},
+
+
+      
+    /**************************************TRANSFERENCIA************************************* */ 
+
+    {IdAcceso:0,  Seleccionar: false, EsMenu: true,  Id:"IdNavTransferencia", Caption: "Transferencias Bancarias" , MenuPadre: "", Clase : "fa-solid fa-building-columns fa-lg", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aNewTransferenciaCuenta", Caption: "Nueva Transferencia (C)" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-transfer fa-lg", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aNewTransferenciaSaldo", Caption: "Nueva Transferencia (S)" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-trend-up fa-lg", Modulo: "CON"},
+    {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aRegTransferencia", Caption: "Registros Transferencia" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-table-cells", Modulo: "CON"},
+
+    
+     /**************************************CHEQUE************************************* */ 
+
+     {IdAcceso:0,  Seleccionar: false, EsMenu: true,  Id:"IdNavCheques", Caption: "Cheques" , MenuPadre: "", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aNewCheque", Caption: "Nuevo Cheque (C)" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aNewChequeSaldo", Caption: "Nuevo Cheque (S)" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aRegCheques", Caption: "Registros Cheques" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-table-list", Modulo: "CON"},
+ 
+     
+      /**************************************CIERRE CONTABLE************************************* */ 
+
+      {IdAcceso:0,  Seleccionar: false, EsMenu: true,  Id:"IdNavCierre", Caption: "Cierre Contable" , MenuPadre: "", Clase : "fa-solid fa-school-lock", Modulo: "CON"},
+      {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aCierreMensual", Caption: "Cierre Mensual" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-arrow-down-up-lock", Modulo: "CON"},
+      {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aCierreFiscal", Caption: "Cierre Fiscal" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-building-lock", Modulo: "CON"},
+
+
+       /**************************************REPORTE************************************* */ 
+
+     {IdAcceso:0,  Seleccionar: false, EsMenu: true,  Id:"IdNavReporte", Caption: "Reporte" , MenuPadre: "", Clase : "fa-solid fa-print", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aBalanzaComprobacion", Caption: "Balanza Comprobación" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aBalanceGeneral", Caption: "Balance General" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aEstadoResultado", Caption: "Estado Resultdo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aFlujoEfectivo", Caption: "Flujo Efectivo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aCambioPatrimonio", Caption: "Estado Cambio Patrimonio" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON"},
+     {IdAcceso:0,  Seleccionar: false, EsMenu: false, Id:"aGastosAcumulados", Caption: "Gastos Acumulados" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON"},
+ 
+
+]
+
 
 
   constructor(public GET: getServidor, public DIALOG: MatDialog) {

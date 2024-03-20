@@ -196,16 +196,27 @@ body {
     color: black;
 }
 
-a,
-a:visited {
-    text-decoration: none;
-    color: var(--escan-opcional) !important;
-    font-weight: bold;
+a {
+  text-decoration: none;
+  color: initial;
 }
 
+a:visited {
+  color: initial;
+}
+
+a:hover {
+    color: var(--escan-primario) !important;
+}
+
+.dropdown{
+  span:hover{
+    color: var(--escan-primario) !important;
+  }
+}
 
 i {
-    color: var(--escan-secundario);
+  color: var(--escan-secundario);
 }
 
 .primario,
