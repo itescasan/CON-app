@@ -202,8 +202,9 @@ a {
 }
 
 a:visited {
-  color: initial;
+  color: black !important;
 }
+
 
 a:hover {
     color: var(--escan-primario) !important;
