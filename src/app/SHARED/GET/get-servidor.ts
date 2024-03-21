@@ -1,4 +1,4 @@
-import { HttpClient, HttpXhrBackend } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "../class/Cadena_Conexion";
@@ -11,6 +11,7 @@ export class getServidor{
     
     private _Cnx = new Conexion();
     private http: HttpClient;
+    private config: { version: string };
 
     constructor(){
 
@@ -45,5 +46,29 @@ public Consecutivo(Serie : string, Tipo : string) : Observable<any>{
 }
   
  
+
+public  Version()
+{
+
+
+  this.config = require("src/assets/config.json");
+
+  const headers = new HttpHeaders()
+    .set('Cache-Control', 'no-cache')
+    .set('Pragma', 'no-cache');
+
+
+  this.http
+    .get<{ version: string }>("./assets/config.json", { headers })
+    .subscribe(config => {
+
+      if (config.version !== this.config.version) {
+
+        location.reload();
+      }
+    });
+
+}
+
 
 }
