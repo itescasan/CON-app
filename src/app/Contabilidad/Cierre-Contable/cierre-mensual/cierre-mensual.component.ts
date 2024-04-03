@@ -5,6 +5,7 @@ import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
+import { postCierreMes } from '../CRUD/POST/post-cierre-mes';
 @Component({
   selector: 'app-cierre-mensual', 
   templateUrl: './cierre-mensual.component.html',
@@ -13,7 +14,7 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 export class CierreMensualComponent {
   public val = new Validacion();
 
-  constructor(private cFunciones: Funciones
+  constructor(private cFunciones: Funciones, private POST : postCierreMes
     ) {
   
       this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
@@ -26,12 +27,68 @@ export class CierreMensualComponent {
     }
 
 
-  V_Imprimir(): void {
+  V_Procesar(): void {
 
 
-    document.getElementById("btnReporte-CierreMensual")?.setAttribute("disabled", "disabled");
-   
+    let dialogRef = this.cFunciones.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+        id: "wait"
+      }
+    );
 
+    document.getElementById("btnCiere-Mes")?.setAttribute("disabled", "disabled");
+
+
+    this.POST.Procesar( this.val.Get("cmbCierreMes").value, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd")).subscribe(
+      {
+        next: (data) => {
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          }
+          else {
+
+
+            let Datos: iDatos = _json["d"];
+            let msj: string = Datos.d;
+
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              data: "<p><b class='bold'>" + msj + "</b></p>"
+            });
+
+
+            
+
+          }
+
+        },
+        error: (err) => {
+          dialogRef.close();
+
+          document.getElementById("btnCiere-Mes")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+        },
+        complete: () => {
+          document.getElementById("btnCiere-Mes")?.removeAttribute("disabled");
+        }
+      }
+    );
     
   }
 }
