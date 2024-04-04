@@ -117,11 +117,11 @@ export class AccesoWebComponent {
     
     this.POST.GuardarAcceso(this.lstPerfil.data).subscribe(
       {
-        next: (s) => {
+        next: (data) => {
 
 
           dialogRef.close();
-          let _json = JSON.parse(s);
+          let _json : any = data;
 
           if (_json["esError"] == 1) {
             if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
