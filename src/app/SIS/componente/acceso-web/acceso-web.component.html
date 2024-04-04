@@ -1,0 +1,129 @@
+<div id="AccesoWeb"  class="contenedor-AccesoWeb mb-1">
+
+    <form class="mx-2" [formGroup]="val.ValForm" autocomplete="off">
+        <div class="row">
+            <div class="mb-3">
+                <div class="card">
+                    <div>
+                        <div class="card-header card-escasan-header">LIBERACION DE PRECIO</div>
+
+                        <div class="card-body">
+
+                            <div class="row linea">
+
+                                <igx-combo #cmbUsuario valueKey="Usuario" displayKey="Nombre" id="cmbUsuario"
+                                    [data]="lstUsuario" formControlName="cmbUsuario" placeholder="Usuario"
+                                    searchPlaceholder="Seleccione un usuario..." [autoFocusSearch]="true"
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Usuario($event)"
+                                    (keyup)="v_Enter_Usuario($event);">
+
+                                    <igx-prefix><i class="fa-solid fa-list-check"></i></igx-prefix>
+                                </igx-combo>
+
+
+
+
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="btn-contenedor">
+
+                                    <div class="boton-refrescar">
+                                        <button type="button" class="btn btn-opcional mb-3"
+                                            id="btnRefresscar-acceso-web" (click)="V_CargarDatos();"><i
+                                                class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button>
+                                    </div>
+
+                                    <div class="bonotnes-ediccion">
+
+                                        <button type="button" class="btn btn-primario mb-3" id="btnGuardar-liberacion"
+                                            (click)="V_Guardar();"><i
+                                                class="fa-solid fa-arrow-left fa-beat fa-lg opcional"></i>
+                                            Guardar</button>
+                                        <button type="button" class="btn btn-secundario mb-3" id="btnCanclar-liberacion"
+                                            (click)="V_Limpiar();"><i
+                                                class="fa-solid fa-arrow-left fa-beat fa-lg opcional"></i>
+                                            Cancelar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="mat-elevation-z8  contenedor-tabla">
+                <table class="table table-hover table-bordered table-sm tabla-custom mat-elevation-z8" mat-table
+                    [dataSource]="lstPerfil">
+
+                    <ng-container matColumnDef="Caption">
+                        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                        <td mat-cell *matCellDef="let element; let j=index" [ngClass]="element.EsMenu == true ? 'menu' : 'item'">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" [disabled]="element.EsMenu " (change)="V_Activar($event.target, element)"
+                                     [(ngModel)]="element.Activo" [ngModelOptions]="{standalone: true}" id="chk{{j+1}}">
+
+                                    <label [ngClass]="element.EsMenu == true ? 'menu' : 'item'" for="chk{{j+1}}">
+                                        <i class="{{element.Clase}}"></i> {{element.Caption}}
+                                      </label>
+                                    
+                                    
+                                    
+                            </div>
+    
+                        </td>
+                    </ng-container>
+
+
+
+                    
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+                </table>
+
+
+            </div>
+
+        </div>
+
+    </form>
+
+
+</div>
+
+
+<div class="contenedor-pie">
+    <div class="pie-acceso-web">
+
+        <div class="row gx-0">
+
+            <div class="input-group">
+                <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+
+                <div class="form-floating">
+                    <input type="text" id="txtBuscar-precio-liberado" class="form-control"
+                        placeholder="Buscar" aria-label="Buscar" (keyup)="v_Filtrar($event)">
+                    <label for="txtBuscar-libre-precio">Buscar</label>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,126 @@
+@import "/src/assets/scss/media.scss";
+
+
+.contenedor-AccesoWeb{
+  min-width: var(--min-width);
+}
+
+
+
+
+label{
+  font-size: 1.2em;
+  i{
+    margin-left: 5px;
+  }
+}
+
+
+input:disabled,
+.menu{
+  font-weight: bold;
+  opacity: 1;
+
+}
+
+
+.menu{
+
+  input{
+    margin-left: 5px;
+  }
+  
+}
+.item{
+
+  input{
+    margin-left: 15px;
+  }
+  
+}
+
+
+.btn-contenedor {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+
+  button {
+    margin-right: 5px;
+  }
+
+
+  .bonotnes-ediccion {
+    text-align: right;
+  }
+
+
+  @include Tamano(xs) {
+    button {
+      display: block;
+      width: 100%;
+    }
+
+    .boton-refrescar,
+    .bonotnes-ediccion {
+      width: 100%;
+    }
+
+  }
+
+  @include Tamano(lg) {
+    button {
+      display: initial;
+      width: auto;
+    }
+  }
+}
+
+@include Tamano_Menor(md) {
+
+  .btn-contenedor {
+
+    display: block;
+  }
+
+}
+
+
+.btn-contenedor-ediccion-tabla {
+  text-align: right;
+}
+
+
+
+
+.contenedor-tabla {
+  margin-bottom: 200px;
+
+}
+
+table{
+  input{
+    font-size: 1.5em;
+  }
+}
+
+
+
+//████████████████████████████████████████████PIE████████████████████████████████████████████████████████████████████████
+
+.contenedor-pie {
+  position: relative;
+}
+
+.pie-acceso-web {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 5;
+  background-color: var(--escan-fondo);
+  padding: 10px;
+
+
+
+}
