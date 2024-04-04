@@ -123,6 +123,7 @@ export class AccesoWebComponent {
           dialogRef.close();
           let _json : any = data;
 
+          
           if (_json["esError"] == 1) {
             if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
               this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -130,7 +131,7 @@ export class AccesoWebComponent {
                 data: _json["msj"].Mensaje,
               });
             }
-          }
+          } 
           else {
 
            let Datos: iDatos = _json["d"];

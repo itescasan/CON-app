@@ -21,8 +21,7 @@ export class postServidor{
     }
 
     GuardarAcceso(d : iPerfil[]) : Observable<string> { 
-        return this.http.post<any>(this._Cnx.Url() + "SIS/GuardarAcceso", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
-
+        return this.http.post<any>(this._Cnx.Url() + "Sistema/GuardarAcceso", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
     }
 
 
