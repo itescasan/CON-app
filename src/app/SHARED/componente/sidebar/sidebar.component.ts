@@ -31,6 +31,7 @@ import { GastosAcumuladosComponent } from 'src/app/Reporte/gastos-acumulados/gas
 import { CierreFiscalComponent } from 'src/app/Contabilidad/Cierre-Contable/cierre-fiscal/cierre-fiscal.component';
 import { CierreMensualComponent } from 'src/app/Contabilidad/Cierre-Contable/cierre-mensual/cierre-mensual.component';
 import { iPerfil } from '../../interface/i-Perfiles';
+import { AccesoWebComponent } from 'src/app/SIS/componente/acceso-web/acceso-web.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -306,6 +307,12 @@ export class SidebarComponent {
 
     }
     
+
+    if (id == "idNavAccesoWeb") {
+      this.DynamicFrom.viewContainerRef.clear();
+      let Acceso: ComponentRef<AccesoWebComponent> = this.DynamicFrom.viewContainerRef.createComponent(AccesoWebComponent);
+    }
+
 
     
 
