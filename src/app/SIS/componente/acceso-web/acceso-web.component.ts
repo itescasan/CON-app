@@ -15,7 +15,7 @@ import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-con
 import { iPerfil } from 'src/app/SHARED/interface/i-Perfiles';
 import { iUsuario } from '../../Interface/Usuario';
 import { getServidor } from 'src/app/SHARED/GET/get-servidor';
-import { postServidor } from 'src/app/SHARED/GET/post-servidor';
+import { postServidor } from 'src/app/SHARED/POST/post-servidor';
 
 @Component({
   selector: 'app-acceso-web',

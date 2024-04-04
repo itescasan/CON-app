@@ -46,6 +46,11 @@ public Consecutivo(Serie : string, Tipo : string) : Observable<any>{
 }
   
  
+public AccesoWeb(user : string) : Observable<any>{
+  return this.http.get<any>(this._Cnx.Url() + "SIS/AccesoWeb?user=" + user);
+}
+
+
 
 public  Version()
 {
