@@ -190,11 +190,11 @@ export class AccesoWebComponent {
 
     this.GET.AccesoWeb(this.cFunciones.User).subscribe(
       {
-        next: (s) => {
+        next: (data) => {
 
           document.getElementById("btnRefresscar-acceso-web")?.removeAttribute("disabled");
           dialogRef.close();
-          let _json = JSON.parse(s);
+          let _json = data;
 
           if (_json["esError"] == 1) {
             if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
