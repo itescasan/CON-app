@@ -248,7 +248,7 @@ export class AccesoWebComponent {
       Acc.forEach(f =>{
         
         let u : string = this.val.Get("cmbUsuario").value;
-        let i = this.lstDatosPerfil.findIndex((w : any) => w.Usuario == u && w.Id == f.Id && w.Activo);
+        let i = this.lstDatosPerfil.findIndex((w : any) => w.Usuario == u && w.Id == f.Id && w.Activo && f.Modulo == "CON");
         f.Activo = false;
         f.IdAcceso = -1;
         f.Usuario = this.cFunciones.User;
@@ -272,7 +272,7 @@ export class AccesoWebComponent {
     if(element.MenuPadre == "") return;
 
     
-    let i : number = this.lstPerfil.data.findIndex(f => f.MenuPadre == element.MenuPadre && f.Activo);
+    let i : number = this.lstPerfil.data.findIndex(f => f.MenuPadre == element.MenuPadre && f.Activo && f.Modulo == "CON");
     let p = this.lstPerfil.data.findIndex(f => f.Id == element.MenuPadre );
     this.lstPerfil.data[p].Activo = false;
     if(i != -1) this.lstPerfil.data[p].Activo = true;
