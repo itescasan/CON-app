@@ -251,7 +251,7 @@ export class AccesoWebComponent {
         let i = this.lstDatosPerfil.findIndex((w : any) => w.Usuario == u && w.Id == f.Id && w.Activo && f.Modulo == "CON");
         f.Activo = false;
         f.IdAcceso = -1;
-        f.Usuario = this.cFunciones.User;
+        f.Usuario = u;
         if(i != -1) 
         {
           f.Activo = true;
