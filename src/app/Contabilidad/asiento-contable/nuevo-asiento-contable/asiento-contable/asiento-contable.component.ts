@@ -50,7 +50,7 @@ export class AsientoContableComponent {
   public dec_Dif: number = 0;
   public TC: number;
   public Estado: string = "Solicitado";
-  public load : boolean = false;
+  public load: boolean = false;
 
   public overlaySettings: OverlaySettings = {};
 
@@ -127,7 +127,7 @@ export class AsientoContableComponent {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbSerie").setValue(event.newValue);
       this.v_Consecutivo();
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbSerie.close();
+      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbSerie.close();
     }
   }
 
@@ -152,7 +152,7 @@ export class AsientoContableComponent {
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("txtBodega-asiento").setValue(event.newValue);
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
+      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
   }
 
@@ -172,7 +172,7 @@ export class AsientoContableComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-    
+
     this.valTabla.Get("txtCuenta-asiento" + det.NoLinea).setValue("");
 
     if (event.added.length == 1) {
@@ -188,33 +188,33 @@ export class AsientoContableComponent {
 
       document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
       document.getElementById("txtCentroCosto" + det.NoLinea)?.removeAttribute("disabled");
-     // document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+      // document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
       //document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
 
       if (this.FILA?.NoDocOrigen == undefined) {
-      
-      //  if (i_Cuenta?.Naturaleza == "D") {
-          //document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
-          if (Number(det.Credito.replaceAll(",", "")) != 0) {
-            det.Debito = det.Credito;
-            det.Credito = "0.00";
-          }
+
+        //  if (i_Cuenta?.Naturaleza == "D") {
+        //document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+        if (Number(det.Credito.replaceAll(",", "")) != 0) {
+          det.Debito = det.Credito;
+          det.Credito = "0.00";
+        }
 
 
 
-      //  }
+        //  }
 
-     //   if (i_Cuenta?.Naturaleza == "C") {
-         // document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
-          if (Number(det.Debito.replaceAll(",", "")) != 0) {
-            det.Credito = det.Debito;
-            det.Debito = "0.00";
-          }
+        //   if (i_Cuenta?.Naturaleza == "C") {
+        // document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+        if (Number(det.Debito.replaceAll(",", "")) != 0) {
+          det.Credito = det.Debito;
+          det.Debito = "0.00";
+        }
 
-      //  }
+        //  }
       }
 
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCuenta.close();
+      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCuenta.close();
 
     }
 
@@ -252,7 +252,7 @@ export class AsientoContableComponent {
 
       if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
       det.CentroCosto = event.added[0];
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCentroCosto.close();
+      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCentroCosto.close();
     }
 
 
@@ -282,11 +282,10 @@ export class AsientoContableComponent {
         document?.getElementById("txt" + columna + det.NoLinea)?.focus();
       }
       else {
-      document?.getElementById("txtDebito" + det.NoLinea)?.focus();
+        document?.getElementById("txtDebito" + det.NoLinea)?.focus();
       }
 
-      if(columna == "txtDebito")
-      {
+      if (columna == "txtDebito") {
 
         if (Number(det.Credito.replaceAll(",", ""))) {
           det.Credito = "0.00";
@@ -301,14 +300,44 @@ export class AsientoContableComponent {
 
       if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea))
 
-      if (det.NoLinea != i) return;
 
-      if (Number(det.Debito.replaceAll(",", "")) != 0) {
+
+      if (Number(det.Credito.replaceAll(",", "")) != 0) {
         det.Debito = "0.00";
       }
 
+      if (det.NoLinea != i) return;
+
       this.V_Agregar();
     }
+
+  }
+
+
+  public V_FocusOut(columna: string, det: iAsientoDetalle) {
+
+
+    let vacio = ["0.00", "0", ""];
+    if (columna == "txtDebito" &&  !vacio.includes(det.Debito) ) {
+
+      if (Number(det.Credito.replaceAll(",", ""))) {
+        det.Credito = "0.00";
+      }
+
+    }
+
+
+
+    if (columna == "txtCredito" &&  !vacio.includes(det.Credito))  {
+
+      if (Number(det.Debito.replaceAll(",", ""))) {
+        det.Debito = "0.00";
+      }
+
+    }
+
+
+
 
   }
 
@@ -423,7 +452,7 @@ export class AsientoContableComponent {
 
     this.load = true;
 
-    
+
     this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
@@ -438,23 +467,23 @@ export class AsientoContableComponent {
     this.val.Get("cmbSerie").disable();
     this.val.Get("txtNoAsiento").disable();
 
-  
-   
-    
-    
-   
+
+
+
+
+
     //this.changeDetectorRef.detach();
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.AsientosContablesDetalle));
-   // this.changeDetectorRef.detectChanges();
-    
+    // this.changeDetectorRef.detectChanges();
 
- 
+
+
 
     setTimeout(() => {
 
 
-      
-   
+
+
 
       this.lstDetalle.data.forEach(f => {
         this.valTabla.add("txtCuenta-asiento" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
@@ -500,13 +529,13 @@ export class AsientoContableComponent {
 
       let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
       if (dialogRef != undefined) dialogRef.close();
-    
+
 
       this.load = false;
 
     });
 
-    
+
 
   }
 
@@ -863,8 +892,8 @@ export class AsientoContableComponent {
 
 
   public V_Calcular(): void {
-    if(this.load) return;
-  
+    if (this.load) return;
+
 
     this.dec_TotalDebe = 0;
     this.dec_TotalHaber = 0;
@@ -951,7 +980,7 @@ export class AsientoContableComponent {
 
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.lstBodega.splice(0, this.lstBodega.length);
     this.lstSerie.splice(0, this.lstSerie.length);
     this.lstDetalle.data.splice(0, this.lstDetalle.data.length);

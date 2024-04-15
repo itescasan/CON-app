@@ -303,6 +303,7 @@
                                     [(ngModel)]="det.Debito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
                                     (keydown.Enter)="V_Focus('txtDebito', det);" 
+                                    (focusout) = "V_FocusOut('txtDebito', det);"
                                     (change)="V_Calcular();" autocomplete="off">
                                 </form>
                                
@@ -324,6 +325,7 @@
                                     [(ngModel)]="det.Credito"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
                                     (keydown.Enter)="V_Focus('NuevaFila', det);" 
+                                    (focusout) = "V_FocusOut('txtCredito', det);"
                                     (change)="V_Calcular();" autocomplete="off">
                                 </form>
                                

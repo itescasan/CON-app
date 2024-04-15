@@ -165,6 +165,7 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let CatalogoCuenta: ComponentRef<AsientoContableComponent> = this.DynamicFrom.viewContainerRef.createComponent(AsientoContableComponent);
+      CatalogoCuenta.instance.Editar = false;
 
     }
 
@@ -173,7 +174,7 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let RegCuenta: ComponentRef<RegistroAsientoContableComponent> = this.DynamicFrom.viewContainerRef.createComponent(RegistroAsientoContableComponent);
-
+ 
     }
 
 

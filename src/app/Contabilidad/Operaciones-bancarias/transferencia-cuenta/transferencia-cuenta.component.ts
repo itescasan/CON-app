@@ -452,7 +452,6 @@ export class TransferenciaCuentaComponent {
   public V_Focus(columna: String, det: iAsientoDetalle) {
 
     if (columna != "NuevaFila") {
-
       if (columna != "Debito/Credito") {
         document?.getElementById("txt" + columna + det.NoLinea)?.focus();
       }
@@ -460,16 +459,13 @@ export class TransferenciaCuentaComponent {
         document?.getElementById("txtDebito" + det.NoLinea)?.focus();
       }
 
-
-      if(columna == "txtDebito")
-      {
+      if (columna == "txtDebito") {
 
         if (Number(det.Credito.replaceAll(",", ""))) {
           det.Credito = "0.00";
         }
 
       }
-
 
     }
     else {
@@ -478,17 +474,45 @@ export class TransferenciaCuentaComponent {
 
       if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea))
 
-      if (det.NoLinea != i) return;
 
 
-      if (Number(det.Debito.replaceAll(",", "")) != 0) {
+      if (Number(det.Credito.replaceAll(",", "")) != 0) {
         det.Debito = "0.00";
       }
 
-
+      if (det.NoLinea != i) return;
 
       this.V_Agregar(false);
     }
+
+  }
+
+
+  
+  public V_FocusOut(columna: string, det: iAsientoDetalle) {
+
+
+    let vacio = ["0.00", "0", ""];
+    if (columna == "txtDebito" &&  !vacio.includes(det.Debito) ) {
+
+      if (Number(det.Credito.replaceAll(",", ""))) {
+        det.Credito = "0.00";
+      }
+
+    }
+
+
+
+    if (columna == "txtCredito" &&  !vacio.includes(det.Credito))  {
+
+      if (Number(det.Debito.replaceAll(",", ""))) {
+        det.Debito = "0.00";
+      }
+
+    }
+
+
+
 
   }
 
