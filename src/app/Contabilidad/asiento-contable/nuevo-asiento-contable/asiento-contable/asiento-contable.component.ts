@@ -337,7 +337,7 @@ export class AsientoContableComponent {
     }
 
 
-
+    this.V_Calcular();
 
   }
 

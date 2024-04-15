@@ -512,6 +512,7 @@ export class TransferenciaCuentaComponent {
     }
 
 
+    this.V_Calcular();
 
 
   }
