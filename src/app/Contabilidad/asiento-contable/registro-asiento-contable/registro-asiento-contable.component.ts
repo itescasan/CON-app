@@ -120,28 +120,100 @@ export class RegistroAsientoContableComponent {
 
   public v_Editar(e : iAsiento) : void{
 
-    let dialogRef: MatDialogRef<AsientoContableComponent> = this.cFunciones.DIALOG.open(
-      AsientoContableComponent,
+    
+    
+
+    document.getElementById("btnRefrescar-RegAsiento")?.setAttribute("disabled", "disabled");
+
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+      WaitComponent,
       {
-        panelClass: "escasan-dialog-full",
-        disableClose: true
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
       }
     );
+
+
+
     
-    
+    this.GET.GetDetalle(e.IdAsiento).subscribe(
+      {
+        next: (data) => {
+
+          
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos : iDatos = _json["d"];
+            e.AsientosContablesDetalle = datos.d
+      
+
+
+            let dialogAsiento: MatDialogRef<AsientoContableComponent> = this.cFunciones.DIALOG.open(
+              AsientoContableComponent,
+              {
+                panelClass: "escasan-dialog-full",
+                disableClose: true
+              }
+            );
+
+            
        
-    dialogRef.afterOpened().subscribe(s =>{
-      dialogRef.componentInstance.FILA = e;
-      dialogRef.componentInstance.esModal = true;
+            dialogAsiento.afterOpened().subscribe(s =>{
+              dialogAsiento.componentInstance.FILA = e;
+              dialogAsiento.componentInstance.esModal = true;
+              dialogAsiento.componentInstance.Editar = true;
+            if(e.NoDocOrigen != undefined) dialogAsiento.componentInstance.Editar = false;
 
-      dialogRef.componentInstance.v_CargarDatos();
+            dialogAsiento.componentInstance.v_CargarDatos();
 
-    });
+          });
 
-    dialogRef.afterClosed().subscribe(s =>{
-      this.v_CargarDatos();
-    });
+          dialogAsiento.afterClosed().subscribe(s =>{
+            this.v_CargarDatos();
+          });
 
+
+
+
+          
+          }
+
+        },
+        error: (err) => {
+
+          document.getElementById("btnRefrescar-RegAsiento")?.removeAttribute("disabled");
+
+          dialogRef.close();
+
+          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
+          {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => { 
+        document.getElementById("btnRefrescar-RegAsiento")?.removeAttribute("disabled");
+
+      }
+      }
+    );
+
+
+
+    
    
 
   }

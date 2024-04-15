@@ -349,6 +349,7 @@ export class AsientoContableComponent {
   contextMenuPosition = { x: '0px', y: '0px' };
   public V_Popup(event: MouseEvent, item: iAsientoDetalle): void {
     event.preventDefault();
+    if(!this.Editar) return;
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
     this.contextMenu.menuData = { 'item': item };
