@@ -24,14 +24,15 @@ function getRectArea(elmento: HTMLElement) {
 
   if (elmento.getAttribute("disabled") == undefined) return elmento;
 
+
+
   return getRectArea(elmento)
 
 }
 
 
 
-function onKeyEnter(event: any)
-{
+function onKeyEnter(event: any) {
   if (event.key !== "Enter") return;
 
 
@@ -56,8 +57,7 @@ function onKeyEnter(event: any)
 
   let elmento: HTMLElement = document?.getElementById(id)!;
 
-  if (cmb != undefined && elmento.localName == "igx-combo")
-  {
+  if (cmb != undefined && elmento.localName == "igx-combo") {
     let combo: IgxComboComponent = cmb.find(f => f.id == id)!;
     combo.close();
   }
@@ -75,15 +75,15 @@ function onKeyEnter(event: any)
 
 
   if (cmb != undefined && elmento.localName == "igx-combo") {
-    
+
     let elment: IgxComboComponent = cmb.find(f => f.id == _element_next?.IdNext)!;
 
     if (elment != undefined) elment.open();
 
-    let __next = lstFocus.find(f => f.Id ==  _element_next?.IdNext);
+    let __next = lstFocus.find(f => f.Id == _element_next?.IdNext);
 
 
-    
+
     elment.searchInput.nativeElement.setAttribute("id", __next?.Id!);
     elment.searchInput.nativeElement.addEventListener('keypress', onKeyEnter)
 
@@ -200,21 +200,19 @@ export class Validacion {
   ) {
 
 
-    let NuevoItem : boolean = false;
-    let NuevaRegla : boolean = false;
+    let NuevoItem: boolean = false;
+    let NuevaRegla: boolean = false;
     this.Index = String(Number.parseInt(this.Index) + 1);
 
     const _frm = new FormControl("", this.Cls_Validaciones(id));
 
-    if (this.Get(id) == undefined) 
-    {
+    if (this.Get(id) == undefined) {
       this.ValForm.addControl(id, _frm);
       NuevoItem = true;
     }
-    
 
-    if(this.lstReglas.findIndex(f => f.Id == id && f.Regla == regla) == -1)
-    {
+
+    if (this.lstReglas.findIndex(f => f.Id == id && f.Regla == regla) == -1) {
       const _Regla: ReglasValidacion = new ReglasValidacion();
       _Regla.Id = id;
       _Regla.Regla = regla;
@@ -226,7 +224,11 @@ export class Validacion {
       this.lstReglas.push(_Regla);
     }
 
-    if(NuevoItem) this.lstFrm.push({ Id: id, Frm: _frm, Etiqueta: etiqueta });
+    if (NuevoItem) this.lstFrm.push({ Id: id, Frm: _frm, Etiqueta: etiqueta });
+
+
+
+
 
   }
 
@@ -242,32 +244,20 @@ export class Validacion {
 
 
     document.querySelector('#' + id)?.addEventListener('keypress', onKeyEnter);
+    let elemento  = document.getElementById(id);
+    if(elemento?.tagName == "IGX-COMBO") elemento.addEventListener("keyup", this.V_Forcer_Key_Enter_Combo);
+
+
+    
+
 
   }
-/*
-  public addNumberFocus() {
-
-    var inputs, index;
-
-    inputs = document.getElementsByTagName('input');
-    for (index = 0; index < inputs.length; ++index) {
-      if(inputs[index].id != "")
-      {
-        document.querySelector('#' + inputs[index].id)?.removeEventListener("focusin", this.onFocusIn);
-        document.querySelector('#' + inputs[index].id)?.removeEventListener("focusout", this.onFocusOut);
-      }
-      
-    }
-
-
-  }*/
-
-  public addNumberFocus(id: string, decimal : number) {
+  
+  public addNumberFocus(id: string, decimal: number) {
 
     let i: number = lstFormat.findIndex(f => f.Id == id);
 
-    if (i != -1)
-    {
+    if (i != -1) {
       lstFormat.splice(i, 1);
     }
 
@@ -280,6 +270,41 @@ export class Validacion {
 
 
 
+  private V_Forcer_Key_Enter_Combo(event: any): void {
+
+    if (event.key == "Enter")
+      {
+         let id = event.srcElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
+
+         let elmento: HTMLElement = document?.getElementById(id)!;
+
+
+         let combo: IgxComboComponent = cmb.find(f => f.id == id)!;
+         combo.close();
+         
+
+         let _element_next = lstFocus.find(f => f.Id == id);
+
+         if (_element_next == undefined) return;
+         if (_element_next.IdNext == "") return;
+       
+        
+         elmento = document?.getElementById(_element_next.Id)!;
+         elmento = getRectArea(elmento);
+       
+       
+       
+       
+       
+         elmento?.focus();
+
+         
+
+        
+      }
+
+
+  }
 
   onFocusIn(event: any) {
 
@@ -287,7 +312,7 @@ export class Validacion {
     let id: string = event.target.id;
     let i: number = lstFormat.findIndex(f => f.Id == id);
 
-   
+
     let elmento: any = document?.getElementById(id)!;
 
 
@@ -308,37 +333,37 @@ export class Validacion {
 
 
 
-    let numero : number =  0
-    
-    if(elmento.value != "") numero = Number(elmento.value.replaceAll(",", ""));
+    let numero: number = 0
+
+    if (elmento.value != "") numero = Number(elmento.value.replaceAll(",", ""));
 
 
- 
 
-    elmento.value = formatNumber(numero, "en-IN",  "1."+iform?.Decimal+"-"+iform?.Decimal);
+
+    elmento.value = formatNumber(numero, "en-IN", "1." + iform?.Decimal + "-" + iform?.Decimal);
 
 
   }
 
-public del(id: string): void {
+  public del(id: string): void {
 
-    this.lstReglas.filter( w=> w.Id == id).forEach( w=>{
-
-      
-    let i: number = this.lstReglas.findIndex((f) => f.Id == id && f.Regla == w.Regla);
-
-    if (i != -1) {
-      this.ValForm.removeControl(id);
-      this.lstReglas.splice(i, 1);
-    }
+    this.lstReglas.filter(w => w.Id == id).forEach(w => {
 
 
+      let i: number = this.lstReglas.findIndex((f) => f.Id == id && f.Regla == w.Regla);
 
-    i = lstFocus.findIndex((f) => f.Id == id);
+      if (i != -1) {
+        this.ValForm.removeControl(id);
+        this.lstReglas.splice(i, 1);
+      }
 
-    if (i != -1) {
-      lstFocus.splice(i, 1);
-    }
+
+
+      i = lstFocus.findIndex((f) => f.Id == id);
+
+      if (i != -1) {
+        lstFocus.splice(i, 1);
+      }
 
 
     });
@@ -402,22 +427,21 @@ public del(id: string): void {
       let span = document.getElementById("info-validacion-" + f.Id);
       span?.remove();
 
-	  frm.value = this.ValForm.get(f.Id)?.value;
+      frm.value = this.ValForm.get(f.Id)?.value;
 
-      if ( (String(frm.value) == "undefined" || String(frm.value) == "")) {
+      if ((String(frm.value) == "undefined" || String(frm.value) == "")) {
 
         if (elmento?.localName == "igx-combo") {
           let combo: any = cmb?.find(w => w.id == f.Id)!;
           frm.setValue(combo?._value);
         }
-        else
-        {
+        else {
           frm.setValue((<HTMLInputElement>document.getElementById(f.Id))?.value);
         }
 
 
-     
-        
+
+
       }
 
       let r: string[] = this._Validar(f.Id, f, frm, retorno, errores);
@@ -438,7 +462,7 @@ public del(id: string): void {
 
 
       //AGREGANDO ICONO DE VALIDACION
-	  esError = reglas.filter(w => w.Id == f.Id && w.ErrorMensaje != "").length > 0 ? true : false;
+      esError = reglas.filter(w => w.Id == f.Id && w.ErrorMensaje != "").length > 0 ? true : false;
       span = document.getElementById("-info-validacion-" + f.Id);
       if (span == undefined && esError) {
         esError = false;
@@ -464,7 +488,7 @@ public del(id: string): void {
     i = 0;
     lst.forEach((f: ReglasValidacion) => {
 
-      if(!er.includes(f.ErrorMensaje))er += f.ErrorMensaje;
+      if (!er.includes(f.ErrorMensaje)) er += f.ErrorMensaje;
 
 
       if (i < lst.length - 1 && f.Etiqueta != "") {
@@ -474,8 +498,8 @@ public del(id: string): void {
         }
 
       }
-      else{
-        this.Errores +=  "<li class='error-etiqueta'>" + f.Etiqueta + "<ul>" + er + "</ul></li>";
+      else {
+        this.Errores += "<li class='error-etiqueta'>" + f.Etiqueta + "<ul>" + er + "</ul></li>";
       }
 
       i++;
@@ -492,7 +516,7 @@ public del(id: string): void {
   }
 
 
-  public ActulizarValores(id : string, value : any){
+  public ActulizarValores(id: string, value: any) {
     this.ValForm.get(id)?.setValue(value);
   }
 
