@@ -1,0 +1,82 @@
+@import "/src/assets/scss/media.scss";
+
+
+.contenedor-filtro {
+    position: fixed;
+    top: 0;
+    right: 0;
+    text-align: center;
+    z-index: 1;
+    background-color: var(--escan-fondo);
+
+    p {
+
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+
+
+    .contenedor-boton {
+        text-align: right;
+    }
+
+
+
+    button {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+.contenedor-encabezado {
+    margin-top: 90px;
+    background-color: var(--escan-fondo);
+    padding-left: calc(var(--bs-gutter-x)* 0.5);
+    display: inherit;
+
+    div {
+        height: 32px;
+    }
+
+
+     @include Tamano_Menor(lg) {
+        display: none;
+    }
+}
+
+
+
+.contenedor-tabla {
+    overflow-x: scroll;
+    margin-top: 0px;
+
+    @include Tamano_Menor(lg) {
+        margin-top: 185px;
+    }
+}
+
+.saldo{
+    text-align: right;
+}
+.numero{
+    text-align: right;
+
+    @include Tamano_Menor(md) {
+        text-align: center;
+    }
+}
+
+
+.dashed{
+    border-style: dashed;
+}
+
+
+mat-paginator {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}

@@ -112,7 +112,7 @@ export class AccesoWebComponent {
       }
     );
 
-
+    document.getElementById("btnGuardar-acceso")?.setAttribute("disabled", "disabled");
 
     
     this.POST.GuardarAcceso(this.lstPerfil.data).subscribe(
@@ -152,7 +152,7 @@ export class AccesoWebComponent {
         },
         error: (err) => {
 
-          document.getElementById("liberar-inventario-bonif")?.removeAttribute("disabled");
+          document.getElementById("btnGuardar-acceso")?.removeAttribute("disabled");
 
 
 
@@ -166,7 +166,7 @@ export class AccesoWebComponent {
           }
         },
         complete: () => {
-          document.getElementById("liberar-inventario-bonif")?.removeAttribute("disabled");
+          document.getElementById("btnGuardar-acceso")?.removeAttribute("disabled");
 
         }
       }

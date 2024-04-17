@@ -82,6 +82,7 @@ export class Funciones {
       {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavCierre", Caption: "Cierre Contable" , MenuPadre: "", Clase : "fa-solid fa-school-lock", Modulo: "CON", Usuario : ""},
       {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCierreMensual", Caption: "Cierre Mensual" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-arrow-down-up-lock", Modulo: "CON", Usuario : ""},
       {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCierreFiscal", Caption: "Cierre Fiscal" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-building-lock", Modulo: "CON", Usuario : ""},
+      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aModuloVsContabilidad", Caption: "Modulo VS Contabilidad" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-code-compare", Modulo: "CON", Usuario : ""},
 
 
        /**************************************REPORTE************************************* */ 
