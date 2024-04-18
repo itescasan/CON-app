@@ -45,6 +45,27 @@
                         </div>
 
 
+                        <div class="col-12 col-md-12 col-lg-4 mb-1">
+
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+    
+                                <div class="form-floating">
+                                    <input type="text" id="txtBuscar-modulo-vs-contabilidad" class="form-control" placeholder="Buscar"
+                                        aria-label="Buscar" formControlName="txtBuscar-modulo-vs-contabilidad" (keyup)="v_Filtrar($event)">
+                                    <label for="txtBuscar-modulo-vs-contabilidad">Buscar</label>
+    
+                                </div>
+
+                                
+    
+                            </div>
+    
+    
+                        </div>
+
+                        
+
                     </div>
                 </form>
             </div>
@@ -81,14 +102,30 @@
                         <div class="row">
     
                             <div class="col-4 col-sm-4 col-md-3 col-lg-3">
-                                <span>{{det.CuentaContable}}</span>
+                                <div class="row">
+
+                                    <div class="col-12 col-sm-12 col-md-1 col-lg-1">
+                                        <a href="#" class="link" (click)="V_Navegar(det, 'Siguiente')" *ngIf="Modulo == '' || NoDocumento == ''"><i class="fa-solid fa-circle-info fa-lg primario"> </i></a>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-10 col-lg-10">
+                                        {{det.CuentaContable}} -  {{det.NombreCuenta}}
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-1 col-lg-1">
+                                        <a href="#" class="link" (click)="V_Navegar(det, 'Atras')"><i class="fa-solid fa-arrow-left-long fa-lg" *ngIf="Modulo != ''"></i></a>
+                                    </div>
+
+
+                                </div>
+                                
                             </div>
 
                             <div class="col-8 col-sm-8 col-md-3 col-lg-3">
-                                <span>{{det.NoDocumento}}</span>
+                                <span>{{det.NoDocumento }}</span>
                             </div>
 
-
+                
                             <div class="col-6 col-sm-6 col-md-2 col-lg-2 numero">
                                 <span>{{det.Modulo | number : '1.2-2'}}</span>
                             </div>

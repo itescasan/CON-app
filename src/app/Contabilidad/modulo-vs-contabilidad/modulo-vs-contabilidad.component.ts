@@ -17,26 +17,83 @@ import { MatPaginator } from '@angular/material/paginator';
 export class ModuloVSContabilidadComponent {
 
   public val = new Validacion();
-  private Modulo : string = "";
-  private NoDocumento : string = "";
-  public lst : MatTableDataSource<iModuloVSContabilidad>;
+  public Modulo: string = "";
+  public NoDocumento: string = "";
+  private CuentaContable : string = "";
+
+  private AntModulo: string = "";
+  private AntNoDocumento: string = "";
+  private AntCuentaContable: string = "";
+
+
+  public lst: MatTableDataSource<iModuloVSContabilidad>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
 
   displayedColumns: string[] = ["col1"];
 
 
-  constructor(private cFunciones: Funciones, private GET : getCierreMes
+  constructor(private cFunciones: Funciones, private GET: getCierreMes
   ) {
 
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
+    this.val.add("txtBuscar-modulo-vs-contabilidad", "1", "LEN>=", "0", "Buscar", "");
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
-    
-    
+
+
   }
 
+  V_Navegar(det: iModuloVSContabilidad, evento: string) {
+
+
+    if (evento == "Siguiente") {
+      this.AntModulo = this.Modulo;
+      this.AntNoDocumento = this.NoDocumento;
+      this.CuentaContable = this.CuentaContable;
+
+      this.Modulo = det.Tabla;
+      this.NoDocumento = det.NoDocumento;
+      this.CuentaContable = det.CuentaContable;
+    }
+
+    if (evento == "Atras") {
+
+      if (this.Modulo != this.AntModulo || this.NoDocumento != this.AntNoDocumento || this.CuentaContable != this.AntCuentaContable) {
+        this.Modulo = this.AntModulo;
+        this.NoDocumento = this.AntNoDocumento;
+        this.CuentaContable = this.AntCuentaContable;
+        
+      }
+      else {
+        if (this.Modulo == this.AntModulo) {
+          this.Modulo = "";
+          this.AntModulo = "";
+        }
+
+        if (this.NoDocumento == this.AntNoDocumento) {
+          this.NoDocumento = "";
+          this.AntNoDocumento = "";
+        }
+
+        if (this.CuentaContable == this.AntCuentaContable) {
+          this.CuentaContable = "";
+          this.AntCuentaContable = "";
+        }
+      }
+
+
+    }
+
+
+
+
+
+
+
+    this.V_Comparar();
+  }
 
   V_Comparar(): void {
 
@@ -53,7 +110,7 @@ export class ModuloVSContabilidadComponent {
     document.getElementById("btn-Modulo-VS-Contabilidad")?.setAttribute("disabled", "disabled");
 
 
-    this.GET.Comparar( this.Modulo, this.NoDocumento, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value).subscribe(
+    this.GET.Comparar(this.Modulo, this.NoDocumento, this.CuentaContable , this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value).subscribe(
       {
         next: (data) => {
 
@@ -72,7 +129,7 @@ export class ModuloVSContabilidadComponent {
 
 
             let Datos: iDatos = _json["d"];
-      
+
             this.lst = new MatTableDataSource(Datos.d);
             this.lst.paginator = this.paginator;
 
@@ -95,7 +152,14 @@ export class ModuloVSContabilidadComponent {
         }
       }
     );
-    
+
   }
-  
+
+
+
+  public v_Filtrar(event : any){
+    this.lst.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  }
+
+
 }

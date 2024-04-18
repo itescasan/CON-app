@@ -422,6 +422,7 @@ export class Validacion {
       let frm: any = this.Get(f.Id);
       let etiqueta: string = this.lstFrm.find((ff) => ff.Id == f.Id)?.Etiqueta!;
       let _Id: string = "";
+      let hmtlValue = "";
 
       let elmento = document.getElementById(f.Id);
       elmento?.parentElement?.classList.remove("contenedor-info-validacion");
@@ -430,6 +431,7 @@ export class Validacion {
       span?.remove();
 
       frm.value = this.ValForm.get(f.Id)?.value;
+      hmtlValue = (<HTMLInputElement>document.getElementById(f.Id))?.value
 
       if ((String(frm.value) == "undefined" || String(frm.value) == "")) {
 
@@ -438,13 +440,16 @@ export class Validacion {
           frm.setValue(combo?._value);
         }
         else {
-          frm.setValue((<HTMLInputElement>document.getElementById(f.Id))?.value);
+          frm.setValue(hmtlValue);
         }
 
-
-
-
       }
+      else
+      {
+        if(frm.value != hmtlValue) frm.setValue(hmtlValue);
+      }
+
+     
 
       let r: string[] = this._Validar(f.Id, f, frm, retorno, errores);
       reglas[i].ErrorMensaje = "";

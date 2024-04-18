@@ -52,7 +52,7 @@
     margin-top: 0px;
 
     @include Tamano_Menor(lg) {
-        margin-top: 185px;
+        margin-top: 250px;
     }
 }
 
@@ -79,4 +79,8 @@ mat-paginator {
     left: 0;
     width: 100%;
     z-index: 1;
+}
+
+.link{
+    color: var(--escan-primario);
 }

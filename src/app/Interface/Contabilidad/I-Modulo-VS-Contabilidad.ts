@@ -2,11 +2,13 @@ export interface iModuloVSContabilidad{
     NoLinea: number;
     CuentaContable: string;
     NoDocumento: string;
+    NombreCuenta: string;
     CodigoBodega: string,
     Modulo: number;
     Contabilidad: number;
     Saldo : number;
-    CodConfig : String;
-    TipoDoc : String;
-    Tabla : String;
+    CodConfig : string;
+    TipoDoc : string;
+    Tabla : string;
+    
 }
