@@ -178,6 +178,8 @@ export class ModuloVSContabilidadComponent {
       else{
         this.lst = new MatTableDataSource(this.tempDatos);
       }
+
+      this.lst.paginator = this.paginator;
   }, 200);
 
 
