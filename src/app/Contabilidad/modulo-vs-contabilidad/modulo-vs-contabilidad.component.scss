@@ -54,6 +54,8 @@
     @include Tamano_Menor(lg) {
         margin-top: 250px;
     }
+
+    
 }
 
 .saldo{
@@ -81,6 +83,18 @@ mat-paginator {
     z-index: 1;
 }
 
-.link{
-    color: var(--escan-primario);
+
+.navegacion{
+    @include Tamano_Menor(md) {
+        width: 100%;
+    }
+}
+
+.etiqueta{
+    display: none;
+
+
+    @include Tamano_Menor(md) {
+        display:inline;
+    }
 }

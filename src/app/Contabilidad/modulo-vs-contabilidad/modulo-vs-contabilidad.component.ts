@@ -19,14 +19,16 @@ export class ModuloVSContabilidadComponent {
   public val = new Validacion();
   public Modulo: string = "";
   public NoDocumento: string = "";
-  private CuentaContable : string = "";
+  private CuentaContable: string = "";
 
   private AntModulo: string = "";
   private AntNoDocumento: string = "";
   private AntCuentaContable: string = "";
+  private SoloDif: boolean = false;
 
 
   public lst: MatTableDataSource<iModuloVSContabilidad>;
+  private tempDatos : iModuloVSContabilidad[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
 
@@ -64,7 +66,7 @@ export class ModuloVSContabilidadComponent {
         this.Modulo = this.AntModulo;
         this.NoDocumento = this.AntNoDocumento;
         this.CuentaContable = this.AntCuentaContable;
-        
+
       }
       else {
         if (this.Modulo == this.AntModulo) {
@@ -110,7 +112,7 @@ export class ModuloVSContabilidadComponent {
     document.getElementById("btn-Modulo-VS-Contabilidad")?.setAttribute("disabled", "disabled");
 
 
-    this.GET.Comparar(this.Modulo, this.NoDocumento, this.CuentaContable , this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value).subscribe(
+    this.GET.Comparar(this.Modulo, this.NoDocumento, this.CuentaContable, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value).subscribe(
       {
         next: (data) => {
 
@@ -130,7 +132,16 @@ export class ModuloVSContabilidadComponent {
 
             let Datos: iDatos = _json["d"];
 
-            this.lst = new MatTableDataSource(Datos.d);
+            this.tempDatos = Datos.d;
+
+            if (this.SoloDif) {
+              this.lst = new MatTableDataSource(this.tempDatos.filter((f : any) => f.Saldo != 0 ));
+            }
+            else{
+              this.lst = new MatTableDataSource(this.tempDatos);
+            }
+
+            
             this.lst.paginator = this.paginator;
 
           }
@@ -156,10 +167,48 @@ export class ModuloVSContabilidadComponent {
   }
 
 
+  public V_TipoSaldo(event: any): void {
+    this.SoloDif = !this.SoloDif;
 
-  public v_Filtrar(event : any){
+
+    setTimeout(()=>{                          
+      if (this.SoloDif) {
+        this.lst = new MatTableDataSource(this.tempDatos.filter((f : any) => f.Saldo != 0 ));
+      }
+      else{
+        this.lst = new MatTableDataSource(this.tempDatos);
+      }
+  }, 200);
+
+
+    
+    
+  }
+
+  public v_Filtrar(event: any) {
     this.lst.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
   }
+
+
+
+  private ngAfterViewInit() {
+
+
+
+    ///CAMBIO DE FOCO
+    this.val.addFocus("txtFecha", "cmbMoneda", undefined);
+    this.val.addFocus("cmbMoneda", "btn-Modulo-VS-Contabilidad", "click");
+
+
+
+    //HABILITANDO CHECKBOK POR PROBLEMAS DE VIZUALIZACION
+    let lstcheckbox: any = document.querySelectorAll("input[type='checkbox']");
+    lstcheckbox.forEach((f: any) => {
+      f.bootstrapToggle();
+    });
+
+  }
+
 
 
 }
