@@ -1,6 +1,9 @@
 @import "/src/assets/scss/media.scss";
 
-
+.contenedor
+{
+    overflow-x: scroll !important;
+}
 .contenedor-filtro {
     position: fixed;
     top: 0;
@@ -8,6 +11,7 @@
     text-align: center;
     z-index: 1;
     background-color: var(--escan-fondo);
+    
 
     p {
 
@@ -45,10 +49,13 @@
     }
 }
 
+table{
+    margin-bottom: 200px;
+}
 
 
 .contenedor-tabla {
-    overflow-x: scroll;
+    overflow-x: scroll !important;
     margin-top: 0px;
 
     @include Tamano_Menor(lg) {
