@@ -371,15 +371,16 @@ export class CatalogoCuentaComponent {
     let Fila : iCuenta = {} as iCuenta;
 
     Fila.CuentaContable = this.Prefix + this.val.Get("txtCuenta").value;
-    Fila.NombreCuenta = this.val.Get("txtDescripcion").value;
+    Fila.NombreCuenta = String(this.val.Get("txtDescripcion").value).toUpperCase();
     Fila.Nivel = this.val.Get("cmbNivel").value;
     Fila.IdGrupo = this.val.Get("cmbGrupo").value;
     Fila.ClaseCuenta = this.val.Get("cmbClase").value;
     Fila.CuentaPadre = this.val.Get("txtCuentaPadre").value;
     Fila.Naturaleza = this.val.Get("cmbNaturaleza").value;
-    Fila.Bloqueada = this.val.Get("chkCuentaBloqueada").value;
+    Fila.Bloqueada = this.val.Get("chkCuentaBloqueada").value  == "on" ? true : false;
     Fila.UsuarioModifica = this.cFunciones.User;
  
+
 
     document.getElementById("btnGuardar-Cuenta")?.setAttribute("disabled", "disabled");
 
