@@ -53,7 +53,7 @@ export class ModuloVSContabilidadComponent {
     if (evento == "Siguiente") {
       this.AntModulo = this.Modulo;
       this.AntNoDocumento = this.NoDocumento;
-      this.CuentaContable = this.CuentaContable;
+      this.AntCuentaContable = this.CuentaContable;
 
       this.Modulo = det.Tabla;
       this.NoDocumento = det.NoDocumento;

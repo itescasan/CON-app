@@ -3,6 +3,7 @@ export interface iModuloVSContabilidad{
     CuentaContable: string;
     NoDocumento: string;
     NombreCuenta: string;
+    Referencia : string;
     CodigoBodega: string,
     Modulo: number;
     Contabilidad: number;
