@@ -91,4 +91,15 @@ export class CierreMensualComponent {
     );
     
   }
+
+
+  
+  private ngAfterViewInit() {
+
+    ///CAMBIO DE FOCO
+    this.val.addFocus("txtFecha", "cmbCierreMes", undefined);
+    this.val.addFocus("cmbCierreMes", "btnCiere-Mes", "click");
+
+
+  }
 }

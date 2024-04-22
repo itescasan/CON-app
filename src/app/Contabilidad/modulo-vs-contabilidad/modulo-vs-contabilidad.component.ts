@@ -162,6 +162,8 @@ export class ModuloVSContabilidadComponent {
 
             this.lst.paginator = this.paginator;
 
+            this.lst.filter = this.val.Get("txtBuscar-modulo-vs-contabilidad").value.trim().toLowerCase();
+
           }
 
         },
