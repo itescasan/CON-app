@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
@@ -8,6 +8,13 @@ import { getCierreMes } from '../Cierre-Contable/CRUD/POST/get-cierre-mes';
 import { iModuloVSContabilidad } from 'src/app/Interface/Contabilidad/I-Modulo-VS-Contabilidad';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { IgxComboComponent } from 'igniteui-angular';
+
+export interface iMoneda {
+  Moneda: string;
+  ValorMoneda: boolean;
+}
+
 
 @Component({
   selector: 'app-modulo-vs-contabilidad',
@@ -15,6 +22,9 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrl: './modulo-vs-contabilidad.component.scss'
 })
 export class ModuloVSContabilidadComponent {
+
+  @ViewChildren(IgxComboComponent)
+  public lstCmb: QueryList<IgxComboComponent>;
 
   public val = new Validacion();
   public Modulo: string = "";
@@ -28,11 +38,15 @@ export class ModuloVSContabilidadComponent {
 
 
   public lst: MatTableDataSource<iModuloVSContabilidad>;
-  private tempDatos : iModuloVSContabilidad[] = [];
+  private tempDatos: iModuloVSContabilidad[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
 
   displayedColumns: string[] = ["col1"];
+  public lstMoneda: iMoneda[] = [{ Moneda: "Cordobas", ValorMoneda: true }, { Moneda: "Dolares", ValorMoneda: false }];
+
+  @ViewChild("cmbMoneda", { static: false })
+  public cmbMoneda: IgxComboComponent;
 
 
   constructor(private cFunciones: Funciones, private GET: getCierreMes
@@ -43,6 +57,10 @@ export class ModuloVSContabilidadComponent {
     this.val.add("txtBuscar-modulo-vs-contabilidad", "1", "LEN>=", "0", "Buscar", "");
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
+
+    setTimeout(() => {
+      this.cmbMoneda?.select([true]);
+    });
 
 
   }
@@ -112,7 +130,7 @@ export class ModuloVSContabilidadComponent {
     document.getElementById("btn-Modulo-VS-Contabilidad")?.setAttribute("disabled", "disabled");
 
 
-    this.GET.Comparar(this.Modulo, this.NoDocumento, this.CuentaContable, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value).subscribe(
+    this.GET.Comparar(this.Modulo, this.NoDocumento, this.CuentaContable, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.cmbMoneda.value[0]).subscribe(
       {
         next: (data) => {
 
@@ -135,13 +153,13 @@ export class ModuloVSContabilidadComponent {
             this.tempDatos = Datos.d;
 
             if (this.SoloDif) {
-              this.lst = new MatTableDataSource(this.tempDatos.filter((f : any) => f.Saldo != 0 ));
+              this.lst = new MatTableDataSource(this.tempDatos.filter((f: any) => f.Saldo != 0));
             }
-            else{
+            else {
               this.lst = new MatTableDataSource(this.tempDatos);
             }
 
-            
+
             this.lst.paginator = this.paginator;
 
           }
@@ -171,20 +189,20 @@ export class ModuloVSContabilidadComponent {
     this.SoloDif = !this.SoloDif;
 
 
-    setTimeout(()=>{                          
+    setTimeout(() => {
       if (this.SoloDif) {
-        this.lst = new MatTableDataSource(this.tempDatos.filter((f : any) => f.Saldo != 0 ));
+        this.lst = new MatTableDataSource(this.tempDatos.filter((f: any) => f.Saldo != 0));
       }
-      else{
+      else {
         this.lst = new MatTableDataSource(this.tempDatos);
       }
 
       this.lst.paginator = this.paginator;
-  }, 200);
+    }, 200);
 
 
-    
-    
+
+
   }
 
   public v_Filtrar(event: any) {
@@ -193,8 +211,12 @@ export class ModuloVSContabilidadComponent {
 
 
 
+
+
   private ngAfterViewInit() {
 
+
+    this.val.Combo(this.lstCmb);
 
 
     ///CAMBIO DE FOCO

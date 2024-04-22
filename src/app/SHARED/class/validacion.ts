@@ -12,7 +12,7 @@ import { ErrorStateMatcher } from "@angular/material/core";
 import { formatDate, formatNumber } from "@angular/common";
 import { IgxComboComponent } from "igniteui-angular";
 import { QueryList } from "@angular/core";
-
+import { IComboSelectionChangingEventArgs } from 'igniteui-angular';
 
 
 function getRectArea(elmento: HTMLElement) {
@@ -47,6 +47,7 @@ function onKeyEnter(event: any) {
     id = event.target.parentElement.parentElement.parentElement.parentElement.id;
     event.target.setAttribute("id", id);
   }
+
 
 
 
@@ -177,6 +178,21 @@ export class Validacion {
   public Combo(c: any) {
     cmb = c;
   }
+
+
+
+
+
+  public V_SingleSelection(event: IComboSelectionChangingEventArgs) {
+  
+    if (event.added.length) {
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.Get(event.owner.id).setValue(event.newValue[0]);
+      event.owner.close();
+    }
+}
+
+
   public CambioRegla(id: string, r: string): string {
     return this.lstReglas.filter((f) => f.Id == id && f.Regla == r)[0].valor;
   }
