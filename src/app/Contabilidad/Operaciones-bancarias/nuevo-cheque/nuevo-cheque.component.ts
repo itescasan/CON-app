@@ -226,15 +226,6 @@ export class NuevoChequeComponent {
     }
   }
 
-  // public v_Enter_CuentaBanco(event: any) {
-
-  //   if (event.key == "Enter") {
-  //     let cmb : any = this.cmbCuentaBancaria.dropdown;
-  //     let _Item: iCuentaBancaria = cmb._focusedItem.value;
-  //     this.cmbCuentaBancaria.setSelectedItem(_Item.IdCuentaBanco);
-  //     this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
-  //   }
-  // }
 
   public v_Enter_CuentaBanco(event: any) {
     if (event.key == "Enter") {
@@ -244,10 +235,6 @@ export class NuevoChequeComponent {
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
     }
   }
-
-
-  // let _Item: iCuenta = cmb._focusedItem.value;
-  //     if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
 
 
 
@@ -336,7 +323,7 @@ public v_CargarReembolsos(): void {
       let text = this.val.Get("cmbReembolsoC").value[0]
       const myArray = text.split("-");
       let CC = myArray[1].replace(/\s{2,}/g, ' ').trim();
-      let Nu = myArray[0].replace(/\s{2,}/g, ' ').trim();
+      let Nu = myArray[0].replace(/\s{2,}/g, ' ').trim(); 
       
       this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
       this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
@@ -1562,21 +1549,6 @@ public v_CargarReembolsos(): void {
         
     }
 
-  //   this.valTabla.Combo(this.cmbCombo);
-
-  //   this.val.addNumberFocus("txtTotalCordoba", 2);
-  //   this.val.addNumberFocus("txtTotalDolar", 2);
-
-  //   let i : number = 0;
-  //   this.lstDetalle.data.forEach(f => {
-  //     this.val.addNumberFocus("txtDebito" + f.NoLinea, 2);
-  //     this.val.addFocus("txtCredito" + f.NoLinea, "txtImporte" + (f.NoLinea + 1) , undefined);
-  //     this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);
-  //     i++;
-  //   });
-
-
-  // }
 
 }
 

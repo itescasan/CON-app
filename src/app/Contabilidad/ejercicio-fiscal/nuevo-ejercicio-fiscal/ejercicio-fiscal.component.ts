@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { RegistroEjercicioFiscalComponent } from '../registro-ejercicio-fiscal/registro-ejercicio-fiscal.component';
@@ -20,7 +20,8 @@ import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-con
 import { DialogRef } from '@angular/cdk/dialog';
 import { iEjercicioFiscal } from 'src/app/Interface/Contabilidad/i-EjercicioFiscal';
 import { postEjercicioFiscal } from '../CRUD/POST/post-Ejercicio-fiscal';
-
+import { GlobalPositionStrategy, ISizeInfo, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
+import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class EjercicioFiscalComponent {
   inputValue: string = "";
   inputini: string = "";
   imputfin: string = '';
+  public overlaySettings: OverlaySettings = {};
 
   public iDatos: iDatos[] = [];
 
@@ -46,7 +48,7 @@ export class EjercicioFiscalComponent {
   // public Mascara: string = "";
   // public Prefix: string = "";
   
-  displayedColumns: string[] = ["NoPeriodo","NombrePeriodo","ClasePeriodo","FechaPeridoI","FechaPeridoF","Estado"];
+  displayedColumns: string[] = ["NoPeriodo","NombrePeriodo","ClasePeriodo","FechaPeridoI","FechaPeridoF","Estado","Icon"];
 
   public lstPeriodo = new MatTableDataSource<iPeriodo> ;
 
@@ -58,14 +60,15 @@ export class EjercicioFiscalComponent {
   pipe: any;
 
 
+
   
   constructor(private GET: getCuentaContable, private POST: postEjercicioFiscal ,private cFunciones : Funciones )
   {
     this.val.add("idEjercicioFiscal", "1", "LEN>", "0", "Ejercio_Fiscal", "Ingrese Nombre Ejercicio Fiscal.");
     this.val.add("idFechaIni", "1", "LEN>", "0", "Fecha", "Seleccione fecha inicial.");    
-    this.val.add("txtCuentaA", "1", "LEN>=", "0", "Cuenta Acumulada", "");    
-    this.val.add("txtCuentaP", "1", "LEN>", "0", "Cuenta Perdida", "Seleccione una Cuenta.");
-    this.val.add("txtCuentaPr", "1", "LEN>", "0", "Cuenta Periodo","Seleccione una Cuenta.");
+    this.val.add("cmbCuenta", "1", "LEN>=", "0", "Cuenta Acumulada", "");    
+    this.val.add("cmbCuenta2", "1", "LEN>", "0", "Cuenta Perdida", "Seleccione una Cuenta.");
+    this.val.add("cmbCuenta3", "1", "LEN>", "0", "Cuenta Periodo","Seleccione una Cuenta.");
     this.val.add("chkBloqueadaEF", "1", "LEN>", "0", "Bloqueada", "");
 
     this.v_Evento("Iniciar");
@@ -83,9 +86,9 @@ export class EjercicioFiscalComponent {
       
         this.val.Get("idEjercicioFiscal").setValue("");       
         this.val.Get("idFechaIni").setValue();
-        this.val.Get("txtCuentaA").setValue("");
-        this.val.Get("txtCuentaP").setValue("");
-        this.val.Get("txtCuentaPr").setValue("");
+        this.val.Get("cmbCuenta").setValue("");
+        this.val.Get("cmbCuenta2").setValue("");
+        this.val.Get("cmbCuenta3").setValue("");
         this.val.Get("chkBloqueadaEF").setValue(true);
 
         this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
@@ -98,28 +101,104 @@ export class EjercicioFiscalComponent {
     }
   }
 
-  public v_Select_Cuenta(event: any): void {
+  // public v_Select_Cuenta(event: any): void {
 
-    let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.option.value)!;
+  //   let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.option.value)!;
 
 
+  // }
+  @ViewChild("cmbCuenta", { static: false })
+  public cmbCuenta: IgxComboComponent;
+ 
+  public v_Select_Cuenta(event: any) {
+   this.val.Get("cmbCuenta").setValue("");
+   if (event.added.length == 1) {  
+     if(event.newValue.length > 1) event.newValue.splice(0, 1);
+     let _Item  = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0]);
+ 
+     if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuenta.close();
+    }
+ }
+ 
+ public v_Enter_Cuenta(event: any) {
+   if (event.key == "Enter") {
+     let cmb : any = this.cmbCuenta.dropdown;
+     let _Item: iCuenta = cmb._focusedItem.value;
+     this.cmbCuenta.setSelectedItem(_Item.CuentaContable);
+     this.val.Get("cmbCuenta").setValue([_Item.CuentaContable]);
+ 
+   }
+ }
+ @ViewChild("cmbCuenta2", { static: false })
+  public cmbCuenta2: IgxComboComponent;
+
+  public v_Select_Cuenta2(event: any) {
+    this.val.Get("cmbCuenta2").setValue("");
+    if (event.added.length == 1) {
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbCuenta2").setValue(event.newValue);
+  
+      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuenta2.close();
+    }
   }
+
+
+  public v_Enter_Cuenta2(event: any) {
+    if (event.key == "Enter") {
+      let cmb: any = this.cmbCuenta2.dropdown;
+      let _Item: iCuenta = cmb._focusedItem.value;
+      this.cmbCuenta2.setSelectedItem(_Item.CuentaContable);
+      this.val.Get("cmbCuenta2").setValue([_Item.CuentaContable]);
+
+    }
+  }
+  @ViewChild("cmbCuenta3", { static: false })
+  public cmbCuenta3: IgxComboComponent;
+
+  public v_Select_Cuenta3(event: any) {
+    this.val.Get("cmbCuenta3").setValue("");
+    if (event.added.length == 1) {
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbCuenta3").setValue(event.newValue);
+  
+      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuenta3.close();
+    }
+  }
+
+  public v_Enter_Cuenta3(event: any) {
+    if (event.key == "Enter") {
+      let cmb: any = this.cmbCuenta3.dropdown;
+      let _Item: iCuenta = cmb._focusedItem.value;
+      this.cmbCuenta3.setSelectedItem(_Item.CuentaContable);
+      this.val.Get("cmbCuenta3").setValue([_Item.CuentaContable]);
+
+    }
+  }
+
 
   public v_CargarDatos(): void {
 
     // this.lstGrupos = [];
     
    
-    document.getElementById("btnRefrescar-Cuenta")?.setAttribute("disabled", "disabled");
+    document.getElementById("btnRefrescar")?.setAttribute("disabled", "disabled");
 
-    let dialogRef: MatDialogRef<WaitComponent> =  this.cFunciones.DIALOG.open(
-      WaitComponent,
-      {
-        panelClass: "escasan-dialog-full-blur",
-        data: "",
-      }
-    );
+    
+    let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
+     
 
+    if(dialogRef == undefined)
+    {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id : "wait"
+        }
+      );
+
+    }
 
     this.GET.Datos().subscribe(
       {
@@ -150,7 +229,7 @@ export class EjercicioFiscalComponent {
         error: (err) => {
 
 
-          document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled");
+          document.getElementById("btnRefrescar")?.removeAttribute("disabled");
           dialogRef.close();
 
           this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -158,7 +237,7 @@ export class EjercicioFiscalComponent {
           });
 
         },
-        complete: () => { document.getElementById("btnRefrescar-Cuenta")?.removeAttribute("disabled"); }
+        complete: () => { document.getElementById("btnRefrescar")?.removeAttribute("disabled"); }
       }
     ); 
 
@@ -193,12 +272,12 @@ export class EjercicioFiscalComponent {
       this.Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
       this.Fila.ClasePeriodos = "Mensuales";
       this.Fila.NumerosPeriodos = 12;     
-      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaA").value)!;
-      this.Fila.CuentaContableAcumulada = i_Cuenta.CuentaContable;
-      let i_Cuenta2: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaP").value)!;
-      this.Fila.CuentaPerdidaGanancia = i_Cuenta2.CuentaContable;
-      let i_Cuenta3: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaPr").value)!;
-      this.Fila.CuentaContablePeriodo = i_Cuenta3.CuentaContable;
+      //let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaA").value)!;
+      this.Fila.CuentaContableAcumulada = this.val.Get("cmbCuenta").value[0];
+      //let i_Cuenta2: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaP").value)!;
+      this.Fila.CuentaPerdidaGanancia = this.val.Get("cmbCuenta2").value[0];
+      //let i_Cuenta3: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaPr").value)!;
+      this.Fila.CuentaContablePeriodo = this.val.Get("cmbCuenta3").value[0];
       this.Fila.FechaReg = new Date();
       this.Fila.UsuarioReg = this.cFunciones.User;
       // Detalle Ejercicio Fiscal (Periodos)
@@ -291,6 +370,7 @@ export class EjercicioFiscalComponent {
   }
 
   public fill_Table(){
+    if(this.esModal) return;
     this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
     
     for (let i = 0; i <= 11; i++) {
@@ -325,40 +405,48 @@ export class EjercicioFiscalComponent {
 
   ngOnInit() : void{
 
-  
+    this.overlaySettings = {};
+
+    if (window.innerWidth <= 992) {
+      this.overlaySettings = {
+        positionStrategy: new GlobalPositionStrategy({ openAnimation: scaleInCenter, closeAnimation: scaleOutCenter }),
+        modal: true,
+        closeOnOutsideClick: true
+      };
+    }
      //FILTRO CLIENTE
-     this.filteredCuenta1 = this.val.Get("txtCuentaA").valueChanges.pipe(
-      startWith(""),
-      map((value: string) => {
-        return this.lstCuenta.filter((option) =>
-          option.Filtro.toLowerCase().includes(
-            (value || "").toLowerCase().trimStart()
-          )
-        );
-      })
-    );
+    //  this.filteredCuenta1 = this.val.Get("txtCuentaA").valueChanges.pipe(
+    //   startWith(""),
+    //   map((value: string) => {
+    //     return this.lstCuenta.filter((option) =>
+    //       option.Filtro.toLowerCase().includes(
+    //         (value || "").toLowerCase().trimStart()
+    //       )
+    //     );
+    //   })
+    // );
 
-    this.filteredCuenta2 = this.val.Get("txtCuentaP").valueChanges.pipe(
-      startWith(""),
-      map((value: string) => {
-        return this.lstCuenta.filter((option) =>
-          option.Filtro.toLowerCase().includes(
-            (value || "").toLowerCase().trimStart()
-          )
-        );
-      })
-    );
+    // this.filteredCuenta2 = this.val.Get("txtCuentaP").valueChanges.pipe(
+    //   startWith(""),
+    //   map((value: string) => {
+    //     return this.lstCuenta.filter((option) =>
+    //       option.Filtro.toLowerCase().includes(
+    //         (value || "").toLowerCase().trimStart()
+    //       )
+    //     );
+    //   })
+    // );
 
-    this.filteredCuenta3 = this.val.Get("txtCuentaPr").valueChanges.pipe(
-      startWith(""),
-      map((value: string) => {
-        return this.lstCuenta.filter((option) =>
-          option.Filtro.toLowerCase().includes(
-            (value || "").toLowerCase().trimStart()
-          )
-        );
-      })
-    );
+    // this.filteredCuenta3 = this.val.Get("txtCuentaPr").valueChanges.pipe(
+    //   startWith(""),
+    //   map((value: string) => {
+    //     return this.lstCuenta.filter((option) =>
+    //       option.Filtro.toLowerCase().includes(
+    //         (value || "").toLowerCase().trimStart()
+    //       )
+    //     );
+    //   })
+    // );
 
 
 

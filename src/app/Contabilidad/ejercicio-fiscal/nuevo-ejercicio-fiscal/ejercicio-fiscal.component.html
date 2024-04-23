@@ -1,5 +1,5 @@
 
-<div class="container-md" cdkDrag>  
+<div class="container-md" >  
     <div class="escasan-dialog" *ngIf="esModal">
         <div class="btn-contenedor-custom" >
             <button class="close-button custom-cerrar" [mat-dialog-close]="true">
@@ -53,7 +53,7 @@
                     </div>
                     
 
-                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                    <!-- <div class="col-12 col-md-12 col-lg-6 mb-1">
                         <div class="row mb-1">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fa-regular fa-newspaper fa-beat-fade fa-lg"></i></span>
@@ -76,9 +76,41 @@
                                 </div>
                             </div>
                         </div>
+                    </div> -->
+                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                        <igx-combo #cmbCuenta [data]="lstCuenta" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbCuenta"
+                                        formControlName="cmbCuenta" placeholder="Cuenta Acumulada"
+                                        searchPlaceholder="Seleccione una Cuenta..." [autoFocusSearch]="true"
+                                        [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Cuenta($event)" 
+                                        (keyup)="v_Enter_Cuenta($event);">
+                                        <label igxLabel>Cuenta Acumulada</label>
+                                        <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                        </igx-combo>
                     </div>
 
                     <div class="col-12 col-md-12 col-lg-6 mb-1">
+                        <igx-combo #cmbCuenta2 [data]="lstCuenta" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbCuenta2"
+                                        formControlName="cmbCuenta2" placeholder="Utilidad Perdida"
+                                        searchPlaceholder="Seleccione una Cuenta..." [autoFocusSearch]="true"
+                                        [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Cuenta2($event)"
+                                        (keyup)="v_Enter_Cuenta2($event);">
+                                        <label igxLabel>Utilidad Perdida</label>
+                                        <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                        </igx-combo>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-6 mb-3">
+                        <igx-combo #cmbCuenta3 [data]="lstCuenta" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbCuenta3"
+                                        formControlName="cmbCuenta3" placeholder="Utilidad Periodo"
+                                        searchPlaceholder="Seleccione una Cuenta..." [autoFocusSearch]="true"
+                                        [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Cuenta3($event)"
+                                        (keyup)="v_Enter_Cuenta3($event);">
+                                        <label igxLabel>Utilidad Periodo</label>
+                                        <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                        </igx-combo>
+                    </div>
+
+                    <!-- <div class="col-12 col-md-12 col-lg-6 mb-1">
                         <div class="row mb-1">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fa-regular fa-newspaper fa-beat-fade fa-lg"></i></span>
@@ -101,11 +133,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
                    
 
-                    <div class="col-12 col-md-12 col-lg-6 mb-1">
+                    <!-- <div class="col-12 col-md-12 col-lg-6 mb-1">
                         <div class="row mb-1">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fa-solid fa-arrow-down-wide-short fa-beat-fade fa-lg"></i></span>
@@ -128,7 +160,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+
+
                     <!-- <div class="row">
                         <div class="btn-contenedor d-grid gap-2 d-md-flex justify-content-md-end mb-3">                            
                             <span>
@@ -176,7 +210,13 @@
                         <!-- Symbol Column -->
                         <ng-container matColumnDef="Estado">
                             <th mat-header-cell *matHeaderCellDef> Estado </th>
-                            <td mat-cell *matCellDef="let det"> {{det.Estado}} 
+                            <td mat-cell *matCellDef="let det"> {{det.Estado}}                                 
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="Icon">
+                            <th mat-header-cell *matHeaderCellDef> Accion </th>
+                            <td mat-cell *matCellDef="let det">  
                                 <button class="btn btn-opcional" (click)="E_ditar(det)">
                                     <i [ngClass]="det.Estado == 'ABIERTO' ? 'fas fa-lock-open fa-lg' : 'fas fa-lock fa-lg'  "></i>
                                 </button>

@@ -28,6 +28,7 @@ export class RegistroEjercicioFiscalComponent {
   public iDatos: iDatos[] = [];
 
   public lstEjercicio : MatTableDataSource<iEjercicioFiscal>;
+  public lstCuenta : MatTableDataSource<iCuenta>;
 
   displayedColumns: string[] = ["Nombre","FechaInicio","FechaFinal","FechaReg","UsuarioReg","Estado","Editar"];
 
@@ -71,9 +72,7 @@ export class RegistroEjercicioFiscalComponent {
 
             let datos : iDatos[] = _json["d"];
 
-            this.lstEjercicio = new MatTableDataSource(datos[0].d);
-            
-
+            this.lstEjercicio = new MatTableDataSource(datos[0].d); 
             this.lstEjercicio.paginator = this.paginator;
 
           
@@ -104,7 +103,7 @@ export class RegistroEjercicioFiscalComponent {
 
     }
 
-    public v_Editar(e : iEjercicioFiscal) : void{
+    public v_Editar(det : iEjercicioFiscal) : void{
 
      
     let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
@@ -112,13 +111,14 @@ export class RegistroEjercicioFiscalComponent {
       {
         panelClass: "escasan-dialog-full-blur",
         data: "",
+        id : "wait"
       }
     );
 
 
 
 
-      this.GET.GetPeriodo(e.IdEjercicio).subscribe(
+      this.GET.GetPeriodo(det.IdEjercicio).subscribe(
         {
           next: (data) => {
   
@@ -148,45 +148,37 @@ export class RegistroEjercicioFiscalComponent {
                 }
               );
 
-              dialofEjercicio.componentInstance.v_CargarDatos();        
-            
+              dialofEjercicio.componentInstance.Fila = det;
+              dialofEjercicio.componentInstance.esModal = true;
+              dialofEjercicio.componentInstance.v_CargarDatos();
+
               dialofEjercicio.afterOpened().subscribe(s =>{
-                dialofEjercicio.componentInstance.esModal = true;
-
-                dialofEjercicio.componentInstance.Fila = e;
-                dialofEjercicio.componentInstance.val.Get("idEjercicioFiscal").setValue(e.Nombre);
-                dialofEjercicio.componentInstance.val.Get("chkBloqueadaEF").setValue(e.Estado == "ABIERTO" ? true : false);
-                dialofEjercicio.componentInstance.val.Get("idFechaIni").setValue((new Date(e.FechaInicio).getFullYear()));
-            
-                let i_Cuenta: iCuenta = dialofEjercicio.componentInstance.lstCuenta.find(f => f.CuentaContable == e.CuentaContableAcumulada)!;
-                dialofEjercicio.componentInstance.val.Get("txtCuentaA").setValue(i_Cuenta.Filtro);
-
-                let i_Cuenta2: iCuenta = dialofEjercicio.componentInstance.lstCuenta.find(f => f.CuentaContable == e.CuentaPerdidaGanancia)!;
-                dialofEjercicio.componentInstance.val.Get("txtCuentaP").setValue(i_Cuenta2.Filtro);
-
-                let i_Cuenta3: iCuenta = dialofEjercicio.componentInstance.lstCuenta.find(f => f.CuentaContable == e.CuentaContablePeriodo)!;
-                dialofEjercicio.componentInstance.val.Get("txtCuentaPr").setValue(i_Cuenta3.Filtro);
                 
+
                 
-                dialofEjercicio.componentInstance.lstPeriodo = new  MatTableDataSource(datos[0].d);
+                dialofEjercicio.componentInstance.Fila = det;
+                dialofEjercicio.componentInstance.val.Get("idEjercicioFiscal").setValue(det.Nombre);
+                dialofEjercicio.componentInstance.val.Get("chkBloqueadaEF").setValue(det.Estado == "ABIERTO" ? true : false);
+                dialofEjercicio.componentInstance.val.Get("idFechaIni").setValue((new Date(det.FechaInicio).getFullYear()));
+                dialofEjercicio.componentInstance.cmbCuenta.select([det.CuentaContableAcumulada]);
+                dialofEjercicio.componentInstance.cmbCuenta2.select([det.CuentaPerdidaGanancia]);
+                dialofEjercicio.componentInstance.cmbCuenta3.select([det.CuentaContablePeriodo]);
 
 
-                document.getElementById("idEjercicioFiscal")?.setAttribute("disabled", "disabled");
-                document.getElementById("idFechaIni")?.setAttribute("disabled", "disabled");
-                document.getElementById("txtCuentaA")?.setAttribute("disabled", "disabled");
-                document.getElementById("txtCuentaP")?.setAttribute("disabled", "disabled");
-                document.getElementById("txtCuentaPr")?.setAttribute("disabled", "disabled");
-               
-          
-                let chk: any = document.querySelector("#chkBloqueadaEF");
-                chk.bootstrapToggle("on");
-                if(e.Estado == "CERRADO") chk.bootstrapToggle("off");
-          
-          
+        
+                dialofEjercicio.componentInstance.lstPeriodo = new MatTableDataSource(datos[0].d);
+                dialofEjercicio.componentInstance.lstPeriodo._updateChangeSubscription();
+         
+    
+                
+
               });
-          
-              dialofEjercicio.afterClosed().subscribe(s =>{this.v_CargarDatos()});
-            
+
+              dialofEjercicio.afterClosed().subscribe(s =>{
+                this.v_CargarDatos();
+              });
+
+                          
             }
   
           },

@@ -44,7 +44,7 @@ export class RegistroChequesComponent {
   lstBodega: iBodega[] = [];
 
   public overlaySettings: OverlaySettings = {};
-  public lstCheques :  MatTableDataSource<any>
+  public lstCheques :  MatTableDataSource<any> 
 
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>;
@@ -230,110 +230,6 @@ export class RegistroChequesComponent {
 
 
   }
-
-
-  // public V_EditarCheque(det : any) : void{
-
-
-    
-    
-  //   let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
-
-
-  //     if(dialogRef == undefined)
-  //     {
-  //       dialogRef = this.cFunciones.DIALOG.open(
-  //         WaitComponent,
-  //         {
-  //           panelClass: "escasan-dialog-full-blur",
-  //           data: "",
-  //           id : "wait"
-  //         }
-  //       );
-  
-  //     }
-
-
-      
-  //   this.GET.GetDetalleCuenta(det.IdCheque).subscribe(
-  //     {
-  //       next: (data) => {
-
-
-  //         dialogRef.close();
-  //         let _json: any = data;
-
-  //         if (_json["esError"] == 1) {
-  //           if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-  //             this.cFunciones.DIALOG.open(DialogErrorComponent, {
-  //               id: "error-servidor-msj",
-  //               data: _json["msj"].Mensaje,
-  //             });
-  //           }
-  //         } else {
-
-  //           let datos: iDatos[] = _json["d"];
-
-          
-  //             let dialogTransf: MatDialogRef<NuevoChequeComponent> = this.cFunciones.DIALOG.open(
-  //               NuevoChequeComponent,
-  //               {
-  //                 panelClass: "escasan-dialog-full",
-  //                 disableClose: true
-  //               }
-  //             );
-              
-              
-                
-  //             dialogTransf.afterOpened().subscribe(s =>{
-  //               dialogTransf.componentInstance.FILA = det;
-  //               dialogTransf.componentInstance.esModal = true;
-
-
-  //               dialogTransf.componentInstance.lstDetalle.data = JSON.parse(JSON.stringify(datos[0].d));
-
-
-  //               dialogTransf.componentInstance.v_CargarDatos();
-
-  //             });
-
-  //             dialogTransf.afterClosed().subscribe(s =>{
-  //               this.v_CargarDatos();
-  //             });
-
-
-     
-
-  //         }
-
-  //       },
-  //       error: (err) => {
-
-  //         document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
-  //         dialogRef.close();
-
-  //         if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-  //           this.cFunciones.DIALOG.open(DialogErrorComponent, {
-  //             id: "error-servidor",
-  //             data: "<b class='error'>" + err.message + "</b>",
-  //           });
-  //         }
-
-  //       },
-  //       complete: () => {
-  //         document.getElementById("btnRefrescar-RegCheque")?.removeAttribute("disabled");
-
-
-  //       }
-  //     }
-  //   );
-
-
-
-
-
-
-
 
   // }
   public V_EditarCheque(det : any) : void{ 
