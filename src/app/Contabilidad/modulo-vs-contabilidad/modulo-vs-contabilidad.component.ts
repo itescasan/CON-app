@@ -82,25 +82,16 @@ export class ModuloVSContabilidadComponent {
     this.CodConfig = "";
     this.NoDocumento = "";
     this.SoloDif = false;
+    this.val.Get("txtBuscar-modulo-vs-contabilidad").setValue("");
 
     let chk: any = document.querySelector("#chkSoloDiferencia");
     chk?.bootstrapToggle("on");
 
 
-    setTimeout(() => {
-      this.cmbMoneda?.select([true]);
-      
-
-      this.tempDatos.splice(0, this.tempDatos.length);
-      this.lst.data.splice(0, this.lst.data.length);
-      this.lst.paginator = this.paginator;
-      this.lst.filter = "";
-
-      
-    });
-
-    
-    
+    this.tempDatos.splice(0, this.tempDatos.length);
+    this.lst.data.splice(0, this.lst.data.length);
+    this.lst.paginator = this.paginator;
+    this.lst.filter = "";
 
 
   }
