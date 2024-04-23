@@ -66,6 +66,7 @@ export class ModuloVSContabilidadComponent {
     
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
+    this.val.Get("txtBuscar-modulo-vs-contabilidad").setValue("");
 
    
 
@@ -80,9 +81,17 @@ export class ModuloVSContabilidadComponent {
 
     setTimeout(() => {
       this.cmbMoneda?.select([true]);
+      
+
+      this.tempDatos.splice(0, this.tempDatos.length);
+      this.lst.data.splice(0, this.lst.data.length);
+      this.lst.paginator = this.paginator;
+      this.lst.filter = "";
+
       this.V_Comparar();
     });
 
+    
     
 
 
