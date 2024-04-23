@@ -27,14 +27,14 @@ export class ModuloVSContabilidadComponent {
   public lstCmb: QueryList<IgxComboComponent>;
 
   public val = new Validacion();
-  public Modulo: string = "";
-  public NoDocumento: string = "";
-  private CuentaContable: string = "";
-
-  private AntModulo: string = "";
-  private AntNoDocumento: string = "";
-  private AntCuentaContable: string = "";
+  public Nivel: number = 0;
+  private Tabla: string = "";
+  private CodBodega: string = "";
+  private TipoDoc: string = "";
+  private CodConfig: string = "";
+  private NoDocumento: string = "";
   private SoloDif: boolean = false;
+
 
 
   public lst: MatTableDataSource<iModuloVSContabilidad>;
@@ -52,63 +52,77 @@ export class ModuloVSContabilidadComponent {
   constructor(private cFunciones: Funciones, private GET: getCierreMes
   ) {
 
+    
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("txtBuscar-modulo-vs-contabilidad", "1", "LEN>=", "0", "Buscar", "");
-    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
-    this.val.Get("cmbMoneda").setValue(true);
 
-    setTimeout(() => {
-      this.cmbMoneda?.select([true]);
-    });
-
+    this.V_Limpiar();
 
   }
 
+  public V_Limpiar()
+  {
+    
+    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
+    this.val.Get("cmbMoneda").setValue(true);
+
+   
+
+
+    this.Nivel = 0;
+    this.Tabla = "";
+    this.CodBodega = "";
+    this.TipoDoc = "";
+    this.CodConfig = "";
+    this.NoDocumento = "";
+
+
+    setTimeout(() => {
+      this.cmbMoneda?.select([true]);
+      this.V_Comparar();
+    });
+
+    
+
+
+  }
   V_Navegar(det: iModuloVSContabilidad, evento: string) {
 
 
     if (evento == "Siguiente") {
-      this.AntModulo = this.Modulo;
-      this.AntNoDocumento = this.NoDocumento;
-      this.AntCuentaContable = this.CuentaContable;
-
-      this.Modulo = det.Tabla;
-      this.NoDocumento = det.NoDocumento;
-      this.CuentaContable = det.CuentaContable;
+      this.Nivel += 1;
+    }
+    else {
+      this.Nivel -= 1;
     }
 
-    if (evento == "Atras") {
-
-      if (this.Modulo != this.AntModulo || this.NoDocumento != this.AntNoDocumento || this.CuentaContable != this.AntCuentaContable) {
-        this.Modulo = this.AntModulo;
-        this.NoDocumento = this.AntNoDocumento;
-        this.CuentaContable = this.AntCuentaContable;
-
-      }
-      else {
-        if (this.Modulo == this.AntModulo) {
-          this.Modulo = "";
-          this.AntModulo = "";
-        }
-
-        if (this.NoDocumento == this.AntNoDocumento) {
-          this.NoDocumento = "";
-          this.AntNoDocumento = "";
-        }
-
-        if (this.CuentaContable == this.AntCuentaContable) {
-          this.CuentaContable = "";
-          this.AntCuentaContable = "";
-        }
-      }
+    this.Tabla = "";
+    this.CodBodega = "";
+    this.TipoDoc = "";
+    this.CodConfig = "";
+    this.NoDocumento = "";
 
 
+    switch (this.Nivel) {
+      case 1:
+        this.Tabla = det.Tabla;
+        break;
+      case 2:
+        this.Tabla = det.Tabla;
+        this.CodBodega = det.CodigoBodega;
+        break;
+      case 3:
+        this.Tabla = det.Tabla;
+        this.CodBodega = det.CodigoBodega;
+        this.TipoDoc = det.TipoDoc;
+        this.CodConfig = det.CodConfig;
+        break;
+      case 4:
+        this.NoDocumento = det.NoDocumento;
+        break;
+        
     }
-
-
-
-
 
 
 
@@ -130,7 +144,8 @@ export class ModuloVSContabilidadComponent {
     document.getElementById("btn-Modulo-VS-Contabilidad")?.setAttribute("disabled", "disabled");
 
 
-    this.GET.Comparar(this.Modulo, this.NoDocumento, this.CuentaContable, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.cmbMoneda.value[0]).subscribe(
+
+    this.GET.Comparar(this.Nivel, this.Tabla, this.CodBodega, this.TipoDoc, this.CodConfig, this.NoDocumento, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.cmbMoneda.value[0]).subscribe(
       {
         next: (data) => {
 

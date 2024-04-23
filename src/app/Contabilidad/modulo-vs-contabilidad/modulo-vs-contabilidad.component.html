@@ -33,9 +33,21 @@
 
 
                         <div class="col-12 col-md-12 col-lg-2  mb-1">
-                            <button type="button" class="btn btn-primario" id="btn-Modulo-VS-Contabilidad"
-                                (click)="V_Comparar();"><i class="fa-solid fa-code-compare fa-beat-fade fa-xl"></i>
-                                COMPARAR</button>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-primario" id="btn-Modulo-VS-Contabilidad"
+                                    (click)="V_Comparar();"><i class="fa-solid fa-code-compare fa-beat-fade fa-xl"></i>
+                                    COMPARAR</button>
+                                </div>
+
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-opcional" id="btn-Limpiar-Modulo-VS-Contabilidad"
+                                    (click)="V_Limpiar();"><i class="fa-solid fa-eraser fa-beat-fade fa-xl"></i>
+                                    LIMPIAR</button>
+                                </div>
+
+                            </div>
+                            
                         </div>
 
 
@@ -137,7 +149,7 @@
 
                 
                             <div class="col-12">
-                                <span>{{det.Referencia}}</span>
+                                <span>{{(det.Referencia == '' ? det.Tabla : det.Referencia)}}</span>
                             </div>
 
 
@@ -178,7 +190,7 @@
 
                                 <button type="button" class="btn btn-primario navegacion"
                                     id="btn-Modulo-VS-Contabilidad-siguiente" (click)="V_Navegar(det, 'Siguiente')"
-                                    *ngIf="Modulo == '' || NoDocumento == ''">
+                                    *ngIf="Nivel <= 3">
                                     <i class="fa-solid fa-circle-info fa-lg"> </i>
                                 </button>
 
@@ -192,7 +204,7 @@
 
                                 <button type="button" class="btn btn-secundario navegacion"
                                     id="btn-Modulo-VS-Contabilidad-atras" (click)="V_Navegar(det, 'Atras')"
-                                    *ngIf="Modulo != ''">
+                                    *ngIf="Nivel > 0 && Nivel <= 4">
                                     <i class="fa-solid fa-arrow-left-long fa-lg"></i>
                                 </button>
 
