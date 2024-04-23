@@ -20,9 +20,8 @@ export class getCierreMes {
     }
 
 
-    Comparar(Modulo: string, NoDocumento : string, CuentaContable : string, Fecha : String, esCordoba : boolean): Observable<string> {
-
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CierreMensual/ModuloVSContabilidad?Modulo=" +  Modulo + "&NoDocumento=" + NoDocumento + "&CuentaContable=" + CuentaContable + "&Fecha=" + Fecha + "&esCordoba=" + esCordoba);
+    Comparar(Nivel : number, Tabla: string, CodBodega : string, TipoDoc : string, CodConfig : string, NoDocumento : string, Fecha : String, esCordoba : boolean): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/CierreMensual/ModuloVSContabilidad?Nivel=" + Nivel + "&Tabla=" +  Tabla + "&CodBodega=" + CodBodega + "&TipoDoc=" + TipoDoc + "&CodConfig=" + CodConfig + "&NoDocumento=" + NoDocumento + "&Fecha=" + Fecha + "&esCordoba=" + esCordoba);
     }
 
 

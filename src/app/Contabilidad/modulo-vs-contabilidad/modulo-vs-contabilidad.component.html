@@ -20,27 +20,34 @@
 
 
                         <div class="col-12 col-md-12 col-lg-3  mb-1">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Moneda" id="cmbMoneda"
-                                        formControlName="cmbMoneda">
-                                        <option value="true">Cordoba</option>
-                                        <option value="false">Dolar</option>
-                                    </select>
-                                    <label for="cmbMoneda">Moneda</label>
-                                </div>
 
-                            </div>
+                            <igx-combo #cmbMoneda  [data]="lstMoneda"  id="cmbMoneda" formControlName="cmbMoneda"
+                            [displayKey]="'Moneda'" [valueKey]="'ValorMoneda'"
+                            (selectionChanging)="this.val.V_SingleSelection($event);">
+                                <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
+                            </igx-combo >
+
                         </div>
 
 
 
 
                         <div class="col-12 col-md-12 col-lg-2  mb-1">
-                            <button type="button" class="btn btn-primario" id="btn-Modulo-VS-Contabilidad"
-                                (click)="V_Comparar();"><i class="fa-solid fa-code-compare fa-beat-fade fa-xl"></i>
-                                COMPARAR</button>
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-primario" id="btn-Modulo-VS-Contabilidad"
+                                    (click)="V_Comparar();"><i class="fa-solid fa-code-compare fa-beat-fade fa-xl"></i>
+                                    COMPARAR</button>
+                                </div>
+
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-opcional" id="btn-Limpiar-Modulo-VS-Contabilidad"
+                                    (click)="V_Limpiar();"><i class="fa-solid fa-eraser fa-beat-fade fa-xl"></i>
+                                    LIMPIAR</button>
+                                </div>
+
+                            </div>
+                            
                         </div>
 
 
@@ -117,12 +124,12 @@
 
 
                               
-                            <div class="col-8 col-sm-4  mb-1 etiqueta">
+                            <div class="col-8 col-sm-4 col-md-6 col-lg-6 mb-1 etiqueta">
                                 <b>Cuenta Contable</b>
                             </div>
 
 
-                            <div class="col-4 col-sm-8 mb-1 etiqueta">
+                            <div class="col-4 col-sm-8 col-md-6 col-lg-6  mb-1 etiqueta">
                                 <b>Documento</b>
                             </div>
 
@@ -142,24 +149,24 @@
 
                 
                             <div class="col-12">
-                                <span>{{det.Referencia}}</span>
+                                <span>{{(det.Referencia == '' ? det.Tabla : det.Referencia)}}</span>
                             </div>
 
 
                             
-                            <div class="col-6 col-sm-6 mb-1 etiqueta numero">
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 mb-1 numero etiqueta">
                                 <b>Modulo</b>
                             </div>
 
 
-                            <div class="col-6 col-sm-6 mb-1 etiqueta numero">
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-6 mb-1 numero etiqueta">
                                 <b>Contabilidad</b>
                             </div>
 
 
 
 
-                            <div class="col-6 col-sm-6 col-md-2 col-lg-2 mb-2 numero">
+                            <div class="col-6 col-sm-6 col-md-2 col-lg-2 offset-md-6 offset-lg-6 mb-2 numero">
                                 <span>{{det.Modulo | number : '1.2-2'}}</span>
                             </div>
 
@@ -183,7 +190,7 @@
 
                                 <button type="button" class="btn btn-primario navegacion"
                                     id="btn-Modulo-VS-Contabilidad-siguiente" (click)="V_Navegar(det, 'Siguiente')"
-                                    *ngIf="Modulo == '' || NoDocumento == ''">
+                                    *ngIf="Nivel <= 3">
                                     <i class="fa-solid fa-circle-info fa-lg"> </i>
                                 </button>
 
@@ -197,7 +204,7 @@
 
                                 <button type="button" class="btn btn-secundario navegacion"
                                     id="btn-Modulo-VS-Contabilidad-atras" (click)="V_Navegar(det, 'Atras')"
-                                    *ngIf="Modulo != ''">
+                                    *ngIf="Nivel > 0 && Nivel <= 4">
                                     <i class="fa-solid fa-arrow-left-long fa-lg"></i>
                                 </button>
 

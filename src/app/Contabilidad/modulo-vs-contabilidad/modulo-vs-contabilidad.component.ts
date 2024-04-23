@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
@@ -8,6 +8,13 @@ import { getCierreMes } from '../Cierre-Contable/CRUD/POST/get-cierre-mes';
 import { iModuloVSContabilidad } from 'src/app/Interface/Contabilidad/I-Modulo-VS-Contabilidad';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { IgxComboComponent } from 'igniteui-angular';
+
+export interface iMoneda {
+  Moneda: string;
+  ValorMoneda: boolean;
+}
+
 
 @Component({
   selector: 'app-modulo-vs-contabilidad',
@@ -16,81 +23,114 @@ import { MatPaginator } from '@angular/material/paginator';
 })
 export class ModuloVSContabilidadComponent {
 
-  public val = new Validacion();
-  public Modulo: string = "";
-  public NoDocumento: string = "";
-  private CuentaContable: string = "";
+  @ViewChildren(IgxComboComponent)
+  public lstCmb: QueryList<IgxComboComponent>;
 
-  private AntModulo: string = "";
-  private AntNoDocumento: string = "";
-  private AntCuentaContable: string = "";
+  public val = new Validacion();
+  public Nivel: number = 0;
+  private Tabla: string = "";
+  private CodBodega: string = "";
+  private TipoDoc: string = "";
+  private CodConfig: string = "";
+  private NoDocumento: string = "";
   private SoloDif: boolean = false;
 
 
+
   public lst: MatTableDataSource<iModuloVSContabilidad>;
-  private tempDatos : iModuloVSContabilidad[] = [];
+  private tempDatos: iModuloVSContabilidad[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
 
   displayedColumns: string[] = ["col1"];
+  public lstMoneda: iMoneda[] = [{ Moneda: "Cordobas", ValorMoneda: true }, { Moneda: "Dolares", ValorMoneda: false }];
+
+  @ViewChild("cmbMoneda", { static: false })
+  public cmbMoneda: IgxComboComponent;
 
 
   constructor(private cFunciones: Funciones, private GET: getCierreMes
   ) {
 
+    
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("txtBuscar-modulo-vs-contabilidad", "1", "LEN>=", "0", "Buscar", "");
+
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
+    this.val.Get("txtBuscar-modulo-vs-contabilidad").setValue("");
+
+
+    setTimeout(() => {
+      this.cmbMoneda?.select([true]);
+
+    });
+
 
 
   }
 
+  public V_Limpiar()
+  {
+    
+
+    this.Nivel = 0;
+    this.Tabla = "";
+    this.CodBodega = "";
+    this.TipoDoc = "";
+    this.CodConfig = "";
+    this.NoDocumento = "";
+    this.SoloDif = false;
+    this.val.Get("txtBuscar-modulo-vs-contabilidad").setValue("");
+
+    let chk: any = document.querySelector("#chkSoloDiferencia");
+    chk?.bootstrapToggle("on");
+
+
+    this.tempDatos.splice(0, this.tempDatos.length);
+    this.lst.data.splice(0, this.lst.data.length);
+    this.lst.paginator = this.paginator;
+    this.lst.filter = "";
+
+
+  }
   V_Navegar(det: iModuloVSContabilidad, evento: string) {
 
 
     if (evento == "Siguiente") {
-      this.AntModulo = this.Modulo;
-      this.AntNoDocumento = this.NoDocumento;
-      this.AntCuentaContable = this.CuentaContable;
-
-      this.Modulo = det.Tabla;
-      this.NoDocumento = det.NoDocumento;
-      this.CuentaContable = det.CuentaContable;
+      this.Nivel += 1;
+    }
+    else {
+      this.Nivel -= 1;
     }
 
-    if (evento == "Atras") {
-
-      if (this.Modulo != this.AntModulo || this.NoDocumento != this.AntNoDocumento || this.CuentaContable != this.AntCuentaContable) {
-        this.Modulo = this.AntModulo;
-        this.NoDocumento = this.AntNoDocumento;
-        this.CuentaContable = this.AntCuentaContable;
-
-      }
-      else {
-        if (this.Modulo == this.AntModulo) {
-          this.Modulo = "";
-          this.AntModulo = "";
-        }
-
-        if (this.NoDocumento == this.AntNoDocumento) {
-          this.NoDocumento = "";
-          this.AntNoDocumento = "";
-        }
-
-        if (this.CuentaContable == this.AntCuentaContable) {
-          this.CuentaContable = "";
-          this.AntCuentaContable = "";
-        }
-      }
+    this.Tabla = "";
+    this.CodBodega = "";
+    this.TipoDoc = "";
+    this.CodConfig = "";
+    this.NoDocumento = "";
 
 
+    switch (this.Nivel) {
+      case 1:
+        this.Tabla = det.Tabla;
+        break;
+      case 2:
+        this.Tabla = det.Tabla;
+        this.CodBodega = det.CodigoBodega;
+        break;
+      case 3:
+        this.Tabla = det.Tabla;
+        this.CodBodega = det.CodigoBodega;
+        this.TipoDoc = det.TipoDoc;
+        this.CodConfig = det.CodConfig;
+        break;
+      case 4:
+        this.NoDocumento = det.NoDocumento;
+        break;
+        
     }
-
-
-
-
 
 
 
@@ -112,7 +152,8 @@ export class ModuloVSContabilidadComponent {
     document.getElementById("btn-Modulo-VS-Contabilidad")?.setAttribute("disabled", "disabled");
 
 
-    this.GET.Comparar(this.Modulo, this.NoDocumento, this.CuentaContable, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value).subscribe(
+
+    this.GET.Comparar(this.Nivel, this.Tabla, this.CodBodega, this.TipoDoc, this.CodConfig, this.NoDocumento, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.cmbMoneda.value[0]).subscribe(
       {
         next: (data) => {
 
@@ -135,14 +176,16 @@ export class ModuloVSContabilidadComponent {
             this.tempDatos = Datos.d;
 
             if (this.SoloDif) {
-              this.lst = new MatTableDataSource(this.tempDatos.filter((f : any) => f.Saldo != 0 ));
+              this.lst = new MatTableDataSource(this.tempDatos.filter((f: any) => f.Saldo != 0));
             }
-            else{
+            else {
               this.lst = new MatTableDataSource(this.tempDatos);
             }
 
-            
+
             this.lst.paginator = this.paginator;
+
+            this.lst.filter = this.val.Get("txtBuscar-modulo-vs-contabilidad").value.trim().toLowerCase();
 
           }
 
@@ -171,20 +214,20 @@ export class ModuloVSContabilidadComponent {
     this.SoloDif = !this.SoloDif;
 
 
-    setTimeout(()=>{                          
+    setTimeout(() => {
       if (this.SoloDif) {
-        this.lst = new MatTableDataSource(this.tempDatos.filter((f : any) => f.Saldo != 0 ));
+        this.lst = new MatTableDataSource(this.tempDatos.filter((f: any) => f.Saldo != 0));
       }
-      else{
+      else {
         this.lst = new MatTableDataSource(this.tempDatos);
       }
 
       this.lst.paginator = this.paginator;
-  }, 200);
+    }, 200);
 
 
-    
-    
+
+
   }
 
   public v_Filtrar(event: any) {
@@ -193,8 +236,12 @@ export class ModuloVSContabilidadComponent {
 
 
 
+
+
   private ngAfterViewInit() {
 
+
+    this.val.Combo(this.lstCmb);
 
 
     ///CAMBIO DE FOCO
