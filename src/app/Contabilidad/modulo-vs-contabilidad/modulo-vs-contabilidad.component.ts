@@ -81,6 +81,10 @@ export class ModuloVSContabilidadComponent {
     this.TipoDoc = "";
     this.CodConfig = "";
     this.NoDocumento = "";
+    this.SoloDif = false;
+
+    let chk: any = document.querySelector("#chkSoloDiferencia");
+    chk?.bootstrapToggle("off");
 
 
     setTimeout(() => {
