@@ -84,7 +84,7 @@ export class ModuloVSContabilidadComponent {
     this.SoloDif = false;
 
     let chk: any = document.querySelector("#chkSoloDiferencia");
-    chk?.bootstrapToggle("off");
+    chk?.bootstrapToggle("on");
 
 
     setTimeout(() => {
