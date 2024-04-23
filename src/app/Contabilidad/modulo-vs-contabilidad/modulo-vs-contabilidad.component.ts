@@ -57,19 +57,23 @@ export class ModuloVSContabilidadComponent {
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("txtBuscar-modulo-vs-contabilidad", "1", "LEN>=", "0", "Buscar", "");
 
-    this.V_Limpiar();
+    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
+    this.val.Get("cmbMoneda").setValue(true);
+    this.val.Get("txtBuscar-modulo-vs-contabilidad").setValue("");
+
+
+    setTimeout(() => {
+      this.cmbMoneda?.select([true]);
+
+    });
+
+
 
   }
 
   public V_Limpiar()
   {
     
-    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
-    this.val.Get("cmbMoneda").setValue(true);
-    this.val.Get("txtBuscar-modulo-vs-contabilidad").setValue("");
-
-   
-
 
     this.Nivel = 0;
     this.Tabla = "";
@@ -88,7 +92,7 @@ export class ModuloVSContabilidadComponent {
       this.lst.paginator = this.paginator;
       this.lst.filter = "";
 
-      this.V_Comparar();
+      
     });
 
     
