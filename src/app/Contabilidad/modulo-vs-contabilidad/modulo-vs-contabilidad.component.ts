@@ -86,15 +86,15 @@ export class ModuloVSContabilidadComponent {
     this.TipoDoc = "";
     this.CodConfig = "";
     this.NoDocumento = "";
-    this.SoloDif = false;
+ 
     this.val.Get("txtBuscar-modulo-vs-contabilidad").setValue("");
 
     let chk: any = document.querySelector("#chkSoloDiferencia");
     chk?.bootstrapToggle("on");
 
 
+    this.lst = new MatTableDataSource<iModuloVSContabilidad>;
     this.tempDatos.splice(0, this.tempDatos.length);
-    this.lst.data.splice(0, this.lst.data.length);
     this.lst.paginator = this.paginator;
     this.lst.filter = "";
 
@@ -216,8 +216,7 @@ export class ModuloVSContabilidadComponent {
 
 
   public V_TipoSaldo(event: any): void {
-    this.SoloDif = !this.SoloDif;
-
+    this.SoloDif = !event.target.checked;
 
     setTimeout(() => {
       if (this.SoloDif) {
