@@ -6,9 +6,12 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { getCierreMes } from '../Cierre-Contable/CRUD/POST/get-cierre-mes';
 import { iModuloVSContabilidad } from 'src/app/Interface/Contabilidad/I-Modulo-VS-Contabilidad';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { IgxComboComponent } from 'igniteui-angular';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { IgxComboComponent, IgxComboModule, IgxDatePickerModule } from 'igniteui-angular';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatInputModule } from '@angular/material/input';
 
 export interface iMoneda {
   Moneda: string;
@@ -18,6 +21,8 @@ export interface iMoneda {
 
 @Component({
   selector: 'app-modulo-vs-contabilidad',
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, MatTableModule, CommonModule, MatPaginatorModule, IgxComboModule, MatInputModule, IgxDatePickerModule],
   templateUrl: './modulo-vs-contabilidad.component.html',
   styleUrl: './modulo-vs-contabilidad.component.scss'
 })
@@ -81,15 +86,15 @@ export class ModuloVSContabilidadComponent {
     this.TipoDoc = "";
     this.CodConfig = "";
     this.NoDocumento = "";
-    this.SoloDif = false;
+ 
     this.val.Get("txtBuscar-modulo-vs-contabilidad").setValue("");
 
     let chk: any = document.querySelector("#chkSoloDiferencia");
     chk?.bootstrapToggle("on");
 
 
+    this.lst = new MatTableDataSource<iModuloVSContabilidad>;
     this.tempDatos.splice(0, this.tempDatos.length);
-    this.lst.data.splice(0, this.lst.data.length);
     this.lst.paginator = this.paginator;
     this.lst.filter = "";
 
@@ -211,8 +216,7 @@ export class ModuloVSContabilidadComponent {
 
 
   public V_TipoSaldo(event: any): void {
-    this.SoloDif = !this.SoloDif;
-
+    this.SoloDif = !event.target.checked;
 
     setTimeout(() => {
       if (this.SoloDif) {

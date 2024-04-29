@@ -56,7 +56,7 @@ import { CambioPatrimonioComponent } from './Reporte/cambio-patrimonio/cambio-pa
 import { GastosAcumuladosComponent } from './Reporte/gastos-acumulados/gastos-acumulados.component';
 import { CierreMensualComponent } from './Contabilidad/Cierre-Contable/cierre-mensual/cierre-mensual.component';
 import { CierreFiscalComponent } from './Contabilidad/Cierre-Contable/cierre-fiscal/cierre-fiscal.component';
-import { ModuloVSContabilidadComponent } from './Contabilidad/modulo-vs-contabilidad/modulo-vs-contabilidad.component';
+
 
 @NgModule({
   declarations: [
@@ -90,7 +90,6 @@ import { ModuloVSContabilidadComponent } from './Contabilidad/modulo-vs-contabil
     GastosAcumuladosComponent,
     CierreMensualComponent,
     CierreFiscalComponent,
-    ModuloVSContabilidadComponent
 
    
   ],
