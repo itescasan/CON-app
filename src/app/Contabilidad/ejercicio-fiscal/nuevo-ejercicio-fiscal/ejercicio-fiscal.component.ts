@@ -20,7 +20,7 @@ import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-con
 import { DialogRef } from '@angular/cdk/dialog';
 import { iEjercicioFiscal } from 'src/app/Interface/Contabilidad/i-EjercicioFiscal';
 import { postEjercicioFiscal } from '../CRUD/POST/post-Ejercicio-fiscal';
-import { GlobalPositionStrategy, ISizeInfo, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
+import { BlockScrollStrategy, GlobalPositionStrategy, ISizeInfo, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 
 
@@ -36,6 +36,8 @@ export class EjercicioFiscalComponent {
   inputini: string = "";
   imputfin: string = '';
   public overlaySettings: OverlaySettings = {};
+  public isEvent: boolean = false;
+
 
   public iDatos: iDatos[] = [];
 
@@ -89,7 +91,7 @@ export class EjercicioFiscalComponent {
         this.val.Get("cmbCuenta").setValue("");
         this.val.Get("cmbCuenta2").setValue("");
         this.val.Get("cmbCuenta3").setValue("");
-        this.val.Get("chkBloqueadaEF").setValue(true);
+        //this.val.Get("chkBloqueadaEF").setValue(true);
 
         this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
         this.lstPeriodo = new MatTableDataSource<iPeriodo> ;
@@ -267,7 +269,7 @@ export class EjercicioFiscalComponent {
       console.log(this.val.Get("idFechaIni").value)
     
       this.Fila.Nombre = this.val.Get("idEjercicioFiscal").value;
-      this.Fila.Estado = this.val.Get("chkBloqueadaEF").value === true ?  'ABIERTO': 'CERRADO';
+      this.Fila.Estado = this.val.Get("chkBloqueadaEF").value = 'on' ?  'ABIERTO': 'CERRADO';
       this.Fila.FechaInicio = new Date(Number(this.val.Get("idFechaIni").value), 0, 1);
       this.Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
       this.Fila.ClasePeriodos = "Mensuales";
@@ -336,6 +338,17 @@ export class EjercicioFiscalComponent {
 
     public v_Bloqueada(event: any): void {
       this.val.Get("chkBloqueadaEF").setValue(event.target.checked);
+     
+        if (this.isEvent) {
+          this.isEvent = false;
+          return;
+        }
+        this.isEvent = true; 
+        let chk: any = document.querySelector("#chkBloqueadaEF");
+         if(!this.esModal) chk.bootstrapToggle("on");
+         return
+      
+       
     }
 
   public v_Editar(){
