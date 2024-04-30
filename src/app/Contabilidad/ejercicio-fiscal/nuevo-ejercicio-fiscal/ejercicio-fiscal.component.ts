@@ -373,10 +373,10 @@ export class EjercicioFiscalComponent {
     dialogRef.afterClosed().subscribe(s => {
       if (dialogRef.componentInstance.retorno == "1") {
         if (det.Estado  == 'ACEPTAR' ) {
-          det.Estado = "CANCELAR";
+          det.Estado = "ABIERTO";
         }
         else{
-          det.Estado = "ACEPTAR";
+          det.Estado = "CERRADO";
         }
       }
     })
