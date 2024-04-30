@@ -367,16 +367,16 @@ export class EjercicioFiscalComponent {
     );
 
     dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Cambiar el Estado</p>";
-    dialogRef.componentInstance.textBoton1 = "ABIERTO";
-    dialogRef.componentInstance.textBoton2 = "CERRADO";
+    dialogRef.componentInstance.textBoton1 = (det.Estado == 'ABIERTO' ? 'BLOQUEADO' : "ABIERTO");
+    dialogRef.componentInstance.textBoton2 = "CANCELAR";
 
     dialogRef.afterClosed().subscribe(s => {
       if (dialogRef.componentInstance.retorno == "1") {
         if (det.Estado  == 'ABIERTO' ) {
-          det.Estado = "ABIERTO";
+          det.Estado = "BLOQUEADO";
         }
         else{
-          det.Estado = "BLOQUEADO";
+          det.Estado = "ABIERTO";
         }
       }
     })
@@ -427,41 +427,7 @@ export class EjercicioFiscalComponent {
         closeOnOutsideClick: true
       };
     }
-     //FILTRO CLIENTE
-    //  this.filteredCuenta1 = this.val.Get("txtCuentaA").valueChanges.pipe(
-    //   startWith(""),
-    //   map((value: string) => {
-    //     return this.lstCuenta.filter((option) =>
-    //       option.Filtro.toLowerCase().includes(
-    //         (value || "").toLowerCase().trimStart()
-    //       )
-    //     );
-    //   })
-    // );
-
-    // this.filteredCuenta2 = this.val.Get("txtCuentaP").valueChanges.pipe(
-    //   startWith(""),
-    //   map((value: string) => {
-    //     return this.lstCuenta.filter((option) =>
-    //       option.Filtro.toLowerCase().includes(
-    //         (value || "").toLowerCase().trimStart()
-    //       )
-    //     );
-    //   })
-    // );
-
-    // this.filteredCuenta3 = this.val.Get("txtCuentaPr").valueChanges.pipe(
-    //   startWith(""),
-    //   map((value: string) => {
-    //     return this.lstCuenta.filter((option) =>
-    //       option.Filtro.toLowerCase().includes(
-    //         (value || "").toLowerCase().trimStart()
-    //       )
-    //     );
-    //   })
-    // );
-
-
+   
 
     let lstcheckbox: any = document.querySelectorAll("input[type='checkbox']");
       lstcheckbox.forEach((f: any) => {
