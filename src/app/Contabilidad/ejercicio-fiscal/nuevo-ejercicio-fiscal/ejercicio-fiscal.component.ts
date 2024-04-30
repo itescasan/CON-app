@@ -367,16 +367,16 @@ export class EjercicioFiscalComponent {
     );
 
     dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Cambiar el Estado</p>";
-    dialogRef.componentInstance.textBoton1 = "ACEPTAR";
-    dialogRef.componentInstance.textBoton2 = "CANCELAR";
+    dialogRef.componentInstance.textBoton1 = "ABIERTO";
+    dialogRef.componentInstance.textBoton2 = "CERRADO";
 
     dialogRef.afterClosed().subscribe(s => {
       if (dialogRef.componentInstance.retorno == "1") {
-        if (det.Estado  == 'ACEPTAR' ) {
+        if (det.Estado  == 'ABIERTO' ) {
           det.Estado = "ABIERTO";
         }
         else{
-          det.Estado = "CERRADO";
+          det.Estado = "BLOQUEADO";
         }
       }
     })
