@@ -159,14 +159,13 @@ export class RegistroEjercicioFiscalComponent {
                 dialofEjercicio.componentInstance.Fila = det;
                 dialofEjercicio.componentInstance.val.Get("idEjercicioFiscal").setValue(det.Nombre);
                 //dialofEjercicio.componentInstance.isEvent = true;
-                //dialofEjercicio.componentInstance.val.Get("chkBloqueadaEF").setValue(det.Estado == "ABIERTO" ? true : false);
+                
                 let chk: any = document.querySelector("#chkBloqueadaEF");
                 chk.bootstrapToggle(det.Estado == "ABIERTO" ? 'on' : 'off');
-                //chk.bootstrapToggle('off');  
-
+                //chk.bootstrapToggle('off');
+                //dialofEjercicio.componentInstance.val.Get("chkBloqueadaEF").setValue(det.Estado);
+                //console.log(dialofEjercicio.componentInstance.val.Get("chkBloqueadaEF").setValue(det.Estado));                
                 document.getElementById("chkBloqueadaEF")?.setAttribute("disabled", "disabled");
-
-                  
                 //dialofEjercicio.componentInstance.isEvent = false;            
                 dialofEjercicio.componentInstance.val.Get("idFechaIni").setValue(this.cFunciones.DateFormat(det.FechaInicio,'yyyy'));                
                 dialofEjercicio.componentInstance.cmbCuenta.select([det.CuentaContableAcumulada]);

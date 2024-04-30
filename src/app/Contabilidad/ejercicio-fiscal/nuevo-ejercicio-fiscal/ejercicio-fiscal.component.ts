@@ -96,8 +96,8 @@ export class EjercicioFiscalComponent {
         this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
         this.lstPeriodo = new MatTableDataSource<iPeriodo> ;
         
-        let chk: any = document.querySelector("#chkBloqueadaEF");
-        if (chk != undefined) chk.bootstrapToggle("on");
+        // let chk: any = document.querySelector("#chkBloqueadaEF");
+        // if (chk != undefined) chk.bootstrapToggle("on");
    
       break; 
     }
@@ -266,10 +266,12 @@ export class EjercicioFiscalComponent {
         }
       );
 
-      console.log(this.val.Get("idFechaIni").value)
+      
     
       this.Fila.Nombre = this.val.Get("idEjercicioFiscal").value;
-      this.Fila.Estado = this.val.Get("chkBloqueadaEF").value = 'on' ?  'ABIERTO': 'CERRADO';
+      let chk: any = document.querySelector("#chkBloqueadaEF");
+      console.log(this.val.Get("chkBloqueadaEF").value )      
+      this.Fila.Estado = this.val.Get("chkBloqueadaEF").value == 'on' ?  'ABIERTO': 'CERRADO';   //this.val.Get("chkBloqueadoEQ").value = 'on' ? "ACTIVO" : "ANULADO";    
       this.Fila.FechaInicio = new Date(Number(this.val.Get("idFechaIni").value), 0, 1);
       this.Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
       this.Fila.ClasePeriodos = "Mensuales";
@@ -339,16 +341,16 @@ export class EjercicioFiscalComponent {
     public v_Bloqueada(event: any): void {
       this.val.Get("chkBloqueadaEF").setValue(event.target.checked);
      
-        if (this.isEvent) {
-          this.isEvent = false;
-          return;
-        }
-        this.isEvent = true; 
-        let chk: any = document.querySelector("#chkBloqueadaEF");
-         if(!this.esModal) chk.bootstrapToggle("on");
-         return
+        // if (this.isEvent) {
+        //   this.isEvent = false;
+        //   return;
+        // }
+        // this.isEvent = true; 
+        // let chk: any = document.querySelector("#chkBloqueadaEF");
+        //  if(!this.esModal) chk.bootstrapToggle("on");
+        //  return
       
-       
+        document.getElementById("chkBloqueadaEF")?.setAttribute("disabled", "disabled");
     }
 
   public v_Editar(){
