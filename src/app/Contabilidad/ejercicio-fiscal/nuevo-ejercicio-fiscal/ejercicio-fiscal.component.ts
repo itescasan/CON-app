@@ -91,7 +91,7 @@ export class EjercicioFiscalComponent {
         this.val.Get("cmbCuenta").setValue("");
         this.val.Get("cmbCuenta2").setValue("");
         this.val.Get("cmbCuenta3").setValue("");
-        //this.val.Get("chkBloqueadaEF").setValue(true);
+        this.val.Get("chkBloqueadaEF").setValue(true);
 
         this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
         this.lstPeriodo = new MatTableDataSource<iPeriodo> ;
@@ -271,7 +271,7 @@ export class EjercicioFiscalComponent {
       this.Fila.Nombre = this.val.Get("idEjercicioFiscal").value;
       let chk: any = document.querySelector("#chkBloqueadaEF");
       console.log(this.val.Get("chkBloqueadaEF").value )      
-      this.Fila.Estado = this.val.Get("chkBloqueadaEF").value == 'on' ?  'ABIERTO': 'CERRADO';   //this.val.Get("chkBloqueadoEQ").value = 'on' ? "ACTIVO" : "ANULADO";    
+      this.Fila.Estado = this.val.Get("chkBloqueadaEF").value  ?  'ABIERTO': 'CERRADO';   //this.val.Get("chkBloqueadoEQ").value = 'on' ? "ACTIVO" : "ANULADO";    
       this.Fila.FechaInicio = new Date(Number(this.val.Get("idFechaIni").value), 0, 1);
       this.Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
       this.Fila.ClasePeriodos = "Mensuales";
