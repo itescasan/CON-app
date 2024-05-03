@@ -1,12 +1,12 @@
 export class Conexion {
 
-     /*private IP : string = "localhost";
-     private PORT : String =  "7193";
+    //  private IP : string = "localhost";
+    //  private PORT : String =  "7193";
 
     
-     Url() : string{
-         return "https://"+this.IP+":"+this.PORT+"/api/"; 
-     }*/
+    //  Url() : string{
+    //      return "https://"+this.IP+":"+this.PORT+"/api/"; 
+    //  }
  
      
 

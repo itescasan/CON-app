@@ -23,7 +23,8 @@ export class EstadoResultadoComponent {
     this.val.add("cmbOpcion", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
     this.val.add("cmbMeses", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
 
-    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
+    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
+    //this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
     this.val.Get("cmbOpcion").setValue(true);
     this.val.Get("cmbMeses").setValue(true);
@@ -52,8 +53,8 @@ export class EstadoResultadoComponent {
 
     }
 
-
-    this.GET.GetEstadoResultado(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbOpcion").value,this.val.Get("cmbMoneda").value).subscribe(
+    
+    this.GET.GetEstadoResultado(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbOpcion").value,this.val.Get("cmbMoneda").value).subscribe(      
       {
         next: (data) => {
 

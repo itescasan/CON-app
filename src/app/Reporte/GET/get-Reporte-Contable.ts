@@ -31,7 +31,7 @@ export class getReporteContable{
     }
 
     public GetEstadoResultado(Fecha: String, Estado: boolean, EsMonedaLocal : boolean): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/EstadoResultado?Fecha=" + Fecha + "&Estado" + Estado  + "&EsMonedaLocal=" + EsMonedaLocal);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/EstadoResultado?Fecha=" + Fecha + "&Estado=" + Estado  + "&EsMonedaLocal=" + EsMonedaLocal);
     }
 
 
