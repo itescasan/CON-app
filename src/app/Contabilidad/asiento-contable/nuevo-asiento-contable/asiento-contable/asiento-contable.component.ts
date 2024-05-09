@@ -647,6 +647,7 @@ export class AsientoContableComponent {
             this.TC = Number(datos.d);
             this.val.Get("TxtTC").setValue(this.TC);
             this.V_Calcular();
+            this.v_Consecutivo();
           }
 
         },
@@ -727,7 +728,7 @@ export class AsientoContableComponent {
           } else {
 
             let datos: iDatos = _json["d"];
-            if (!this.esModal) this.val.Get("txtNoAsiento").setValue(datos.d);
+            if (!this.esModal) this.val.Get("txtNoAsiento").setValue(String(datos.d).replaceAll("$", this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "YYYYMM")));
 
 
           }

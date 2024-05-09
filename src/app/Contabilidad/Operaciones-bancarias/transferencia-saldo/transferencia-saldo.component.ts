@@ -67,7 +67,7 @@ export class TransferenciaSaldoComponent {
   public esModal: boolean = false;
   public TC: number;
   public Anulado: boolean = false;
-  public dec_Disponible: number = 0;
+  public dec_Banco: number = 0;
   public dec_Aplicado: number = 0;
   public dec_Dif: number = 0;
   public dec_Retencion: number = 0;
@@ -128,7 +128,7 @@ export class TransferenciaSaldoComponent {
 
         this.Anulado = false;
         this.FILA.IdTransferencia = "00000000-0000-0000-0000-000000000000";
-        this.dec_Disponible = 0;
+        this.dec_Banco = 0;
         this.dec_Aplicado = 0;
         this.dec_Dif = 0;
 
@@ -656,21 +656,7 @@ export class TransferenciaSaldoComponent {
   public V_Calcular(): void {
 
 
-    if (this.IdMoneda != "undefined" && this.IdMoneda != "") {
-
-      this.val.Get("txtComision").enable();
-
-      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        this.val.Get("txtTotalCordoba").enable();
-        this.dec_Disponible = Number(this.val.Get("txtTotalCordoba").value.toString().replaceAll(",", ""));
-      }
-      else {
-        this.val.Get("txtTotalDolar").enable();
-        this.dec_Disponible = Number(this.val.Get("txtTotalDolar").value.toString().replaceAll(",", ""));
-      }
-    }
-
-
+ 
 
     this.TC = this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4");
     this.val.Get("TxtTC").setValue(this.TC);
@@ -717,7 +703,7 @@ export class TransferenciaSaldoComponent {
       f.NuevoSaldoML = 0;
       f.NuevoSaldoMS = 0;
       this.dec_Aplicado += Importe;
-
+    
 
       if (this.cFunciones.MonedaLocal == this.IdMoneda) {
         f.ImporteML = this.cFunciones.Redondeo(Importe, "2");
@@ -731,6 +717,7 @@ export class TransferenciaSaldoComponent {
 
 
       //RETENCIONES
+      
       this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(r => {
 
         if(Number(String(r.Monto).replaceAll(",", "")) != 0)
@@ -748,6 +735,7 @@ export class TransferenciaSaldoComponent {
 
         let Retencion: number = Number(String(r.Monto).replaceAll(",", ""));
           this.dec_Retencion += Retencion;
+  
 
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
             r.MontoML = this.cFunciones.Redondeo(Retencion, "2");
@@ -762,6 +750,7 @@ export class TransferenciaSaldoComponent {
           if (Retencion != 0) f.Retenido = true;
 
 
+   
 
       })
 
@@ -770,10 +759,14 @@ export class TransferenciaSaldoComponent {
       //DIFERENCIAL CAMBIARIO (ANTERIOR - ACTUAL)
 
 
+     
       if (f.IdMoneda == this.cFunciones.MonedaLocal) {
+
+   
         f.DiferencialMS = this.cFunciones.Redondeo(Importe / f.TasaCambioDoc, "2") - f.ImporteMS;
         f.DiferencialMS = this.cFunciones.Redondeo(f.DiferencialMS, "2");
         f.DiferencialML = 0;
+
 
         if (this.IdMoneda != this.cFunciones.MonedaLocal) {
           f.DiferencialMS = this.cFunciones.Redondeo(f.ImporteML / f.TasaCambioDoc, "2") - f.ImporteMS;
@@ -793,6 +786,10 @@ export class TransferenciaSaldoComponent {
         }
 
       }
+
+      
+      
+
 
       f.NuevoSaldoML = this.cFunciones.Redondeo((f.SaldoAntML - f.ImporteML), "2") - f.DiferencialML;
       f.NuevoSaldoMS = this.cFunciones.Redondeo((f.SaldoAntMS - f.ImporteMS), "2") - f.DiferencialMS;
@@ -840,16 +837,23 @@ export class TransferenciaSaldoComponent {
 
 
 
+
+
+
     if (this.IdMoneda != "undefined" && this.IdMoneda != "") {
 
 
+      this.val.Get("txtComision").enable();
+
+      this.dec_Banco = this.dec_Aplicado - this.dec_Retencion;
+
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.dec_Aplicado, "2"));
+
+        this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.dec_Banco, "2"))
       }
       else {
-        this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.dec_Aplicado, "2"));
+        this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.dec_Banco, "2"))
 
-        this.dec_Disponible = Number(this.val.Get("txtTotalDolar").value.toString().replaceAll(",", ""));
       }
 
 
@@ -1025,19 +1029,64 @@ export class TransferenciaSaldoComponent {
       if (f.DiferencialML != 0 && f.DiferencialML < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
       if (f.DiferencialMS != 0 && f.DiferencialMS < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
 
-      if (f.DiferencialML != 0 && f.DiferencialML > 0) this.Nueva_Linea_Asiento((f.DiferencialML),  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
-      if (f.DiferencialMS != 0 && f.DiferencialMS > 0) this.Nueva_Linea_Asiento((f.DiferencialMS),  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
+      if (f.DiferencialML != 0 && f.DiferencialML > 0) this.Nueva_Linea_Asiento(f.DiferencialML,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
+      if (f.DiferencialMS != 0 && f.DiferencialMS > 0) this.Nueva_Linea_Asiento(f.DiferencialMS,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
 
 
+      let RetML : number = 0;
+      let RetMS : number = 0;
+      
       this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(w => {
         this.Nueva_Linea_Asiento(Number(w.Monto.replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "");
+    
+    
+        RetML += w.MontoML;
+        RetMS += w.MontoMS;
       });
 
 
+
+         //AJUSTE
+        
+         let AjusteMS : number = 0;
+         let AjusteML : number = 0;
+
+         if (this.IdMoneda == this.cFunciones.MonedaLocal)
+        {
+          
+          AjusteMS = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteML - RetML, "2") / this.TC, "2");
+          AjusteMS = this.cFunciones.Redondeo(f.ImporteMS - (AjusteMS + RetMS), "2");
+ 
+ 
+        }
+        else
+        {
+          
+          AjusteML = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteMS - RetMS, "2") * this.TC, "2");
+          AjusteML = this.cFunciones.Redondeo(f.ImporteML - (AjusteML + RetML), "2");
+ 
+        }
+       
+
+         if (AjusteML < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
+         if (AjusteMS < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
+
+         if (AjusteML> 0) this.Nueva_Linea_Asiento(AjusteML,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
+         if (AjusteMS > 0) this.Nueva_Linea_Asiento(AjusteMS,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
+   
+
+         
+        
     });
 
 
+
+
+
+
+
     this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
+    console.log(this.Asiento.AsientosContablesDetalle)
 
   }
 
