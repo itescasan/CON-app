@@ -113,6 +113,7 @@ export class EjercicioFiscalComponent {
   public cmbCuenta: IgxComboComponent;
  
   public v_Select_Cuenta(event: any) {
+    
    this.val.Get("cmbCuenta").setValue("");
    if (event.added.length == 1) {  
      if(event.newValue.length > 1) event.newValue.splice(0, 1);
