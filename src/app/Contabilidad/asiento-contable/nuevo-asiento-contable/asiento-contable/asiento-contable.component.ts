@@ -51,6 +51,7 @@ export class AsientoContableComponent {
   public TC: number;
   public Estado: string = "Solicitado";
   public load: boolean = false;
+  public Clonar : boolean = false
 
   public overlaySettings: OverlaySettings = {};
 
@@ -534,6 +535,18 @@ export class AsientoContableComponent {
 
       this.load = false;
 
+      if(this.Clonar)
+        {
+          this.Editar = false;
+          this.esModal = false;
+          this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
+          this.FILA = {} as iAsiento;
+          this.FILA.IdAsiento = -1;
+          this.Estado = "Solicitado";
+          this.V_TasaCambios();
+          this.v_Consecutivo();
+          
+        }
     });
 
 

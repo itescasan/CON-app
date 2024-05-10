@@ -31,8 +31,8 @@
                                 <div class="input-group">
 
                                     <div class="form-floating">
-                                        <input type="date" id="txtFecha2" class="form-control" placeholder="Fecha Final" max="9999-12-31"
-                                            aria-label="Fecha Final" formControlName="txtFecha2">
+                                        <input type="date" id="txtFecha2" class="form-control" placeholder="Fecha Final"
+                                            max="9999-12-31" aria-label="Fecha Final" formControlName="txtFecha2">
                                         <label for="txtFecha2">Hasta</label>
 
                                     </div>
@@ -145,7 +145,7 @@
                         <div class="row">
 
                             <div class="contenedor-edicion">
-                                <button type="button" class="btn" (click)="v_Editar(det)"><i
+                                <button type="button" class="btn" (click)="v_Editar(det, false)"><i
                                         class="fa-solid fa-eye fa-beat-fade fa-lg primario"></i>
                                 </button>
 
@@ -182,7 +182,13 @@
                 <button mat-menu-item (click)="V_Autorizar(item)"
                     *ngIf="!(['ANULADO', 'AUTORIZADO', 'DESCUADRADO']).includes(item.Estado)"><i
                         class="fas fa-plus fa-lg"></i> Autorizar</button>
-                <button mat-menu-item ><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+
+
+                <button mat-menu-item (click)="V_Clonar(item)"
+                *ngIf="item.NoDocOrigen == null"><i
+                        class="fa-solid fa-clone fa-lg primario"></i> Clonar</button>
+
+                <button mat-menu-item><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
             </ng-template>
         </mat-menu>
 

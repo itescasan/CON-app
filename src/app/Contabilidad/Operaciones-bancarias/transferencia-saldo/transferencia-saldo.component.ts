@@ -1086,7 +1086,7 @@ export class TransferenciaSaldoComponent {
 
 
     this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
-    console.log(this.Asiento.AsientosContablesDetalle)
+
 
   }
 
