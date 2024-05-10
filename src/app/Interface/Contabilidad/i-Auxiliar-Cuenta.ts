@@ -13,7 +13,8 @@ export interface iAuxiliarCuenta{
     DEBE_MS : number,
     HABER_MS : number,
     Saldo_MS : number,
-    Cuenta_Padre: string
+    Cuenta_Padre: string,
+    Bodega : string,
     Editar : number,
     Linea : number,
 }
