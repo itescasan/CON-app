@@ -118,7 +118,7 @@ export class RegistroAsientoContableComponent {
     this.lstAsiento.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
   }
 
-  public v_Editar(e : iAsiento) : void{
+  public v_Editar(e : iAsiento, Clonar : boolean) : void{
 
     
     
@@ -352,6 +352,12 @@ export class RegistroAsientoContableComponent {
 
   }
 
+
+  V_Clonar(item: iAsiento) : void
+  {
+    console.log(item)
+    this.v_Editar(item, true);
+  }
 
 
   
