@@ -661,6 +661,7 @@ export class AsientoContableComponent {
             this.val.Get("TxtTC").setValue(this.TC);
             this.V_Calcular();
             this.v_Consecutivo();
+            this.v_Consecutivo();
           }
 
         },
@@ -725,7 +726,7 @@ export class AsientoContableComponent {
     if (this.cmbSerie.selection.length == 0) return;
 
 
-    this.cFunciones.GET.Consecutivo(this.val.Get("cmbSerie").value, "Contabilidad").subscribe(
+    this.cFunciones.GET.ConsecutivoContabilidad(this.val.Get("cmbSerie").value, this.val.Get("txtFecha").value).subscribe(
       {
         next: (data) => {
 
