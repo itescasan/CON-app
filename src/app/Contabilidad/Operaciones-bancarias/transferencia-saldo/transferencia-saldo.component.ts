@@ -722,7 +722,7 @@ export class TransferenciaSaldoComponent {
 
         if(Number(String(r.Monto).replaceAll(",", "")) != 0)
         {
-          let Porc: number = 1 + r.PorcImpuesto;
+          let Porc: number = r.PorcImpuesto;
           let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
           let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((r.Porcentaje / 100), "4"), "2");
           r.Monto = this.cFunciones.NumFormat(Ret, "2");
