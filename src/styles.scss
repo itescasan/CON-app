@@ -72,11 +72,12 @@ $custom-datepicker-theme: calendar-theme(
 [class^=igx-] {
 
 
-    --box-background: transparent;
+    --box-background : transparent;//var(--escan-primario);
     --box-background-hover: transparent;
     --box-background-focus: transparent;
-    --toggle-button-background: transparent;
-    --toggle-button-background-focus: transparent;
+    --toggle-button-background : transparent;
+    --toggle-button-background-focus : transparent;
+    --placeholder-color:var(--escan-opcional)//white;
 
 
     .igx-input-group {
