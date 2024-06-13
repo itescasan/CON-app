@@ -56,7 +56,9 @@ import { CambioPatrimonioComponent } from './Reporte/cambio-patrimonio/cambio-pa
 import { GastosAcumuladosComponent } from './Reporte/gastos-acumulados/gastos-acumulados.component';
 import { CierreMensualComponent } from './Contabilidad/Cierre-Contable/cierre-mensual/cierre-mensual.component';
 import { CierreFiscalComponent } from './Contabilidad/Cierre-Contable/cierre-fiscal/cierre-fiscal.component';
-
+import { AccesoCajaComponent } from './Contabilidad/acceso-caja/acceso-caja.component';
+import { ConfCajaChicaComponent } from './Contabilidad/techo-caja-chica/conf-caja-chica.component';
+import { DialogInputComponent } from './SHARED/componente/dialog-input/dialog-input.component';
 
 @NgModule({
   declarations: [
@@ -90,8 +92,9 @@ import { CierreFiscalComponent } from './Contabilidad/Cierre-Contable/cierre-fis
     GastosAcumuladosComponent,
     CierreMensualComponent,
     CierreFiscalComponent,
-
-   
+    AccesoCajaComponent,
+    ConfCajaChicaComponent,
+    DialogInputComponent,
   ],
   imports: [
     BrowserModule,

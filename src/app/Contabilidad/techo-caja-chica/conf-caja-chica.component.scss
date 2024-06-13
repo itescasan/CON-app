@@ -1,0 +1,150 @@
+@import "/src/assets/scss/media.scss";
+
+
+
+
+.contenedor-cuenta{
+    margin-bottom: 50px;
+
+    max-width: var(--min-width-md);
+}
+
+
+.cuenta-padre{
+    margin: 5px;
+}
+
+.bloqueada {
+
+    display: flex;
+    justify-content: center;
+    
+    
+    .contenedor{
+        text-align: center;
+
+        label{
+            font-weight: bold;
+            display: block;
+            margin-bottom: 2px;
+        }
+    }
+
+    
+  @include Tamano_Menor(lg) {
+    justify-content: right;
+  }
+   
+  }
+  
+
+ .custom-group{
+    display: flex;
+    justify-content: left;
+    height: fit-content;
+   
+
+    .input-group-custom {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+  
+        p{
+            font-weight: bold;
+            color: var(--escan-secundario);
+            writing-mode:vertical-lr;
+            text-orientation: mixed;
+        }
+    }
+
+    div{
+        width: 100%;
+
+        input
+        {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        textarea
+        {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-bottom-left-radius: 0;
+            min-height: 100px;
+            height: 128px;
+        }
+    }
+ }
+
+
+ .botones{
+
+    
+    div:first-child{
+        margin-top: 5px;
+
+    }
+    .btn-secundario{
+        @include Tamano_Menor(lg) {
+            width: 100%;
+          }
+        
+    }
+
+    .btn-contenedor{
+        display: flex;
+        justify-content:right;
+    
+        
+    
+        .btn-primario{
+            margin-right: 10px;
+        }
+
+        button{
+            @include Tamano_Menor(lg) {
+                width: 100%;
+              }
+        }
+
+      
+    
+     }
+
+    
+
+ }
+
+ .contenedor-pie {
+    position: relative;
+    
+}
+
+.pie-asiento {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 2;
+    background-color: var(--escan-fondo);
+    padding: 10px;
+}
+
+
+
+ .btn-contenedor-custom {
+    display: flex;
+    justify-content: flex-end;
+}
+
+th{
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+
+  .container {
+    padding: 2%;
+  }
+
+
+

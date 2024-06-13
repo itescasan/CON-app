@@ -1,0 +1,66 @@
+
+#dialog-confirmar{
+    width: 370px !important;
+    max-width: 400px;
+    padding: 5px;
+    box-shadow: 3px 4px 14px 6px rgba(0, 0, 0, 0.76);
+}
+
+.msj{
+
+    text-align: justify;
+    text-justify: inter-word;
+    word-wrap: break-word;    
+}
+
+.bold{
+    font-weight: bold;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: black,
+    
+}
+
+.logo{
+    display: flex;
+    justify-content:center;
+    width: 100%;
+    padding: 10px;
+}
+
+img{
+   
+    width:220px;
+    height:60px;
+}
+
+button{
+    min-width: 100px;
+}
+
+button:first-child{
+    margin-right: 25px;
+}
+
+.margin{
+    margin-top: 2%;
+    margin-left: 4%;
+    margin-right: 4%;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.buton {
+ margin-bottom: 4%;
+ margin-left: 3%;
+ margin-right: 4%;
+}
+.mt-00 {
+    margin-right: 4%;
+}
+
+.ml {
+    margin-left: 2%;
+    margin-right: 2%;
+}
+

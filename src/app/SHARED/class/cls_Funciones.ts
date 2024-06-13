@@ -95,8 +95,14 @@ export class Funciones {
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCambioPatrimonio", Caption: "Estado Cambio Patrimonio" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aGastosAcumulados", Caption: "Gastos Acumulados" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
  
+    /**************************************ACCESO CAJA CHICA ************************************* */ 
 
-      /**************************************ACCESO WEB************************************* */ 
+    {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavAccesoCaja", Caption: "Acceso Caja Chica" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aAccesoCajaChica", Caption: "Acceso Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aTechoCajaChica", Caption: "Configuración Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+
+
+      /**************************************ACCESO WEB**************************************/ 
 
       {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"idNavAccesoWeb", Caption: "Acceso Web" , MenuPadre: "", Clase : "fa-solid fa-database", Modulo: "CON", Usuario: ""},
   
