@@ -39,6 +39,10 @@ export class RegistroTrasnferenciaComponent {
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>;
 
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
+ 
+
 
   constructor(private cFunciones: Funciones,  private GET_BODEGA : getBodega, private GET : getTransferencia
   ) {
@@ -468,6 +472,14 @@ export class RegistroTrasnferenciaComponent {
     if(this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
   
     
+
+  }
+
+
+  private ngAfterViewInit() {
+
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
 
   }
 

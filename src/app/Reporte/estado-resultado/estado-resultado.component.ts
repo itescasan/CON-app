@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
@@ -14,6 +14,9 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 })
 export class EstadoResultadoComponent {
   public val = new Validacion();
+
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
 
   constructor(private cFunciones: Funciones, private GET: getReporteContable
   ) {
@@ -128,9 +131,16 @@ export class EstadoResultadoComponent {
   ngDoCheck(): void {
     ///CAMBIO DE FOCO
 
-    this.val.addFocus("txtFecha", "cmbMoneda", undefined);
+    this.val.addFocus("txtFecha", "cmbOpcion", undefined);
+    this.val.addFocus("cmbOpcion", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "btnReporte-Estado-Resultado", "click");
+    
 
+  }
+
+  private ngAfterViewInit() {
+
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
 
   }
 

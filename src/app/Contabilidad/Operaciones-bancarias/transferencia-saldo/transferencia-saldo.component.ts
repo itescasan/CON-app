@@ -79,6 +79,9 @@ export class TransferenciaSaldoComponent {
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>;
 
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
+
 
   public orderby: iOrderBy[] = [
     { Columna: "Operacion", Direccion: "" },
@@ -1616,6 +1619,7 @@ export class TransferenciaSaldoComponent {
     });
 
   }
+ 
 
 
   ngAfterViewInit(): void {
@@ -1632,6 +1636,9 @@ export class TransferenciaSaldoComponent {
     if(this.cmbCentroCosto != undefined) this.cmbCentroCosto.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
     if(this.cmbProveedor != undefined) this.cmbProveedor.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
     
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
+
 
   }
 

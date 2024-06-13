@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import { getReporteContable } from '../GET/get-Reporte-Contable';
@@ -20,6 +20,9 @@ export class BalanzaComponent {
 
 
   public val = new Validacion();
+
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
 
   constructor(private cFunciones: Funciones, private GET: getReporteContable
   ) {
@@ -195,5 +198,11 @@ export class BalanzaComponent {
 
   }
 
+
+  private ngAfterViewInit() {
+
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+
+  }
 
 }

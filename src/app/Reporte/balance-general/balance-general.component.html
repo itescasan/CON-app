@@ -12,9 +12,24 @@
 
 
                         <div class="col-12 col-md-12 col-lg-3 mb-1">
-                            <igx-date-picker formControlName="txtFecha" id="txtFecha" [inputFormat]="'MM/yyyy'" >
-                                <label igxLabel>Fecha</label>
-                            </igx-date-picker>
+                            <div class="form-group">
+                                <div class="form-time-picker">
+                                    <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
+                                        [inputFormat]="'MM/yyyy'">
+                                        <label igxLabel>Fecha</label>
+            
+                                        <igx-picker-toggle igxPrefix>
+                                            <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                        </igx-picker-toggle>
+            
+                                        <igx-picker-clear igxSuffix>
+                                            <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                        </igx-picker-clear>
+            
+                                    </igx-date-picker>
+                                </div>
+                            </div>
+
                         </div>
 
 

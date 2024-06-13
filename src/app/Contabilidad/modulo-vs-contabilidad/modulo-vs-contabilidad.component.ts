@@ -8,7 +8,7 @@ import { getCierreMes } from '../Cierre-Contable/CRUD/POST/get-cierre-mes';
 import { iModuloVSContabilidad } from 'src/app/Interface/Contabilidad/I-Modulo-VS-Contabilidad';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { IgxComboComponent, IgxComboModule, IgxDatePickerModule } from 'igniteui-angular';
+import { IgxComboComponent, IgxComboModule, IgxDatePickerModule, IgxIconModule } from 'igniteui-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
@@ -22,7 +22,7 @@ export interface iMoneda {
 @Component({
   selector: 'app-modulo-vs-contabilidad',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatTableModule, CommonModule, MatPaginatorModule, IgxComboModule, MatInputModule, IgxDatePickerModule],
+  imports: [FormsModule, ReactiveFormsModule, MatTableModule, CommonModule, MatPaginatorModule, IgxComboModule, MatInputModule, IgxDatePickerModule, IgxIconModule ],
   templateUrl: './modulo-vs-contabilidad.component.html',
   styleUrl: './modulo-vs-contabilidad.component.scss'
 })
@@ -53,6 +53,9 @@ export class ModuloVSContabilidadComponent {
   @ViewChild("cmbMoneda", { static: false })
   public cmbMoneda: IgxComboComponent;
 
+
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
 
   constructor(private cFunciones: Funciones, private GET: getCierreMes
   ) {
@@ -251,6 +254,10 @@ export class ModuloVSContabilidadComponent {
     ///CAMBIO DE FOCO
     this.val.addFocus("txtFecha", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "btn-Modulo-VS-Contabilidad", "click");
+
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
+
 
 
 

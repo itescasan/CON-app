@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Validacion } from 'src/app/SHARED/class/validacion';
 import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
@@ -13,6 +13,9 @@ import { postCierreMes } from '../CRUD/POST/post-cierre-mes';
 })
 export class CierreMensualComponent {
   public val = new Validacion();
+
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
 
   constructor(private cFunciones: Funciones, private POST : postCierreMes
     ) {
@@ -93,12 +96,15 @@ export class CierreMensualComponent {
   }
 
 
-  
+
   private ngAfterViewInit() {
 
     ///CAMBIO DE FOCO
     this.val.addFocus("txtFecha", "cmbCierreMes", undefined);
     this.val.addFocus("cmbCierreMes", "btnCiere-Mes", "click");
+
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
 
 
   }

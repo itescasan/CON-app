@@ -45,6 +45,9 @@ export class AuxiliarCuentaComponent {
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>;
 
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
+
 
   constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta, private GET_BODEGA: getBodega
   ) {
@@ -445,6 +448,13 @@ export class AuxiliarCuentaComponent {
     this.val.addFocus("txtFecha2", "txtBodega-auxiliar", undefined);
     this.val.addFocus("txtBodega-auxiliar", "txtCuenta-Asiento", undefined);
     this.val.addFocus("txtCuenta-Asiento", "btnRefrescar-Auxiliar", "click");
+
+  }
+
+  private ngAfterViewInit() {
+
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
 
   }
 
