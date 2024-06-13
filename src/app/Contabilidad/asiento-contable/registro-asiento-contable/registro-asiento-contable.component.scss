@@ -20,6 +20,7 @@
     text-align: center;
     z-index: 1;
     background-color: var(--escan-fondo);
+
    
    p{
    
@@ -33,7 +34,7 @@ table{
     margin-top: 75px;
 
     @include Tamano_Menor(lg) {
-        margin-top: 137px;
+        margin-top: 180px;
     }
  
 }

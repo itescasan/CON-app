@@ -48,6 +48,9 @@ export class AuxiliarCuentaComponent {
   @ViewChild("datepiker", { static: false })
   public datepiker: any;
 
+  @ViewChild("datepiker2", { static: false })
+  public datepiker2: any;
+
 
   constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta, private GET_BODEGA: getBodega
   ) {
@@ -454,6 +457,7 @@ export class AuxiliarCuentaComponent {
   private ngAfterViewInit() {
 
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
      
 
   }
