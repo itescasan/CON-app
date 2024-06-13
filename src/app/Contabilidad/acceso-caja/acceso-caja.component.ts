@@ -275,15 +275,10 @@ export class AccesoCajaComponent {
   }
 
 
-  V_Activar(checked: any, element : any): void {
-
-    if(element.MenuPadre == "") return;
-
+  V_Activar(checked: any, element : any): void {    
     
-    let i : number = this.lstAccesoCajachica.data.findIndex(f => f.Activo );
-    let p = this.lstAccesoCajachica.data.findIndex(f => f.CuentaContable == element.CuentaContable );
-    this.lstAccesoCajachica.data[p].Activo = false;
-    if(i != -1) this.lstAccesoCajachica.data[p].Activo = true;
+    let i : number = this.lstAccesoCajachica.data.findIndex(f => f.CuentaContable == element.CuentaContable );   
+    this.lstAccesoCajachica.data[i].Activo = element.Activo;  
 
   }
 
