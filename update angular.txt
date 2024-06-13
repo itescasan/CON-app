@@ -3,3 +3,10 @@ ng update @angular/core
 ng update rxjs
 ng update 
 npm install
+
+
+
+
+npm install -g npm-check-updates
+ncu -u
+npm install

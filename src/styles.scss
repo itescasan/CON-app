@@ -44,9 +44,10 @@ $custom-drop-down-theme: drop-down-theme($background-color: #d9f5d6,
     );
 
 
-    $custom-datepicker-theme: calendar-theme($header-background: var(--escan-primario),
+    $custom-datepicker-theme: calendar-theme(
+        $header-background: var(--escan-primario),
         $content-background: var(--escan-fondo),
-        $date-selected-text-color: var(--escan-fondo),
+        /*$date-selected-text-color: var(--escan-fondo),*/
 
         $date-selected-background: var(--escan-primario),
 
@@ -199,7 +200,12 @@ of each col-* inside the row. For example, use g-0 for no spacing between column
 .igx-calendar__date-content:hover {
   color: var(--escan-fondo);
 }
-
+.igx-days-view__date--current .igx-days-view__date-inner {
+    color: var(--escan-primario);
+    border-color: var(--escan-secundario);
+    background: transparent;
+  }
+  
 
 html,
 body {
