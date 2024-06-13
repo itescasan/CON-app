@@ -59,6 +59,9 @@ export class TransferenciaCuentaComponent {
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>;
 
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
+
 
   constructor(public cFunciones: Funciones, private GET: getTransferencia, private POST: postTrasnferencia) {
 
@@ -940,6 +943,7 @@ export class TransferenciaCuentaComponent {
     this.val.Combo(this.cmbCombo);
     this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
     this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
+    this.val.addFocus("txtFecha", "txtBeneficiario", undefined);
     this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
     this.val.addNumberFocus("TxtTC", 4);
 
@@ -989,6 +993,13 @@ export class TransferenciaCuentaComponent {
     });
 
 
+  }
+
+  ngAfterViewInit(): void {
+
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
+   
   }
 
 

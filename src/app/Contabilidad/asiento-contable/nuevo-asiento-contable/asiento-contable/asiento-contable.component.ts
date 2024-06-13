@@ -55,6 +55,9 @@ export class AsientoContableComponent {
 
   public overlaySettings: OverlaySettings = {};
 
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
+
 
 
 
@@ -637,7 +640,7 @@ export class AsientoContableComponent {
 
 
   public V_TasaCambios(): void {
-
+alert("")
     if (this.val.Get("txtFecha").value == undefined) return;
 
 
@@ -975,6 +978,9 @@ export class AsientoContableComponent {
     this.val.addFocus("txtFecha", "txtReferenciaDoc", undefined);
     this.val.addFocus("txtReferenciaDoc", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "txtObservaciones", undefined);
+
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
    
   }
 

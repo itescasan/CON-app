@@ -27,6 +27,9 @@ export class RegistroAsientoContableComponent {
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
  
+
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
  
   
   public lstAsiento : MatTableDataSource<iAsiento>;
@@ -371,5 +374,11 @@ export class RegistroAsientoContableComponent {
     }
     
 
+    private ngAfterViewInit() {
+
+      if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+       
+  
+    }
 
 }
