@@ -44,84 +44,84 @@ $custom-drop-down-theme: drop-down-theme($background-color: #d9f5d6,
     );
 
 
-    $custom-datepicker-theme: calendar-theme($content-background: var(--escan-fondo),
-    $content-foreground: var(--escan-fondo),
-    $header-background: var(--escan-primario),
-    $header-foreground: var(--escan-fondo),
-    /*$date-selected-text-color: var(--escan-fondo),*/
+$custom-datepicker-theme: calendar-theme($content-background: var(--escan-fondo),
+        $content-foreground: var(--escan-fondo),
+        $header-background: var(--escan-primario),
+        $header-foreground: var(--escan-fondo),
+        /*$date-selected-text-color: var(--escan-fondo),*/
 
 
 
-    $year-hover-foreground: var(--escan-fondo),
-    $year-hover-background: var(--escan-secundario),
+        $year-hover-foreground: var(--escan-fondo),
+        $year-hover-background: var(--escan-secundario),
 
-    $year-current-foreground: var(--escan-fondo),
-    $year-current-background: var(--escan-primario),
-    $year-current-hover-foreground: var(--escan-fondo),
-    $year-current-hover-background: var(--escan-secundario),
+        $year-current-foreground: var(--escan-fondo),
+        $year-current-background: var(--escan-primario),
+        $year-current-hover-foreground: var(--escan-fondo),
+        $year-current-hover-background: var(--escan-secundario),
 
-    $year-selected-current-foreground: var(--escan-fondo),
-    $year-selected-current-background: var(--escan-primario),
-    $year-selected-current-hover-foreground: var(--escan-fondo),
-    $year-selected-current-hover-background: var(--escan-primario),
+        $year-selected-current-foreground: var(--escan-fondo),
+        $year-selected-current-background: var(--escan-primario),
+        $year-selected-current-hover-foreground: var(--escan-fondo),
+        $year-selected-current-hover-background: var(--escan-primario),
 
-    $year-selected-foreground: var(--escan-fondo),
-    $year-selected-background: var(--escan-primario),
-    $year-selected-hover-foreground: var(--escan-fondo),
-    $year-selected-hover-background: var(--escan-primario),
-
-
-
-
-    $month-hover-foreground: var(--escan-fondo),
-    $month-hover-background: var(--escan-secundario),
-
-    $month-current-foreground: var(--escan-fondo),
-    $month-current-background: var(--escan-primario),
-    $month-current-hover-foreground: var(--escan-fondo),
-    $month-current-hover-background: var(--escan-secundario),
+        $year-selected-foreground: var(--escan-fondo),
+        $year-selected-background: var(--escan-primario),
+        $year-selected-hover-foreground: var(--escan-fondo),
+        $year-selected-hover-background: var(--escan-primario),
 
 
 
-    $month-selected-current-foreground: var(--escan-fondo),
-    $month-selected-current-background: var(--escan-primario),
-    $month-selected-current-hover-foreground: var(--escan-fondo),
-    $month-selected-current-hover-background: var(--escan-primario),
 
-    $month-selected-foreground: var(--escan-fondo),
-    $month-selected-background: var(--escan-primario),
-    $month-selected-hover-foreground: var(--escan-fondo),
-    $month-selected-hover-background: var(--escan-primario),
+        $month-hover-foreground: var(--escan-fondo),
+        $month-hover-background: var(--escan-secundario),
 
+        $month-current-foreground: var(--escan-fondo),
+        $month-current-background: var(--escan-primario),
+        $month-current-hover-foreground: var(--escan-fondo),
+        $month-current-hover-background: var(--escan-secundario),
 
 
-    $date-selected-background: var(--escan-primario),
+
+        $month-selected-current-foreground: var(--escan-fondo),
+        $month-selected-current-background: var(--escan-primario),
+        $month-selected-current-hover-foreground: var(--escan-fondo),
+        $month-selected-current-hover-background: var(--escan-primario),
+
+        $month-selected-foreground: var(--escan-fondo),
+        $month-selected-background: var(--escan-primario),
+        $month-selected-hover-foreground: var(--escan-fondo),
+        $month-selected-hover-background: var(--escan-primario),
 
 
-    $date-selected-hover-background: var(--escan-secundario),
-    $date-selected-hover-foreground: var(--escan-fondo),
-    $date-selected-focus-background: var(--escan-secundario),
-    $date-selected-focus-foreground : var(--escan-fondo),
 
-    $date-current-hover-background: var(--escan-secundario),
-    $date-current-hover-foreground: var(--escan-fondo),
-    $date-current-focus-background: var(--escan-secundario),
-    $date-current-focus-foreground: var(--escan-fondo),
+        $date-selected-background: var(--escan-primario),
 
 
-    $date-selected-current-background: var(--escan-primario),
-    $date-selected-current-foreground: var(--escan-fondo),
-    $date-selected-current-hover-background: var(--escan-secundario),
-    $date-selected-current-hover-foreground: var(--escan-fondo),
-    $date-selected-current-focus-background: var(--escan-secundario),
-    $date-selected-current-focus-foreground: var(--escan-fondo),
+        $date-selected-hover-background: var(--escan-secundario),
+        $date-selected-hover-foreground: var(--escan-fondo),
+        $date-selected-focus-background: var(--escan-secundario),
+        $date-selected-focus-foreground : var(--escan-fondo),
+
+        $date-current-hover-background: var(--escan-secundario),
+        $date-current-hover-foreground: var(--escan-fondo),
+        $date-current-focus-background: var(--escan-secundario),
+        $date-current-focus-foreground: var(--escan-fondo),
 
 
-    $navigation-hover-color: var(--escan-primario),
-    $navigation-focus-color: var(--escan-secundario),
+        $date-selected-current-background: var(--escan-primario),
+        $date-selected-current-foreground: var(--escan-fondo),
+        $date-selected-current-hover-background: var(--escan-secundario),
+        $date-selected-current-hover-foreground: var(--escan-fondo),
+        $date-selected-current-focus-background: var(--escan-secundario),
+        $date-selected-current-focus-foreground: var(--escan-fondo),
 
 
-  );
+        $navigation-hover-color: var(--escan-primario),
+        $navigation-focus-color: var(--escan-secundario),
+
+
+    );
 
 
 
@@ -142,9 +142,9 @@ $custom-drop-down-theme: drop-down-theme($background-color: #d9f5d6,
 
 
     .igx-input-group {
-        --focused-secondary-color: var(--escan-secundario);
-        --success-secondary-color: var(--escan-secundario);
-        --error-secondary-color: var(--escan-primario);
+        --focused-secondary-color: var(--escan-primario);
+        --success-secondary-color: var(--escan-primario);
+        //--error-secondary-color: var(--escan-primario);
     }
 
     .igx-input-group--disabled .igx-input-group__input {
@@ -238,37 +238,41 @@ of each col-* inside the row. For example, use g-0 for no spacing between column
     --min-width-xl: 1200px;
     --min-width-xxl: 1200px;
 
-  //igx-calendar
-  --igx-calendar-date-focus-background: var(--escan-primario);
-  --igx-calendar-date-hover-background: var(--escan-primario);
+    //input
+    --igx-input-group-error-secondary-color: var(--escan-secundario);
+    --igx-input-group-focused-secondary-color: var(--escan-primario);
+
+    //igx-calendar
+    --igx-calendar-date-focus-background: var(--escan-primario);
+    --igx-calendar-date-hover-background: var(--escan-primario);
 
 }
 
- //igx-calendar
+//igx-calendar
 .igx-days-view__date-inner:hover {
     color: var(--escan-fondo);
-  }
-  
-  .igx-calendar-picker__date:hover {
+}
+
+.igx-calendar-picker__date:hover {
     color: var(--escan-primario);
-  }
-  
-  
-  
-  .igx-days-view__date--current .igx-days-view__date-inner {
+}
+
+
+
+.igx-days-view__date--current .igx-days-view__date-inner {
     color: var(--escan-primario);
     border-color: var(--escan-secundario);
     background: transparent;
-  }
-  
-  .igx-months-view__month--current .igx-months-view__month-inner,
-  .igx-years-view__year--current .igx-years-view__year-inner {
+}
+
+.igx-months-view__month--current .igx-months-view__month-inner,
+.igx-years-view__year--current .igx-years-view__year-inner {
     color: var(--escan-primario);
     background: transparent;
     box-shadow: inset 0 0 0 0.0625rem var(--escan-secundario);
-  }
-  
-  
+}
+
+
 
 html,
 body {
