@@ -991,7 +991,9 @@ export class TransferenciaCuentaComponent {
 
     if (this.cmbCuentaBancaria != undefined) this.cmbCuentaBancaria.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
     if (this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
-
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
+   
 
 
 
@@ -1035,12 +1037,6 @@ export class TransferenciaCuentaComponent {
 
   }
 
-  ngAfterViewInit(): void {
-
-    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
-     
-   
-  }
 
 
 }

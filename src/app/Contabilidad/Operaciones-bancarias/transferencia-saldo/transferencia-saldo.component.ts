@@ -1663,8 +1663,15 @@ export class TransferenciaSaldoComponent {
  
 
 
-  ngAfterViewInit(): void {
-    ///CAMBIO DE FOCO
+
+
+  ngDoCheck() {
+    this.val.Combo(this.cmbCombo);
+    this.val.addNumberFocus("TxtTC", 4);
+    this.val.addNumberFocus("txtComision", 2);
+    this.val.addNumberFocus("txtTotalCordoba", 2);
+    this.val.addNumberFocus("txtTotalDolar", 2);
+
 
     this.val.addFocus("cmbCuentaBancaria", "cmbCentroCosto", undefined);
     this.val.addFocus("cmbCentroCosto", "cmbBodega", undefined);
@@ -1680,15 +1687,6 @@ export class TransferenciaSaldoComponent {
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
      
 
-
-  }
-
-  ngDoCheck() {
-    this.val.Combo(this.cmbCombo);
-    this.val.addNumberFocus("TxtTC", 4);
-    this.val.addNumberFocus("txtComision", 2);
-    this.val.addNumberFocus("txtTotalCordoba", 2);
-    this.val.addNumberFocus("txtTotalDolar", 2);
 
 
     this.lstDetalle.data.forEach(f => {
