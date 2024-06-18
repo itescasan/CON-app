@@ -640,7 +640,7 @@ export class AsientoContableComponent {
 
 
   public V_TasaCambios(): void {
-alert("")
+
     if (this.val.Get("txtFecha").value == undefined) return;
 
 
@@ -663,7 +663,6 @@ alert("")
             this.TC = Number(datos.d);
             this.val.Get("TxtTC").setValue(this.TC);
             this.V_Calcular();
-            this.v_Consecutivo();
             this.v_Consecutivo();
           }
 

@@ -156,7 +156,8 @@ export class TransferenciaCuentaComponent {
       this.val.Get("txtNombreCuenta").setValue(_Item?.NombreCuenta);
       this.val.Get("txtBanco").setValue(_Item?.Banco);
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
-      this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
+      //this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
+      this.v_Consecutivo();
       this.IdMoneda = String(_Item?.IdMoneda);
 
       let i: number = this.V_Agregar(true);
@@ -274,7 +275,8 @@ export class TransferenciaCuentaComponent {
               this.val.Get("txtNombreCuenta").setValue(i_C?.NombreCuenta);
               this.val.Get("txtBanco").setValue(i_C?.Banco);
               this.val.Get("txtMoneda").setValue(i_C?.Moneda);
-              this.val.Get("txtNoDoc").setValue(i_C?.Consecutivo);
+              //this.val.Get("txtNoDoc").setValue(i_C?.Consecutivo);
+              this.v_Consecutivo();
               this.IdMoneda = String(i_C?.IdMoneda);
               this.V_Calcular();
             }
@@ -350,6 +352,44 @@ export class TransferenciaCuentaComponent {
     );
   }
 
+
+
+  public v_Consecutivo(): void {
+
+
+
+    this.cFunciones.GET.ConsecutivoContabilidad("EG", this.val.Get("txtFecha").value).subscribe(
+      {
+        next: (data) => {
+
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos = _json["d"];
+            if (!this.esModal) this.val.Get("txtNoDoc").setValue(String(datos.d).replaceAll("$", this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "YYYYMM")));
+
+
+          }
+
+        },
+        error: (err) => {
+
+          this.cFunciones.DIALOG.open(DialogErrorComponent, {
+            data: "<b class='error'>" + err.message + "</b>",
+          });
+
+        },
+      }
+    );
+  }
 
 
 
