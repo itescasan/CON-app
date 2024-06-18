@@ -143,21 +143,16 @@
             padding: 5px;
         }
 
-        @include Tamano_Menor(lg) {
-
-
-            .etiqueta {
-                width: 30%;
-            }
-
-
-            .valores {
-                width: 70%;
-            }
-
-
-
+        
+        .etiqueta {
+            width: 30%;
         }
+
+
+        .valores {
+            width: 70%;
+        }
+
 
     }
 

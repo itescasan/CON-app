@@ -70,7 +70,7 @@
 
                 <div class="row linea-bottom-secundario mt-2">
 
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3 col-xl-3 col-xxl-4 mb-1">
 
                         <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
                             formControlName="cmbBodega" placeholder="Bodega"
@@ -82,7 +82,7 @@
                         </igx-combo>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-4 mb-1">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-4 mb-1">
 
                         <div class="input-group">
                             <span class="input-group-text secundario">No</span>
@@ -95,7 +95,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-2  mb-1">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-2  mb-1">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
                             <div class="form-floating">
@@ -108,7 +108,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-3 col-xl-3 col-xxl-2 mb-1">
                         <div class="form-group">
                             <div class="form-time-picker">
                                 <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
@@ -136,11 +136,11 @@
                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
 
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
+                            <div class="col-12 col-sm-12 col-md-9 col-lg-9 col-xxl-8">
 
                                 <div class="row">
 
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-9 mb-1">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xxl-9 mb-1">
                                         <igx-combo #cmbProveedor [data]="lstProveedor" valueKey="Codigo"
                                             displayKey="DisplayKey" id="cmbProveedor" formControlName="cmbProveedor"
                                             placeholder="Proveedor" searchPlaceholder="Seleccione una proveedor..."
@@ -152,7 +152,7 @@
                                         </igx-combo>
                                     </div>
 
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-3 mb-1">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xxl-3 mb-1">
                                         <button type="button" class="btn btn-opcional" id="btn-Documentos-Proveedor"
                                             (click)="v_BuscarDocumentos();"><i
                                                 class="fa-solid fa-magnifying-glass fa-beat-fade fa-lg"></i>
@@ -163,7 +163,7 @@
                             </div>
 
 
-                            <div class="col-12 col-sm-12 col-md-3 col-lg-4 mb-1">
+                            <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xxl-4 mb-1">
                                 <div class="input-group">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Beneficiario"

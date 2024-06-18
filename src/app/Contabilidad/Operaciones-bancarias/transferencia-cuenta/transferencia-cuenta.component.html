@@ -56,7 +56,7 @@
 
                 <div class="row linea-bottom-secundario mt-2">
 
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-1">
 
                         <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
                             formControlName="cmbBodega" placeholder="Bodega"
@@ -68,7 +68,7 @@
                         </igx-combo>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-4 col-lg-4 mb-1">
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-1">
 
                         <div class="input-group">
                             <span class="input-group-text secundario">No</span>
@@ -81,7 +81,7 @@
                         </div>
                     </div>
 
-                    <div class="col-6 col-sm-6 col-md-4 col-lg-2 offset-lg-2 mb-1">
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-2 offset-xxl-2 mb-1">
                         <div class="form-group">
                             <div class="form-time-picker">
                                 <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
@@ -379,15 +379,31 @@
 
 
 <div class="contenedor-pie">
+    
     <div class="pie-transferencia">
 
         <div class="totales">
-            <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
+            <div class="row">
+
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                    <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
                 "1.2-2"}}</span></span>
-            <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                    <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
                     "1.2-2"}}</span></span>
-            <span class="credito"><span class="etiqueta">Crédito:</span><span class="valores">{{dec_TotalHaber | number
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                    <span class="credito"><span class="etiqueta">Crédito:</span><span class="valores">{{dec_TotalHaber | number
                     : "1.2-2"}}</span></span>
+                </div>
+
+            </div>
+           
+           
+           
             
         </div>
 
