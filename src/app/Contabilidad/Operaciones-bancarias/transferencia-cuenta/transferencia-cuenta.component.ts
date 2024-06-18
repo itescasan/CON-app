@@ -767,7 +767,7 @@ export class TransferenciaCuentaComponent {
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.IdMoneda = this.IdMoneda;
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
-    this.FILA.IdSerie = "TBan"
+    this.FILA.IdSerie = "EG"
     this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
     this.FILA.Fecha = this.val.Get("txtFecha").value;
     this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
