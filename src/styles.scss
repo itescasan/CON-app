@@ -276,7 +276,16 @@ of each col-* inside the row. For example, use g-0 for no spacing between column
 
 html,
 body {
-    height: 100%;
+  max-height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+}
+
+
+
+html,
+body {
     min-width: var(--min-width);
     background-image: url("../src/assets/images/foto-pattern-dark.png");
     background-repeat: repeat, repeat;
