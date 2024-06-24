@@ -91,10 +91,7 @@
     
                                     <div class="col-12 col-md-12 col-lg-6 mb-1">
                                         <div class="input-group">
-                                            <span class="input-group-text"> <button type="button" class="btn btn-secundario"
-                                                id="btnReporte-auxiliar" (click)="V_Imprimir();"><i
-                                                    class="fa-solid fa-print fa-beat-fade fa-xl"></i>
-                                                Imprimir</button></span>
+                                            
     
                                             <div class="form-floating">
                                                 <input type="text" id="txtCuenta-Asiento" class="form-control"
@@ -103,10 +100,7 @@
                                                 <label for="txtCuenta-Asiento">Cuenta</label>
     
                                             </div>
-                                            <span class="input-group-text"><button type="button" class="btn btn-secundario"
-                                                    id="btnRefrescar-Auxiliar" (click)="v_CargarDatos();"><i
-                                                        class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
-                                                    Refrescar</button></span>
+                                           
     
                                         </div>
     
@@ -119,6 +113,22 @@
     
                             </div>
     
+
+                            <div class="col-12 contenedor-botones-accion mb-3">
+
+                                <button type="button" class="btn btn-secundario"
+                                id="btnReporte-auxiliar" (click)="V_Imprimir();"><i
+                                    class="fa-solid fa-print fa-beat-fade fa-xl"></i>
+                                Imprimir</button>
+
+                                <button type="button" class="btn btn-opcional"
+                                id="btnRefrescar-Auxiliar" (click)="v_CargarDatos();"><i
+                                    class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                                Refrescar</button>
+                               
+
+                                    
+                            </div>
     
     
     

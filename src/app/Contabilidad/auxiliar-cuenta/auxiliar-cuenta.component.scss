@@ -17,6 +17,13 @@
 }
 
 
+.contenedor-botones-accion{
+    text-align: right;
+    button:first-child{
+        margin-right: 10px;
+    }
+}
+
 
 
 .encabezado-titulo{
@@ -100,10 +107,10 @@ table,
 
 table {
 
-    margin-top: 125px;
+    margin-top: 340px;
 
-    @include Tamano_Menor(lg) {
-        margin-top: 245px;
+    @include Tamano(lg) {
+        margin-top: 150px;
     }
 
 
