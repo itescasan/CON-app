@@ -97,7 +97,7 @@ export class CierreMensualComponent {
 
 
 
-  private ngAfterViewInit() {
+  private ngDoCheck() {
 
     ///CAMBIO DE FOCO
     this.val.addFocus("txtFecha", "cmbCierreMes", undefined);

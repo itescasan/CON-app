@@ -978,8 +978,7 @@ export class AsientoContableComponent {
     this.val.addFocus("txtReferenciaDoc", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "txtObservaciones", undefined);
 
-    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
-     
+   
    
   }
 
@@ -990,6 +989,9 @@ export class AsientoContableComponent {
 
     this.valTabla.Combo(this.lstCmb);
 
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
+    
     this.lstDetalle.data.forEach(f => {
 
       this.valTabla.addFocus("txtCuenta-asiento" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);

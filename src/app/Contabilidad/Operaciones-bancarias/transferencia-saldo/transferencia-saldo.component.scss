@@ -1,6 +1,8 @@
 @import "/src/assets/scss/media.scss";
 
-
+.contenedor-padre{
+    margin-bottom: 450px;
+}
 .contenedor-transferencia {
     background-color: var(--escan-fondo);
     z-index: 0;

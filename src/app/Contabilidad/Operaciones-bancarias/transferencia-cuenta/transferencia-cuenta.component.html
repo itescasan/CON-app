@@ -1,428 +1,431 @@
-<div class="contenedor-transferencia">
+<div class="contenedor-padre">
 
-    <div class="escasan-dialog" *ngIf="esModal">
-        <div class="btn-contenedor-custom">
-            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
-                <mat-icon class="close-icon" color="warn">close</mat-icon>
-            </button>
+    <div class="contenedor-transferencia">
+
+        <div class="escasan-dialog" *ngIf="esModal">
+            <div class="btn-contenedor-custom">
+                <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+                    <mat-icon class="close-icon" color="warn">close</mat-icon>
+                </button>
+            </div>
         </div>
-    </div>
+        
+        <form autocomplete="off" [formGroup]="val.ValForm">
     
-    <form autocomplete="off" [formGroup]="val.ValForm">
-
-
-        <div class="card">
-            <div class="card-header card-escasan-header opcional">Transferencia Bancaria</div>
-            <div class="card-body">
-                <div class="row linea-bottom-primario">
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
-                        <igx-combo #cmbCuentaBancaria [data]="lstCuentabancaria" valueKey="IdCuentaBanco"
-                            displayKey="DisplayKey" id="cmbCuentaBancaria" formControlName="cmbCuentaBancaria"
-                            placeholder="No Cuenta" searchPlaceholder="Seleccione una cuenta bancaria..." [autoFocusSearch]="true"
-                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CuentaBanco($event)"
-                            (keyup)="v_Enter_CuentaBanco($event);">
-                            <label igxLabel>Cuenta Bancaria</label>
-                            <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
-                        </igx-combo>
-                    </div>
-
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
-                        <div class="input-group">
-
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Nombre Cuenta" id="txtNombreCuenta"
-                                    formControlName="txtNombreCuenta">
-                                <label for="txtNombreCuenta">Nombre Cuenta</label>
-                            </div>
-
+    
+            <div class="card">
+                <div class="card-header card-escasan-header opcional">Transferencia Bancaria</div>
+                <div class="card-body">
+                    <div class="row linea-bottom-primario">
+    
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                            <igx-combo #cmbCuentaBancaria [data]="lstCuentabancaria" valueKey="IdCuentaBanco"
+                                displayKey="DisplayKey" id="cmbCuentaBancaria" formControlName="cmbCuentaBancaria"
+                                placeholder="No Cuenta" searchPlaceholder="Seleccione una cuenta bancaria..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CuentaBanco($event)"
+                                (keyup)="v_Enter_CuentaBanco($event);">
+                                <label igxLabel>Cuenta Bancaria</label>
+                                <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
+                            </igx-combo>
                         </div>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
-                        <div class="input-group">
-
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Banco" id="txtBanco"
-                                    formControlName="txtBanco">
-                                <label for="txtBanco">Banco</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row linea-bottom-secundario mt-2">
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-1">
-
-                        <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
-                            formControlName="cmbBodega" placeholder="Bodega"
-                            searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
-                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
-                            (keyup)="v_Enter_Bodega($event);">
-                            <label igxLabel>Bodega</label>
-                            <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
-                        </igx-combo>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-1">
-
-                        <div class="input-group">
-                            <span class="input-group-text secundario">No</span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="No" id="txtNoDoc"
-                                    formControlName="txtNoDoc">
-                                <label for="txtNoDoc">No</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-2 offset-xxl-2 mb-1">
-                        <div class="form-group">
-                            <div class="form-time-picker">
-                                <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
-                                    [inputFormat]="'dd/MM/yyyy'" (valueChange)="V_TasaCambios();">
-                                    <label igxLabel>Fecha</label>
-        
-                                    <igx-picker-toggle igxPrefix>
-                                        <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
-                                    </igx-picker-toggle>
-        
-                                    <igx-picker-clear igxSuffix>
-                                        <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
-                                    </igx-picker-clear>
-        
-                                </igx-date-picker>
+    
+    
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                            <div class="input-group">
+    
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" placeholder="Nombre Cuenta" id="txtNombreCuenta"
+                                        formControlName="txtNombreCuenta">
+                                    <label for="txtNombreCuenta">Nombre Cuenta</label>
+                                </div>
+    
                             </div>
                         </div>
-
+    
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 mb-1">
+                            <div class="input-group">
+    
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" placeholder="Banco" id="txtBanco"
+                                        formControlName="txtBanco">
+                                    <label for="txtBanco">Banco</label>
+                                </div>
+    
+                            </div>
+                        </div>
+    
                     </div>
-
-                </div>
-
-                <div class="row mt-2">
-
-                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-
-                        <div class="row">
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-8 mb-1">
-                                <div class="input-group">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Beneficiario" id="txtBeneficiario"
-                                            formControlName="txtBeneficiario">
-                                        <label for="txtBeneficiario">Beneficiario</label>
-                                    </div>
-        
+    
+                    <div class="row linea-bottom-secundario mt-2">
+    
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-1">
+    
+                            <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
+                                formControlName="cmbBodega" placeholder="Bodega"
+                                searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
+                                (keyup)="v_Enter_Bodega($event);">
+                                <label igxLabel>Bodega</label>
+                                <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                            </igx-combo>
+                        </div>
+    
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 mb-1">
+    
+                            <div class="input-group">
+                                <span class="input-group-text secundario">No</span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" placeholder="No" id="txtNoDoc"
+                                        formControlName="txtNoDoc">
+                                    <label for="txtNoDoc">No</label>
+                                </div>
+    
+                            </div>
+                        </div>
+    
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-2 offset-xxl-2 mb-1">
+                            <div class="form-group">
+                                <div class="form-time-picker">
+                                    <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
+                                        [inputFormat]="'dd/MM/yyyy'" (valueChange)="V_TasaCambios();">
+                                        <label igxLabel>Fecha</label>
+            
+                                        <igx-picker-toggle igxPrefix>
+                                            <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                        </igx-picker-toggle>
+            
+                                        <igx-picker-clear igxSuffix>
+                                            <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                        </igx-picker-clear>
+            
+                                    </igx-date-picker>
                                 </div>
                             </div>
     
+                        </div>
+    
+                    </div>
+    
+                    <div class="row mt-2">
+    
+                        <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+    
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-8 mb-1">
+                                    <div class="input-group">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" placeholder="Beneficiario" id="txtBeneficiario"
+                                                formControlName="txtBeneficiario">
+                                            <label for="txtBeneficiario">Beneficiario</label>
+                                        </div>
+            
+                                    </div>
+                                </div>
+        
+        
+                                
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
+                                <div class="input-group">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Beneficiario" id="txtMoneda"
+                                            formControlName="txtMoneda">
+                                        <label for="txtMoneda">Moneda</label>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-12  mb-1">
+                                <div class="concepto">
+                                    <div class="form-floating">
+                                        <textarea type="textarea" class="form-control" placeholder="Concepto" id="txtConcepto"
+                                            formControlName="txtConcepto"></textarea>
+                                        <label for="txtConcepto">Concepto</label>
+                                    </div>
+                                </div>
+        
+                            </div>
+        
+                            </div>
+                          
     
                             
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
-                            <div class="input-group">
-                                <div class="form-floating">
-                                    <input type="text" class="form-control" placeholder="Beneficiario" id="txtMoneda"
-                                        formControlName="txtMoneda">
-                                    <label for="txtMoneda">Moneda</label>
-                                </div>
-                            </div>
                         </div>
     
-                        <div class="col-12  mb-1">
-                            <div class="concepto">
-                                <div class="form-floating">
-                                    <textarea type="textarea" class="form-control" placeholder="Concepto" id="txtConcepto"
-                                        formControlName="txtConcepto"></textarea>
-                                    <label for="txtConcepto">Concepto</label>
-                                </div>
-                            </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
     
-                        </div>
-    
-                        </div>
-                      
-
-                        
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-
-                        <div class="row">
-                            <div class="col-12  mb-1">
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="TC" id="TxtTC" (change)="V_Calcular();" (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                            formControlName="TxtTC">
-                                        <label for="TxtTC">TC</label>
+                            <div class="row">
+                                <div class="col-12  mb-1">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" placeholder="TC" id="TxtTC" (change)="V_Calcular();" (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                                formControlName="TxtTC">
+                                            <label for="TxtTC">TC</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-    
-                            <div class="col-12 mb-1">
-    
-                                <div class="input-group">
-                                    <span class="input-group-text">C$</span>
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Total Cordoba"
-                                            id="txtTotalCordoba" formControlName="txtTotalCordoba">
-                                        <label for="txtTotalCordoba">Total</label>
-                                    </div>
-                                </div>
-                            </div>
         
-                            <div class="col-12 mb-1">
-                                <div class="input-group">
-                                    <span class="input-group-text">U$</span>
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
-                                            formControlName="txtTotalDolar">
-                                        <label for="txtTotalDolar">Total</label>
+                                <div class="col-12 mb-1">
+        
+                                    <div class="input-group">
+                                        <span class="input-group-text">C$</span>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" placeholder="Total Cordoba"
+                                                id="txtTotalCordoba" formControlName="txtTotalCordoba">
+                                            <label for="txtTotalCordoba">Total</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        
-                        </div>
-
-                     
-
-                        
-                    </div>
-
-                </div>
-
-              
-            </div>
-        </div>
-
-
-    </form>
-</div>
-
-
-
-
-<div class="contenedor-transferencia mt-2">
-    <div class="row g-1 header">
-
-
-        <div class="col-8 col-lg-4"><span>Cuenta</span></div>
-
-    
-        <div class="col-12 col-lg-2"><span>Referencia</span></div>
-
-        <div class="col-12 col-lg-2"><span>Centro Costo</span></div>
-
-        <div class="col-6 col-lg-2 numero"><span>Débito</span></div>
-
-
-        <div class="col-6 col-lg-2 numero"><span>Crédito</span></div>
-
-    </div>
-
-
-    <div class="mat-elevation-z8 contenedor-tabla">
-        <table class="table table-hover  table-sm tabla-layout mat-elevation-z8" mat-table [dataSource]="lstDetalle">
-
-
-
-            <ng-container matColumnDef="col1">
-                <td mat-cell *matCellDef="let det" (contextmenu)="V_Popup($event, det)">
-                    <div class="row">
-
-                        <div class="col-12 col-lg-4">
-                            <div class="row">
-                                <div class="header-cell"><span>Cuenta</span></div>
-                            </div>
-                            <div class="row">
-
-
-                                <form autocomplete="off">
-                                    <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable" [ngModelOptions]="{standalone: true}"
-                                        valueKey="CuentaContable" displayKey="NombreCuenta"
-                                        id="txtCuenta{{det.NoLinea}}" 
-                                        [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
-                                        (selectionChanging)="v_Select_Cuenta($event, det)"
-                                        (keyup)="v_Enter_Cuenta($event, det);">
-
-                                    </igx-combo>
-                                </form>
-
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-
-                        <div class="col-12 col-lg-2">
-                            <div class="row">
-                                <div class="header-cell"><span>Referencia</span></div>
-                            </div>
-                            <div class="row">
-                                <form autocomplete="off">
-                                    <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
-                                         [(ngModel)]="det.Referencia">
-                                </form>
-
-
-                            </div>
-
-                        </div>
-
-                        
-                        <div class="col-12 col-lg-2">
-                            <div class="row">
-                                <div class="header-cell"><span>Centro Costo</span></div>
-                            </div>
-                            <div class="row">
-
-                                
-                                <form autocomplete="off">
-                                    <igx-combo [data]="lstCentroCosto"  [(ngModel)]="det.CentroCosto" valueKey="Codigo" displayKey="CentroCosto"
-                                        id="txtCentroCosto{{det.NoLinea}}"   [ngModelOptions]="{standalone: true}"
-                                        [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
-                                        (selectionChanging)="v_Select_CentroCosto($event, det)"
-                                        (keyup)="v_Enter_CentroCosto($event, det);" >
-
-                                    </igx-combo>
-                                </form>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-lg-2">
-
-                            <div class="row">
-                                <div class="header-cell"><span>Débito</span></div>
-                            </div>
-                            <div class="row">
-
-                                <form autocomplete="off">
-                                    <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="det.Debito"
-                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
-                                    (keydown.Enter)="V_Focus('txtDebito', det);" 
-                                    (focusout) = "V_FocusOut('txtDebito', det);"
-                                    (change)="V_Calcular();" autocomplete="off">
-                                </form>
-                               
-
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="col-6 col-lg-2">
-                            <div class="row">
-                                <div class="header-cell"><span>Crédito</span></div>
-                            </div>
-                            <div class="row">
-
-                                <form autocomplete="off">
-                                    <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
-                                    [(ngModel)]="det.Credito"
-                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                    (keydown.Enter)="V_Focus('NuevaFila', det);" 
-                                    (focusout) = "V_FocusOut('txtCredito', det);"
-                                    (change)="V_Calcular();" autocomplete="off">
-                                </form>
-                               
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </td>
-            </ng-container>
-
-
-
-
-
-
-
-
-
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
-
-
-        </table>
-
-        <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
-            [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
-        </div>
-        <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
-            <ng-template matMenuContent let-item="item">
-                <button mat-menu-item (click)="V_Agregar(false)" id="btn-FilaNueva-Transferencia"><i class="fas fa-plus fa-lg"></i>Agregar</button>
-                <button mat-menu-item (click)="V_Eliminar(item)" *ngIf=" item.NoLinea != 1"><i
-                        class="fas fa-eraser fa-lg"></i>Eliminar</button>
-            </ng-template>
-        </mat-menu>
-    </div>
-
-</div>
-
-
-
-
-<div class="contenedor-pie">
-    
-    <div class="pie-transferencia">
-
-        <div class="totales">
-            <div class="row">
-
-                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                    <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
-                "1.2-2"}}</span></span>
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                    <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
-                    "1.2-2"}}</span></span>
-                </div>
-
-                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                    <span class="credito"><span class="etiqueta">Crédito:</span><span class="valores">{{dec_TotalHaber | number
-                    : "1.2-2"}}</span></span>
-                </div>
-
-            </div>
-           
-           
-           
             
-        </div>
-
-        <div class="botones" *ngIf="!Anulado">
-            <div>
-                <button type="button" class="btn btn-secundario" id="btnRefrescar-Transferencia"
-                    (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
-                    Refrescar</button>
+                                <div class="col-12 mb-1">
+                                    <div class="input-group">
+                                        <span class="input-group-text">U$</span>
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
+                                                formControlName="txtTotalDolar">
+                                            <label for="txtTotalDolar">Total</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+    
+                         
+    
+                            
+                        </div>
+    
+                    </div>
+    
+                  
+                </div>
             </div>
-
-            <div class="botones-edicion">
-                <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia-Cuenta" (click)="v_Guardar();"><i
-                        class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
-                    Guardar</button>
-
-                    <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento-Cuenta" (click)="v_Evento('Limpiar');"
-                    [disabled]="esModal"  ><i class="fa-solid fa-arrow-left fa-beat fa-lg"  ></i> Cancelar</button>
-            </div>
+    
+    
+        </form>
+    </div>
+    
+    
+    
+    
+    <div class="contenedor-transferencia mt-2">
+        <div class="row g-1 header">
+    
+    
+            <div class="col-8 col-lg-4"><span>Cuenta</span></div>
+    
+        
+            <div class="col-12 col-lg-2"><span>Referencia</span></div>
+    
+            <div class="col-12 col-lg-2"><span>Centro Costo</span></div>
+    
+            <div class="col-6 col-lg-2 numero"><span>Débito</span></div>
+    
+    
+            <div class="col-6 col-lg-2 numero"><span>Crédito</span></div>
+    
         </div>
-
+    
+    
+        <div class="mat-elevation-z8 contenedor-tabla">
+            <table class="table table-hover  table-sm tabla-layout mat-elevation-z8" mat-table [dataSource]="lstDetalle">
+    
+    
+    
+                <ng-container matColumnDef="col1">
+                    <td mat-cell *matCellDef="let det" (contextmenu)="V_Popup($event, det)">
+                        <div class="row">
+    
+                            <div class="col-12 col-lg-4">
+                                <div class="row">
+                                    <div class="header-cell"><span>Cuenta</span></div>
+                                </div>
+                                <div class="row">
+    
+    
+                                    <form autocomplete="off">
+                                        <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable" [ngModelOptions]="{standalone: true}"
+                                            valueKey="CuentaContable" displayKey="NombreCuenta"
+                                            id="txtCuenta{{det.NoLinea}}" 
+                                            [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
+                                            (selectionChanging)="v_Select_Cuenta($event, det)"
+                                            (keyup)="v_Enter_Cuenta($event, det);">
+    
+                                        </igx-combo>
+                                    </form>
+    
+    
+                                </div>
+    
+    
+    
+                            </div>
+    
+    
+    
+    
+                            <div class="col-12 col-lg-2">
+                                <div class="row">
+                                    <div class="header-cell"><span>Referencia</span></div>
+                                </div>
+                                <div class="row">
+                                    <form autocomplete="off">
+                                        <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
+                                             [(ngModel)]="det.Referencia">
+                                    </form>
+    
+    
+                                </div>
+    
+                            </div>
+    
+                            
+                            <div class="col-12 col-lg-2">
+                                <div class="row">
+                                    <div class="header-cell"><span>Centro Costo</span></div>
+                                </div>
+                                <div class="row">
+    
+                                    
+                                    <form autocomplete="off">
+                                        <igx-combo [data]="lstCentroCosto"  [(ngModel)]="det.CentroCosto" valueKey="Codigo" displayKey="CentroCosto"
+                                            id="txtCentroCosto{{det.NoLinea}}"   [ngModelOptions]="{standalone: true}"
+                                            [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
+                                            (selectionChanging)="v_Select_CentroCosto($event, det)"
+                                            (keyup)="v_Enter_CentroCosto($event, det);" >
+    
+                                        </igx-combo>
+                                    </form>
+    
+                                </div>
+    
+                            </div>
+    
+                            <div class="col-6 col-lg-2">
+    
+                                <div class="row">
+                                    <div class="header-cell"><span>Débito</span></div>
+                                </div>
+                                <div class="row">
+    
+                                    <form autocomplete="off">
+                                        <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="det.Debito"
+                                        (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
+                                        (keydown.Enter)="V_Focus('txtDebito', det);" 
+                                        (focusout) = "V_FocusOut('txtDebito', det);"
+                                        (change)="V_Calcular();" autocomplete="off">
+                                    </form>
+                                   
+    
+                                </div>
+    
+    
+                            </div>
+    
+    
+                            <div class="col-6 col-lg-2">
+                                <div class="row">
+                                    <div class="header-cell"><span>Crédito</span></div>
+                                </div>
+                                <div class="row">
+    
+                                    <form autocomplete="off">
+                                        <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"  [ngModelOptions]="{standalone: true}"
+                                        [(ngModel)]="det.Credito"
+                                        (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                        (keydown.Enter)="V_Focus('NuevaFila', det);" 
+                                        (focusout) = "V_FocusOut('txtCredito', det);"
+                                        (change)="V_Calcular();" autocomplete="off">
+                                    </form>
+                                   
+    
+                                </div>
+    
+                            </div>
+    
+                        </div>
+    
+    
+                    </td>
+                </ng-container>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
+    
+    
+            </table>
+    
+            <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+                [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+            </div>
+            <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
+                <ng-template matMenuContent let-item="item">
+                    <button mat-menu-item (click)="V_Agregar(false)" id="btn-FilaNueva-Transferencia"><i class="fas fa-plus fa-lg"></i>Agregar</button>
+                    <button mat-menu-item (click)="V_Eliminar(item)" *ngIf=" item.NoLinea != 1"><i
+                            class="fas fa-eraser fa-lg"></i>Eliminar</button>
+                </ng-template>
+            </mat-menu>
+        </div>
+    
+    </div>
+    
+    
+    
+    
+    <div class="contenedor-pie">
+        
+        <div class="pie-transferencia">
+    
+            <div class="totales">
+                <div class="row">
+    
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
+                    "1.2-2"}}</span></span>
+                    </div>
+    
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <span class="debito"><span class="etiqueta">Débito:</span><span class="valores">{{dec_TotalDebe | number :
+                        "1.2-2"}}</span></span>
+                    </div>
+    
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <span class="credito"><span class="etiqueta">Crédito:</span><span class="valores">{{dec_TotalHaber | number
+                        : "1.2-2"}}</span></span>
+                    </div>
+    
+                </div>
+               
+               
+               
+                
+            </div>
+    
+            <div class="botones" *ngIf="!Anulado">
+                <div>
+                    <button type="button" class="btn btn-secundario" id="btnRefrescar-Transferencia"
+                        (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                        Refrescar</button>
+                </div>
+    
+                <div class="botones-edicion">
+                    <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia-Cuenta" (click)="v_Guardar();"><i
+                            class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
+                        Guardar</button>
+    
+                        <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento-Cuenta" (click)="v_Evento('Limpiar');"
+                        [disabled]="esModal"  ><i class="fa-solid fa-arrow-left fa-beat fa-lg"  ></i> Cancelar</button>
+                </div>
+            </div>
+    
+        </div>
     </div>
 </div>

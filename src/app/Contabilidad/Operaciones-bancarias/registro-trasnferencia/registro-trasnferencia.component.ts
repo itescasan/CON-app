@@ -473,19 +473,12 @@ export class RegistroTrasnferenciaComponent {
 
     if(this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
   
-    
-
-  }
-
-
-  private ngAfterViewInit() {
-
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
   
-     
 
   }
+
 
   
 
