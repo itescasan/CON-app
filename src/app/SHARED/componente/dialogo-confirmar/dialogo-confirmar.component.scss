@@ -63,3 +63,21 @@ button{
 button:first-child{
     margin-right: 25px;
 }
+
+
+.btn-contenedor-cerrar{
+    background-color: var(--escan-primario);
+    font-size: 1em;
+    padding: 5px;
+    text-align: right;
+
+
+    button{
+        font-size: 1.2em;
+        margin: 0;
+        padding: 0;
+        width: auto;
+      }
+    
+  }
+ 
