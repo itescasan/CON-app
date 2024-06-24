@@ -23,13 +23,15 @@ img{
     top: 15px;
     left: 0;
     //right: 0;
-    padding-top: 0;
+    padding-top: 10px;
+    background-color: var(--escan-secundario);
     i{
-        color: var(--escan-opcional);
+        color: var(--escan-fondo);
     }
     
     z-index: 2;
 }
+
 
 .contenedor-boton.start{
     left: 0;
