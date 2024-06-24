@@ -460,5 +460,12 @@ export class AuxiliarCuentaComponent {
   }
 
 
+  ngAfterViewInit(): void {
+    $("#offcanvasBottom-auxiluar").removeAttr("show");
+    $("#btnMostrarPie-auxiluar").trigger("click"); 
+
+  }
+
+
 
 }

@@ -9,6 +9,24 @@
 }
 
 
+.card-escasan-header{
+    
+    div{
+     display: inline-block;
+    }
+ 
+ 
+     div:first-child{
+         color: var(--escan-fondo);
+         width: 80%;
+     }
+ 
+     div:last-child{
+         color: var(--escan-fondo);
+         width: 20%;
+     }
+ }
+ 
 
 .concepto {
 
@@ -142,16 +160,40 @@ input.center {
 
 //████████████████████████████████████████████PIE████████████████████████████████████████████████████████████████████████
 
+.offcanvas-bottom{
+    
+    width: 100%;
+    height: 350px;
+
+
+
+    
+
+    @include Tamano(md) {
+        height: 350px;
+    }
+
+
+    @include Tamano(lg) {
+        height: 180px;
+    }
+
+
+
+
+}
+
+
 .contenedor-pie {
     position: relative;
 
 }
 
 .pie-transferencia {
-    position: fixed;
+    /*position: fixed;
     bottom: 0;
     left: 0;
-    width: 100vw;
+    width: 100vw;*/
     z-index: 5;
     background-color: var(--escan-fondo);
     padding: 10px;

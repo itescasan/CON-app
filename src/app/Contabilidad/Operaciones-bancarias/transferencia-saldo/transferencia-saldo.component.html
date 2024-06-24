@@ -13,7 +13,21 @@
     
     
             <div class="card">
-                <div class="card-header card-escasan-header opcional">Transferencia Bancaria</div>
+                <div class="card-header card-escasan-header opcional">
+
+                    
+                    <div>
+                        Transferencia Bancaria (Documento)
+                    </div>
+    
+                    <div>
+                        <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#offcanvasBottom-tranf-saldo" aria-controls="offcanvasBottom-tranf-saldo" id="btnMostrarPie-tranf-saldo"><i class="fa-solid fa-eye"></i>
+                             Totales</button>
+                    </div>
+
+           
+                </div>
                 <div class="card-body">
                     <div class="row linea-bottom-primario">
     
@@ -492,50 +506,61 @@
     
     
     
-    <div class="contenedor-pie">
-        <div class="pie-transferencia">
-    
-            <div class="totales">
-    
-                <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
-                        "1.2-2"}}</span></span>
-    
-                <span class="retencion"><span class="etiqueta">Retención:</span><span class="valores">{{dec_Retencion |
-                        number :
-                        "1.2-2"}}</span></span>
-    
-    
-                <span class="aplicado"><span class="etiqueta">Aplicado:</span><span class="valores">{{dec_Aplicado | number
-                        : "1.2-2"}}</span></span>
-    
-                <span class="disponible"><span class="etiqueta">Banco:</span><span class="valores">{{dec_Banco |
-                        number :
-                        "1.2-2"}}</span></span>
-    
-            </div>
-    
-            <div class="botones">
-                <div>
-                    <button type="button" class="btn btn-secundario" id="btnRefrescar-Transferencia"
-                        (click)="v_CargarDatos();" *ngIf="!Anulado"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
-                        Refrescar</button>
-                    <button type="button" class="btn btn-opcional" id="btn-Documentos-proveedor-Contabilizacion"
-                        (click)="V_Mostrar_Asiento();"><i class="fa-solid fa-book fa-beat fa-lg"></i>
-                        Contabilización</button>
+   
+
+
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" data-bs-scroll="true" data-bs-backdrop="false"  id="offcanvasBottom-tranf-saldo" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas-header">
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body small">
+            <div class="contenedor-pie">
+                <div class="pie-transferencia">
+            
+                    <div class="totales">
+            
+                        <span class="diferencia"><span class="etiqueta">DIF:</span><span class="valores dif">{{dec_Dif | number :
+                                "1.2-2"}}</span></span>
+            
+                        <span class="retencion"><span class="etiqueta">Retención:</span><span class="valores">{{dec_Retencion |
+                                number :
+                                "1.2-2"}}</span></span>
+            
+            
+                        <span class="aplicado"><span class="etiqueta">Aplicado:</span><span class="valores">{{dec_Aplicado | number
+                                : "1.2-2"}}</span></span>
+            
+                        <span class="disponible"><span class="etiqueta">Banco:</span><span class="valores">{{dec_Banco |
+                                number :
+                                "1.2-2"}}</span></span>
+            
+                    </div>
+            
+                    <div class="botones">
+                        <div>
+                            <button type="button" class="btn btn-secundario" id="btnRefrescar-Transferencia"
+                                (click)="v_CargarDatos();" *ngIf="!Anulado"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                                Refrescar</button>
+                            <button type="button" class="btn btn-opcional" id="btn-Documentos-proveedor-Contabilizacion"
+                                (click)="V_Mostrar_Asiento();"><i class="fa-solid fa-book fa-beat fa-lg"></i>
+                                Contabilización</button>
+                        </div>
+            
+            
+                        <div class="botones-edicion">
+                            <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia-Saldo"
+                                (click)="v_Guardar();" *ngIf="!Anulado"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
+                                Guardar</button>
+            
+                            <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento-saldo"
+                                (click)="v_Evento('Limpiar');" [disabled]="esModal" *ngIf="!Anulado"><i
+                                    class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+                        </div>
+                    </div>
+            
                 </div>
-    
-    
-                <div class="botones-edicion">
-                    <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia-Saldo"
-                        (click)="v_Guardar();" *ngIf="!Anulado"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
-                        Guardar</button>
-    
-                    <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento-saldo"
-                        (click)="v_Evento('Limpiar');" [disabled]="esModal" *ngIf="!Anulado"><i
-                            class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
-                </div>
             </div>
-    
+        
         </div>
     </div>
 </div>

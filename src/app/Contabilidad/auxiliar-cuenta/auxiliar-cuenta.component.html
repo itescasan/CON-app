@@ -6,7 +6,21 @@
     
             <div class="contenedor-filtro linea-bottom-primario">
                 <div class="row">
-                    <p>Auxiliar de Cuentas</p>
+
+                    <div class="encabezado-titulo">
+                        <div>
+                            <p>Auxiliar de Cuentas</p>
+                        </div>
+        
+                        <div>
+                            <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBottom-auxiluar" aria-controls="offcanvasBottom-auxiluar" id="btnMostrarPie-auxiluar"><i class="fa-solid fa-eye"></i>
+                                 Totales</button>
+                        </div>
+                    </div>
+                   
+
+                    
                 </div>
     
                 <div class="row mb-2">
@@ -241,70 +255,81 @@
     
     
     
-    <div class="contenedor-pie">
-        <div class="pie-asiento">
     
-            <div class="row">
+
+
     
-                <div class="col-12 col-sm-12 col-md-12 col-lg-3 mb-1">
-                    
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+<div class="offcanvas offcanvas-bottom" tabindex="-1" data-bs-scroll="true" data-bs-backdrop="false"  id="offcanvasBottom-auxiluar" aria-labelledby="offcanvasBottomLabel">
+    <div class="offcanvas-header">
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body small">
+        <div class="contenedor-pie">
+            <div class="pie-asiento">
         
-                        <div class="form-floating">
-                            <input type="text" id="txtBuscar-cuenta" class="form-control" placeholder="Buscar"
-                                aria-label="Buscar"  (keyup)="v_Filtrar($event)">
-                            <label for="txtBuscar-Asiento">Buscar</label>
+                <div class="row">
         
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-3 mb-1">
+                        
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+            
+                            <div class="form-floating">
+                                <input type="text" id="txtBuscar-cuenta" class="form-control" placeholder="Buscar"
+                                    aria-label="Buscar"  (keyup)="v_Filtrar($event)">
+                                <label for="txtBuscar-Asiento">Buscar</label>
+            
+                            </div>
                         </div>
                     </div>
-                </div>
-    
-                <div class="col-12 col-sm-12 col-md-12 col-lg-3">
-    
-                    <div class="totales">
-                        <span class="credito"><span class="etiqueta">Debe:</span><span class="valores debito-credito">{{TotalDEBE | number :
-                            "1.2-2"}}</span></span>
-                            
-                    </div>
-                  
-                </div>
-    
-                <div class="col-12 col-sm-12 col-md-12 col-lg-3 mb-1">
-    
-                    <div class="totales">
-                       
-                        <span>
-                            <span class="debito"><span class="etiqueta">Haber:</span><span class="valores debito-credito">{{TotalHABER | number :
+        
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3 mb-1">
+        
+                        <div class="totales">
+                            <span class="credito"><span class="etiqueta">Debe:</span><span class="valores debito-credito">{{TotalDEBE | number :
                                 "1.2-2"}}</span></span>
-                        </span>
-                       
-                            
+                                
+                        </div>
+                      
                     </div>
-                  
-                </div>
-    
-    
-                <div class="col-12 col-sm-12 col-md-12 col-lg-3 mb-1">
-    
-                    <div class="totales">
-    
-                        <span>
-                            <span class="saldofinal"><span class="etiqueta">Saldo Final:</span><span class="valores">{{SaldoFinal | number
-                                : "1.2-2"}}</span></span>
-                        </span>
-                       
-                       
+        
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3 mb-1">
+        
+                        <div class="totales">
+                           
+                            <span>
+                                <span class="debito"><span class="etiqueta">Haber:</span><span class="valores debito-credito">{{TotalHABER | number :
+                                    "1.2-2"}}</span></span>
+                            </span>
+                           
+                                
+                        </div>
+                      
                     </div>
-                  
+        
+        
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-3 offset-md-6 offset-lg-0 mb-1">
+        
+                        <div class="totales">
+        
+                            <span>
+                                <span class="saldofinal"><span class="etiqueta">Saldo Final:</span><span class="valores">{{SaldoFinal | number
+                                    : "1.2-2"}}</span></span>
+                            </span>
+                           
+                           
+                        </div>
+                      
+                    </div>
+        
+        
+        
+        
+            
                 </div>
-    
-    
-    
-    
         
             </div>
-    
         </div>
     </div>
+</div>
 </div>

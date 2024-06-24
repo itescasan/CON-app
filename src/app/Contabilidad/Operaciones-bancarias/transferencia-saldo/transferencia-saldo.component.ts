@@ -1696,4 +1696,10 @@ export class TransferenciaSaldoComponent {
 
 
   }
+
+  ngAfterViewInit(): void {
+    $("#offcanvasBottom-tranf-saldo").removeAttr("show");
+    $("#btnMostrarPie-tranf-saldo").trigger("click"); 
+
+  }
 }

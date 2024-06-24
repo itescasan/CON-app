@@ -1038,5 +1038,10 @@ export class TransferenciaCuentaComponent {
   }
 
 
+  ngAfterViewInit(): void {
+    $("#offcanvasBottom-trans-cuenta").removeAttr("show");
+    $("#btnMostrarPie-trans-cuenta").trigger("click"); 
+
+  }
 
 }
