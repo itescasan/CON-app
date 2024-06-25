@@ -35,6 +35,8 @@ import { AccesoWebComponent } from 'src/app/SIS/componente/acceso-web/acceso-web
 import { ModuloVSContabilidadComponent } from 'src/app/Contabilidad/modulo-vs-contabilidad/modulo-vs-contabilidad.component';
 import { AccesoCajaComponent } from 'src/app/Contabilidad/acceso-caja/acceso-caja.component';
 import { ConfCajaChicaComponent } from 'src/app/Contabilidad/techo-caja-chica/conf-caja-chica.component';
+import { NuevoIngresoCajaComponent } from 'src/app/Contabilidad/Ingreso-Caja/nuevo-ingreso-caja/nuevo-ingreso-caja.component';
+import { RegistroIngresoCajaComponent } from 'src/app/Contabilidad/Ingreso-Caja/registro-ingreso-caja/registro-ingreso-caja.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -335,6 +337,22 @@ export class SidebarComponent {
       let techoCch: ComponentRef<ConfCajaChicaComponent> = this.DynamicFrom.viewContainerRef.createComponent(ConfCajaChicaComponent);
 
     }
+
+    if(id == "aIngresoCaja"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let Ingresocc: ComponentRef<NuevoIngresoCajaComponent> = this.DynamicFrom.viewContainerRef.createComponent(NuevoIngresoCajaComponent);
+
+    }
+
+    if(id == "aRegistroCaja"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let RegistroCC: ComponentRef<RegistroIngresoCajaComponent> = this.DynamicFrom.viewContainerRef.createComponent(RegistroIngresoCajaComponent);
+
+    }   
     
 
     if (id == "idNavAccesoWeb") {

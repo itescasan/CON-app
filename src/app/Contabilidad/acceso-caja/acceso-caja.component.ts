@@ -25,7 +25,7 @@ import { iAccesoCaja } from 'src/app/Interface/Contabilidad/i-AccesoCajaChica';
 export class AccesoCajaComponent {
 
   public val = new Validacion();
-  displayedColumns: string[] = ["Caption"];
+  displayedColumns: string[] = ["NombreCuenta"];
   public lstAccesoCajachica: MatTableDataSource<iAccesoCaja>;
   public lstDatosCuenta: any[] = [];
   public lstDatosPerfil: any[] = [];

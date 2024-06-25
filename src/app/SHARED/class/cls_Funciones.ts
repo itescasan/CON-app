@@ -100,7 +100,8 @@ export class Funciones {
     {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavAccesoCaja", Caption: "Acceso Caja Chica" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aAccesoCajaChica", Caption: "Acceso Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aTechoCajaChica", Caption: "Configuración Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
-
+    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aIngresoCaja", Caption: "Ingreso Facturas Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRegistroCaja", Caption: "Registro Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
 
       /**************************************ACCESO WEB**************************************/ 
 

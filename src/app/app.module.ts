@@ -59,6 +59,8 @@ import { CierreFiscalComponent } from './Contabilidad/Cierre-Contable/cierre-fis
 import { AccesoCajaComponent } from './Contabilidad/acceso-caja/acceso-caja.component';
 import { ConfCajaChicaComponent } from './Contabilidad/techo-caja-chica/conf-caja-chica.component';
 import { DialogInputComponent } from './SHARED/componente/dialog-input/dialog-input.component';
+import { NuevoIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/nuevo-ingreso-caja/nuevo-ingreso-caja.component';
+import { RegistroIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/registro-ingreso-caja/registro-ingreso-caja.component';
 
 @NgModule({
   declarations: [
@@ -95,6 +97,8 @@ import { DialogInputComponent } from './SHARED/componente/dialog-input/dialog-in
     AccesoCajaComponent,
     ConfCajaChicaComponent,
     DialogInputComponent,
+    NuevoIngresoCajaComponent,
+    RegistroIngresoCajaComponent,
   ],
   imports: [
     BrowserModule,

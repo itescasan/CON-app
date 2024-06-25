@@ -67,7 +67,7 @@
                 <table class="table table-hover table-bordered table-sm tabla-custom mat-elevation-z8" mat-table
                     [dataSource]="lstDatosCuenta">
 
-                    <ng-container matColumnDef="Caption">
+                    <ng-container matColumnDef="NombreCuenta">
                         <th mat-header-cell *matHeaderCellDef>Nombre</th>
                         <td mat-cell *matCellDef="let element; let j=index" [ngClass]="element.EsMenu == true || element.MenuPadre=='' ? 'menu' : 'item'">
                             <div class="form-check">
@@ -75,7 +75,7 @@
                                      [(ngModel)]="element.Activo" [ngModelOptions]="{standalone: true}" id="chk{{j+1}}">
 
                                     <label [ngClass]="element.EsMenu == true ? 'menu' : 'item'" for="chk{{j+1}}">
-                                        <i class="{{element.Clase}}"></i> {{element.Caption}}
+                                        <i class="{{element.Clase}}"></i> {{element.NombreCuenta}}
                                       </label>
                                     
                                     
