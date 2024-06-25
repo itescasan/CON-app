@@ -477,16 +477,15 @@ export class Validacion {
       elmento?.parentElement?.classList.remove("contenedor-info-validacion");
 
   
-      console.log(elmento.querySelectorAll('.igx-input-group'))
-    
+   
 
       let span = document.getElementById("info-validacion-" + f.Id);
       span?.remove();
 
       frm.value = this.ValForm.get(f.Id)?.value;
       hmtlValue = elmento?.value
-      if(elmento.type == "checkbox") hmtlValue = frm.value;
-      if(elmento.localName == "igx-date-picker") hmtlValue = frm.value;
+      if(elmento?.type == "checkbox") hmtlValue = frm.value;
+      if(elmento?.localName == "igx-date-picker") hmtlValue = frm.value;
 
 
       if ((String(frm.value) == "undefined" || String(frm.value) == "")) {
@@ -538,14 +537,14 @@ export class Validacion {
         elmento?.parentElement?.classList.add("contenedor-info-validacion");
 
       
-        elmento.querySelectorAll('.igx-input-group').forEach((key : HTMLElement) => {
+        elmento?.querySelectorAll('.igx-input-group')?.forEach((key : HTMLElement) => {
           key.classList.add('igx-input-group--invalid');
         });
 
       }
       else
       {
-        elmento.querySelectorAll('.igx-input-group--invalid').forEach((key : HTMLElement) => {
+        elmento?.querySelectorAll('.igx-input-group--invalid')?.forEach((key : HTMLElement) => {
           key.classList.remove('igx-input-group--invalid');
         });
     
@@ -581,7 +580,7 @@ export class Validacion {
 
 
     if (this.Errores != "") {
-      this.Errores = "<ul>" + this.Errores + "</ul>";
+      this.Errores = "<ul class='contenedor-validador'>" + this.Errores + "</ul>";
       return false;
     }
 

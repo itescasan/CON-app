@@ -199,7 +199,9 @@ export class TransferenciaSaldoComponent {
       this.val.Get("txtNombreCuenta").setValue(_Item?.NombreCuenta);
       this.val.Get("txtBanco").setValue(_Item?.Banco);
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
-      this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
+      //this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
+      this.v_Consecutivo();
+
 
 
       if (this.IdMoneda != _Item?.IdMoneda) {
@@ -419,7 +421,8 @@ export class TransferenciaSaldoComponent {
               this.val.Get("txtNombreCuenta").setValue(i_C?.NombreCuenta);
               this.val.Get("txtBanco").setValue(i_C?.Banco);
               this.val.Get("txtMoneda").setValue(i_C?.Moneda);
-              this.val.Get("txtNoDoc").setValue(i_C?.Consecutivo);
+              //this.val.Get("txtNoDoc").setValue(i_C?.Consecutivo);
+              this.v_Consecutivo();
               this.IdMoneda = String(i_C?.IdMoneda);
               if (!this.esModal) this.V_Calcular();
               if (!this.esModal) this.V_Contabilizacion();
@@ -453,6 +456,44 @@ export class TransferenciaSaldoComponent {
     );
 
 
+  }
+
+
+  public v_Consecutivo(): void {
+
+
+
+    this.cFunciones.GET.ConsecutivoContabilidad("EG", this.val.Get("txtFecha").value).subscribe(
+      {
+        next: (data) => {
+
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos = _json["d"];
+            if (!this.esModal) this.val.Get("txtNoDoc").setValue(String(datos.d).replaceAll("$", this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "YYYYMM")));
+
+
+          }
+
+        },
+        error: (err) => {
+
+          this.cFunciones.DIALOG.open(DialogErrorComponent, {
+            data: "<b class='error'>" + err.message + "</b>",
+          });
+
+        },
+      }
+    );
   }
 
 
@@ -1262,7 +1303,7 @@ export class TransferenciaSaldoComponent {
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
     this.FILA.IdMoneda = this.IdMoneda;
-    this.FILA.IdSerie = "TBan"
+    this.FILA.IdSerie = "EG"
     this.FILA.NoTransferencia = this.val.Get("txtNoDoc").value;
     this.FILA.Fecha = this.val.Get("txtFecha").value;
     this.FILA.Beneficiario = this.cmbProveedor.displayValue;
@@ -1622,8 +1663,15 @@ export class TransferenciaSaldoComponent {
  
 
 
-  ngAfterViewInit(): void {
-    ///CAMBIO DE FOCO
+
+
+  ngDoCheck() {
+    this.val.Combo(this.cmbCombo);
+    this.val.addNumberFocus("TxtTC", 4);
+    this.val.addNumberFocus("txtComision", 2);
+    this.val.addNumberFocus("txtTotalCordoba", 2);
+    this.val.addNumberFocus("txtTotalDolar", 2);
+
 
     this.val.addFocus("cmbCuentaBancaria", "cmbCentroCosto", undefined);
     this.val.addFocus("cmbCentroCosto", "cmbBodega", undefined);
@@ -1640,21 +1688,18 @@ export class TransferenciaSaldoComponent {
      
 
 
-  }
-
-  ngDoCheck() {
-    this.val.Combo(this.cmbCombo);
-    this.val.addNumberFocus("TxtTC", 4);
-    this.val.addNumberFocus("txtComision", 2);
-    this.val.addNumberFocus("txtTotalCordoba", 2);
-    this.val.addNumberFocus("txtTotalDolar", 2);
-
 
     this.lstDetalle.data.forEach(f => {
       this.val.addNumberFocus("txtImporte" + f.Index, 2);
       this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1), undefined);
     });
 
+
+  }
+
+  ngAfterViewInit(): void {
+    $("#offcanvasBottom-tranf-saldo").removeAttr("show");
+    $("#btnMostrarPie-tranf-saldo").trigger("click"); 
 
   }
 }

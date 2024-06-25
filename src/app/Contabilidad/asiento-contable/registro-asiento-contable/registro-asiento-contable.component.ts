@@ -373,14 +373,12 @@ export class RegistroAsientoContableComponent {
     this.val.addFocus("txtFecha2", "txtBuscar-Asiento", undefined);
     this.val.addFocus("txtBuscar-Asiento", "btnRefrescar-RegAsiento", "click");
 
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
+
     }
     
 
-    private ngAfterViewInit() {
 
-      if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
-      if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
-  
-    }
 
 }

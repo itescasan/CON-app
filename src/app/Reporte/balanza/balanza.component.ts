@@ -199,15 +199,12 @@ export class BalanzaComponent {
     this.val.addFocus("cmbNivel", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "btnReporte-Balanza", "click");
 
-
-  }
-
-
-  private ngAfterViewInit() {
-
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
 
   }
+
+
+
 
 }

@@ -245,7 +245,7 @@ export class ModuloVSContabilidadComponent {
 
 
 
-  private ngAfterViewInit() {
+  private ngDoCheck() {
 
 
     this.val.Combo(this.lstCmb);

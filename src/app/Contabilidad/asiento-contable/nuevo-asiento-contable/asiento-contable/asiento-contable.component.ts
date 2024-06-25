@@ -640,7 +640,7 @@ export class AsientoContableComponent {
 
 
   public V_TasaCambios(): void {
-alert("")
+
     if (this.val.Get("txtFecha").value == undefined) return;
 
 
@@ -663,7 +663,6 @@ alert("")
             this.TC = Number(datos.d);
             this.val.Get("TxtTC").setValue(this.TC);
             this.V_Calcular();
-            this.v_Consecutivo();
             this.v_Consecutivo();
           }
 
@@ -979,18 +978,21 @@ alert("")
     this.val.addFocus("txtReferenciaDoc", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "txtObservaciones", undefined);
 
-    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
-     
-   
+    $("#offcanvasBottom-asiento").removeAttr("show");
+    $("#btnMostrarPie-asiento").trigger("click"); 
+
   }
 
 
 
 
   ngDoCheck() {
-
+    
     this.valTabla.Combo(this.lstCmb);
 
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
+    
     this.lstDetalle.data.forEach(f => {
 
       this.valTabla.addFocus("txtCuenta-asiento" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);

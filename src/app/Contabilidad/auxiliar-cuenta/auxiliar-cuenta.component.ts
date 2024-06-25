@@ -452,15 +452,20 @@ export class AuxiliarCuentaComponent {
     this.val.addFocus("txtBodega-auxiliar", "txtCuenta-Asiento", undefined);
     this.val.addFocus("txtCuenta-Asiento", "btnRefrescar-Auxiliar", "click");
 
-  }
-
-  private ngAfterViewInit() {
-
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
      
 
+
   }
+
+
+  ngAfterViewInit(): void {
+    $("#offcanvasBottom-auxiluar").removeAttr("show");
+    $("#btnMostrarPie-auxiluar").trigger("click"); 
+
+  }
+
 
 
 }

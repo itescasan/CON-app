@@ -134,14 +134,10 @@ export class EstadoResultadoComponent {
     this.val.addFocus("txtFecha", "cmbOpcion", undefined);
     this.val.addFocus("cmbOpcion", "cmbMoneda", undefined);
     this.val.addFocus("cmbMoneda", "btnReporte-Estado-Resultado", "click");
-    
-
-  }
-
-  private ngAfterViewInit() {
-
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
 
+
   }
+
 
 }
