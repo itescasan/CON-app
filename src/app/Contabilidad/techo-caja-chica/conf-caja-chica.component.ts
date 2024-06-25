@@ -65,8 +65,10 @@ export class ConfCajaChicaComponent {
       case "Limpiar":     
 
         this.lstConfCaja.data.splice(0, this.lstConfCaja.data.length);
+        this.lstValorCaja.splice(0, this.lstValorCaja.length);
+        this.lstCuentasCaja.splice(0, this.lstCuentasCaja.length);
         this.lstConfCaja = new MatTableDataSource<iConfCaja> ;
-
+        this.FILA.splice(0, this.FILA.length);
         this.v_CargarDatos();
         
         
@@ -147,11 +149,11 @@ export class ConfCajaChicaComponent {
     Acc.forEach(f =>{
               
       let i = this.lstValorCaja.findIndex((w : any) => w.CuentaContable == f.CuentaContable );
-      //f.Activo = false;
+      f.Estado = "ABIERTO";
       // f.IdAcceso = -1;     
       if(i != -1) 
       {
-        f.Estado = this.lstValorCaja[i].Estado;;
+        f.Estado = this.lstValorCaja[i].Estado;
         f.IdTecho = this.lstValorCaja[i].IdTecho;
         f.Valor = this.cFunciones.NumFormat(this.lstValorCaja[i].Valor, "2");
         f.Serie = this.lstValorCaja[i].Serie;

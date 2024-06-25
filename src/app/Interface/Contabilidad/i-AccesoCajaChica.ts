@@ -1,6 +1,7 @@
 export interface iAccesoCaja{
     IdAcceso: number;
-    CuentaContable: string;  
+    CuentaContable: string;
+    NombreCuenta: string;
     Usuario : string;
     Activo : boolean;  
 }
