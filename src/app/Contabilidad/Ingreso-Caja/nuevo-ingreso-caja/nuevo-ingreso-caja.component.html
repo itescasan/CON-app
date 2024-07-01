@@ -60,7 +60,7 @@
                         <div class="input-group">
                             <span class="input-group-text secundario">#</span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="No" id="txtConsecutivo"
+                                <input type="text" class="form-control" placeholder="No" id="txtConsecutivo"                               
                                     formControlName="txtConsecutivo">
                                 <label for="txtConsecutivo">No</label>
                             </div>
@@ -363,32 +363,32 @@
                     *ngIf="orderby[0].Direccion != ''"
                     [ngClass]="orderby[0].Direccion == 'ASC' ?   'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
         </div>
-        <div class="col-8 col-lg-1 center"><span>Proveedor <i
+        <div class="col-8 col-lg-1 center"><span>Concepto <i
                     *ngIf="orderby[1].Direccion != ''"
                     [ngClass]="orderby[1].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
         </div>
 
-        <div class="col-12 col-lg-1 center"><span>Codigo <i
+        <div class="col-12 col-lg-1 center"><span>Referencia <i
                     *ngIf="orderby[2].Direccion != ''"
                     [ngClass]="orderby[2].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
         </div>
 
-        <div class="col-12 col-lg-1 center"><span>Cuenta <i
+        <div class="col-12 col-lg-1 center"><span>Proveedor <i
                     *ngIf="orderby[3].Direccion != ''"
                     [ngClass]="orderby[3].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
         </div>
 
-        <div class="col-6 col-lg-1  numero"><span>CentroCosto</span></div>
+        <div class="col-6 col-lg-1  center"><span>Cuenta</span></div>
 
-        <div class="col-6 col-lg-1 numero"><span>SubTotal</span></div>
+        <div class="col-6 col-lg-1 center"><span>CentroCosto</span></div>
 
-        <div class="col-6 col-lg-1 numero"><span>Iva</span></div>
+        <div class="col-6 col-lg-1 center"><span>SubTotal</span></div>
 
-        <div class="col-6 col-lg-1 numero"><span>Total</span></div>
+        <div class="col-6 col-lg-1 center"><span>IVA</span></div>
 
-        <div class="col-6 col-lg-1 numero"><span>Referencia</span></div>
+        <div class="col-6 col-lg-2 center"><span>Total</span></div>
 
-        <div class="col-6 col-lg-2 numero"><span>Empleado</span></div>
+        <div class="col-6 col-lg-2 center"><span>Empleado</span></div>
 
     </div>
 
@@ -404,17 +404,12 @@
 
                         <div class="col-6 col-lg-1">
                             <div class="row">
-                                <div class="header-cell"><span>Operacion</span></div>
+                                <div class="header-cell"><span>Fecha</span></div>
                             </div>
-                            <div class="row">
-
-                           
-                                    <span *ngIf="det.Retenido"><i class="fa-solid fa-r"></i></span>
-                                    <input type="text" class="form-control center blue blod"
-                                        id="txtOperacion{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                        [ngModel]="det.Operacion" disabled>
-                           
-
+                            <div class="row">                           
+                                <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                [ngModelOptions]="{standalone: true}" [ngModel]="det.FechaFactura |date:'dd MMM yyyy'"
+                                disabled>
                             </div>
 
 
@@ -425,50 +420,56 @@
 
                         <div class="col-6 col-lg-1">
                             <div class="row">
-                                <div class="header-cell"><span>Tipo Documento</span></div>
+                                <div class="header-cell"><span>Concepto</span></div>
                             </div>
                             <div class="row">
 
                                
-                                    <input type="text" class="form-control center" id="txtTipoDocumento{{det.Index}}"
-                                        [ngModelOptions]="{standalone: true}" [ngModel]="det.TipoDocumento" disabled>
-                          
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-                        <div class="col-12 col-lg-2">
-                            <div class="row">
-                                <div class="header-cell"><span>Documento</span></div>
-                            </div>
-                            <div class="row">
-
-                              
-                                    <input type="text" class="form-control center" id="txtDocumento{{det.Index}}"
-                                        [ngModelOptions]="{standalone: true}" [ngModel]="det.Documento" disabled>
-                           
-
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-lg-2">
-
-                            <div class="row">
-                                <div class="header-cell"><span>Fecha</span></div>
-                            </div>
-                            <div class="row">
-
-                           
+                                <div class="row">                           
                                     <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
-                                        [ngModelOptions]="{standalone: true}" [ngModel]="det.Fecha |date:'dd MMM yyyy'"
-                                        disabled>
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.Concepto"
+                                    disabled>
+                                </div>
+                          
+
+                            </div>
+
+
+
+                        </div>
+
+
+
+                        <div class="col-12 col-lg-1">
+                            <div class="row">
+                                <div class="header-cell"><span>Referencia</span></div>
+                            </div>
+                            <div class="row">
+
+                                <div class="row">                           
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.Referencia"
+                                    disabled>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-6 col-lg-1">
+
+                            <div class="row">
+                                <div class="header-cell"><span>Proveedor</span></div>
+                            </div>
+                            <div class="row">
+
+                           
+                                <div class="row">                           
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.Proveedor"
+                                    disabled>
+                                </div>
                           
 
 
@@ -478,32 +479,34 @@
                         </div>
 
 
-                        <div class="col-6 col-lg-2">
+                        <div class="col-6 col-lg-1">
                             <div class="row">
-                                <div class="header-cell"><span>Saldo</span></div>
+                                <div class="header-cell"><span>Cuenta</span></div>
                             </div>
                             <div class="row">
 
                              
-                                    <input type="text" class="form-control numero  secundario"
-                                        id="txtSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                        [ngModel]="det.Saldo" disabled>
-                          
+                                <div class="row">                           
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.Cuenta"
+                                    disabled>
+                                </div>
 
                             </div>
 
                         </div>
 
-                        <div class="col-6 col-lg-2">
+                        <div class="col-6 col-lg-1">
                             <div class="row">
-                                <div class="header-cell"><span>Importe</span></div>
+                                <div class="header-cell"><span>CentroCosto</span></div>
                             </div>
                             <div class="row">
 
-                                    <input type="text" class="form-control numero importe" id="txtImporte{{det.Index}}"
-                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Importe"
-                                        (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                        (change)="V_Calcular();" autocomplete="off">
+                                <div class="row">                           
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.CentroCosto"
+                                    disabled>
+                                </div>
                       
 
 
@@ -512,17 +515,66 @@
                         </div>
 
 
-                        <div class="col-6 col-lg-2">
+                        <div class="col-6 col-lg-1">
                             <div class="row">
-                                <div class="header-cell"><span>Nuevo Saldo</span></div>
+                                <div class="header-cell"><span>SubTotal</span></div>
                             </div>
                             <div class="row">
 
                                
-                                    <input type="text" class="form-control numero blue blod"
-                                        id="txtNuevoSaldo{{det.Index}}" [ngModelOptions]="{standalone: true}"
-                                        [ngModel]="(det.NuevoSaldo == det.Saldo? '': det.NuevoSaldo)" disabled>
-                          
+                                <div class="row">                           
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.SubTotal"
+                                    disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6 col-lg-1">
+                            <div class="row">
+                                <div class="header-cell"><span>IVA</span></div>
+                            </div>
+                            <div class="row">
+
+                               
+                                <div class="row">                           
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.Iva"
+                                    disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6 col-lg-2">
+                            <div class="row">
+                                <div class="header-cell"><span>Total</span></div>
+                            </div>
+                            <div class="row">
+
+                               
+                                <div class="row">                           
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.Total"
+                                    disabled>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6 col-lg-2">
+                            <div class="row">
+                                <div class="header-cell center"><span>Empleado</span></div>
+                            </div>
+                            <div class="row">
+
+                               
+                                <div class="row">                           
+                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.CuentaEmpleado"
+                                    disabled>
+                                </div>
                             </div>
 
                         </div>
@@ -570,10 +622,10 @@
             <span class="diferencia"><span class="etiqueta">Monto Caja:</span><span class="valores dif">{{mont_Caja | number :
                     "1.2-2"}}</span></span>
 
-            <span class="retencion"><span class="etiqueta">Gasto C$:</span><span class="valores">{{dec_Retencion | number :
+            <span class="retencion"><span class="etiqueta">Gasto C$:</span><span class="valores">{{gas_Caja | number :
                     "1.2-2"}}</span></span>
 
-            <span class="disponible"><span class="etiqueta">Saldo Caja:</span><span class="valores dif">{{dec_Disponible |
+            <span class="disponible"><span class="etiqueta">Saldo Caja:</span><span class="valores dif">{{sal_Disponible |
                     number :
                     "1.2-2"}}</span></span>
            

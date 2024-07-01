@@ -23,7 +23,7 @@ export class postIngresoCaja{
  
    GuardarIngresoCaja(d : iIngresoCajaPost) : Observable<string> { 
 
-    return this.http.post<any>(this._Cnx.Url() + "Contabilidad/EjercicioFiscal/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
+    return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
 
 }
 

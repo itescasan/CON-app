@@ -1,7 +1,6 @@
 export interface iIngCajaDetalle {
     IdDetalleIngresoCajaChica: number;
-    IdIngresoCajaC : number;
-    FechaRegistro: Date;
+    IdIngresoCajaC : number;    
     FechaFactura: Date;
     Concepto: string;
     Referencia : string;
@@ -11,9 +10,7 @@ export interface iIngCajaDetalle {
     SubTotal : number;
     Iva : number;
     Total : number;
-    CuentaEmpleado: string;
-    NombreEmpleado : string;
-    FechaModificacion : Date;
+    CuentaEmpleado: any; 
 }
 
 

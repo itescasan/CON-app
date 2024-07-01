@@ -55,9 +55,10 @@ export class NuevoIngresoCajaComponent {
   public Anulado: boolean = false;  
   public dec_Aplicado: number = 0;
   public dec_Contabilizado:  boolean = false;
-  public dec_Retencion: number = 0; 
-  public dec_Disponible: number = 0; 
-  public mont_Caja: number = 0;  
+  public gas_Caja: number = 0; 
+  public sal_Disponible: number = 0; 
+  public mont_Caja: number = 0;
+  public IdCaja: number = 0; 
   
 
   public orderby: iOrderBy[] = [
@@ -82,11 +83,11 @@ export class NuevoIngresoCajaComponent {
     this.val.add("txtConsecutivo", "1", "LEN>", "0", "Consecutivo", "No se ha definido el número de consecutivo.");
     this.val.add("txtReferencia", "1", "LEN>", "0", "Referencia", "Ingrese la Referencia.");
     this.val.add("txtProveedor", "1", "LEN>", "0", "Proveedor", "Ingrese el Proveedor.");
-    this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese el Proveedor.");
-    this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese el Proveedor.");
-    this.val.add("txtSubTotal", "1", "NUM>=", "0", "Subtotal", "Ingrese el Proveedor.");
+    this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese la Fecha.");
+    this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese el Concepto.");
+    this.val.add("txtSubTotal", "1", "NUM>", "0", "Subtotal", "Ingrese el Valor del Sub-Total.");
     this.val.add("txtIVA", "1", "NUM>=", "0", "IVA", "Ingrese el IVA.");
-    this.val.add("txtTotal", "1", "NUM>=", "0", "Total", "Ingrese el Proveedor.");
+    this.val.add("txtTotal", "1", "NUM>=", "0", "Total", "Ingrese el Total.");
   
     
     // this.val.add("cmbProveedor", "1", "LEN>", "0", "Proveedor", "Seleccione un proveedor.");
@@ -111,13 +112,15 @@ export class NuevoIngresoCajaComponent {
       case "Iniciar":
         this.v_Evento("Limpiar");
         this.v_CargarDatos();
+        
+       
         break;
 
       case "Limpiar":
 
         this.Anulado = false;
         this.FILA.IdIngresoCajaChica = 0;
-        this.dec_Disponible = 0;
+        this.sal_Disponible = 0;
         this.dec_Aplicado = 0;
         this.mont_Caja = 0;
 
@@ -190,6 +193,12 @@ export class NuevoIngresoCajaComponent {
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbRubro").setValue(event.newValue);
+      let cmb: any = this.cmbRubro.dropdown;
+      let _Item: iAccesoCaja = cmb._focusedItem.value;
+      this.cmbRubro.setSelectedItem(_Item.CuentaContable);
+      this.val.Get("cmbRubro").setValue([_Item.CuentaContable]);
+      //this.val.Get("cmbRubro").setValue([_Item.NombreCuenta])
+      this.v_EnableCmbEmpleado(_Item?.NombreCuenta);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
   }
@@ -201,16 +210,7 @@ export class NuevoIngresoCajaComponent {
       this.cmbRubro.setSelectedItem(_Item.CuentaContable);
       this.val.Get("cmbRubro").setValue([_Item.CuentaContable]);
       //this.val.Get("cmbRubro").setValue([_Item.NombreCuenta])
-
-      let array = ['ALIMENTACION','HOSPEDAJE','TRANSPORTE'];      
-      let cuenta = _Item.NombreCuenta.split("->");
-      array.includes(cuenta[1])
-      if (array.includes(cuenta[1])) {
-        this.val.Get("cmbEmpleado").enable();
-      }else {
-        this.val.Get("cmbEmpleado").disable();
-        this.val.Get("cmbEmpleado").setValue("");
-      }
+      this.v_EnableCmbEmpleado(_Item?.NombreCuenta);
         
 
     }
@@ -224,7 +224,7 @@ export class NuevoIngresoCajaComponent {
 
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
-      this.val.Get("cmbCentroCosto").setValue(event.newValue);
+      this.val.Get("cmbCentroCosto").setValue(event.newValue);     
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCentroCosto.close();
     }
   }
@@ -234,8 +234,7 @@ export class NuevoIngresoCajaComponent {
       let cmb: any = this.cmbCentroCosto.dropdown;
       let _Item: iCentroCosto = cmb._focusedItem?.value;
       this.cmbCentroCosto.setSelectedItem(_Item?.Codigo);
-      this.val.Get("cmbCentroCosto").setValue([_Item?.Codigo]);
-
+      this.val.Get("cmbCentroCosto").setValue([_Item?.Codigo]);      
     }
   }
 
@@ -257,7 +256,7 @@ export class NuevoIngresoCajaComponent {
     if (event.key == "Enter") {
       let cmb: any = this.cmbEmpleado.dropdown;
       let _Item: iAccesoCaja = cmb._focusedItem?.value;
-      this.cmbCentroCosto.setSelectedItem(_Item?.CuentaContable);
+      this.cmbEmpleado.setSelectedItem(_Item?.CuentaContable);
       this.val.Get("cmbEmpleado").setValue([_Item?.CuentaContable]);
 
     }
@@ -269,40 +268,21 @@ export class NuevoIngresoCajaComponent {
     this.val.Get(id).setValue(this.cFunciones.NumFormat(this.val.Get(id).value.replaceAll(",", ""), "2"));
   }
 
+  public v_EnableCmbEmpleado(NombreCuenta: string): void
+  {
+    let array = ['ALIMENTACION','HOSPEDAJE','TRANSPORTE'];
+    let cuenta = NombreCuenta.split("->");
+    array.includes(cuenta[1])
+    if (array.includes(cuenta[1])) {
+      this.val.Get("cmbEmpleado").enable();
+      this.val.replace("cmbEmpleado", "1","LEN>", "0", "Seleccione un Empleado.")
+    }else {
+      this.val.Get("cmbEmpleado").disable();
+      this.val.Get("cmbEmpleado").setValue("");
+      this.val.replace("cmbEmpleado", "1","LEN>=", "0", "Seleccione una Empleado.")
+    }
+  }
 
-
-
-  // public v_ConvertirTotal(event: any): void {
-  //   let valor: number = 0;
-  //   let id: String = "";
-
-  //   if (event != "") {
-  //     if (event.target.value == "") return;
-  //     valor = Number(String(event.target.value).replaceAll(",", ""));
-
-  //     id = event.target.id;
-  //   }
-  //   else {
-  //     valor = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
-  //     id = "txtTotalDolar";      
-
-  //   }
-
-
-
-  //   if (id == "txtTotalCordoba") {
-  //     valor = valor / this.TC;
-  //     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(valor, "2"));
-  //   }
-
-  //   if (id == "txtTotalDolar") {
-  //     valor = valor * this.TC;
-  //     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(valor, "2"));
-  //   }
-
-    
-
-  // }
 
 
   //██████████████████████████████████████████CARGAR DATOS██████████████████████████████████████████████████████
@@ -346,8 +326,7 @@ export class NuevoIngresoCajaComponent {
             let datos: iDatos[] = _json["d"];
 
             this.lstBodega = datos[0].d;        
-            this.lstCentroCosto = datos[1]?.d;
-            
+            this.lstCentroCosto = datos[1]?.d; 
 
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.CuentaContable);
@@ -363,7 +342,7 @@ export class NuevoIngresoCajaComponent {
 
       dialogRef.close();
 
-      document.getElementById("btnRefrescar-Cheque")?.removeAttribute("disabled");
+      document.getElementById("btnRefrescar-Caja")?.removeAttribute("disabled");
       if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
         this.cFunciones.DIALOG.open(DialogErrorComponent, {
           id: "error-servidor",
@@ -372,7 +351,7 @@ export class NuevoIngresoCajaComponent {
       }
 
     },
-    complete: () => { document.getElementById("btnRefrescar-Cheque")?.removeAttribute("disabled"); }
+    complete: () => { document.getElementById("btnRefrescar-Caja")?.removeAttribute("disabled"); }
     } 
   );
 
@@ -403,8 +382,8 @@ export class NuevoIngresoCajaComponent {
             this.lstInfoCaja = datos[1].d;
             this.lstEmpleado = datos[2].d;
             if (!this.esModal) this.val.Get("txtConsecutivo").setValue(this.lstInfoCaja[0].Consecutivo);
-            this.mont_Caja = this.cFunciones.Redondeo(this.lstInfoCaja[0].Valor, "2");
-
+            this.mont_Caja = this.cFunciones.Redondeo(this.lstInfoCaja[0].Valor, "2");            
+            this.v_llenarDatos(this.lstInfoCaja[0].Consecutivo,this.cFunciones.User,this.lstInfoCaja[0].CuentaContable);
 
           }
 
@@ -490,67 +469,29 @@ export class NuevoIngresoCajaComponent {
        
   
 
-    this.dec_Aplicado = 0;
-    this.mont_Caja = 0;
-    this.dec_Retencion = 0;
+    this.sal_Disponible = 0;
+    //this.mont_Caja = 0;
+    this.gas_Caja = 0;
 
 
 
     this.lstDetalle.data.forEach(f => {
+      this.IdCaja = f.IdIngresoCajaC
+      if (f.IdIngresoCajaC == undefined) f.IdIngresoCajaC = 0;
+
+      this.gas_Caja += f.SubTotal
+      this.sal_Disponible = this.mont_Caja - this.gas_Caja
 
     });
 
   }
 
   public v_Guardar(): void {   
-
-      if (Number(Number(this.val.Get("txtSubTotal").value.toString().replaceAll(",", ""))) == 0 ) 
-      {
-        this.val.add("txtSubTotal", "1", "NUM>", "0", "SubTotal", "Escriba el SubTotal ");
-        if(!this.val.ItemValido(["txtTotalCordoba"])) return;
-      } 
-    
-      if (Number(Number(this.val.Get("txtTotal").value.toString().replaceAll(",", ""))) == 0 ) {
-        this.val.add("txtTotal", "1", "NUM>", "0", "Total", "Escriba el Total");
-        if(!this.val.ItemValido(["txtTotal"])) return;
-
-      }
-
-      if (this.val.Get("cmbBodega").value.toString().length == 0 ) {
-        this.val.add("cmbBodega", "1", "LEN>", "0", "Bodega", "Seleccione la Bodega");
-        if(!this.val.ItemValido(["cmbBodega"])) return;
-      }
-
-      if (this.val.Get("cmbRubro").value.toString().length == 0 ) {
-        this.val.add("cmbRubro", "1", "LEN>", "0", "Total", "Seleccione el Rubro");
-        if(!this.val.ItemValido(["cmbRubro"])) return;
-      }
-
-      if (this.val.Get("cmbCentroCosto").value.toString().length == 0 ) {
-        this.val.add("cmbCentroCosto", "1", "LEN>", "0", "Total", "Seleccione el Centro de Costo");
-        if(!this.val.ItemValido(["cmbCentroCosto"])) return;
-      }
-
-      if (this.val.Get("txtReferencia").value.toString().length == 0 ) {
-        this.val.add("txtReferencia", "1", "NUM>", "0", "Total", "Escriba la Referencia");
-        if(!this.val.ItemValido(["txtReferencia"])) return;
-      }
-
-      if (this.val.Get("txtProveedor").value.toString().length == 0 ) {
-        this.val.add("txtProveedor", "1", "NUM>", "0", "Total", "Escriba el nombre del Proveedor");
-        if(!this.val.ItemValido(["txtProveedor"])) return;
-      }
-
-      if (this.val.Get("txtConcepto").value.toString().length == 0 ) {
-        this.val.add("txtConcepto", "1", "NUM>", "0", "Total", "Escriba el Concepto");
-        if(!this.val.ItemValido(["txtConcepto"])) return;
-      }
-
-      if (Number(Number(this.val.Get("txtConsecutivo").value)) == 0) {
-        this.val.add("txtConsecutivo", "1", "NUM>", "0", "Total", "Verifique el Consecutivo");
-        if(!this.val.ItemValido(["txtConsecutivo"])) return;
-      }
-      
+ 
+      this.val.EsValido();
+      this.valTabla.EsValido();
+  
+  
       if (this.val.Errores != "") {
         this.cFunciones.DIALOG.open(DialogErrorComponent, {
           data: this.val.Errores,
@@ -558,34 +499,42 @@ export class NuevoIngresoCajaComponent {
   
         return;
       }
-
-      this.FILA.IdIngresoCajaChica = -1;
-      this.FILA.FechaRegistro = this.cFunciones.FechaServer;
+  
+  
+  
+      if (this.valTabla.Errores != "") {
+        this.cFunciones.DIALOG.open(DialogErrorComponent, {
+          data: this.valTabla.Errores,
+        });
+  
+        return;
+      }
+  
+      this.FILA.IdIngresoCajaChica = this.IdCaja;
       this.FILA.Cuenta = this.val.Get("cmbBodega").value[0];
-      this.FILA.Consecutivo = this.val.Get("txtConsecutivo").value[0];
-      this.FILA.FechaModificacion = this.cFunciones.FechaServer;
+      this.FILA.Consecutivo = this.val.Get("txtConsecutivo").value;
       this.FILA.Usuario = this.cFunciones.User;
       this.FILA.UsuarioModifica = this.cFunciones.User;
       this.FILA.Aplicado = false;
       this.FILA.Contabilizado = false;
+      
 
       let det: iIngCajaDetalle  = {} as iIngCajaDetalle;
 
       det.IdDetalleIngresoCajaChica = -1;
-      det.IdIngresoCajaC = -1;
-      det.FechaRegistro = this.val.Get("txtFecha").value;
+      det.IdIngresoCajaC = -1;     
+      det.FechaFactura = this.val.Get("txtFecha").value;
       det.Concepto = this.val.Get("txtConcepto").value;
       det.Referencia = this.val.Get("txtReferencia").value;
       det.Proveedor = this.val.Get("txtProveedor").value;
-      det.Cuenta = this.val.Get("cmbRubro").value;
-      det.CentroCosto = this.val.Get("cmbCentroCosto").value;
-      det.SubTotal = this.val.Get("txtSubTotal").value;
-      det.Iva = this.val.Get("txtIVA").value;
-      det.Total =this.val.Get("txtTotal").value;
-      det.CuentaEmpleado = this.val.Get("cmbEmpleado").value;
-      det.NombreEmpleado = this.val.Get("cmbEmpleado").value;
-      det.FechaModificacion = this.cFunciones.FechaServer;    
-  
+      det.Cuenta = this.val.Get("cmbRubro").value[0];
+      det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
+      det.SubTotal = Number(String(this.val.Get("txtSubTotal").value).replaceAll(",", ""));
+      det.Iva = Number(String(this.val.Get("txtIVA").value).replaceAll(",", ""));
+      det.Total = Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""));
+
+      det.CuentaEmpleado = this.val.Get("cmbEmpleado").value == undefined ?  "" : this.val.Get("cmbEmpleado").value[0]; 
+      
   
       if (!this.esModal) {      
   
@@ -632,7 +581,8 @@ export class NuevoIngresoCajaComponent {
                 data: "<p><b class='bold'>" + msj + "</b></p>"
               });
   
-  
+              this.v_Rubro();
+
               if (!this.esModal) this.v_Evento("Limpiar");
   
             }
@@ -658,10 +608,10 @@ export class NuevoIngresoCajaComponent {
 
     }
 
+   
     ngOnInit(): void {
       this.overlaySettings = {};
-
-      this.v_llenarDatos();
+      
 
     if (window.innerWidth <= 992) {
       this.overlaySettings = {
@@ -671,7 +621,75 @@ export class NuevoIngresoCajaComponent {
       };
     }
   }
-  public v_llenarDatos() {
+  public v_llenarDatos(Consecutivo : number, Usuario : string, CuentaBodega : string) {
+
+    document.getElementById("btnRefrescar-Caja")?.setAttribute("disabled", "disabled");
+
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+    this.GET.Get(Consecutivo,Usuario,CuentaBodega).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos[] = _json["d"];
+
+            this.lstDetalle.data = datos[0].d;        
+            this.V_Calcular();
+            
+
+
+            if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.CuentaContable);
+            
+            //if (this.esModal) this.v_Visualizar();
+
+
+      }
+
+    },
+    error: (err) => {
+
+
+      dialogRef.close();
+
+      document.getElementById("btnRefrescar-Caja")?.removeAttribute("disabled");
+      if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+        this.cFunciones.DIALOG.open(DialogErrorComponent, {
+          id: "error-servidor",
+          data: "<b class='error'>" + err.message + "</b>",
+        });
+      }
+
+    },
+    complete: () => { document.getElementById("btnRefrescar-Caja")?.removeAttribute("disabled"); }
+    } 
+  );
    
   }
     // this.overlaySettings = {};
