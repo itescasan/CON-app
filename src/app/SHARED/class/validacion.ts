@@ -10,9 +10,10 @@ import {
 import { ErrorStateMatcher } from "@angular/material/core";
 
 import { formatDate, formatNumber } from "@angular/common";
-import { IgxComboComponent } from "igniteui-angular";
+import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings } from "igniteui-angular";
 import { QueryList } from "@angular/core";
 import { IComboSelectionChangingEventArgs } from 'igniteui-angular';
+import { scaleInCenter, scaleOutCenter } from "igniteui-angular/animations";
 
 
 function getRectArea(elmento: HTMLElement) {
@@ -164,12 +165,13 @@ interface iFormat {
 
 const lstFocus: iFocus[] = [];
 const lstFormat: iFormat[] = [];
-let cmb: QueryList<IgxComboComponent>;
+let cmb: IgxComboComponent[] = [];
 
 export class Validacion {
 
 
-
+  private overlaySettings: OverlaySettings = {};
+  private overlaySettings2: OverlaySettings = {};
   private fb = new FormBuilder();
   public Iniciar: boolean = false;
   public Errores: string = "";
@@ -180,6 +182,14 @@ export class Validacion {
   private lstFrm: I_Frm[] = [];
 
 
+  private xs : number = 0;
+  private sm : number = 576;
+  private md : number = 768;
+  private lg : number = 992;
+  private xl : number = 1200;
+  private xxl : number = 1400;
+
+
 
   constructor() {
     lstFocus.splice(0, lstFocus.length);
@@ -188,8 +198,54 @@ export class Validacion {
 
   public ValForm = this.fb.nonNullable.group({});
 
-  public Combo(c: any) {
-    cmb = c;
+  public Combo(c: QueryList<IgxComboComponent>) {
+
+    c?.filter(f=> {
+
+      let temp = cmb.find( w=> w.id == f.id);
+
+      if(temp == undefined) cmb.push(f);
+
+    });
+
+
+    
+  }
+
+
+  public ComboOverLay(c: QueryList<IgxComboComponent>, Permir_OutsideCLick_id : string[]) {
+
+    c?.forEach( f => {
+      f.itemsWidth = (window.innerWidth <= this.sm ? String(window.innerWidth) : this.sm) + "px";
+      f.overlaySettings = this.overlaySettings;
+      if(Permir_OutsideCLick_id.includes(f.id)) f.overlaySettings = this.overlaySettings2;
+
+    });
+
+
+
+    this.overlaySettings = {};
+    this.overlaySettings2 = {};
+
+
+    if (window.innerWidth <= this.md) {
+      this.overlaySettings = {
+        positionStrategy: new GlobalPositionStrategy({ openAnimation: scaleInCenter, closeAnimation: scaleOutCenter }),
+        modal: true,
+        closeOnOutsideClick: false
+      };
+
+      this.overlaySettings2 = {
+        positionStrategy: new GlobalPositionStrategy({ openAnimation: scaleInCenter, closeAnimation: scaleOutCenter }),
+        modal: true,
+        closeOnOutsideClick: true
+      };
+    }
+
+
+
+  
+
   }
 
 

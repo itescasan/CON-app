@@ -119,13 +119,10 @@
 
 
     @include Tamano(lg) {
-        height: 180px;
-    }
-
-
-    @include Tamano(xl) {
         height: 220px;
     }
+
+
 
 
 }

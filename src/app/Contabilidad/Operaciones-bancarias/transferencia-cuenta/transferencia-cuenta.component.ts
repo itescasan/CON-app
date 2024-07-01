@@ -173,7 +173,7 @@ export class TransferenciaCuentaComponent {
 
       }, 250);
 
-      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
+      this.cmbCuentaBancaria.close();
 
     }
   }
@@ -199,7 +199,7 @@ export class TransferenciaCuentaComponent {
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
-      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
+      this.cmbBodega.close();
     }
   }
 
@@ -419,7 +419,7 @@ export class TransferenciaCuentaComponent {
 
 
 
-      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCuenta.close();
+      txtCuenta.close();
 
     }
 
@@ -457,7 +457,7 @@ export class TransferenciaCuentaComponent {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       det.CentroCosto = event.newValue[0];
 
-      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCentro.close();
+      txtCentro.close();
 
     }
 

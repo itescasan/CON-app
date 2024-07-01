@@ -117,7 +117,7 @@ export class SidebarComponent {
     if(this.ErrorServidor && id != "aSalir"){
       this.cFunciones.DIALOG.closeAll();
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
-        data: "<b class='error'>" + "Error al conectar con el servidor, por favor recargue la pagina o cierre sessión." + "</b>",
+        data: "<b class='error'>" + "Obteniendo Información del servidor por favor espere." + "</b>",
       });
       return;
     }
@@ -433,13 +433,13 @@ export class SidebarComponent {
           this.ErrorServidor = true;
         
           
-          if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
+          /*if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
           {
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               id : "error-servidor",
               data: "<b class='error'>" + err.message + "</b>",
             });
-          }
+          }*/
        
 
         },

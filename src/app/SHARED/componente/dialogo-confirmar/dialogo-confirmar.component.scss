@@ -1,4 +1,4 @@
-
+@import "/src/assets/scss/media.scss";
 #dialog-confirmar{
     width: 300px;
     max-width: 400px;
@@ -65,6 +65,7 @@ button:first-child{
 }
 
 
+  
 .btn-contenedor-cerrar{
     background-color: var(--escan-primario);
     font-size: 1em;
