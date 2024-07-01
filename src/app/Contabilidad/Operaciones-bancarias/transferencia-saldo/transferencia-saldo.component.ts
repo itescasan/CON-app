@@ -213,7 +213,7 @@ export class TransferenciaSaldoComponent {
 
 
       this.IdMoneda = String(_Item?.IdMoneda);
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
+      this.cmbCuentaBancaria.close();
 
     }
 
@@ -240,7 +240,7 @@ export class TransferenciaSaldoComponent {
 
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbCentroCosto").setValue(event.newValue);
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCentroCosto.close();
+      this.cmbCentroCosto.close();
     }
   }
 
@@ -266,7 +266,7 @@ export class TransferenciaSaldoComponent {
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
+      this.cmbBodega.close();
     }
   }
 
@@ -301,7 +301,7 @@ export class TransferenciaSaldoComponent {
 
       this.val.Get("cmbProveedor").setValue(event.newValue);
 
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbProveedor.close();
+      this.cmbProveedor.close();
     }
   }
 
