@@ -21,10 +21,19 @@ export class postIngresoCaja{
     }
 
  
-   GuardarIngresoCaja(d : iIngresoCajaPost) : Observable<string> { 
+   GuardarIngresoCaja(d : iIngresoCajaPost) : Observable<string> 
+   { 
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
+   }
 
-    return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Guardar", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
-
-}
+    EliminarDetalleCaja(id : number) : Observable<string> 
+    {        
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Eliminar?IdIngCajaDetalle=" + id, { headers: { 'content-type': 'application/text' } });        
+    }
+    
+    AplicarIngCaja(id : number, user: string) : Observable<string> 
+    {        
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Aplicar?IdIngresoCaja=" + id + "&user=" + user, { headers: { 'content-type': 'application/text' } });        
+    }   
 
 }

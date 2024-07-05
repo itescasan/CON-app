@@ -31,6 +31,12 @@ export class getIngresoCaja{
    public Get(Consecutivo : number ,Usuario :string, CuentaBodega : string ) : Observable<string>{
     return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Get?Consecutivo=" + Consecutivo  + "&USuario=" + Usuario + "&CuentaBodega=" + CuentaBodega);
  }
-   
+    public GetRptIngCaja(Id: number): Observable<string> {
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/IngresosCaja?Id=" + Id);
+  }
+ 
+  public GetRegistro(Usuario: string): Observable<string> {
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Registro?User=" + Usuario);
+  }
 
 }

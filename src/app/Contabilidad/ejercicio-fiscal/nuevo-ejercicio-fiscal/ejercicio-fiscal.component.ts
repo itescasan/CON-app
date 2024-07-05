@@ -382,7 +382,7 @@ export class EjercicioFiscalComponent {
           det.Estado = "ABIERTO";
         }
       }
-    })
+    });
   }
 
   public fill_Table(){

@@ -31,6 +31,7 @@ import { iIngresoCajaPost } from 'src/app/Interface/Contabilidad/i-IngresoCaja-P
   styleUrl: './nuevo-ingreso-caja.component.scss'
 })
 export class NuevoIngresoCajaComponent {
+
   public overlaySettings: OverlaySettings = {};
   public val = new Validacion();
   public valTabla = new Validacion();
@@ -71,14 +72,13 @@ export class NuevoIngresoCajaComponent {
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>; 
 
-
   constructor(public cFunciones: Funciones, private GET: getIngresoCaja, private POST: postIngresoCaja) {
 
 
     
     this.val.add("cmbBodega", "1", "LEN>", "0", "Bodega", "Seleccione una Bodega.");
     this.val.add("cmbRubro", "1", "LEN>", "0", "Centro Costo", "No se ha definido el Rubro.");
-    this.val.add("cmbCentroCosto", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro costo.");
+    this.val.add("cmbCentroCosto", "1", "LEN>", "0", "Centro Costo", "Seleccione un centro costo.");
     this.val.add("cmbEmpleado", "1", "LEN>", "0", "Empleado", "Ingrese el Empleado.");    
     this.val.add("txtConsecutivo", "1", "LEN>", "0", "Consecutivo", "No se ha definido el número de consecutivo.");
     this.val.add("txtReferencia", "1", "LEN>", "0", "Referencia", "Ingrese la Referencia.");
@@ -170,7 +170,10 @@ export class NuevoIngresoCajaComponent {
       this.val.Get("cmbBodega").setValue(event.newValue);
       this.v_Rubro();
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
+      this.cmbBodega.close();
     }
+
+    
   }
 
   public v_Enter_Bodega(event: any) {
@@ -200,6 +203,7 @@ export class NuevoIngresoCajaComponent {
       //this.val.Get("cmbRubro").setValue([_Item.NombreCuenta])
       this.v_EnableCmbEmpleado(_Item?.NombreCuenta);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
+      this.cmbRubro.close();
     }
   }
 
@@ -226,6 +230,7 @@ export class NuevoIngresoCajaComponent {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbCentroCosto").setValue(event.newValue);     
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCentroCosto.close();
+      this.cmbCentroCosto.close();
     }
   }
 
@@ -249,6 +254,7 @@ export class NuevoIngresoCajaComponent {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbEmpleado").setValue(event.newValue);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbEmpleado.close();
+      this.cmbEmpleado.close();
     }
   }
 
@@ -330,6 +336,8 @@ export class NuevoIngresoCajaComponent {
 
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.CuentaContable);
+
+            this.v_Rubro();
             
             //if (this.esModal) this.v_Visualizar();
 
@@ -480,7 +488,7 @@ export class NuevoIngresoCajaComponent {
       if (f.IdIngresoCajaC == undefined) f.IdIngresoCajaC = 0;
 
       this.gas_Caja += f.SubTotal
-      this.sal_Disponible = this.mont_Caja - this.gas_Caja
+      this.sal_Disponible = this.mont_Caja - this.gas_Caja      
 
     });
 
@@ -692,416 +700,269 @@ export class NuevoIngresoCajaComponent {
   );
    
   }
-    // this.overlaySettings = {};
 
-    // if (window.innerWidth <= 992) {
-    //   this.overlaySettings = {
-    //     positionStrategy: new GlobalPositionStrategy({ openAnimation: scaleInCenter, closeAnimation: scaleOutCenter }),
-    //     modal: true,
-    //     closeOnOutsideClick: true
-    //   };
-    // }  
+  V_Eliminar(item: iIngCajaDetalle) {
+    
 
+    let i = this.lstDetalle.data.findIndex(f => f.IdDetalleIngresoCajaChica == item.IdDetalleIngresoCajaChica);
 
-  //private v_Visualizar() {
+    if (i == -1) return;
+    let dialogRef: MatDialogRef<DialogoConfirmarComponent> =  this.cFunciones.DIALOG.open(
+      DialogoConfirmarComponent,
+      {
+        disableClose: true
 
-    // this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco); 
-    // this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
-    // this.cmbProveedor.setSelectedItem(this.FILA.CodProveedor);
-    // this.cmbCentroCosto.setSelectedItem(this.FILA.CentroCosto);
-    // this.val.Get("txtNoDoc").setValue(this.FILA.NoCheque);
-    // this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
-    // this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
-    // this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
-    // this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
-    // this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+      }
+    );
 
+    dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Eliminar Este Registro</p>";
+    dialogRef.componentInstance.textBoton1 = ("ACEPTAR");
+    dialogRef.componentInstance.textBoton2 = "CANCELAR";
 
+    dialogRef.afterClosed().subscribe(s => {
+      if (dialogRef.componentInstance.retorno == "1") {
+        this.v_Eliminar_IngCaja(item.IdDetalleIngresoCajaChica)
+      }
+    });
+       
 
-    // this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
-    // this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.ChequeRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
-
- 
-
-    // this.IdMoneda = this.FILA.IdMoneda;
-
-    // this.TC = this.FILA.TasaCambio;
-    // this.Anulado = this.FILA.Anulado;
+  }
 
 
+  v_Eliminar_IngCaja(id : number)  {
+    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+      }
+    );
+
+    document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+
+
+    // let Datos : iIngresoCajaPost = {} as iIngresoCajaPost;
+    // Datos.I = this.FILA;
+    // Datos.D = det;
+
+    this.POST.EliminarDetalleCaja(id).subscribe(
+      {
+        next: (data) => {
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          }
+          else {
+
+
+            let Datos: iDatos[] = _json["d"];
+            let msj: string = Datos[0].d;
+
+
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              data: "<p><b class='bold'>" + msj + "</b></p>"
+            });
+
+            this.v_Rubro();
+
+            if (!this.esModal) this.v_Evento("Limpiar");
+
+          }
+
+        },
+        error: (err) => {
+          dialogRef.close();
+
+          document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+        },
+        complete: () => {
+          document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+        }
+      }
+    );
+  }
+
+  public v_ImprimirIngCaja() {   
+
+    document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+
+    this.GET.GetRptIngCaja(this.IdCaja).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos = _json["d"];
+            this.printPDFS(datos.d);
 
 
 
-    // let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
-    // if (dialogRef != undefined) dialogRef.close();
+          }
 
-  //}
-
-  // public V_Ordenar_ColumnaCombo() : void{
-
-  //   let c = (<HTMLInputElement>document.getElementById("cmbColumna")).value;
-  //   let d = (<HTMLInputElement>document.getElementById("cmbDireccion")).value;
-
-  //   let o : iOrderBy = this.orderby.find(f => f.Columna == c)!;
-  //   if(d == "ASC") o.Direccion = "";
-  //   if(d == "DESC") o.Direccion = "ASC";
-
-  //   this.V_Ordenar_Columna(c);
-
-  // }
-
-  // public V_Ordenar_Columna(c: string): void {
- 
-
-  //   let o : iOrderBy = this.orderby.find(f => f.Columna == c)!;
-
-  //   if(o.Direccion == "ASC")
-  //   {
-  //     o.Direccion = "DESC";
-  //   }
-  //   else
-  //   {
-  //     o.Direccion = "ASC";
-  //   }
-
-    // this.lstDetalle.data.sort((a, b) => {
-
-    //   // switch (c) {
-    //   //   case "Operacion":
-    //   //     return 0 - (a.Operacion > b.Operacion ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
-    //   //     break;
-
-    //   //   case "TipoDocumento":
-    //   //     return 0 - (a.TipoDocumento > b.TipoDocumento ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
-    //   //     break;
-
-    //   //   case "Documento":
-    //   //     return 0 - (a.Documento > b.Documento ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
-    //   //     break;
-
-    //   //   case "Fecha":
-    //   //     return 0 - (a.Fecha > b.Fecha ? (o.Direccion == "ASC" ? -1: 1) : (o.Direccion == "ASC" ? 1: -1));
-    //   //     break;
-    //   // }
-
-    //   // return 0 - (a.Index > b.Index ? -1 : 1);
-
-    // });
+        },
+        error: (err) => {
 
 
-    //this.lstDetalle._updateChangeSubscription()
+          dialogRef.close();
+          document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
 
 
-    // Ascending
-    //this.lstDetalle.data.sort((a,b) => 0 - (a > b ? -1 : 1));
+        }
+      }
+    );
 
-    // Descending
-    //this.lstDetalle.data.sort((a, b) => 0 - (a.Fecha > b.Fecha ? 1 : -1));
-    //this.lstDetalle._updateChangeSubscription()
 
-  //}
+  }
+
+
+  async printPDFS(datos: any) {
+
+
+
+    let byteArray = new Uint8Array(atob(datos).split('').map(char => char.charCodeAt(0)));
+
+    var file = new Blob([byteArray], { type: 'application/pdf' });
+
+    let url = URL.createObjectURL(file);
+
+    let tabOrWindow : any = window.open(url, '_blank');
+    tabOrWindow.focus();
+
+    return
+    let pdfsToMerge = [url];
 
   
 
+    if (this.cFunciones.MyBrowser() == "Firefox") {
+      let iframe = document.createElement('iframe');
+      iframe.id = "frameBalanza";
+      iframe.style.display = 'none';
+
+      iframe.src = url
+      document.body.appendChild(iframe);
+      iframe.onload = () => {
+        setTimeout(() => {
+          iframe.focus();
+          iframe.contentWindow?.print();
+
+
+        });
+      };
+
+    }
+    else {
+      const mergedPdf = await PDFDocument.create();
+      for (const pdfCopyDoc of pdfsToMerge) {
+        const pdfBytes = await fetch(pdfCopyDoc).then(res => res.arrayBuffer())
+
+        const pdf = await PDFDocument.load(pdfBytes);
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        copiedPages.forEach((page: any) => {
+          mergedPdf.addPage(page);
+        });
+      }
+
+
+      const mergedPdfFile = await mergedPdf.save();
+      this.downloadFile(mergedPdfFile);
+    }
 
 
 
-  // }
+
+  }
 
 
-  // public v_ImprimirCheque() {
-  //   document.getElementById("btnImprimir-Cheques")?.setAttribute("disabled", "disabled");
-  //   let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+  downloadFile(data: any) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+
+    printJS({
+      printable: url,
+      type: 'pdf',
+      onPdfOpen: undefined,
+      onPrintDialogClose: undefined
+    })
+
+  }
 
 
-  //   if (dialogRef == undefined) {
-  //     dialogRef = this.cFunciones.DIALOG.open(
-  //       WaitComponent,
-  //       {
-  //         panelClass: "escasan-dialog-full-blur",
-  //         data: "",
-  //         id: "wait"
-  //       }
-  //     );
+  ngAfterViewInit(): void {
+    ///CAMBIO DE FOCO    
+    this.val.addFocus("txtReferencia", "txtProveedor", undefined);
+    this.val.addFocus("txtProveedor", "txtFecha", undefined);
+    this.val.addFocus("txtFecha", "txtConcepto", undefined);
+    this.val.addFocus("txtConcepto", "txtSubTotal", undefined);
+    this.val.addFocus("txtSubTotal", "txtIVA", undefined);
+    //this.val.addFocus("txtIVA", "btn-imprimir", undefined);
 
-  //   }
-
-
-
-    // this.GET.GetRptCheque(this.val.Get("txtNoDoc").value).subscribe(
-    //   {
-    //     next: (data) => {
-
-
-    //       dialogRef.close();
-    //       let _json: any = data;
-
-    //       if (_json["esError"] == 1) {
-    //         if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-    //           this.cFunciones.DIALOG.open(DialogErrorComponent, {
-    //             id: "error-servidor-msj",
-    //             data: _json["msj"].Mensaje,
-    //           });
-    //         }
-    //       } else {
-
-    //         let datos: iDatos = _json["d"];
-    //         this.printPDFS(datos.d);
-
-
-
-    //       }
-
-    //     },
-    //     error: (err) => {
-
-
-    //       dialogRef.close();
-    //       document.getElementById("btnReporte-Cheque")?.removeAttribute("disabled");
-    //       if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-    //         this.cFunciones.DIALOG.open(DialogErrorComponent, {
-    //           id: "error-servidor",
-    //           data: "<b class='error'>" + err.message + "</b>",
-    //         });
-    //       }
-
-    //     },
-    //     complete: () => {
-    //       document.getElementById("btnImprimir-Cheques")?.removeAttribute("disabled");
-
-
-    //     }
-    //   }
-    // );
-
-
- // }
+ 
+  }
+   
   
    //██████████████████████████████████████████POPUP██████████████████████████████████████████████████████
 
-  //  @ViewChild(MatMenuTrigger)
-  //  contextMenu: MatMenuTrigger;
-  //  contextMenuPosition = { x: '0px', y: '0px' };
-  //  public V_Popup(event: MouseEvent, item: iAsientoDetalle): void {
-  //    event.preventDefault();
-  //    this.contextMenuPosition.x = event.clientX + 'px';
-  //    this.contextMenuPosition.y = event.clientY + 'px';
-  //    this.contextMenu.menuData = { 'item': item };
-  //    this.contextMenu.menu!.focusFirstItem('mouse');
-  //    this.contextMenu.openMenu();
-  //  }
-
-  //  V_Retener(item: iChequeDocumento): void {
-
-  //   this.val.Combo(this.cmbCombo);
-  //   this.val.ItemValido(["cmbCuentaBancaria", "cmbCentroCosto", "cmbProveedor"]);
-
-
-
-  //   if (this.val.Errores != "") {
-  //     this.cFunciones.DIALOG.open(DialogErrorComponent, {
-  //       data: this.val.Errores,
-  //     });
-
-  //     return;
-  //   }
-
-
-  //   let dialogRef: MatDialogRef<RetencionComponent> = this.cFunciones.DIALOG.open(
-  //     RetencionComponent,
-  //     {
-  //       panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
-  //       disableClose: true,
-  //       data: [item, this.lstRetencion]
-  //     }
-  //   );
-
-  //   dialogRef.afterOpened().subscribe(s => {
-
-
-  //     if (this.lstRetencion.filter((f: any) => f.Documento == item.Documento && f.TipoDocumento == item.TipoDocumento).length == 0) {
-
-  //       dialogRef.componentInstance.v_BucarRetenciones();
-
-  //     }
-  //     else {
-
-  //       let i: number = 0;
-  //       this.lstRetencion.filter(w => w.Documento == item.Documento && w.TipoDocumento == item.TipoDocumento).forEach(f => {
-
-  //         dialogRef.componentInstance.lstRetencion.data.push({
-  //           IdDetRetencion: this.FILA.IdCheque,
-  //           Seleccionar: (Number(f.Monto.replaceAll(",", "")) != 0 ? true : false),
-  //           Index: i,
-  //           IdRetencion: f.IdRetencion,
-  //           Retencion: f.Retencion,
-  //           Porcentaje: f.Porcentaje,
-  //           Documento: f.Documento,
-  //           TipoDocumento: f.TipoDocumento,
-  //           Serie: f.Serie,
-  //           Monto: f.Monto,
-  //           PorcImpuesto: f.PorcImpuesto,
-  //           TieneImpuesto: f.TieneImpuesto,
-  //           CuentaContable: f.CuentaContable
-  //         });
-
-  //         i++;
-
-
-  //       });
-
-  //       dialogRef.componentInstance.lstRetencion._updateChangeSubscription();
-  //     }
-
-  //   });
-
-
-  //   dialogRef.afterClosed().subscribe(s => {
-
-  //     dialogRef.componentInstance.lstRetencion.data.forEach(f => {
-
-  //       let i: number = this.lstRetencion.findIndex(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.IdRetencion == f.IdRetencion)!;
-  //       let esNuevo: boolean = false;
-
-        
-
-  //       let r: iRetencion = {} as iRetencion;
-  //       if (i == -1) {
-  //         esNuevo = true;
-  //         r.IdDetRetencion = 0;
-  //       }
-  //       else {
-  //         r = this.lstRetencion[i];
-  //       }
-
-  //       r.IdDetRetencion = f.IdDetRetencion;
-  //       r.IdTransferencia = this.FILA.IdCheque;
-  //       r.Index = f.Index;
-  //       r.IdRetencion = f.IdRetencion;
-  //       r.Retencion = f.Retencion;
-  //       r.Porcentaje = f.Porcentaje;
-  //       r.Documento = f.Documento;
-  //       r.Serie = f.Serie;
-  //       r.TipoDocumento = f.TipoDocumento;
-  //       r.IdMoneda = this.IdMoneda;
-  //       r.TasaCambio = this.TC;
-  //       r.Monto = f.Monto;
-  //       r.MontoMS = 0;
-  //       r.MontoML = 0;
-  //       r.TieneImpuesto = f.TieneImpuesto;
-  //       r.PorcImpuesto = f.PorcImpuesto;
-  //       r.CuentaContable = f.CuentaContable;
-
-  //       if (esNuevo) this.lstRetencion.push(r);
-
-
-  //     });
-
-
-
-
-  //     this.V_Calcular();
-  //   });
-
-  // }
- 
-
-  // async printPDFS(datos: any) {
-
-
-
-  //   let byteArray = new Uint8Array(atob(datos).split('').map(char => char.charCodeAt(0)));
-
-  //   var file = new Blob([byteArray], { type: 'application/pdf' });
-
-  //   let url = URL.createObjectURL(file);
-
-  //   let tabOrWindow : any = window.open(url, '_blank');
-  //   tabOrWindow.focus();
-
-  //   return
-  //   let pdfsToMerge = [url];
+   @ViewChild(MatMenuTrigger)
+   contextMenu: MatMenuTrigger;
+   contextMenuPosition = { x: '0px', y: '0px' };
+   public V_Popup(event: MouseEvent, item: iIngCajaDetalle): void {
+     event.preventDefault();
+     this.contextMenuPosition.x = event.clientX + 'px';
+     this.contextMenuPosition.y = event.clientY + 'px';
+     this.contextMenu.menuData = { 'item': item };
+     this.contextMenu.menu!.focusFirstItem('mouse');
+     this.contextMenu.openMenu();
+   }
 
   
-
-  //   if (this.cFunciones.MyBrowser() == "Firefox") {
-  //     let iframe = document.createElement('iframe');
-  //     iframe.id = "frameBalanza";
-  //     iframe.style.display = 'none';
-
-  //     iframe.src = url
-  //     document.body.appendChild(iframe);
-  //     iframe.onload = () => {
-  //       setTimeout(() => {
-  //         iframe.focus();
-  //         iframe.contentWindow?.print();
-
-
-  //       });
-  //     };
-
-  //   }
-  //   else {
-  //     const mergedPdf = await PDFDocument.create();
-  //     for (const pdfCopyDoc of pdfsToMerge) {
-  //       const pdfBytes = await fetch(pdfCopyDoc).then(res => res.arrayBuffer())
-
-  //       const pdf = await PDFDocument.load(pdfBytes);
-  //       const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-  //       copiedPages.forEach((page: any) => {
-  //         mergedPdf.addPage(page);
-  //       });
-  //     }
-
-
-  //     const mergedPdfFile = await mergedPdf.save();
-  //     this.downloadFile(mergedPdfFile);
-  //   }
-
-
-
-
-  // }
-
-
-  // downloadFile(data: any) {
-  //   const blob = new Blob([data], { type: 'application/pdf' });
-  //   const url = window.URL.createObjectURL(blob);
-
-  //   printJS({
-  //     printable: url,
-  //     type: 'pdf',
-  //     onPdfOpen: undefined,
-  //     onPrintDialogClose: undefined
-  //   })
-
-  // }
-
-
-
-  // ngAfterViewInit(): void {
-  //   ///CAMBIO DE FOCO
-  //   this.val.Combo(this.cmbCombo);
-  //   this.val.addFocus("cmbCuentaBancaria", "cmbCentroCosto", undefined);
-  //   this.val.addFocus("cmbCentroCosto", "cmbBodega", undefined);
-  //   this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
-  //   this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
-
-  // }
-
-  // ngDoCheck(){
-
-  //   this.val.addNumberFocus("TxtTC", 2);
-  //   this.val.addNumberFocus("txtComision", 2);
-  //   this.val.addNumberFocus("txtTotalCordoba", 2);
-  //   this.val.addNumberFocus("txtTotalDolar", 2);
-
-
-  //   this.lstDetalle.data.forEach(f => {
-  //     this.val.addNumberFocus("txtImporte" + f.Index, 2);
-  //     this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1) , undefined);
-  //   });
-
-      
-  // }
 }

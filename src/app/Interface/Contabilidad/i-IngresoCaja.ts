@@ -1,7 +1,8 @@
 import { iIngCajaDetalle } from "./i-IngresoCaja-Detalle";
 
 export interface iIngCaja {
-    IdIngresoCajaChica: number;    
+    IdIngresoCajaChica: number;
+    FechaRegistro: Date,   
     Cuenta: string;
     Consecutivo : number;    
     Usuario : string;
