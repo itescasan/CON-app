@@ -316,6 +316,7 @@ public v_Enter_Reembolso(event: any) {
     this.val.Get("txtTotalCordoba").setValue("0.00");
 
     this.v_CargarReembolsos()
+    
 
   }
 }
@@ -757,7 +758,7 @@ public v_CargarReembolsos(): void {
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
 
-
+   
 
     det.IdAsiento = -1;
     det.NoLinea = i;
@@ -792,6 +793,7 @@ public v_CargarReembolsos(): void {
         //this.suma += Number(Valor.toString());
         det.Credito = this.cFunciones.NumFormat(Number(Valor.toString()),"2");
         det.Debito =  this.cFunciones.NumFormat(Number(0),"2");
+        
       }
     });
 
@@ -1012,7 +1014,8 @@ public v_CargarReembolsos(): void {
     if(!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoCheque = "C";
 
-    if (this.val.Get("cmbReembolsoC").value == undefined) {
+    
+    if (this.cmbReembolsoC.selection.length != 0) {
       let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
       let id = i_C?.IdIngresoCajaChica;
       this.FILA.IdIngresoCaja = id;
@@ -1095,7 +1098,7 @@ public v_CargarReembolsos(): void {
             let msj: string = Datos[0].d;
 
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              data: "<p><b class='bold'>" + msj + "</b></p>"
+              data: "<p><b class='bold'>" + msj + "</b></p>" 
             });
 
 

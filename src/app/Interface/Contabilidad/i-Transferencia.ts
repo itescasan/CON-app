@@ -23,6 +23,7 @@ export interface iTransferencia{
     CentroCosto: string;
     Anulado : boolean;
     UsuarioReg : string;
+    IdIngresoCajaChica: any;
     TransferenciaDocumento: iTransferenciaDocumento[];
-    TranferenciaRetencion: iRetencion[];
+    TranferenciaRetencion: iRetencion[];    
 }

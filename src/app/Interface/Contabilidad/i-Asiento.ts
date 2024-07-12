@@ -20,7 +20,7 @@ export interface iAsiento{
     TotalML: number;
     TotalMS: number;
     FechaReg: Date;
-    UsuarioReg: string;
+    UsuarioReg: string;    
 
     AsientosContablesDetalle : iAsientoDetalle[]
 }

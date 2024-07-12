@@ -58,8 +58,8 @@ export class TransferenciaCuentaComponent {
   public TC: number;
   public Anulado: boolean = false;
 
-  private Valor : number = 0.0;
-  private ValorC : number = 0.0;
+  public SumValor: number = 0;
+  public SumIVA: number = 0;
 
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>;
@@ -111,6 +111,8 @@ export class TransferenciaCuentaComponent {
         this.dec_TotalDebe = 0;
         this.dec_TotalHaber = 0;
         this.dec_Dif = 0;
+        this.SumValor = 0;
+        this.SumIVA = 0;
 
 
         this.val.Get("cmbCuentaBancaria").setValue("");
@@ -124,7 +126,7 @@ export class TransferenciaCuentaComponent {
         this.val.Get("txtConcepto").setValue("");
         this.val.Get("txtTotalDolar").setValue("0.00");
         this.val.Get("txtTotalCordoba").setValue("0.00");
-
+        this.val.Get("cmbReembolsoC").setValue("");
 
         this.val.Get("txtNombreCuenta").disable();
         this.val.Get("txtBanco").disable();
@@ -171,11 +173,14 @@ export class TransferenciaCuentaComponent {
 
 
       setTimeout(() => {
+       
         let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i);        
-
-        txtCuenta.setSelectedItem((this.IdMoneda == this.cFunciones.MonedaLocal ? _Item?.CuentaNuevaC : _Item?.CuentaNuevaD));
         
-
+        txtCuenta.setSelectedItem((this.IdMoneda == this.cFunciones.MonedaLocal ? _Item?.CuentaNuevaC : _Item?.CuentaNuevaD));
+        let det = this.lstDetalle.data.find(y => y.NoLinea == i);
+          det!.Referencia = this.val.Get("txtNoDoc").value + ' ' + this.val.Get("txtBeneficiario").value;         
+          
+         
       }, 250);
 
       this.cmbCuentaBancaria.close();
@@ -230,7 +235,7 @@ export class TransferenciaCuentaComponent {
 
      
     
-      let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+      let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
 
       this.lstDetalle.data.forEach(f =>{
 
@@ -249,7 +254,7 @@ export class TransferenciaCuentaComponent {
       this.valTabla.add("txtCentroCosto1", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
   
 
-      this.lstDetalle.data.push(det);
+      this.lstDetalle.data.push(detBanco);
 
       this.lstDetalle._updateChangeSubscription();
 
@@ -257,11 +262,8 @@ export class TransferenciaCuentaComponent {
    
 
 
-      setTimeout(() => {
-
-        let SumValor: number = 0;
-        let SumIVA: number = 0;
-
+      setTimeout(() => {        
+        this.SumIVA = 0;
         _Item?.DetalleCaja.forEach(f => {
           let i : number  = this.V_Agregar(false);
           let det = this.lstDetalle.data.find(y => y.NoLinea == i);
@@ -269,8 +271,10 @@ export class TransferenciaCuentaComponent {
           det!.CentroCosto = [f.CentroCosto];
           det!.Referencia =  String(f.Referencia);
           det!.Debito = this.cFunciones.NumFormat(f.SubTotal, "2");
-          SumValor += f.Total;
-          SumIVA += f.Iva;
+          det!.Naturaleza = "D";
+          this.SumValor += f.Total;
+          this.SumIVA += f.Iva;
+          detBanco!.Credito = this.cFunciones.NumFormat(this.SumValor, "2");
  
           this.valTabla.Get( "txtCuenta" + i).setValue([f.Cuenta]);
          this.valTabla.Get( "txtCentroCosto" + i).setValue([f.CentroCosto]);
@@ -280,13 +284,14 @@ export class TransferenciaCuentaComponent {
      
        })
 
-       if (SumIVA > 0) {
+       if (this.SumIVA > 0) {
         let i : number  = this.V_Agregar(false);
           let det = this.lstDetalle.data.find(y => y.NoLinea == i);
           det!.CuentaContable = ['2102-01-01-01'];
           det!.CentroCosto = "";
           det!.Referencia =  "IVA";
-          det!.Debito = this.cFunciones.NumFormat(SumIVA, "2");
+          det!.Debito = this.cFunciones.NumFormat(this.SumIVA, "2");
+          det!.Naturaleza = "D";
 
           this.valTabla.Get( "txtCuenta" + i).setValue(['2102-01-01-01']);
           this.valTabla.Get( "txtCentroCosto" + i).setValue("");
@@ -612,7 +617,7 @@ export class TransferenciaCuentaComponent {
 
       if (columna == "txtDebito") {
 
-        if (Number(det.Credito.replaceAll(",", ""))) {
+        if (Number(det.Credito.replaceAll(",", ""))) { 
           det.Credito = "0.00";
         }
 
@@ -784,10 +789,6 @@ export class TransferenciaCuentaComponent {
   }
 
 
-
-
-
-
   public V_Calcular(): void {
 
     this.dec_TotalDebe = 0;
@@ -889,6 +890,12 @@ export class TransferenciaCuentaComponent {
     this.FILA.UsuarioReg = this.cFunciones.User;
     if (!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoTransferencia = "C";
+
+    if (this.cmbReembolsoC.selection.length != 0) {
+      let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
+      let id = i_C?.IdIngresoCajaChica;
+      this.FILA.IdIngresoCajaChica = id;
+    }
 
 
 
