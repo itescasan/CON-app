@@ -467,7 +467,11 @@ export class Validacion {
         lstFocus.splice(i, 1);
       }
 
+      i = this.lstFrm.findIndex((f) => f.Id == id);
 
+      if (i != -1) {
+        this.lstFrm.splice(i, 1);
+      }
     });
 
 
