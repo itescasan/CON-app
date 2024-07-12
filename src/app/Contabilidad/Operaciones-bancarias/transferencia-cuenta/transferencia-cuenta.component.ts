@@ -32,6 +32,7 @@ export class TransferenciaCuentaComponent {
   public valTabla = new Validacion();
 
   private IdMoneda: string = "";
+  private Visualizando : boolean = false;
 
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria: iCuentaBancaria[] = [];
@@ -226,6 +227,7 @@ export class TransferenciaCuentaComponent {
   
   
   public v_Select_Reembolso(event: any) {
+   
     this.val.Get("cmbReembolsoC").setValue("");
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
@@ -233,7 +235,7 @@ export class TransferenciaCuentaComponent {
   
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
 
-     
+      if(this.Visualizando ) return;
     
       let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
 
@@ -306,6 +308,9 @@ export class TransferenciaCuentaComponent {
       
      }
      else{
+
+      if(this.Visualizando ) return;
+
       let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
 
       this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
@@ -323,6 +328,7 @@ export class TransferenciaCuentaComponent {
   }
   
   public v_Enter_Reembolso(event: any) {
+    if(this.Visualizando ) return;
     if (event.key == "Enter") {
       let cmb : any = this.cmbReembolsoC.dropdown;
       let _Item: IReembolsos = cmb._focusedItem.value;    
@@ -1004,6 +1010,7 @@ export class TransferenciaCuentaComponent {
   private v_Visualizar() {
 
 
+    this.Visualizando = true;
     this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
     this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
     this.val.Get("txtNoDoc").setValue(this.FILA.NoTransferencia);
@@ -1013,7 +1020,18 @@ export class TransferenciaCuentaComponent {
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+    this.val.Get("cmbReembolsoC").disable();
     this.IdMoneda = this.FILA.IdMoneda;
+
+    let rem : IReembolsos = {} as IReembolsos;
+    rem.IdIngresoCajaChica = this.FILA.IdIngresoCajaChica;
+    rem.Cuenta = this.FILA.CuentaCaja;
+    rem.DetalleCaja = [];
+
+    this.lstReembolsos.push(rem);
+
+    this.cmbReembolsoC.select([this.FILA.CuentaCaja]);
+
 
     this.TC = this.FILA.TasaCambio;
     this.Anulado = this.FILA.Anulado;
@@ -1055,8 +1073,9 @@ export class TransferenciaCuentaComponent {
 
 
 
+        this.Visualizando = false;
 
-      });
+      }, 150);
 
 
 

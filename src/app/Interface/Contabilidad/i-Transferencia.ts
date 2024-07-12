@@ -21,9 +21,10 @@ export interface iTransferencia{
     TotalCordoba: number;
     TotalDolar: number;
     CentroCosto: string;
-    Anulado : boolean;
-    UsuarioReg : string;
     IdIngresoCajaChica: any;
+    CuentaCaja : string;
+    Anulado : boolean;
+    UsuarioReg : string;  
     TransferenciaDocumento: iTransferenciaDocumento[];
     TranferenciaRetencion: iRetencion[];    
 }
