@@ -68,7 +68,8 @@ export class BalanzaComponent {
 
 
 
-    this.GET.GetBalanzaComprobacion(this.val.Get("txtFecha1").value, this.val.Get("txtFecha2").value, this.val.Get("cmbNivel").value, this.val.Get("cmbMoneda").value).subscribe(
+
+    this.GET.GetBalanzaComprobacion( this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd") , this.cFunciones.DateFormat(this.val.Get("txtFecha2").value, "yyyy-MM-dd"), this.val.Get("cmbNivel").value, this.val.Get("cmbMoneda").value).subscribe(
       {
         next: (data) => {
 

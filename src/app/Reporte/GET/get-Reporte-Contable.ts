@@ -21,7 +21,8 @@ export class getReporteContable{
     }
 
 
-    public GetBalanzaComprobacion(Fecha1: Date, Fecha2: Date, Nivel: number, EsMonedaLocal : boolean): Observable<string> {
+    public GetBalanzaComprobacion(Fecha1: String, Fecha2: String, Nivel: number, EsMonedaLocal : boolean): Observable<string> {
+  
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/BalanzaComprobacion?FechaInicio=" + Fecha1 + "&FechaFinal=" + Fecha2 + "&Nivel=" + Nivel + "&EsMonedaLocal=" + EsMonedaLocal);
     }
 
