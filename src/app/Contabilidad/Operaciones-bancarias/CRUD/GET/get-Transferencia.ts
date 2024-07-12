@@ -47,5 +47,9 @@ export class getTransferencia {
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/BuscarTiposRetenciones?NoDocumento=" + NoDocumento + "&TipoDocumento=" + TipoDocumento);
     }
 
+    public GetReembolsoD(id : any): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Cheques/GetDetalleReembolso?id=" + id);
+    }
+
 
 }

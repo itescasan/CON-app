@@ -28,6 +28,7 @@ import * as printJS from 'print-js';
 import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
 import { IReembolsosD } from 'src/app/Interface/Contabilidad/i-ReembolsoD';
 import { DecimalPipe } from '@angular/common';
+import { uniqueDates } from 'igniteui-angular/lib/core/utils';
 
 
 @Component({
@@ -222,7 +223,7 @@ export class NuevoChequeComponent {
 
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
       
-
+      this.cmbCuentaBancaria.close();
     }
   }
 
@@ -248,6 +249,7 @@ export class NuevoChequeComponent {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
+      this.cmbBodega.close();
     }
   }
 
@@ -257,7 +259,7 @@ export class NuevoChequeComponent {
       let _Item: iBodega = cmb._focusedItem.value;
       this.cmbBodega.setSelectedItem(_Item.Codigo);
       this.val.Get("cmbBodega").setValue([_Item.Codigo]);
-
+      
     }
   }
 
@@ -271,6 +273,7 @@ export class NuevoChequeComponent {
     let _Item  = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0]);
 
     if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaC.close();
+    this.cmbCuentaC.close();
    }
 }
 
@@ -289,13 +292,14 @@ public cmbReembolsoC: IgxComboComponent;
 
 
  public v_Select_Reembolso(event: any) {
+  this.V_Verificar()
   this.val.Get("cmbReembolsoC").setValue("");
-  if (event.added.length == 1) {  
+  if (event.added.length == 1) {
     if(event.newValue.length > 1) event.newValue.splice(0, 1);
-    let _Item  = this.lstReembolsos.find(f => f.Titulo == event.newValue[0]);
+    let _Item  = this.lstReembolsos.find(f => f.Cuenta == event.newValue[0]);
 
     if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
-    
+    this.V_Verificar()
    }
 }
 
@@ -304,8 +308,8 @@ public v_Enter_Reembolso(event: any) {
     let cmb : any = this.cmbReembolsoC.dropdown;
     let _Item: IReembolsos = cmb._focusedItem.value;    
      
-    this.cmbReembolsoC.setSelectedItem(_Item.Titulo);
-    this.val.Get("cmbReembolsoC").setValue([_Item.Titulo]);
+    this.cmbReembolsoC.setSelectedItem(_Item.Cuenta);
+    this.val.Get("cmbReembolsoC").setValue([_Item.Cuenta]);
     document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled"); 
 
     this.val.Get("txtTotalDolar").setValue("0.00");
@@ -316,19 +320,26 @@ public v_Enter_Reembolso(event: any) {
   }
 }
 
+public V_Verificar() {
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
+    this.V_Agregar();
+}
+
 public v_CargarReembolsos(): void {
   
 
   if (this.val.Get("cmbReembolsoC").value == undefined) return;
-      let text = this.val.Get("cmbReembolsoC").value[0]
-      const myArray = text.split("-");
-      let CC = myArray[1].replace(/\s{2,}/g, ' ').trim();
-      let Nu = myArray[0].replace(/\s{2,}/g, ' ').trim(); 
+  let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
+      let id = i_C?.IdIngresoCajaChica;
+      // const myArray = text.split("-");
+      // let CC = myArray[1].replace(/\s{2,}/g, ' ').trim();
+      // let Nu = myArray[0].replace(/\s{2,}/g, ' ').trim(); 
       
       this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
       this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
 
-    this.GET.GetReembolsoD(CC,Nu).subscribe(
+    this.GET.GetReembolsoD(id).subscribe(
       {
         next: (data) => {
 
@@ -344,12 +355,16 @@ public v_CargarReembolsos(): void {
           } else {
             let datos: iDatos[] = _json["d"];
             let SumValor: number = 0;
-            
+            let SumIVA: number = 0;
             this.lstReembolsoD.data = datos[0].d;
             this.lstReembolsoD.data.forEach(f => {
-              this.v_ContabilizarR(f.Cuenta,f.Referencia,f.idCC,f.Valor)
-              SumValor += f.Valor;
+              this.v_ContabilizarR(f.Cuenta,f.Referencia,f.CentroCosto,f.SubTotal)
+              SumValor += f.Total;
+              SumIVA += f.Iva;
             });
+            if (SumIVA > 0) {
+              this.V_Add('2102-01-01-01','IVA','',SumIVA,"D");
+            }
             
             this.lstReembolsoD._updateChangeSubscription();
 
@@ -360,7 +375,7 @@ public v_CargarReembolsos(): void {
               if (this.IdMoneda == this.cFunciones.MonedaLocal) {
                 this.V_Add(item.CuentaNuevaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",SumValor,"C");
               } else {
-                this.ValorC = this.cFunciones.Redondeo((SumValor),"2")  
+                this.ValorC = this.cFunciones.Redondeo((SumValor),"2")
                 this.V_Add(item.CuentaNuevaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
               }
              
@@ -535,8 +550,7 @@ public v_CargarReembolsos(): void {
 
 
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
-  public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-    this.valTabla.Get("txtCuenta" + det.NoLinea).setValue("");
+  public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {    
     
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
@@ -558,6 +572,7 @@ public v_CargarReembolsos(): void {
       if (i_Cuenta.Naturaleza == "D")
       {
         document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
+        if (det.Credito == undefined) return;
         if(Number(det.Credito.replaceAll(",", "")) != 0)
         {
           det.Debito = det.Credito;
@@ -571,6 +586,7 @@ public v_CargarReembolsos(): void {
       if (i_Cuenta.Naturaleza == "C")
       {
         document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
+        if (det.Credito == undefined) return;
         if(Number(det.Debito.replaceAll(",", "")) != 0)
         {
           det.Credito  = det.Debito;
@@ -578,13 +594,13 @@ public v_CargarReembolsos(): void {
         }
         
       }
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCuenta.close();
+      txtCuenta.close();
 
     }
 
     this.V_Calcular();
-
-
+   
+    
 
   }
   
@@ -702,11 +718,11 @@ public v_CargarReembolsos(): void {
     let i: number = 1;
 
     if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
+    
 
     this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
-
 
 
     det.IdAsiento = -1;
@@ -739,12 +755,13 @@ public v_CargarReembolsos(): void {
 
     this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
+    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
 
 
 
     det.IdAsiento = -1;
     det.NoLinea = i;
+    det.CuentaContable = "";
 
     //det.Debito = "0";
     det.DebitoML = 0;
@@ -762,6 +779,7 @@ public v_CargarReembolsos(): void {
 
     setTimeout(() => {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + i);
+      this.valTabla.Get("txtCuenta" + i).setValue([cuenta]);
 
       if(!txtCuenta.selection.includes(cuenta)) txtCuenta.setSelectedItem(cuenta);
       det.Referencia = Concepto;
@@ -942,6 +960,7 @@ public v_CargarReembolsos(): void {
 
   
   public v_Guardar() : void{
+    this.val.Combo(this.cmbCombo);
 
     this.val.EsValido();
     this.valTabla.EsValido();
@@ -989,9 +1008,16 @@ public v_CargarReembolsos(): void {
     this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
     this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
     this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
-    this.FILA.UsuarioReg = this.cFunciones.User;
+    this.FILA.UsuarioReg = this.cFunciones.User;    
     if(!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoCheque = "C";
+
+    if (this.val.Get("cmbReembolsoC").value == undefined) {
+      let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
+      let id = i_C?.IdIngresoCajaChica;
+      this.FILA.IdIngresoCaja = id;
+    }
+   
 
 
 
@@ -1264,10 +1290,10 @@ public v_CargarReembolsos(): void {
       
       // let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        this.V_Add("1142-05",Referencia,CC,Valor,"D");
+        this.V_Add(CuentaC,Referencia,CC,Valor,"D");
       } else {
         //this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  - this.cFunciones.Redondeo(this.suma,"2") +  this.cFunciones.Redondeo(this.sumaDebito,"2")
-        this.V_Add("1142-05",Referencia,CC,Valor ,"D");
+        this.V_Add(CuentaC,Referencia,CC,Valor ,"D");
       }       
     }
   }
@@ -1301,7 +1327,7 @@ public v_CargarReembolsos(): void {
       this.lstDetalle.data.forEach(f => {
         this.valTabla.add("txtCuenta" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
         this.valTabla.add("txtReferencia" + f.NoLinea, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-        this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
+        this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
 
         f.Debito = this.cFunciones.NumFormat(Number(String(f.Debito).replaceAll(",", "")), "2");
         f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");

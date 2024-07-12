@@ -1,7 +1,9 @@
 export interface IReembolsosD {
-    id: number;
+    IdDetalleIngresoCajaChica: number;
     Cuenta: string;
     Referencia: string;
-    idCC: string;   
-    Valor: number; 
+    CentroCosto: string;   
+    SubTotal: number;
+    Iva: number;
+    Total: number;
 }

@@ -1,3 +1,5 @@
 export interface IReembolsos{
-    Titulo: string;   
+    IdIngresoCajaChica : number;
+    Cuenta : string; 
+    DetalleCaja: any[];
 }

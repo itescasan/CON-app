@@ -2,7 +2,7 @@ export interface iAsientoDetalle{
     IdDetalleAsiento: number;
     IdAsiento: number;
     NoLinea: number;
-    CuentaContable: String;
+    CuentaContable: any;
     Debito: string,
     DebitoML: number;
     DebitoMS: number;

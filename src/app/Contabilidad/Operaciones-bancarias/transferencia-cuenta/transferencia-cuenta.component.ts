@@ -19,7 +19,8 @@ import { postTrasnferencia } from '../CRUD/POST/post-Transferencia';
 import { iTransferenciaPOST } from 'src/app/Interface/Contabilidad/I-transferencia-POST';
 import { iTransferencia } from 'src/app/Interface/Contabilidad/i-Transferencia';
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
-
+import { IReembolsos } from 'src/app/Interface/Contabilidad/i-Reembolsos';
+import { IReembolsosD } from 'src/app/Interface/Contabilidad/i-ReembolsoD';
 @Component({
   selector: 'app-transferencia-cuenta',
   templateUrl: './transferencia-cuenta.component.html',
@@ -36,6 +37,8 @@ export class TransferenciaCuentaComponent {
   public lstCuentabancaria: iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
   lstCentroCosto: iCentroCosto[] = [];
+  lstReembolsos: IReembolsos[] = [];
+  lstReembolsoD = new MatTableDataSource<IReembolsosD>;
 
 
   @ViewChildren(IgxComboComponent)
@@ -55,6 +58,8 @@ export class TransferenciaCuentaComponent {
   public TC: number;
   public Anulado: boolean = false;
 
+  private Valor : number = 0.0;
+  private ValorC : number = 0.0;
 
   @ViewChildren(IgxComboComponent)
   public cmbCombo: QueryList<IgxComboComponent>;
@@ -77,6 +82,8 @@ export class TransferenciaCuentaComponent {
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
+    this.val.add("cmbReembolsoC", "1", "LEN>=", "0", "Reebolsos", "");
+    
 
 
     this.v_Evento("Iniciar");
@@ -164,12 +171,10 @@ export class TransferenciaCuentaComponent {
 
 
       setTimeout(() => {
-        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i);
-
+        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i);        
 
         txtCuenta.setSelectedItem((this.IdMoneda == this.cFunciones.MonedaLocal ? _Item?.CuentaNuevaC : _Item?.CuentaNuevaD));
-
-
+        
 
       }, 250);
 
@@ -186,9 +191,6 @@ export class TransferenciaCuentaComponent {
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
     }
   }
-
-
-
 
 
   @ViewChild("cmbBodega", { static: false })
@@ -214,8 +216,126 @@ export class TransferenciaCuentaComponent {
   }
 
 
+  @ViewChild("cmbReembolsoC", { static: false })
+  public cmbReembolsoC: IgxComboComponent;
+  
+  
+  public v_Select_Reembolso(event: any) {
+    this.val.Get("cmbReembolsoC").setValue("");
+    if (event.added.length == 1) {
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      let _Item  = this.lstReembolsos.find(f => f.Cuenta == event.newValue[0]);
+  
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
+
+     
+    
+      let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+
+      this.lstDetalle.data.forEach(f =>{
+
+        this.valTabla.del("txtCuenta" + f.NoLinea);
+        this.valTabla.del("txtReferencia" + f.NoLinea);
+        this.valTabla.del("txtCentroCosto" + f.NoLinea);
+        this.valTabla.del("txtDebito" + f.NoLinea);
+        this.valTabla.del("txtCredito" + f.NoLinea);
+
+      });
+
+      this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+      this.valTabla = new Validacion();
+      this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+      this.valTabla.add("txtReferencia1", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+      this.valTabla.add("txtCentroCosto1", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+  
+
+      this.lstDetalle.data.push(det);
+
+      this.lstDetalle._updateChangeSubscription();
+
+ 
+   
 
 
+      setTimeout(() => {
+
+        let SumValor: number = 0;
+        let SumIVA: number = 0;
+
+        _Item?.DetalleCaja.forEach(f => {
+          let i : number  = this.V_Agregar(false);
+          let det = this.lstDetalle.data.find(y => y.NoLinea == i);
+          det!.CuentaContable = [f.Cuenta];
+          det!.CentroCosto = [f.CentroCosto];
+          det!.Referencia =  String(f.Referencia);
+          det!.Debito = this.cFunciones.NumFormat(f.SubTotal, "2");
+          SumValor += f.Total;
+          SumIVA += f.Iva;
+ 
+          this.valTabla.Get( "txtCuenta" + i).setValue([f.Cuenta]);
+         this.valTabla.Get( "txtCentroCosto" + i).setValue([f.CentroCosto]);
+
+
+         this.V_Calcular();
+     
+       })
+
+       if (SumIVA > 0) {
+        let i : number  = this.V_Agregar(false);
+          let det = this.lstDetalle.data.find(y => y.NoLinea == i);
+          det!.CuentaContable = ['2102-01-01-01'];
+          det!.CentroCosto = "";
+          det!.Referencia =  "IVA";
+          det!.Debito = this.cFunciones.NumFormat(SumIVA, "2");
+
+          this.valTabla.Get( "txtCuenta" + i).setValue(['2102-01-01-01']);
+          this.valTabla.Get( "txtCentroCosto" + i).setValue("");
+          this.V_Calcular();
+      }
+       
+      });
+
+
+
+
+      
+     }
+     else{
+      let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+
+      this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+      this.valTabla = new Validacion();
+      this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+      this.valTabla.add("txtReferencia1", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+      this.valTabla.add("txtCentroCosto1", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+  
+
+      this.lstDetalle.data.push(det);
+
+      this.lstDetalle._updateChangeSubscription();
+
+     }
+  }
+  
+  public v_Enter_Reembolso(event: any) {
+    if (event.key == "Enter") {
+      let cmb : any = this.cmbReembolsoC.dropdown;
+      let _Item: IReembolsos = cmb._focusedItem.value;    
+       
+      this.cmbReembolsoC.setSelectedItem(_Item.Cuenta);
+      this.val.Get("cmbReembolsoC").setValue([_Item.Cuenta]);
+    
+    }
+  }
+
+
+
+
+
+ 
+
+
+  
 
 
   //██████████████████████████████████████████CARGAR DATOS██████████████████████████████████████████████████████
@@ -266,6 +386,7 @@ export class TransferenciaCuentaComponent {
             this.lstBodega = datos[1].d;
             this.lstCuenta = datos[2].d.filter((f: any) => f.ClaseCuenta == "D");
             this.lstCentroCosto = datos[3].d;
+            this.lstReembolsos = datos[5].d;
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
 
@@ -479,19 +600,6 @@ export class TransferenciaCuentaComponent {
   }
 
 
-/*
-  public V_FocusOut(det: iAsientoDetalle): void {
-
-
-    det.Debito = this.cFunciones.NumFormat(Number(det.Debito.replaceAll(",", "")), "2");
-    det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
-    det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
-    det.Credito = this.cFunciones.NumFormat(Number(det.Credito.replaceAll(",", "")), "2");
-    det.CreditoML = this.cFunciones.Redondeo(det.CreditoML, "2");
-    det.CreditoMS = this.cFunciones.Redondeo(det.CreditoMS, "2");
-
-  }*/
-
   public V_Focus(columna: String, det: iAsientoDetalle) {
 
     if (columna != "NuevaFila") {
@@ -628,7 +736,6 @@ export class TransferenciaCuentaComponent {
   }
 
   V_Eliminar(item: iAsientoDetalle) {
-    console.log(item.NoLinea)
 
     let i = this.lstDetalle.data.findIndex(f => f.NoLinea == item.NoLinea);
 

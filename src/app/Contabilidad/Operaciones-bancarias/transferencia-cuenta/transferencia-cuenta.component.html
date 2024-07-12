@@ -18,7 +18,7 @@
                     
                     <div>
                         Transferencia Bancaria
-                    </div>
+                    </div>                  
     
                     <div>
                         <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas"
@@ -125,7 +125,7 @@
                         <div class="col-12 col-sm-12 col-md-8 col-lg-8">
     
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-8 mb-1">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-1">
                                     <div class="input-group">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" placeholder="Beneficiario" id="txtBeneficiario"
@@ -138,7 +138,7 @@
         
         
                                 
-                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3 mb-1">
                                 <div class="input-group">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="Beneficiario" id="txtMoneda"
@@ -146,6 +146,19 @@
                                         <label for="txtMoneda">Moneda</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3 mb-1">                               
+                                        <!-- <button type="button" class="btn btn-opcional" id="btnModal-Reembolso"
+                                    (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-money-bill-transfer"></i>
+                                    Reembolso</button> -->
+                                    <igx-combo #cmbReembolsoC [data]="lstReembolsos" valueKey="Cuenta" displayKey="Cuenta" id="cmbReembolsoC"
+                                    formControlName="cmbReembolsoC" placeholder="Reembolso"
+                                    searchPlaceholder="Seleccione un Reembolso..." [autoFocusSearch]="true"
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Reembolso($event)"
+                                    (keyup)="v_Enter_Reembolso($event);">
+                                    <label igxLabel>Reembolso</label>
+                                    <igx-prefix><i class="fa-solid fa-list"></i></igx-prefix>                                     
+                                </igx-combo>                                    
                             </div>
         
                             <div class="col-12  mb-1">
@@ -257,7 +270,7 @@
                                 <div class="row">
     
     
-                                    <form autocomplete="off">
+                                    <form autocomplete="off"> 
                                         <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable" [ngModelOptions]="{standalone: true}"
                                             valueKey="CuentaContable" displayKey="NombreCuenta"
                                             id="txtCuenta{{det.NoLinea}}" 
