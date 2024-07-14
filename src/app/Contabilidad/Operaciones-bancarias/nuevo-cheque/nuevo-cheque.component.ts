@@ -172,8 +172,8 @@ export class NuevoChequeComponent {
 
         this.V_TasaCambios();
 
-        this.V_Agregar();
-
+        this.V_Agregar(true);
+        this.V_Agregar(false);
 
         break;
     }
@@ -221,7 +221,20 @@ export class NuevoChequeComponent {
         this.val.Get("txtTcCompraD").enable();
       }
 
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
+      let i: number = this.V_Agregar(true);
+
+
+      setTimeout(() => {
+       
+        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i);        
+        
+        txtCuenta.setSelectedItem((this.IdMoneda == this.cFunciones.MonedaLocal ? _Item?.CuentaNuevaC : _Item?.CuentaNuevaD));
+        let det = this.lstDetalle.data.find(y => y.NoLinea == i);
+          det!.Referencia = this.val.Get("txtNoDoc").value + ' ' + this.val.Get("txtBeneficiario").value;         
+          
+         
+      }, 250);
+      //if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
       
       this.cmbCuentaBancaria.close();
     }
@@ -292,14 +305,14 @@ public cmbReembolsoC: IgxComboComponent;
 
 
  public v_Select_Reembolso(event: any) {
-  this.V_Verificar()
+  //this.V_Verificar()
   this.val.Get("cmbReembolsoC").setValue("");
   if (event.added.length == 1) {
     if(event.newValue.length > 1) event.newValue.splice(0, 1);
     let _Item  = this.lstReembolsos.find(f => f.Cuenta == event.newValue[0]);
 
     if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
-    this.V_Verificar()
+    //this.V_Verificar()
    }
 }
 
@@ -321,11 +334,11 @@ public v_Enter_Reembolso(event: any) {
   }
 }
 
-public V_Verificar() {
-    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
-    this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
-    this.V_Agregar();
-}
+// public V_Verificar() {
+//     this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+//     this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
+//     this.V_Agregar();
+// }
 
 public v_CargarReembolsos(): void {
   
@@ -690,7 +703,7 @@ public v_CargarReembolsos(): void {
 
       if (det.NoLinea != i) return;
 
-      this.V_Agregar();
+      this.V_Agregar(false);
     }
 
   }
@@ -711,7 +724,7 @@ public v_CargarReembolsos(): void {
   }
 
 
-  V_Agregar() {
+ V_Agregar(esBanco: boolean): number {
 
     //if(this.cmbCuenta == undefined) return;
 
@@ -744,6 +757,9 @@ public v_CargarReembolsos(): void {
     this.lstDetalle.data.push(det);
 
     this.V_Ordenar(i);
+
+
+    return i;
   }
 
   V_Add(cuenta: string, Concepto: string, CC: string, Valor: number, Tipo: string) {

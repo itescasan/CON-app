@@ -22,6 +22,7 @@ export interface iCheque {
     Anulado : boolean;
     UsuarioReg : string;
     IdIngresoCaja: any;
+    CuentaIngCaja: string;
     ChequeDocumento: iChequeDocumento[];
     ChequeRetencion: iRetencion[];
 }
