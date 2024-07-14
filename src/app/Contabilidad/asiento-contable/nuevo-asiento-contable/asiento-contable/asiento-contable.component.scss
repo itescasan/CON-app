@@ -1,8 +1,19 @@
 @import "/src/assets/scss/media.scss";
 
+.app-asiento-contable{
+    position: relative;
+    top:-60px;
+    height: 100vh;
+}
 
 .contenedor-asiento{
     margin-bottom: 450px;
+}
+
+
+.Contenedor-offcanvas{
+    position: relative;
+    text-align: right;
 }
 
 

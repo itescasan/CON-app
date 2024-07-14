@@ -1,11 +1,23 @@
 @import "/src/assets/scss/media.scss";
 
+.app-transferencia-saldo{
+    position: relative;
+    top:-60px;
+    height: 100vh;
+}
+
 .contenedor-padre{
     margin-bottom: 450px;
 }
 .contenedor-transferencia {
     background-color: var(--escan-fondo);
     z-index: 0;
+}
+
+
+.Contenedor-offcanvas{
+    position: relative;
+    text-align: right;
 }
 
 

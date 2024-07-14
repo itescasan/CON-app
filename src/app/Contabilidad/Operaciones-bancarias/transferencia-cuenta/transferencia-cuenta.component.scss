@@ -1,5 +1,11 @@
 @import "/src/assets/scss/media.scss";
 
+.app-transferencia-cuenta{
+    position: relative;
+    top:-60px;
+    height: 100vh;
+}
+
 .contenedor-padre{
     margin-bottom: 450px;
 }
@@ -8,12 +14,17 @@
     
 }
 
+.Contenedor-offcanvas{
+    position: relative;
+    text-align: right;
+}
+
 
 
 .concepto {
 
     textarea {
-        height: 120px;
+        height: 170px;
 
     }
 
