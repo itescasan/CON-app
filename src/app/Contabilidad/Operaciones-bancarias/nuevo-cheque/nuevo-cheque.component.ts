@@ -1046,6 +1046,7 @@ public v_Enter_Reembolso(event: any) {
       let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
       let id = i_C?.IdIngresoCajaChica;
       this.FILA.IdIngresoCaja = id;
+      this.FILA.CuentaIngCaja = i_C?.Cuenta!;
     }
    
 
