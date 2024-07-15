@@ -158,7 +158,7 @@
                                 <div class="input-group">
                                     <div class="form-floating">
                                         <input type="text" class="form-control" placeholder="A Nombre de" id="txtBeneficiario"
-                                            formControlName="txtBeneficiario">
+                                            formControlName="txtBeneficiario" (keyup)="SetDt()">
                                         <label for="txtBeneficiario">A Nombre de</label>
                                     </div>
         
@@ -381,11 +381,12 @@
                             </div>
                             <div class="row">
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
-                                        [(ngModel)]="det.Debito"
+                                    <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Debito"
                                         (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
-                                        (keydown.Enter)="V_Focus('NuevaFila', det);" 
-                                        (change)="V_Calcular(); this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" autocomplete="off">
+                                        (keydown.Enter)="V_Focus('txtDebito', det);"
+                                        (focusout)="V_FocusOut('txtDebito', det);" (change)="V_Calcular();"
+                                        autocomplete="off">
                                 </form>
                             </div>
 
@@ -399,12 +400,13 @@
                             </div>
                             <div class="row">
                                 <form autocomplete="off">
-                                    <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
-                                        [(ngModel)]="det.Credito"
+                                    <input type="text" class="form-control numero" id="txtCredito{{det.NoLinea}}"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Credito"
                                         (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                        (keydown.Enter)="V_Focus('NuevaFila', det);" 
-                                        (change)="V_Calcular(); this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" autocomplete="off">
-                                </form>        
+                                        (keydown.Enter)="V_Focus('NuevaFila', det);"
+                                        (focusout)="V_FocusOut('txtCredito', det);" (change)="V_Calcular();"
+                                        autocomplete="off">
+                                </form>       
                             </div>
 
                         </div>

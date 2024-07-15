@@ -245,7 +245,7 @@ export class RegistroChequesComponent {
         dialogRef = this.cFunciones.DIALOG.open(
           WaitComponent,
           {
-            panelClass: "escasan-dialog-full-blur",
+            panelClass: "escasan-dialog-full-blur", 
             data: "",
             id : "wait"
           }

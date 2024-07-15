@@ -82,8 +82,13 @@ export class NuevoChequeComponent {
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0; 
   public TC: number;
+  public SumValor: number = 0;
+  public SumIVA: number = 0;
   public Anulado : boolean = false;
+  private Visualizando : boolean = false;
 
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
 
   constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postCheque) {  
 
@@ -107,6 +112,7 @@ export class NuevoChequeComponent {
     this.val.add("txtIva", "1", "LEN>=", "0", "IVA", "IVA.")
     this.val.add("txtTcCompraD", "1", "LEN>=", "0", "Compra Divisa", "Compra Divisa.")
 
+    this.v_Evento("Iniciar");
 
   }
 
@@ -127,6 +133,8 @@ export class NuevoChequeComponent {
       this.dec_TotalDebe = 0;
       this.dec_TotalHaber = 0;
       this.dec_Dif = 0;
+      this.SumValor = 0;
+      this.SumIVA = 0;
 
 
         this.val.Get("cmbCuentaBancaria").setValue("");
@@ -159,14 +167,8 @@ export class NuevoChequeComponent {
         //this.val.Get("TxtTC").disable();
         this.val.Get("txtTotalDolar").disable();
         this.val.Get("txtTotalCordoba").disable();
-
-
-
+        
         document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled");
-
-
-
-
         if (this.lstBodega.length > 0) this.cmbBodega?.setSelectedItem(this.lstBodega[0].Codigo);
        
 
@@ -187,8 +189,8 @@ export class NuevoChequeComponent {
   public v_Select_CuentaBanco(event: any) {
     this.val.Get("cmbCuentaBancaria").setValue("");
     if (event.added.length == 1) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
-      let _Item  = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.newValue[0]);
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
+      let _Item = this.lstCuentabancaria.find(f => f.IdCuentaBanco == event.newValue[0]);
 
       this.val.Get("cmbCuentaBancaria").setValue([event.added]);
       this.val.Get("txtNombreCuenta").setValue(_Item?.NombreCuenta);
@@ -196,30 +198,7 @@ export class NuevoChequeComponent {
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
       this.IdMoneda = String(_Item?.IdMoneda);
-
-      document.getElementById("btnContabilizar-Cheques")?.removeAttribute("disabled");
-
-      //this.val.Get("txtTotalDolar").setValue("0.00");
-      //this.val.Get("txtTotalCordoba").setValue("0.00");
-      this.val.Get("txtIrFuente").setValue("");
-      this.val.Get("txtServP").setValue("");
-      this.val.Get("txtAlcaldias").setValue("");
-      this.val.Get("txtIva").setValue("");
-      this.val.Get("txtTcCompraD").setValue("");
-
-
-      this.val.Get("txtTotalDolar").disable();
-      this.val.Get("txtTotalCordoba").disable();
-       //this.val.Get("txtTotalDolar").setValue("0.00");
-      //this.val.Get("txtTotalCordoba").setValue("0.00");
-      //this.val.Get("txtTotalDolar").setValue("0.00");
-      //this.val.Get("txtTotalCordoba").setValue("0.00");
-
-      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        this.val.Get("txtTcCompraD").disable();
-      }else{
-        this.val.Get("txtTcCompraD").enable();
-      }
+      
 
       let i: number = this.V_Agregar(true);
 
@@ -234,16 +213,15 @@ export class NuevoChequeComponent {
           
          
       }, 250);
-      //if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
-      
+
       this.cmbCuentaBancaria.close();
+
     }
   }
 
-
   public v_Enter_CuentaBanco(event: any) {
     if (event.key == "Enter") {
-      let cmb : any = this.cmbCuentaBancaria.dropdown;
+      let cmb: any = this.cmbCuentaBancaria.dropdown;
       let _Item: iCuentaBancaria = cmb._focusedItem.value;
       this.cmbCuentaBancaria.setSelectedItem(_Item.IdCuentaBanco);
       this.val.Get("cmbCuentaBancaria").setValue([_Item.IdCuentaBanco]);
@@ -304,114 +282,120 @@ public v_Enter_Cuenta2(event: any) {
 public cmbReembolsoC: IgxComboComponent;
 
 
- public v_Select_Reembolso(event: any) {
-  //this.V_Verificar()
+public v_Select_Reembolso(event: any) {
+ 
   this.val.Get("cmbReembolsoC").setValue("");
   if (event.added.length == 1) {
     if(event.newValue.length > 1) event.newValue.splice(0, 1);
     let _Item  = this.lstReembolsos.find(f => f.Cuenta == event.newValue[0]);
 
     if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
-    //this.V_Verificar()
+
+    if(this.Visualizando ) return;
+  
+    let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+
+    this.lstDetalle.data.forEach(f =>{
+
+      this.valTabla.del("txtCuenta" + f.NoLinea);
+      this.valTabla.del("txtReferencia" + f.NoLinea);
+      this.valTabla.del("txtCentroCosto" + f.NoLinea);
+      this.valTabla.del("txtDebito" + f.NoLinea);
+      this.valTabla.del("txtCredito" + f.NoLinea);
+
+    });
+
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.valTabla = new Validacion();
+    this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+    this.valTabla.add("txtReferencia1", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+    this.valTabla.add("txtCentroCosto1", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+
+
+    this.lstDetalle.data.push(detBanco);
+
+    this.lstDetalle._updateChangeSubscription();
+
+
+ 
+
+
+    setTimeout(() => {        
+      this.SumIVA = 0;
+      _Item?.DetalleCaja.forEach(f => {
+        let i : number  = this.V_Agregar(false);
+        let det = this.lstDetalle.data.find(y => y.NoLinea == i);
+        det!.CuentaContable = [f.Cuenta];
+        det!.CentroCosto = [f.CentroCosto];
+        det!.Referencia =  String(f.Referencia);
+        det!.Debito = this.cFunciones.NumFormat(f.SubTotal, "2");
+        det!.Naturaleza = "D";
+        this.SumValor += f.Total;
+        this.SumIVA += f.Iva;
+        detBanco!.Credito = this.cFunciones.NumFormat(this.SumValor, "2");
+
+        this.valTabla.Get( "txtCuenta" + i).setValue([f.Cuenta]);
+       this.valTabla.Get( "txtCentroCosto" + i).setValue([f.CentroCosto]);
+
+
+       this.V_Calcular();
+   
+     })
+
+     if (this.SumIVA > 0) {
+      let i : number  = this.V_Agregar(false);
+        let det = this.lstDetalle.data.find(y => y.NoLinea == i);
+        det!.CuentaContable = ['2102-01-01-01'];
+        det!.CentroCosto = "";
+        det!.Referencia =  "IVA";
+        det!.Debito = this.cFunciones.NumFormat(this.SumIVA, "2");
+        det!.Naturaleza = "D";
+
+        this.valTabla.Get( "txtCuenta" + i).setValue(['2102-01-01-01']);
+        this.valTabla.Get( "txtCentroCosto" + i).setValue("");
+        this.V_Calcular();
+    }
+     
+    });
+
+
+
+
+    
+   }
+   else{
+
+    if(this.Visualizando ) return;
+
+    let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.valTabla = new Validacion();
+    this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+    this.valTabla.add("txtReferencia1", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+    this.valTabla.add("txtCentroCosto1", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+
+
+    this.lstDetalle.data.push(det);
+
+    this.lstDetalle._updateChangeSubscription();
+
    }
 }
 
 public v_Enter_Reembolso(event: any) {
+  if(this.Visualizando ) return;
   if (event.key == "Enter") {
     let cmb : any = this.cmbReembolsoC.dropdown;
     let _Item: IReembolsos = cmb._focusedItem.value;    
      
     this.cmbReembolsoC.setSelectedItem(_Item.Cuenta);
     this.val.Get("cmbReembolsoC").setValue([_Item.Cuenta]);
-    document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled"); 
-
-    this.val.Get("txtTotalDolar").setValue("0.00");
-    this.val.Get("txtTotalCordoba").setValue("0.00");
-
-    this.v_CargarReembolsos()
-    
-
+  
   }
 }
 
-// public V_Verificar() {
-//     this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
-//     this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
-//     this.V_Agregar();
-// }
 
-public v_CargarReembolsos(): void {
-  
-
-  if (this.val.Get("cmbReembolsoC").value == undefined) return;
-  let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
-      let id = i_C?.IdIngresoCajaChica;
-      // const myArray = text.split("-");
-      // let CC = myArray[1].replace(/\s{2,}/g, ' ').trim();
-      // let Nu = myArray[0].replace(/\s{2,}/g, ' ').trim(); 
-      
-      this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
-      this.lstDetalle = new MatTableDataSource<iAsientoDetalle>;
-
-    this.GET.GetReembolsoD(id).subscribe(
-      {
-        next: (data) => {
-
-          let _json: any = data;
-
-          if (_json["esError"] == 1) {
-            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                id: "error-servidor-msj",
-                data: _json["msj"].Mensaje,
-              });
-            }
-          } else {
-            let datos: iDatos[] = _json["d"];
-            let SumValor: number = 0;
-            let SumIVA: number = 0;
-            this.lstReembolsoD.data = datos[0].d;
-            this.lstReembolsoD.data.forEach(f => {
-              this.v_ContabilizarR(f.Cuenta,f.Referencia,f.CentroCosto,f.SubTotal)
-              SumValor += f.Total;
-              SumIVA += f.Iva;
-            });
-            if (SumIVA > 0) {
-              this.V_Add('2102-01-01-01','IVA','',SumIVA,"D");
-            }
-            
-            this.lstReembolsoD._updateChangeSubscription();
-
-           
-
-            if(this.val.ItemValido(["cmbCuentaBancaria"])) {
-              let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
-              if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-                this.V_Add(item.CuentaNuevaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",SumValor,"C");
-              } else {
-                this.ValorC = this.cFunciones.Redondeo((SumValor),"2")
-                this.V_Add(item.CuentaNuevaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
-              }
-             
-            }
-           
-          }
-
-        },
-        error: (err) => {
-
-          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              id: "error-servidor",
-              data: "<b class='error'>" + err.message + "</b>",
-            });
-          }
-
-        },
-      }
-    );
-
-}
 
 
   public v_Anulado(event: any): void {
@@ -447,7 +431,7 @@ public v_CargarReembolsos(): void {
 
     }
 
-
+  
 
 
     this.GET.Datos().subscribe(
@@ -520,6 +504,22 @@ public v_CargarReembolsos(): void {
 
   }
 
+  public SetDt(): void {
+
+    let i: number = this.V_Agregar(true);
+
+
+    setTimeout(() => {
+     
+      let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i); 
+      
+      let det = this.lstDetalle.data.find(y => y.NoLinea == i);
+      let Doc = this.val.Get("txtNoDoc").value;
+      det!.Referencia = Doc == undefined ? this.val.Get("txtBeneficiario").value : this.val.Get("txtNoDoc").value  + ' ' + this.val.Get("txtBeneficiario").value ;         
+       
+    }, 250);
+
+  }
 
   public V_TasaCambios(): void {
     if (this.val.Get("txtFecha").value == undefined) return;
@@ -567,53 +567,27 @@ public v_CargarReembolsos(): void {
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {    
     
     if (event.added.length == 1) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
-   
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
 
       let txtCuenta: IgxComboComponent = event.owner
 
 
-      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0])!;
-   
+      let i_Cuenta: iCuenta = this.lstCuenta.find(f => f?.CuentaContable == event.newValue[0])!;
+
+
       det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
-      det.Naturaleza = i_Cuenta.Naturaleza;
+      det.Naturaleza = i_Cuenta?.Naturaleza;
 
       document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
       document.getElementById("txtCentroCosto" + det.NoLinea)?.removeAttribute("disabled");
-      document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-      document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-
-      if (i_Cuenta.Naturaleza == "D")
-      {
-        document.getElementById("txtDebito" + det.NoLinea)?.removeAttribute("disabled");
-        if (det.Credito == undefined) return;
-        if(Number(det.Credito.replaceAll(",", "")) != 0)
-        {
-          det.Debito = det.Credito;
-          det.Credito = "0.00";
-        }
 
 
-        
-      }
 
-      if (i_Cuenta.Naturaleza == "C")
-      {
-        document.getElementById("txtCredito" + det.NoLinea)?.removeAttribute("disabled");
-        if (det.Credito == undefined) return;
-        if(Number(det.Debito.replaceAll(",", "")) != 0)
-        {
-          det.Credito  = det.Debito;
-          det.Debito = "0.00";
-        }
-        
-      }
       txtCuenta.close();
 
     }
 
     this.V_Calcular();
-   
     
 
   }
@@ -621,12 +595,13 @@ public v_CargarReembolsos(): void {
 
   public v_Enter_Cuenta(event: any, det: iAsientoDetalle) {
 
+  
     if (event.key == "Enter") {
       let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + det.NoLinea);
-      let cmb : any = txtCuenta.dropdown;
+      let cmb: any = txtCuenta.dropdown;
 
       let _Item: iCuenta = cmb._focusedItem.value;
-      if(!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
+      if (!txtCuenta.selection.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
       this.valTabla.Get("txtCuenta" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;
       det.Naturaleza = _Item.Naturaleza;
@@ -670,15 +645,29 @@ public v_CargarReembolsos(): void {
 
   }
 
-  public V_FocusOut(det: iAsientoDetalle): void {
+  public V_FocusOut(columna: string, det: iAsientoDetalle) {
+
+    let vacio = ["0.00", "0", ""];
+    if (columna == "txtDebito" &&  !vacio.includes(det.Debito) ) {
+
+      if (Number(det.Credito.replaceAll(",", ""))) {
+        det.Credito = "0.00";
+      }
+
+    }
 
 
-    det.Debito = this.cFunciones.NumFormat(Number(det.Debito.replaceAll(",", "")), "2");
-    det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
-    det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
-    det.Credito = this.cFunciones.NumFormat(Number(det.Credito.replaceAll(",", "")), "2");
-    det.CreditoML = this.cFunciones.Redondeo(det.CreditoML, "2");
-    det.CreditoMS = this.cFunciones.Redondeo(det.CreditoMS, "2");
+
+    if (columna == "txtCredito" &&  !vacio.includes(det.Credito))  {
+
+      if (Number(det.Debito.replaceAll(",", ""))) {
+        det.Debito = "0.00";
+      }
+
+    }
+
+
+    this.V_Calcular();
 
   }
 
@@ -689,8 +678,14 @@ public v_CargarReembolsos(): void {
         document?.getElementById("txt" + columna + det.NoLinea)?.focus();
       }
       else {
-        if (det.Naturaleza == "D") document?.getElementById("txtDebito" + det.NoLinea)?.focus();
-        if (det.Naturaleza == "C") document?.getElementById("txtCredito" + det.NoLinea)?.focus();
+        document?.getElementById("txtDebito" + det.NoLinea)?.focus();
+      }
+
+      if (columna == "txtDebito") {
+
+        if (Number(det.Credito.replaceAll(",", ""))) { 
+          det.Credito = "0.00";
+        }
 
       }
 
@@ -701,10 +696,17 @@ public v_CargarReembolsos(): void {
 
       if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea))
 
+
+
+      if (Number(det.Credito.replaceAll(",", "")) != 0) {
+        det.Debito = "0.00";
+      }
+
       if (det.NoLinea != i) return;
 
       this.V_Agregar(false);
     }
+
 
   }
 
@@ -726,40 +728,52 @@ public v_CargarReembolsos(): void {
 
  V_Agregar(esBanco: boolean): number {
 
-    //if(this.cmbCuenta == undefined) return;
+  let det: iAsientoDetalle = {} as iAsientoDetalle;
+  let i: number = 1;
 
-    let det: iAsientoDetalle = {} as iAsientoDetalle;
-    let i: number = 1;
-
-    if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
-    
-
-    this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
-    this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-    this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+  if (this.lstDetalle.data.length > 0) i = Math.max(...this.lstDetalle.data.map(o => o.NoLinea)) + 1
 
 
-    det.IdAsiento = -1;
-    det.NoLinea = i;
-    det.CuentaContable = "";
-    det.Debito = "0";
-    det.DebitoML = 0;
-    det.DebitoMS = 0;
-    det.Credito = "0";
-    det.CreditoML = 0;
-    det.CreditoMS = 0;
-    det.Modulo = "CON";
-    det.Descripcion = "";
-    det.Referencia = "";
-    det.NoDocumento = "";
-    det.TipoDocumento = "";
-    det.CentroCosto = "";
-    this.lstDetalle.data.push(det);
+  if (esBanco) {
 
-    this.V_Ordenar(i);
+    let x = this.lstDetalle.data.findIndex(f => f.NoLinea == 1);
+    i = 1;
+
+    if (x != -1) return i;
+  }
 
 
-    return i;
+
+
+  this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+  this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+  this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+
+
+
+
+
+  det.IdAsiento = -1;
+  det.NoLinea = i;
+  det.CuentaContable = "";
+  det.Debito = "0";
+  det.DebitoML = 0;
+  det.DebitoMS = 0;
+  det.Credito = "0";
+  det.CreditoML = 0;
+  det.CreditoMS = 0;
+  det.Modulo = "CON";
+  det.Descripcion = "";
+  det.Referencia = "";
+  det.CentroCosto = "";
+  det.NoDocumento = "";
+  det.TipoDocumento = "";
+  this.lstDetalle.data.push(det);
+
+  this.V_Ordenar(i);
+
+
+  return i;
   }
 
   V_Add(cuenta: string, Concepto: string, CC: string, Valor: number, Tipo: string) {
@@ -849,19 +863,16 @@ public v_CargarReembolsos(): void {
       document?.getElementById("txtCuenta" + x)?.focus();
       document.getElementById("txtReferencia" + x)?.setAttribute("disabled", "disabled");
       document.getElementById("txtCentroCosto" + x)?.setAttribute("disabled", "disabled");
-      document.getElementById("txtDebito" + x)?.setAttribute("disabled", "disabled");
-      document.getElementById("txtCredito" + x)?.setAttribute("disabled", "disabled");
 
-   
+      let txtCuenta: any = this.cmbCuenta.find(f => f.id == "txtCuenta" + x);
+      if (x > 2) txtCuenta.open();
 
-      this.val.addFocus("txtCuenta" + x , "txtReferencia" + x, undefined);
+      this.val.addFocus("txtCuenta" + x, "txtReferencia" + x, undefined);
       this.val.addFocus("txtReferencia" + x, "txtCentroCosto" + x, undefined);
       this.val.addFocus("txtCentroCosto" + x, "txtDebito" + x, undefined);
       this.val.addFocus("txtDebito" + x, "txtCredito" + x, undefined);
 
-
     }, 250);
-
 
   }
 
@@ -1321,69 +1332,83 @@ public v_CargarReembolsos(): void {
   {
 
 
+    this.Visualizando = true;
     this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
     this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
     this.cmbCuentaC.setSelectedItem(this.FILA.CuentaContable)
     this.val.Get("txtNoDoc").setValue(this.FILA.NoCheque);
-    this.val.Get("txtFecha").setValue( this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
+    this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
     this.val.Get("txtBeneficiario").setValue(this.FILA.Beneficiario);
     this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
+    this.val.Get("cmbReembolsoC").disable();
+    this.IdMoneda = this.FILA.IdMoneda;
+
+    let rem : IReembolsos = {} as IReembolsos;
+    rem.IdIngresoCajaChica = this.FILA.IdIngresoCaja;
+    rem.Cuenta = this.FILA.CuentaIngCaja;
+    rem.DetalleCaja = [];
+
+    this.lstReembolsos.push(rem);
+
+    this.cmbReembolsoC.select([this.FILA.CuentaIngCaja]);
+
 
     this.TC = this.FILA.TasaCambio;
     this.Anulado = this.FILA.Anulado;
 
 
-
-
    //let x: number = 1;
    
 
-    setTimeout(() => {
+   setTimeout(() => {
 
-      this.lstDetalle.data.forEach(f => {
-        this.valTabla.add("txtCuenta" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
-        this.valTabla.add("txtReferencia" + f.NoLinea, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
-        this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+    this.lstDetalle.data.forEach(f => {
+      this.valTabla.add("txtCuenta" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+      this.valTabla.add("txtReferencia" + f.NoLinea, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+      this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>", "0", "Centro Costo", "Seleccione un centro de costo.");
 
-        f.Debito = this.cFunciones.NumFormat(Number(String(f.Debito).replaceAll(",", "")), "2");
-        f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");
-        
-        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
-        txtCuenta.select([f.CuentaContable]);
-        
+      f.Debito = this.cFunciones.NumFormat(Number(String(f.Debito).replaceAll(",", "")), "2");
+      f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");
 
-        //if(!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable); 
-
-        
-        this.valTabla.Get("txtCuenta" + f.NoLinea).setValue(f.CuentaContable);
-        this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
-
-        
-        let txtCentro: any = this.cmbCombo.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-        if(!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0]) && f.CentroCosto != undefined) txtCentro.setSelectedItem(f.CentroCosto);
-        txtCentro.select([f.CentroCosto]);
-       
-  
-        document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
-        document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
-        document.getElementById("txtCredito" + f.NoLinea)?.setAttribute("disabled", "disabled");
-  
-        if (f.Naturaleza == "D") document.getElementById("txtDebito" + f.NoLinea)?.removeAttribute("disabled");
-  
-        if (f.Naturaleza == "C") document.getElementById("txtCredito" + f.NoLinea)?.removeAttribute("disabled");
-
-      });
-  
+      let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
+      txtCuenta.select([f.CuentaContable]);
 
 
-      let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
-      if(dialogRef != undefined) dialogRef.close();
+     // if (!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable);
+
+
+
+
+      this.valTabla.Get("txtCuenta" + f.NoLinea).setValue(f.CuentaContable);
+      this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
      
-    });
-  }
+
+
+      let txtCentro: any = this.cmbCombo.find(y => y.id == "txtCentroCosto" + f.NoLinea);
+      //if (!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0]) && f.CentroCosto != undefined) txtCentro.setSelectedItem(f.CentroCosto);
+      txtCentro.select([f.CentroCosto]);
+
+
+      document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
+
+
+
+      this.Visualizando = false;
+
+    }, 150);
+
+
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+    if (dialogRef != undefined) dialogRef.close();
+
+
+  });
+}
+  
 
   public v_ImprimirCheque() {
     document.getElementById("btnImprimir-Cheques")?.setAttribute("disabled", "disabled");
@@ -1529,7 +1554,6 @@ public v_CargarReembolsos(): void {
 
   ngOnInit(): void {
 
-    this.v_Evento("Iniciar");
     this.overlaySettings = {};
 
     if (window.innerWidth <= 992) {
@@ -1541,59 +1565,76 @@ public v_CargarReembolsos(): void {
     }
 
 
-    // let chk: any = document.querySelector("#chkAnulado");
-    // if (chk != undefined) chk.bootstrapToggle();
+  }
+
+  
+  ngDoCheck() {
+
+
+    ///CAMBIO DE FOCO
+    this.val.Combo(this.cmbCombo);
+    this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
+    this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
+    this.val.addFocus("txtFecha", "txtBeneficiario", undefined);
+    this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
+    this.val.addNumberFocus("TxtTC", 4);
+
+
+
+    if (this.cmbCuentaBancaria != undefined) this.cmbCuentaBancaria.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
+    if (this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
+   
+
+
+
+    this.lstDetalle.data.forEach(f => {
+
+
+      if (this.cmbCuenta != undefined) {
+        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
+        if (txtCuenta != undefined) txtCuenta.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
+
+        if(f.NoLinea == 1)
+        {
+
+          let cBanco : any = this.lstCuentabancaria.find(w => w.IdCuentaBanco == this.cmbCuentaBancaria?.value[0]);
+
+          txtCuenta.setSelectedItem(cBanco?.IdMoneda == this.cFunciones.MonedaLocal? cBanco?.CuentaNuevaC : cBanco?.CuentaNuevaD);
+
+          document.getElementById("txtCuenta" + f.NoLinea)?.setAttribute("disabled", "disabled");
+
+
+        }
+
+        let txtCentroCosto: any = this.cmbCuenta.find(y => y.id == "txtCentroCosto" + f.NoLinea);
+        if (txtCentroCosto != undefined) txtCentroCosto.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
+
+      }
+
+
+
+
+      this.valTabla.addFocus("txtCuenta" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);
+      this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);
+
+
+      this.valTabla.addNumberFocus("txtDebito" + f.NoLinea, 2);
+      this.valTabla.addNumberFocus("txtCredito" + f.NoLinea, 2);
+
+
+    });
 
 
   }
 
-  ngDoCheck(){
-       ///CAMBIO DE FOCO
-       this.val.Combo(this.cmbCombo);
-       this.val.addFocus("cmbCuentaBancaria", "cmbBodega", undefined);
-       this.val.addFocus("cmbBodega", "txtBeneficiario", undefined);
-       this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
-       this.val.addNumberFocus("TxtTC", 4);
-  
-  
-  
-       if(this.cmbCuentaBancaria != undefined) this.cmbCuentaBancaria.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
-       if(this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
-      
-  
-      
-  
-      this.lstDetalle.data.forEach(f => {
-  
-  
-        if(this.cmbCuenta != undefined)
-        {
-          let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
-          if(txtCuenta != undefined) txtCuenta.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
-  
-          let txtCentroCosto: any = this.cmbCuenta.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-          if(txtCentroCosto != undefined) txtCentroCosto.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
-      
-        }
-  
-  
-    
-        
-      
-  
-        this.valTabla.addFocus("txtCuenta" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);
-        this.valTabla.addFocus("txtReferencia" + f.NoLinea, "txtCentroCosto" + f.NoLinea, undefined);
-  
-  
-        this.val.addNumberFocus("txtDebito" + f.NoLinea, 2);
-        this.val.addNumberFocus("txtCredito" + f.NoLinea, 2);
-        
-  
-      });
-  
-        
-    }
 
+  ngAfterViewInit(): void {
+    $("#offcanvasBottom-trans-cuenta").removeAttr("show");
+    $("#btnMostrarPie-trans-cuenta").trigger("click"); 
+
+  }
 
 }
 
