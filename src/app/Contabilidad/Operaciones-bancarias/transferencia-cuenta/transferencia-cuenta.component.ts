@@ -901,6 +901,7 @@ export class TransferenciaCuentaComponent {
       let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
       let id = i_C?.IdIngresoCajaChica;
       this.FILA.IdIngresoCajaChica = id;
+      this.FILA.CuentaCaja = i_C?.Cuenta!;
     }
 
 
