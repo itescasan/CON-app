@@ -251,7 +251,7 @@
                                         <!-- <button type="button" class="btn btn-opcional" id="btnModal-Reembolso"
                                     (click)="v_Evento('Limpiar');" *ngIf="!esModal"><i class="fa-solid fa-money-bill-transfer"></i>
                                     Reembolso</button> -->
-                                    <igx-combo #cmbReembolsoC [data]="lstReembolsos" valueKey="Cuenta" displayKey="Cuenta" id="cmbReembolsoC"
+                                    <igx-combo #cmbReembolsoC [data]="lstReembolsos" valueKey="key" displayKey="NombreCuenta" id="cmbReembolsoC"
                                     formControlName="cmbReembolsoC" placeholder="Reembolso"
                                     searchPlaceholder="Seleccione un Reembolso..." [autoFocusSearch]="true"
                                     [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Reembolso($event)"

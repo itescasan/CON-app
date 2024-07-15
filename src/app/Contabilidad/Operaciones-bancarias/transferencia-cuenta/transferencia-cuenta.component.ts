@@ -231,7 +231,7 @@ export class TransferenciaCuentaComponent {
     this.val.Get("cmbReembolsoC").setValue("");
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
-      let _Item  = this.lstReembolsos.find(f => f.Cuenta == event.newValue[0]);
+      let _Item  = this.lstReembolsos.find(f => f.key == event.newValue[0]);
   
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
 
@@ -898,7 +898,7 @@ export class TransferenciaCuentaComponent {
     this.FILA.TipoTransferencia = "C";
 
     if (this.cmbReembolsoC.selection.length != 0) {
-      let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
+      let i_C = this.lstReembolsos.find(f => f.NombreCuenta == this.val.Get("cmbReembolsoC").value[0])
       let id = i_C?.IdIngresoCajaChica;
       this.FILA.IdIngresoCajaChica = id;
       this.FILA.CuentaCaja = i_C?.Cuenta!;
@@ -1027,6 +1027,8 @@ export class TransferenciaCuentaComponent {
     let rem : IReembolsos = {} as IReembolsos;
     rem.IdIngresoCajaChica = this.FILA.IdIngresoCajaChica;
     rem.Cuenta = this.FILA.CuentaCaja;
+    rem.key = this.FILA.CuentaCaja;
+    rem.NombreCuenta = this.FILA.CuentaCaja;
     rem.DetalleCaja = [];
 
     this.lstReembolsos.push(rem);

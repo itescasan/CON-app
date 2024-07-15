@@ -287,7 +287,7 @@ public v_Select_Reembolso(event: any) {
   this.val.Get("cmbReembolsoC").setValue("");
   if (event.added.length == 1) {
     if(event.newValue.length > 1) event.newValue.splice(0, 1);
-    let _Item  = this.lstReembolsos.find(f => f.Cuenta == event.newValue[0]);
+    let _Item  = this.lstReembolsos.find(f => f.key == event.newValue[0]);
 
     if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
 
@@ -1024,7 +1024,7 @@ public v_Enter_Reembolso(event: any) {
 
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.CuentaContable = this.val.Get("cmbCuentaC").value[0];
-    this.FILA.CuentaContable = this.val.Get("cmbReembolsoC").value[0];
+    this.FILA.CuentaIngCaja = this.val.Get("cmbReembolsoC").value[0];
     this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
     this.FILA.IdMoneda = this.IdMoneda;
     //this.FILA.CentroCosto = this.val.Get("cmbCombo").value[0];
@@ -1043,7 +1043,7 @@ public v_Enter_Reembolso(event: any) {
 
     
     if (this.cmbReembolsoC.selection.length != 0) {
-      let i_C = this.lstReembolsos.find(f => f.Cuenta == this.val.Get("cmbReembolsoC").value[0])
+      let i_C = this.lstReembolsos.find(f => f.NombreCuenta == this.val.Get("cmbReembolsoC").value[0])
       let id = i_C?.IdIngresoCajaChica;
       this.FILA.IdIngresoCaja = id;
       this.FILA.CuentaIngCaja = i_C?.Cuenta!;
@@ -1336,7 +1336,7 @@ public v_Enter_Reembolso(event: any) {
     this.Visualizando = true;
     this.cmbCuentaBancaria.setSelectedItem(this.FILA.IdCuentaBanco);
     this.cmbBodega.setSelectedItem(this.FILA.CodBodega);
-    this.cmbCuentaC.setSelectedItem(this.FILA.CuentaContable)
+    this.cmbCuentaC.setSelectedItem(this.FILA.CuentaContable)    
     this.val.Get("txtNoDoc").setValue(this.FILA.NoCheque);
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
     this.val.Get("txtBeneficiario").setValue(this.FILA.Beneficiario);
@@ -1350,12 +1350,13 @@ public v_Enter_Reembolso(event: any) {
     let rem : IReembolsos = {} as IReembolsos;
     rem.IdIngresoCajaChica = this.FILA.IdIngresoCaja;
     rem.Cuenta = this.FILA.CuentaIngCaja;
+    rem.key = this.FILA.CuentaIngCaja;
+    rem.NombreCuenta = this.FILA.CuentaIngCaja;
     rem.DetalleCaja = [];
 
     this.lstReembolsos.push(rem);
 
     this.cmbReembolsoC.select([this.FILA.CuentaIngCaja]);
-
 
     this.TC = this.FILA.TasaCambio;
     this.Anulado = this.FILA.Anulado;
