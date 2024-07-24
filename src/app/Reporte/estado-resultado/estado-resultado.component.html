@@ -11,12 +11,12 @@
                     <div class="row">
 
 
-                        <div class="col-12 col-md-12 col-lg-3 mb-1">
+                        <div class="col-12 col-md-12 col-lg-2 mb-1">
                             <div class="form-group">
                                 <div class="form-time-picker">
                                     <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
                                         [inputFormat]="'MM/yyyy'">
-                                        <label igxLabel>Periodo Fiscal</label>
+                                        <label igxLabel>Fecha</label>
             
                                         <igx-picker-toggle igxPrefix>
                                             <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
@@ -32,15 +32,14 @@
 
                         </div>                        
 
-                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                        <div class="col-12 col-md-12 col-lg-2  mb-1">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                                 <div class="form-floating">
                                     <select class="form-select form-select-lg" aria-label="Opcion"
                                     id="cmbOpcion" formControlName="cmbOpcion">
-                                        <option value="true">Cerrado</option>
-                                        <option value="false">Abierto</option>
-                                       
+                                        <option value="true">Abierto</option>
+                                        <option value="false">Cerrado</option>                                       
                                     </select>
                                     <label for="cmbOpcion">Meses</label>
                                 </div>
@@ -48,30 +47,19 @@
                             </div>
                         </div>
 
-                        <!-- <div class="col-12 col-md-12 col-lg-3  mb-1">
+                        <div class="col-12 col-md-12 col-lg-2  mb-1">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                                 <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Meses"
-                                    id="cmbMoneda" formControlName="cmbMeses">
-                                        <option value="true">Enero</option>
-                                        <option value="false">Febrero</option>
-                                        <option value="false">Marzo</option>
-                                        <option value="false">Abril</option>
-                                        <option value="false">Mayo</option>
-                                        <option value="false">Junio</option>
-                                        <option value="false">Julio</option>
-                                        <option value="false">Agosto</option>
-                                        <option value="false">Septiembre</option>
-                                        <option value="false">Octubre</option>
-                                        <option value="false">Noviembre</option>
-                                        <option value="false">Diciebre</option>
+                                    <select class="form-select form-select-lg" aria-label="Tipo"
+                                        id="cmbTipo" formControlName="cmbTipo" (change)="v_Select_Tipo()">
+                                        <option *ngFor="let d of datos" [ngValue]="d">{{ d }}</option>        
                                     </select>
-                                    <label for="cmbMeses">Meses</label>
+                                    <label for="cmbTipo">Tipo</label>
                                 </div>
                                
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="col-12 col-md-12 col-lg-3  mb-1">
                             <div class="input-group">
@@ -92,6 +80,31 @@
                         </div>
 
                     </div>
+                    <div class="row" *ngIf="SU">
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <igx-combo #cmbSucursales [data]="lstBodega" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbSucursales"
+                                formControlName="cmbSucursales" placeholder="Bodega"
+                                searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Sucursales($event)"
+                                (keyup)="v_Enter_Sucursales($event);">
+                                <label igxLabel>Sucursales</label>
+                                <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                            </igx-combo>
+                        </div>
+                    </div> 
+                    <div class="row" *ngIf="CC"> 
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <igx-combo #cmbCentroCosto [data]="lstCentroCosto" valueKey="Codigo" displayKey="CentroCosto" id="cmbCentroCosto"
+                                formControlName="cmbCentroCosto" 
+                                searchPlaceholder="Seleccione un Centro de Costo..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CentroCosto($event)"
+                                (keyup)="v_Enter_CentroCosto($event);">
+                                <label igxLabel>C. Costo</label>
+                                <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                            </igx-combo>
+                        </div>
+                    </div>
+
                 </form>
             </div>
 

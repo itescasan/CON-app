@@ -1,6 +1,7 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
+import { ConfCajaChicaComponent } from "src/app/Contabilidad/techo-caja-chica/conf-caja-chica.component";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 
 
@@ -31,9 +32,12 @@ export class getReporteContable{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/BalanceGeneral?Fecha=" + Fecha + "&EsMonedaLocal=" + EsMonedaLocal);
     }
 
-    public GetEstadoResultado(Fecha: String, Estado: boolean, EsMonedaLocal : boolean): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/EstadoResultado?Fecha=" + Fecha + "&Estado=" + Estado  + "&EsMonedaLocal=" + EsMonedaLocal);
+    public GetEstadoResultado(Fecha: String, Estado: boolean, EsMonedaLocal : boolean, Sucursal: string, CCosto: string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/EstadoResultado?Fecha=" + Fecha + "&Estado=" + Estado  + "&EsMonedaLocal=" + EsMonedaLocal + "&Sucursal=" + Sucursal + "&CCosto=" + CCosto);
     }
 
+    public Datos() : Observable<string>{
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Datos");
+     }
 
 }

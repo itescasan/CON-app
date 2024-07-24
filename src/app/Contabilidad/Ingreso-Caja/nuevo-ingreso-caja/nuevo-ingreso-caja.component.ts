@@ -42,6 +42,7 @@ export class NuevoIngresoCajaComponent {
   lstCentroCosto: iCentroCosto[] = [];
   lstEmpleado : iAccesoCaja[] = [];
   lstInfoCaja : iConfC[] = [];
+  lstCount : {} = {};
 
   @ViewChildren(IgxComboComponent)
   public cmbCuenta: QueryList<IgxComboComponent>;
@@ -168,7 +169,7 @@ export class NuevoIngresoCajaComponent {
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
-      this.v_Rubro();
+      this.v_Rubro();      
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
       this.cmbBodega.close();
     }
@@ -389,9 +390,19 @@ export class NuevoIngresoCajaComponent {
             this.lstRubros = datos[0].d;
             this.lstInfoCaja = datos[1].d;
             this.lstEmpleado = datos[2].d;
+            this.lstCount = datos[3].d;
             if (!this.esModal) this.val.Get("txtConsecutivo").setValue(this.lstInfoCaja[0].Consecutivo);
             this.mont_Caja = this.cFunciones.Redondeo(this.lstInfoCaja[0].Valor, "2");            
             this.v_llenarDatos(this.lstInfoCaja[0].Consecutivo,this.cFunciones.User,this.lstInfoCaja[0].CuentaContable);
+            if (Number(this.lstCount) > 0) {
+              document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+              document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");              
+
+            }else
+            {
+              document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+              document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
+            }
 
           }
 

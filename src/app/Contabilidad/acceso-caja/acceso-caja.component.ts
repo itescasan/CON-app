@@ -56,7 +56,7 @@ export class AccesoCajaComponent {
 
       this.val.Get("cmbUsuario").setValue(event.newValue[0]);
       this.LlenarDatos();
-
+      this.cmbUsuario.close();
     }
   }
 
@@ -66,6 +66,8 @@ export class AccesoCajaComponent {
       let cmb: any = this.cmbUsuario.dropdown;
       let _Item: iUsuario = cmb._focusedItem.value;
       this.cmbUsuario.select([_Item.Usuario]);
+
+     
     }
   }
 
@@ -259,11 +261,11 @@ export class AccesoCajaComponent {
         if(i != -1) 
         {
           f.Activo = true;
-              
-        } 
-        if (x != -1) {
           f.IdAcceso = this.lstDatosPerfil[i].IdAcceso; 
-        }       
+        } 
+        // if (x != -1) {
+         
+        // }       
 
       });
 

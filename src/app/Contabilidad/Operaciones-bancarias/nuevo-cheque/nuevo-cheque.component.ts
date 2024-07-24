@@ -87,7 +87,7 @@ export class NuevoChequeComponent {
   public Anulado : boolean = false;
   private Visualizando : boolean = false;
 
-  @ViewChild("datepiker", { static: false })
+  @ViewChild("datepiker", { static: false }) 
   public datepiker: any;
 
   constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postCheque) {  
