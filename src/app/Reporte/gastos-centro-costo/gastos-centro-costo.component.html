@@ -1,0 +1,78 @@
+<div class="contenedor">
+    <div class="row">
+
+        <div class="contenedor-filtro linea-bottom-primario">
+            <div class="row">
+                <p>Gastos Por Centro Costo</p>
+            </div>
+
+            <div class="row mb-2">
+                <form autocomplete="off" [formGroup]="val.ValForm">
+                    <div class="row">
+
+
+                        <div class="col-12 col-md-12 col-lg-2 mb-1">
+                            <div class="form-group">
+                                <div class="form-time-picker">
+                                    <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
+                                        [inputFormat]="'MM/yyyy'">
+                                        <label igxLabel>Fecha</label>
+            
+                                        <igx-picker-toggle igxPrefix>
+                                            <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                        </igx-picker-toggle>
+            
+                                        <igx-picker-clear igxSuffix>
+                                            <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                        </igx-picker-clear>
+            
+                                    </igx-date-picker>
+                                </div>
+                            </div>
+
+                        </div>         
+                        
+                        
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <igx-combo #cmbCentroCosto [data]="lstCentroCosto" valueKey="Codigo" displayKey="CentroCosto" id="cmbCentroCosto"
+                                formControlName="cmbCentroCosto" 
+                                searchPlaceholder="Seleccione un Centro de Costo..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CentroCosto($event)"
+                                (keyup)="v_Enter_CentroCosto($event);">
+                                <label igxLabel>C. Costo</label>
+                                <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                            </igx-combo>
+                        </div>
+
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Moneda"
+                                    id="cmbMoneda" formControlName="cmbMoneda">
+                                        <option value="true">Cordoba</option>
+                                        <option value="false">Dolar</option>
+                                    </select>
+                                    <label for="cmbMoneda">Moneda</label>
+                                </div>
+                                <span class="input-group-text"> <button type="button" class="btn btn-secundario"
+                                    id="btnReporte-Estado-Resultado" (click)="V_Imprimir();"><i
+                                        class="fa-solid fa-print fa-beat-fade fa-xl"></i>
+                                    Imprimir</button></span>
+                            </div>
+                        </div>                       
+
+                    </div>
+                                        
+
+                </form>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+</div>

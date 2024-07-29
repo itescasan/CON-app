@@ -61,6 +61,7 @@ import { ConfCajaChicaComponent } from './Contabilidad/techo-caja-chica/conf-caj
 import { DialogInputComponent } from './SHARED/componente/dialog-input/dialog-input.component';
 import { NuevoIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/nuevo-ingreso-caja/nuevo-ingreso-caja.component';
 import { RegistroIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/registro-ingreso-caja/registro-ingreso-caja.component';
+import { GastosCentroCostoComponent } from './Reporte/gastos-centro-costo/gastos-centro-costo.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { RegistroIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/regist
     DialogInputComponent,
     NuevoIngresoCajaComponent,
     RegistroIngresoCajaComponent,
+    GastosCentroCostoComponent,
   ],
   imports: [
     BrowserModule,
