@@ -1,3 +1,4 @@
+import { DecimalPipe } from "@angular/common";
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
@@ -43,5 +44,6 @@ export class getReporteContable{
     public Datos() : Observable<string>{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Datos");
      }
+        
 
 }

@@ -39,6 +39,9 @@ import { NuevoIngresoCajaComponent } from 'src/app/Contabilidad/Ingreso-Caja/nue
 import { RegistroIngresoCajaComponent } from 'src/app/Contabilidad/Ingreso-Caja/registro-ingreso-caja/registro-ingreso-caja.component';
 import { GastosCentroCostoComponent } from 'src/app/Reporte/gastos-centro-costo/gastos-centro-costo.component';
   
+import { BalanceSituacionFinancieraComponent } from 'src/app/Reporte/balance-situacion-financiera/balance-situacion-financiera.component';
+import { ComprobantesComponent } from 'src/app/Reporte/comprobantes/comprobantes.component';
+
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
 
@@ -265,6 +268,26 @@ export class SidebarComponent {
       let BalanceGen: ComponentRef<BalanceGeneralComponent> = this.DynamicFrom.viewContainerRef.createComponent(BalanceGeneralComponent);
 
     }
+    
+
+    if(id == "aBalanceSituacionFinanciera"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let BalanceSit: ComponentRef<BalanceSituacionFinancieraComponent> = this.DynamicFrom.viewContainerRef.createComponent(BalanceSituacionFinancieraComponent);
+
+    }
+
+
+    if(id == "aComprobantes"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let BalanceSit: ComponentRef<ComprobantesComponent> = this.DynamicFrom.viewContainerRef.createComponent(ComprobantesComponent);
+
+    }
+
+
 
     if(id == "aEstadoResultado"){
       $("#btnMenu").trigger("click");

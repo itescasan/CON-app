@@ -62,6 +62,9 @@ import { DialogInputComponent } from './SHARED/componente/dialog-input/dialog-in
 import { NuevoIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/nuevo-ingreso-caja/nuevo-ingreso-caja.component';
 import { RegistroIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/registro-ingreso-caja/registro-ingreso-caja.component';
 import { GastosCentroCostoComponent } from './Reporte/gastos-centro-costo/gastos-centro-costo.component';
+import { BalanceSituacionFinancieraComponent } from './Reporte/balance-situacion-financiera/balance-situacion-financiera.component';
+import { ComprobantesComponent } from './Reporte/comprobantes/comprobantes.component';
+
 
 @NgModule({
   declarations: [
@@ -101,6 +104,8 @@ import { GastosCentroCostoComponent } from './Reporte/gastos-centro-costo/gastos
     NuevoIngresoCajaComponent,
     RegistroIngresoCajaComponent,
     GastosCentroCostoComponent,
+    BalanceSituacionFinancieraComponent,
+    ComprobantesComponent
   ],
   imports: [
     BrowserModule,
