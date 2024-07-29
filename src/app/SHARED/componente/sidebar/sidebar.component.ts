@@ -38,10 +38,10 @@ import { ConfCajaChicaComponent } from 'src/app/Contabilidad/techo-caja-chica/co
 import { NuevoIngresoCajaComponent } from 'src/app/Contabilidad/Ingreso-Caja/nuevo-ingreso-caja/nuevo-ingreso-caja.component';
 import { RegistroIngresoCajaComponent } from 'src/app/Contabilidad/Ingreso-Caja/registro-ingreso-caja/registro-ingreso-caja.component';
 import { GastosCentroCostoComponent } from 'src/app/Reporte/gastos-centro-costo/gastos-centro-costo.component';
-  
+import { LibroDiarioComponent } from 'src/app/Reporte/libro-diario/libro-diario.component';  
 import { BalanceSituacionFinancieraComponent } from 'src/app/Reporte/balance-situacion-financiera/balance-situacion-financiera.component';
 import { ComprobantesComponent } from 'src/app/Reporte/comprobantes/comprobantes.component';
-
+import { LibroMayorComponent } from 'src/app/Reporte/libro-mayor/libro-mayor.component';
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
 
@@ -326,6 +326,22 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let GastosCC: ComponentRef<GastosCentroCostoComponent> = this.DynamicFrom.viewContainerRef.createComponent(GastosCentroCostoComponent);
+
+    }
+
+    if(id == "aLibroDiario"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let LibroDiario: ComponentRef<LibroDiarioComponent> = this.DynamicFrom.viewContainerRef.createComponent(LibroDiarioComponent);
+
+    }
+
+    if(id == "aLibroMayor"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let LibroMayor: ComponentRef<LibroMayorComponent> = this.DynamicFrom.viewContainerRef.createComponent(LibroMayorComponent);
 
     }
 

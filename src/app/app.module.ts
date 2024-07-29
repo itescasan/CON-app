@@ -64,7 +64,8 @@ import { RegistroIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/regist
 import { GastosCentroCostoComponent } from './Reporte/gastos-centro-costo/gastos-centro-costo.component';
 import { BalanceSituacionFinancieraComponent } from './Reporte/balance-situacion-financiera/balance-situacion-financiera.component';
 import { ComprobantesComponent } from './Reporte/comprobantes/comprobantes.component';
-
+import { LibroDiarioComponent } from './Reporte/libro-diario/libro-diario.component';
+import { LibroMayorComponent } from './Reporte/libro-mayor/libro-mayor.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,9 @@ import { ComprobantesComponent } from './Reporte/comprobantes/comprobantes.compo
     RegistroIngresoCajaComponent,
     GastosCentroCostoComponent,
     BalanceSituacionFinancieraComponent,
-    ComprobantesComponent
+    ComprobantesComponent,
+    LibroDiarioComponent,
+    LibroMayorComponent,
   ],
   imports: [
     BrowserModule,

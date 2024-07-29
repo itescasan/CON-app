@@ -41,6 +41,14 @@ export class getReporteContable{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/GastoCC?Fecha=" + Fecha +  "&EsMonedaLocal=" + EsMonedaLocal + "&CCosto=" + CCosto);
     }
 
+    public GetLibroDiario(Fecha: String,  EsMonedaLocal : boolean): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/LibroDiario?Fecha=" + Fecha +  "&EsMonedaLocal=" + EsMonedaLocal);
+    }
+
+    public GetLibroMayor(Fecha: String,  EsMonedaLocal : boolean): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/LibroMayor?Fecha=" + Fecha +  "&EsMonedaLocal=" + EsMonedaLocal);
+    }
+
     public Datos() : Observable<string>{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Datos");
      }

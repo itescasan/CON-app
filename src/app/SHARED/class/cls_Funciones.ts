@@ -97,6 +97,8 @@ export class Funciones {
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCambioPatrimonio", Caption: "Estado Cambio Patrimonio" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aGastosAcumulados", Caption: "Gastos Acumulados" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aGastosCCosto", Caption: "Gastos por Centro Costo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aLibroDiario", Caption: "Libro Diario" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aLibroMayor", Caption: "Libro Mayor" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
     /**************************************ACCESO CAJA CHICA ************************************* */ 
 
     {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavAccesoCaja", Caption: "Acceso Caja Chica" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
