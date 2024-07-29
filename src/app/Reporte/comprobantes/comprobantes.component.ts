@@ -6,6 +6,8 @@ import { getReporteFinanciero } from '../GET/get-Reporte-FinancierosCNT';
 import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
+import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
+import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 
 @Component({
   selector: 'app-comprobantes',  
@@ -16,8 +18,11 @@ export class ComprobantesComponent {
 
   public val = new Validacion();
 
+  lstBodega: iBodega[] = [];  
+
   @ViewChild("datepiker", { static: false })
   public datepiker: any;
+  public overlaySettings: OverlaySettings = {};
 
   constructor(private cFunciones: Funciones, private GET: getReporteFinanciero
   ) {
@@ -33,6 +38,30 @@ export class ComprobantesComponent {
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(1);
+
+    this.v_CargarDatos();
+    
+  }
+
+  @ViewChild("cmbBodega", { static: false })
+  public cmbBodega: IgxComboComponent;
+  public v_Select_Bodega(event: any) {
+
+    if (event.added.length == 1) {
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbBodega").setValue(event.newValue);     
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
+      this.cmbBodega.close();
+    }
+  }
+
+  public v_Enter_Bodega(event: any) {
+    if (event.key == "Enter") {
+      let cmb: any = this.cmbBodega.dropdown;
+      let _Item: iBodega = cmb._focusedItem?.value;
+      this.cmbBodega.setSelectedItem(_Item?.Codigo);
+      this.val.Get("cmbBodega").setValue([_Item?.Codigo]);      
+    }
   }
 
 
@@ -124,6 +153,79 @@ export class ComprobantesComponent {
 
 
 
+
+
+  }
+
+
+
+  v_CargarDatos(): void {
+
+    document.getElementById("btnReporte-Comprobantes")?.setAttribute("disabled", "disabled");
+
+
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+    
+    this.GET.Datos().subscribe(      
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+        
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos[] = _json["d"];
+            this.lstBodega = datos[0].d;          
+            
+
+
+          }
+
+        },
+        error: (err) => {
+
+
+          dialogRef.close();
+          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
+
+
+        }
+      }
+    );
 
 
   }
