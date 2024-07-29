@@ -52,17 +52,14 @@
                         </div>   
                         
                         <div class="col-12 col-md-12 col-lg-3  mb-1">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Bodega"
-                                    id="cmbBodega" formControlName="cmbBodega">
-                                        <option value="B-02">MOSTRADOR LA SUBASTA</option>
-                                        <option value="B-03">METROCENTRO</option>
-                                    </select>
-                                    <label for="cmbBodega">Bodega</label>
-                                </div>                               
-                            </div>
+                            <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
+                                formControlName="cmbBodega" 
+                                searchPlaceholder="Seleccione una Bodega..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
+                                (keyup)="v_Enter_Bodega($event);">
+                                <label igxLabel>Bodega</label>
+                                <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                            </igx-combo>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>

@@ -32,6 +32,11 @@ export class getReporteFinanciero{
   
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Comprobantes?FechaInicial=" + Fecha1 + "&FechaFinal=" + Fecha2 + "&CodBodega=" + CodBodega + "&TipoDocumento=" + TipoDocumento + "&IdSerie=" + IdSerie + "&Moneda=" + EsMonedaLocal);
     }
+
+
+    public Datos() : Observable<string>{
+        return this.http.get<any>(this._Cnx.Url() + "Inventario/Bodega/Get");
+     }
     
 
 }
