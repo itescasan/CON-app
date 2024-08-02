@@ -32,26 +32,6 @@
                         </div>
 
                         <div class="col-12 col-md-12 col-lg-3 mb-1">
-                            <div class="form-group">
-                                <div class="form-time-picker">
-                                    <igx-date-picker #datepiker formControlName="txtFecha2" id="txtFecha2"
-                                        [inputFormat]="'dd/MM/yyyy'">
-                                        <label igxLabel>Fecha Final</label>
-            
-                                        <igx-picker-toggle igxPrefix>
-                                            <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
-                                        </igx-picker-toggle>
-            
-                                        <igx-picker-clear igxSuffix>
-                                            <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
-                                        </igx-picker-clear>
-            
-                                    </igx-date-picker>
-                                </div>
-                            </div>
-                        </div>   
-                        
-                        <div class="col-12 col-md-12 col-lg-3  mb-1">
                             <igx-combo #cmbBodega [data]="lstBodega" valueKey="Codigo" displayKey="Bodega" id="cmbBodega"
                                 formControlName="cmbBodega" 
                                 searchPlaceholder="Seleccione una Bodega..." [autoFocusSearch]="true"
@@ -60,24 +40,24 @@
                                 <label igxLabel>Bodega</label>
                                 <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
                             </igx-combo>
-                            <br>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Tipo Documento"
-                                    id="cmbTipoDocumento" formControlName="cmbTipoDocumento">
-                                        <option value="OTROS INGRESOS">OTROS INGRESOS</option>
-                                    </select>
-                                    <label for="cmbTipoDocumento">Tipo Documento</label>
-                                </div>                               
-                            </div>
+                        </div>   
+                        
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <igx-combo #cmbTipoDocumento [data]="lstTipoDocumento" valueKey="IdSerie" displayKey="TipoComprobante" id="cmbTipoDocumento"
+                                formControlName="cmbTipoDocumento" 
+                                searchPlaceholder="Seleccione un Tipo Documento..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_TipoDocumento($event)"
+                                (keyup)="v_Enter_TipoDocumento($event);">
+                                <label igxLabel>Tipo Documento</label>
+                                <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                            </igx-combo>
                             <br>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                                 <div class="form-floating">
                                     <select class="form-select form-select-lg" aria-label="Serie"
                                     id="cmbIdSerie" formControlName="cmbIdSerie">
-                                        <option value="CAJ">CAJ</option>
+                                        <option value="CK1">CAJ</option>
                                     </select>
                                     <label for="cmbIdSerie">Serie</label>
                                 </div>                               
