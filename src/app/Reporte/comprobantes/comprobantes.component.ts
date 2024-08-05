@@ -7,6 +7,7 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
+import { iTipoComprobanteRpt } from 'src/app/Interface/Contabilidad/i-TipoComprobanteRpt';
 import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 
 @Component({
@@ -18,25 +19,25 @@ export class ComprobantesComponent {
 
   public val = new Validacion();
 
-  lstBodega: iBodega[] = [];  
+  lstBodega: iBodega[] = [];
+  lstTipoDocumento: iTipoComprobanteRpt[] = [];  
 
   @ViewChild("datepiker", { static: false })
   public datepiker: any;
   public overlaySettings: OverlaySettings = {};
+  
 
   constructor(private cFunciones: Funciones, private GET: getReporteFinanciero
   ) {
 
-    this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
-    this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
+    this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");    
     this.val.add("cmbBodega", "1", "LEN>", "0", "Bodega", "Selecione una Bodega");
-    this.val.add("cmbTipoDocumento", "1", "LEN>", "0", "Tipo Doc", "Selecione una Tipo Documento");
+    this.val.add("cmbTipoDocumento", "1", "LEN>", "0", "Tipo Doc", "Selecione un Tipo Documento");
     this.val.add("cmbIdSerie", "1", "LEN>", "0", "Serie", "Selecione una Serie");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
 
 
-    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
-    this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
+    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));    
     this.val.Get("cmbMoneda").setValue(1);
 
     this.v_CargarDatos();
@@ -55,12 +56,33 @@ export class ComprobantesComponent {
     }
   }
 
+  @ViewChild("cmbTipoDocumento", { static: false })
+  public cmbTipoDocumento: IgxComboComponent;
+  public v_Select_TipoDocumento(event: any) {
+
+    if (event.added.length == 1) {
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbTipoDocumento").setValue(event.newValue);     
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbTipoDocumento.close();
+      this.cmbTipoDocumento.close();
+    }
+  }
+
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
       let cmb: any = this.cmbBodega.dropdown;
       let _Item: iBodega = cmb._focusedItem?.value;
       this.cmbBodega.setSelectedItem(_Item?.Codigo);
       this.val.Get("cmbBodega").setValue([_Item?.Codigo]);      
+    }
+  }
+
+  public v_Enter_TipoDocumento(event: any) {
+    if (event.key == "Enter") {
+      let cmb: any = this.cmbTipoDocumento.dropdown;
+      let _Item: iTipoComprobanteRpt = cmb._focusedItem?.value;
+      this.cmbTipoDocumento.setSelectedItem(_Item?.IdSerie);
+      this.val.Get("cmbTipoDocumento").setValue([_Item?.IdSerie]);   
     }
   }
 
@@ -88,7 +110,7 @@ export class ComprobantesComponent {
     }
 
 
-    this.GET.GetComprobantes(this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd"), this.cFunciones.DateFormat(this.val.Get("txtFecha2").value, "yyyy-MM-dd"), this.val.Get("cmbBodega").value, this.val.Get("cmbTipoDocumento").value, this.val.Get("cmbIdSerie").value, this.val.Get("cmbMoneda").value).subscribe(
+    this.GET.GetComprobantes(this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd"), this.val.Get("cmbBodega").value, this.val.Get("cmbTipoDocumento").value, this.val.Get("cmbIdSerie").value, this.val.Get("cmbMoneda").value).subscribe(
       {
         next: (data) => {
 
@@ -199,10 +221,53 @@ export class ComprobantesComponent {
           } else {
 
             let datos: iDatos[] = _json["d"];
-            this.lstBodega = datos[0].d;          
+            this.lstBodega = datos[0].d;
+
+          }
+
+        },
+        error: (err) => {
+
+
+          dialogRef.close();
+          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
+
+
+        }
+      }
+    );
+
+
+    this.GET.DatosT().subscribe(      
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+        
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos[] = _json["d"];
+            this.lstTipoDocumento = datos[0].d;
             
-
-
           }
 
         },
