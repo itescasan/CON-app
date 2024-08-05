@@ -42,6 +42,7 @@ import { LibroDiarioComponent } from 'src/app/Reporte/libro-diario/libro-diario.
 import { BalanceSituacionFinancieraComponent } from 'src/app/Reporte/balance-situacion-financiera/balance-situacion-financiera.component';
 import { ComprobantesComponent } from 'src/app/Reporte/comprobantes/comprobantes.component';
 import { LibroMayorComponent } from 'src/app/Reporte/libro-mayor/libro-mayor.component';
+import { VentasAlcaldiaComponent } from 'src/app/Reporte/ventas-alcaldia/ventas-alcaldia.component';
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
 
@@ -342,6 +343,14 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let LibroMayor: ComponentRef<LibroMayorComponent> = this.DynamicFrom.viewContainerRef.createComponent(LibroMayorComponent);
+
+    }
+
+    if(id == "aVentasAlcaldia"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let ventasAlcaldia: ComponentRef<VentasAlcaldiaComponent> = this.DynamicFrom.viewContainerRef.createComponent(VentasAlcaldiaComponent);
 
     }
 

@@ -41,12 +41,16 @@ export class getReporteContable{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/GastoCC?Fecha=" + Fecha +  "&EsMonedaLocal=" + EsMonedaLocal + "&CCosto=" + CCosto);
     }
 
-    public GetLibroDiario(Fecha: String,  EsMonedaLocal : boolean): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/LibroDiario?Fecha=" + Fecha +  "&EsMonedaLocal=" + EsMonedaLocal);
+    public GetLibroDiario(Fecha: String, Estado: boolean, EsMonedaLocal : boolean): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/LibroDiario?Fecha=" + Fecha + "&Estado=" + Estado  +  "&EsMonedaLocal=" + EsMonedaLocal);
     }
 
-    public GetLibroMayor(Fecha: String,  EsMonedaLocal : boolean): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/LibroMayor?Fecha=" + Fecha +  "&EsMonedaLocal=" + EsMonedaLocal);
+    public GetLibroMayor(Fecha: String, Estado: boolean, EsMonedaLocal : boolean): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/LibroMayor?Fecha=" + Fecha + "&Estado=" + Estado  +  "&EsMonedaLocal=" + EsMonedaLocal);
+    }
+
+    public GetVentasAlcaldia(Fecha: String, Sucurasal: string, Municipio : string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/VentasAlcaldia?Fecha=" + Fecha + "&Sucursal=" + Sucurasal  +  "&Municipio=" + Municipio );
     }
 
     public Datos() : Observable<string>{

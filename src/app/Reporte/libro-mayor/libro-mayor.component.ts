@@ -33,12 +33,14 @@ export class LibroMayorComponent {
   ) {
 
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
+    this.val.add("cmbOpcion", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
   
 
 
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
+    this.val.Get("cmbOpcion").setValue(true);
 
  
   
@@ -69,7 +71,7 @@ export class LibroMayorComponent {
     }
 
     
-    this.GET.GetLibroMayor(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"),this.val.Get("cmbMoneda").value[0]).subscribe(      
+    this.GET.GetLibroMayor(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"),this.val.Get("cmbOpcion").value,this.val.Get("cmbMoneda").value[0]).subscribe(      
       {
         next: (data) => {
 
@@ -144,8 +146,9 @@ export class LibroMayorComponent {
   ngDoCheck(): void {
     ///CAMBIO DE FOCO
 
-    this.val.addFocus("txtFecha", "cmbMoneda", undefined);   
-    this.val.addFocus("cmbMoneda", "btnReporte-Libro-Mayor", "click");   
+    this.val.addFocus("txtFecha", "cmbMoneda", undefined);
+    this.val.addFocus("cmbMoneda", "cmbOpcion", undefined); 
+    this.val.addFocus("cmbOpcion", "btnReporte-Libro-Mayor", "click");   
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
 
 
