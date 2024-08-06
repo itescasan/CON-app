@@ -10,6 +10,10 @@ import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
 import { iTipoComprobanteRpt } from 'src/app/Interface/Contabilidad/i-TipoComprobanteRpt';
 import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+
+
 @Component({
   selector: 'app-comprobantes',  
   templateUrl: './comprobantes.component.html',
@@ -19,12 +23,17 @@ export class ComprobantesComponent {
 
   public val = new Validacion();
 
+  displayedColumns: string[] = ["IdAsiento","NoAsiento","Fecha","Concepto"];
+  @ViewChild(MatPaginator, { static: true })
+  paginator: MatPaginator;
+
   lstBodega: iBodega[] = [];
   lstTipoDocumento: iTipoComprobanteRpt[] = [];  
+  public lstAsientosContables :  MatTableDataSource<any>
 
   @ViewChild("datepiker", { static: false })
   public datepiker: any;
-  public overlaySettings: OverlaySettings = {};
+  public overlaySettings: OverlaySettings = {};  
   
 
   constructor(private cFunciones: Funciones, private GET: getReporteFinanciero
@@ -85,100 +94,6 @@ export class ComprobantesComponent {
       this.val.Get("cmbTipoDocumento").setValue([_Item?.IdSerie]);   
     }
   }
-
-
-  V_Imprimir(): void {
-
-
-    document.getElementById("btnReporte-Comprobantes")?.setAttribute("disabled", "disabled");
-
-
-
-    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
-
-
-    if (dialogRef == undefined) {
-      dialogRef = this.cFunciones.DIALOG.open(
-        WaitComponent,
-        {
-          panelClass: "escasan-dialog-full-blur",
-          data: "",
-          id: "wait"
-        }
-      );
-
-    }
-
-
-    this.GET.GetComprobantes(this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd"), this.val.Get("cmbBodega").value, this.val.Get("cmbTipoDocumento").value, this.val.Get("cmbIdSerie").value, this.val.Get("cmbMoneda").value).subscribe(
-      {
-        next: (data) => {
-
-
-          dialogRef.close();
-          let _json: any = data;
-
-          if (_json["esError"] == 1) {
-            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                id: "error-servidor-msj",
-                data: _json["msj"].Mensaje,
-              });
-            }
-          } else {
-
-            let datos: iDatos = _json["d"];
-            this.printPDFS(datos.d);
-
-
-
-          }
-
-        },
-        error: (err) => {
-
-
-          dialogRef.close();
-          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
-          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              id: "error-servidor",
-              data: "<b class='error'>" + err.message + "</b>",
-            });
-          }
-
-        },
-        complete: () => {
-          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
-
-
-        }
-      }
-    );
-
-
-  }
-
-
-  async printPDFS(datos: any) {
-
-
-
-    let byteArray = new Uint8Array(atob(datos).split('').map(char => char.charCodeAt(0)));
-
-    var file = new Blob([byteArray], { type: 'application/pdf' });
-
-    let url = URL.createObjectURL(file);
-
-    let tabOrWindow : any = window.open(url, '_blank');
-    tabOrWindow.focus();
-
-
-
-
-
-  }
-
 
 
   v_CargarDatos(): void {
@@ -292,10 +207,196 @@ export class ComprobantesComponent {
       }
     );
 
+    //ASIENTOS CONTABLES
+    this.GET.GetAsientosContables(this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd")).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos[] = _json["d"];
+
+            this.lstAsientosContables = new MatTableDataSource(datos[0].d);
+     
+
+          }
+
+        },
+        error: (err) => {
+
+          
+          dialogRef.close();
+          document.getElementById("btnRefrescar-Regtransferencia")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnRefrescar-Regtransferencia")?.removeAttribute("disabled");
+
+
+        }
+      }
+    );
 
   }
 
 
+  V_Buscar(): void {
+
+    document.getElementById("btnReporte-Asientos")?.setAttribute("disabled", "disabled");
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+    //ASIENTOS CONTABLES
+    this.GET.GetAsientosContables(this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd")).subscribe(
+      {
+        next: (data) => {
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos[] = _json["d"];
+
+            this.lstAsientosContables = new MatTableDataSource(datos[0].d);     
+
+          }
+
+        },
+        error: (err) => {
+
+          
+          dialogRef.close();
+          document.getElementById("btnReporte-Asientos")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnReporte-Asientos")?.removeAttribute("disabled");
+
+        }
+      }
+    );
+
+  }
+
+
+  V_Imprimir(): void {
+
+    document.getElementById("btnReporte-Comprobantes")?.setAttribute("disabled", "disabled");
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+
+    this.GET.GetComprobantes(this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd"), this.val.Get("cmbBodega").value, this.val.Get("cmbTipoDocumento").value, this.val.Get("cmbIdSerie").value, this.val.Get("cmbMoneda").value).subscribe(
+      {
+        next: (data) => {
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos = _json["d"];
+            this.printPDFS(datos.d);
+
+          }
+
+        },
+        error: (err) => {
+
+          dialogRef.close();
+          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
+
+        }
+      }
+    );
+
+  }
+
+
+  async printPDFS(datos: any) {
+
+    let byteArray = new Uint8Array(atob(datos).split('').map(char => char.charCodeAt(0)));
+
+    var file = new Blob([byteArray], { type: 'application/pdf' });
+
+    let url = URL.createObjectURL(file);
+
+    let tabOrWindow : any = window.open(url, '_blank');
+    tabOrWindow.focus();
+
+  }
 
   ngDoCheck(): void {
     ///CAMBIO DE FOCO
@@ -309,6 +410,5 @@ export class ComprobantesComponent {
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
 
   }
-
 
 }

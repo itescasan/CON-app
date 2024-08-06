@@ -41,6 +41,11 @@ export class getReporteFinanciero{
      public DatosT() : Observable<string>{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/TipoComprobante/Get");
      }
+
+     public GetAsientosContables(Fecha1: String): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientosContables/Get?Fecha=" + Fecha1);
+    }
     
 
 }
