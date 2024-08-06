@@ -53,6 +53,10 @@ export class getReporteContable{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/VentasAlcaldia?Fecha=" + Fecha + "&Sucursal=" + Sucurasal  +  "&Municipio=" + Municipio );
     }
 
+    public GetVentasconImpuestos(Fecha: String, FechaF: String): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/VentasConImpuestos?FechaI=" + Fecha + "&FechaF=" + FechaF );
+    }
+
     public Datos() : Observable<string>{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Datos");
      }
