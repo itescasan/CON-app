@@ -12,6 +12,8 @@ import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
+import { iAsientosContables } from 'src/app/Interface/Contabilidad/i-AsientosContables';
 
 
 @Component({
@@ -29,7 +31,8 @@ export class ComprobantesComponent {
 
   lstBodega: iBodega[] = [];
   lstTipoDocumento: iTipoComprobanteRpt[] = [];  
-  public lstAsientosContables :  MatTableDataSource<any>
+  //public lstAsientosContables :  MatTableDataSource<any>
+  lstAsientosContables : iAsientosContables[] = [];
 
   @ViewChild("datepiker", { static: false })
   public datepiker: any;
@@ -77,6 +80,18 @@ export class ComprobantesComponent {
     }
   }
 
+  @ViewChild("cmbIdSerie", { static: false })
+  public cmbIdSerie: IgxComboComponent;
+  public v_Select_AsientoContable(event: any) {
+
+    if (event.added.length == 1) {
+      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbIdSerie").setValue(event.newValue); 
+      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbIdSerie.close();
+      this.cmbIdSerie.close();
+    }
+  }
+
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
       let cmb: any = this.cmbBodega.dropdown;
@@ -92,6 +107,15 @@ export class ComprobantesComponent {
       let _Item: iTipoComprobanteRpt = cmb._focusedItem?.value;
       this.cmbTipoDocumento.setSelectedItem(_Item?.IdSerie);
       this.val.Get("cmbTipoDocumento").setValue([_Item?.IdSerie]);   
+    }
+  }
+
+  public v_Enter_AsientoContable(event: any) {
+    if (event.key == "Enter") {
+      let cmb: any = this.cmbIdSerie.dropdown;
+      let _Item: iAsientosContables = cmb._focusedItem?.value;
+      this.cmbIdSerie.setSelectedItem(_Item?.NoAsiento);
+      this.val.Get("cmbIdSerie").setValue([_Item?.NoAsiento]);   
     }
   }
 
@@ -226,8 +250,8 @@ export class ComprobantesComponent {
           } else {
 
             let datos: iDatos[] = _json["d"];
-
-            this.lstAsientosContables = new MatTableDataSource(datos[0].d);
+            this.lstAsientosContables = datos[0].d;
+            //this.lstAsientosContables = new MatTableDataSource(datos[0].d);
      
 
           }
@@ -293,8 +317,8 @@ export class ComprobantesComponent {
           } else {
 
             let datos: iDatos[] = _json["d"];
-
-            this.lstAsientosContables = new MatTableDataSource(datos[0].d);     
+            this.lstAsientosContables = datos[0].d;
+            //this.lstAsientosContables = new MatTableDataSource(datos[0].d);     
 
           }
 

@@ -58,16 +58,14 @@
                                 <igx-prefix><i class="bi bi-briefcase-fill fa-lg"></i></igx-prefix>
                             </igx-combo>
                             <br>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                                <div class="form-floating">
-                                    <select class="form-select form-select-lg" aria-label="Serie"
-                                    id="cmbIdSerie" formControlName="cmbIdSerie">
-                                        <option value="CK1">CAJ</option>
-                                    </select>
-                                    <label for="cmbIdSerie">Serie</label>
-                                </div>                               
-                            </div>
+                            <igx-combo #cmbIdSerie [data]="lstAsientosContables" valueKey="NoAsiento" displayKey="Concep" id="cmbIdSerie"
+                                formControlName="cmbIdSerie" 
+                                searchPlaceholder="Seleccione un Asiento Contable..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_AsientoContable($event)"
+                                (keyup)="v_Enter_AsientoContable($event);">
+                                <label igxLabel>Asientos Contables</label>
+                                <igx-prefix><i class="bi bi-briefcase-fill fa-lg"></i></igx-prefix>
+                            </igx-combo>                           
 
                         </div>                       
 
@@ -91,7 +89,7 @@
                         </div>
 
                         <p>Asientos Contables</p>
-                        <div>
+                        <div class="contenedor">
                             <br>
                             
                             <div class="mat-elevation-z8">
