@@ -25,7 +25,7 @@ export class ComprobantesComponent {
 
   public val = new Validacion();
 
-  displayedColumns: string[] = ["IdAsiento","NoAsiento","Fecha","Concepto"];
+  displayedColumns: string[] = ["IdAsiento","NoAsiento","Fecha","Concepto","Imprimir"];
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
@@ -366,6 +366,69 @@ export class ComprobantesComponent {
 
 
     this.GET.GetComprobantes(this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd"), this.val.Get("cmbBodega").value, this.val.Get("cmbTipoDocumento").value, this.val.Get("cmbIdSerie").value, this.val.Get("cmbMoneda").value).subscribe(
+      {
+        next: (data) => {
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos = _json["d"];
+            this.printPDFS(datos.d);
+
+          }
+
+        },
+        error: (err) => {
+
+          dialogRef.close();
+          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnReporte-Comprobantes")?.removeAttribute("disabled");
+
+        }
+      }
+    );
+
+  }
+
+
+  V_Imprimir2(det : iAsientosContables): void {
+
+    document.getElementById("btnReporte-Comprobantes")?.setAttribute("disabled", "disabled");
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+
+    this.GET.GetComprobantes2(det.NoAsiento, this.cFunciones.DateFormat(det.Fecha, "yyyy-MM-dd"), det.Concepto, this.val.Get("cmbMoneda").value).subscribe(
       {
         next: (data) => {
 

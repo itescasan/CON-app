@@ -1,4 +1,4 @@
-<div class="contenedor">
+<div class="contenedor-tabla">
     <div class="row">
 
         <div class="contenedor-filtro linea-bottom-primario">
@@ -10,29 +10,30 @@
                 <form autocomplete="off" [formGroup]="val.ValForm">
                     <div class="row">
 
-
-                        <div class="col-12 col-md-12 col-lg-3 mb-1">
-                            <div class="form-group">
-                                <div class="form-time-picker">
-                                    <igx-date-picker #datepiker formControlName="txtFecha1" id="txtFecha1"
-                                        [inputFormat]="'dd/MM/yyyy'">
-                                        <label igxLabel>Fecha</label>
-            
-                                        <igx-picker-toggle igxPrefix>
-                                            <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
-                                        </igx-picker-toggle>
-            
-                                        <igx-picker-clear igxSuffix>
-                                            <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
-                                        </igx-picker-clear>
-            
-                                    </igx-date-picker>                                    
+                        <div class="col-12 col-md-12 col-lg-3  mb-1">
+                            <div class="input-group">                                
+                                <div class="form-floating">
+                                    <div class="form-time-picker">
+                                        <igx-date-picker #datepiker formControlName="txtFecha1" id="txtFecha1"
+                                            [inputFormat]="'dd/MM/yyyy'">
+                                            <label igxLabel>Fecha</label>
+                
+                                            <igx-picker-toggle igxPrefix>
+                                                <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                            </igx-picker-toggle>
+                
+                                            <igx-picker-clear igxSuffix>
+                                                <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                            </igx-picker-clear>
+                
+                                        </igx-date-picker>                                    
+                                    </div>
                                 </div>
-                                <span class="input-group-text"> 
+                                <span class="input-group-text">                                    
                                     <button type="button" class="btn btn-secundario" id="btnReporte-Asientos" 
                                             (click)="V_Buscar();">
                                         <i class="fa-solid bi bi-search fa-beat-fade fa-xl"></i>
-                                    Buscar</button>
+                                    </button>
                                 </span>
                             </div>
                         </div>
@@ -86,69 +87,8 @@
                                         class="fa-solid fa-print fa-beat-fade fa-xl"></i>
                                     Imprimir</button></span>
                             </div>
-                        </div>
-
-                        <p>Asientos Contables</p>
-                        <div class="contenedor">
-                            <br>
-                            
-                            <div class="mat-elevation-z8">
-                                <table class="table table-hover table-sm tabla-layout" mat-table [dataSource]="lstAsientosContables">            
-                                    
-                                    <ng-container matColumnDef="IdAsiento">
-                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> <span class="texto">No. Asiento</span> </th>
-                                        <td mat-cell *matCellDef="let det" class="mobile-col">
-                                            <div class="texto">
-                                                <span class="mobile-label">No.:</span>
-                                                <div>{{det.IdAsiento}}</div>
-                                            </div>
-                                        </td>
-                                    </ng-container>
+                        </div>      
                         
-                                    <ng-container matColumnDef="NoAsiento">
-                                        <th mat-header-cell *matHeaderCellDef> <span class="texto">Asiento Contable</span> </th>
-                                        <td mat-cell *matCellDef="let det" class="mobile-col">
-                                            <div class="texto">
-                                                <span class="mobile-label">Asiento:</span>
-                                                <div>{{det.NoAsiento}}</div>
-                                            </div>
-                                        </td>
-                                    </ng-container>
-                        
-                        
-                                    <ng-container matColumnDef="Fecha">
-                                        <th mat-header-cell *matHeaderCellDef> <span class="texto">Fecha</span> </th>
-                                        <td mat-cell *matCellDef="let det" class="mobile-col">
-                                            <div class="texto">                                  
-                        
-                                                <div class="mobile-label">Fecha:</div>
-                                                <div>{{det.Fecha | date : "dd/MM/yyyy"}}</div>
-                                            </div>
-                                        </td>
-                                    </ng-container>              
-                        
-                                    <ng-container matColumnDef="Concepto">
-                                        <th mat-header-cell *matHeaderCellDef> <span class="texto">Concepto</span> </th>
-                                        <td mat-cell *matCellDef="let det" class="mobile-col">
-                                            <div class="texto">
-                                                <span class="mobile-label">Concepto:</span>
-                                                <div>{{det.Concepto}}</div>
-                                            </div>
-                                        </td>
-                                    </ng-container>            
-                        
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="columna-titulo"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed">
-                                    </tr>            
-                        
-                                </table>
-                                <mat-paginator [pageSizeOptions]="[100, 200]" class="mat-paginator-sticky"></mat-paginator>    
-                        
-                            </div>
-                            <br>
-                            
-                        </div>
-
                     </div>
                 </form>                
 
@@ -157,6 +97,75 @@
         </div>
 
     </div>
+    
+    
+        
+    <div class="mat-elevation-z8 table-container">
+
+        <table class="table table-hover table-sm tabla-layout mat-elevation-z8" mat-table [dataSource]="lstAsientosContables">            
+                
+                <ng-container matColumnDef="IdAsiento">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> <span class="texto">No. Asiento</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col">
+                        <div class="texto">
+                            <span class="mobile-label">No.:</span>
+                            <div>{{det.IdAsiento}}</div>
+                        </div>
+                    </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="NoAsiento">
+                    <th mat-header-cell *matHeaderCellDef> <span class="texto">Asiento Contable</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col">
+                        <div class="texto">
+                            <span class="mobile-label">Asiento:</span>
+                            <div>{{det.NoAsiento}}</div>
+                        </div>
+                    </td>
+                </ng-container>
+    
+    
+                <ng-container matColumnDef="Fecha">
+                    <th mat-header-cell *matHeaderCellDef> <span class="texto">Fecha</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col">
+                        <div class="texto">                                  
+    
+                            <div class="mobile-label">Fecha:</div>
+                            <div>{{det.Fecha | date : "dd/MM/yyyy"}}</div>
+                        </div>
+                    </td>
+                </ng-container>              
+    
+                <ng-container matColumnDef="Concepto">
+                    <th mat-header-cell *matHeaderCellDef> <span class="texto">Concepto</span> </th>
+                    <td mat-cell *matCellDef="let det" class="mobile-col">
+                        <div class="texto">
+                            <span class="mobile-label">Concepto:</span>
+                            <div>{{det.Concepto}}</div>
+                        </div>
+                    </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="Imprimir">
+                    <th mat-header-cell *matHeaderCellDef> Imprimir </th>
+                    <td mat-cell *matCellDef="let det"> {{det.Imprimir}}
+                        <button class="btn btn-secundario" class="btn" (click)="V_Imprimir2(det)" >
+                            <i class="fa-solid bi bi-printer fa-beat-fade fa-lg"></i>
+                        </button>
+                    </td>                
+                </ng-container> 
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns" class="columna-titulo"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed">
+        </tr>            
+    
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 20, 50]" class="mat-paginator-sticky"></mat-paginator>    
+    
+    </div>
+    
+        
+    
 
 </div>
 

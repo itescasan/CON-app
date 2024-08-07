@@ -19,8 +19,8 @@ export class getReporteFinanciero{
             build: () => new XMLHttpRequest() 
         }));
 
-    }    
-
+    }
+    
 
     public GetBalanceSituacionFinanciera(EsMonedaLocal : Int16Array, Fecha1: String, Fecha2: String): Observable<string> {
   
@@ -31,8 +31,12 @@ export class getReporteFinanciero{
     public GetComprobantes(Fecha1: String, CodBodega: String, TipoDocumento: String, NoAsiento: String, EsMonedaLocal : Int16Array): Observable<string> {
   
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Comprobantes?FechaInicial=" + Fecha1 + "&CodBodega=" + CodBodega + "&TipoDocumento=" + TipoDocumento + "&NoAsiento=" + NoAsiento + "&Moneda=" + EsMonedaLocal);
-    }
+    }    
 
+    public GetComprobantes2(NoAsiento: String, Fecha1: String, Concepto: String, EsMonedaLocal : Int16Array): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Comprobantes2?NoAsiento=" + NoAsiento + "&FechaInicial=" + Fecha1 + "&Concepto=" + Concepto + "&Moneda=" + EsMonedaLocal);
+    }
 
     public Datos() : Observable<string>{
         return this.http.get<any>(this._Cnx.Url() + "Inventario/Bodega/Get");
