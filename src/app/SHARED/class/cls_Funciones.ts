@@ -92,6 +92,7 @@ export class Funciones {
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aBalanceGeneral", Caption: "Balance General" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aBalanceSituacionFinanciera", Caption: "Balance Situacion Financiera" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aComprobantes", Caption: "Comprobantes" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aDiferencias", Caption: "Diferencias Entre CXC vs Contabilidad" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aEstadoResultado", Caption: "Estado Resultdo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aFlujoEfectivo", Caption: "Flujo Efectivo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCambioPatrimonio", Caption: "Estado Cambio Patrimonio" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},

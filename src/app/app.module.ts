@@ -68,6 +68,7 @@ import { LibroDiarioComponent } from './Reporte/libro-diario/libro-diario.compon
 import { LibroMayorComponent } from './Reporte/libro-mayor/libro-mayor.component';
 import { VentasAlcaldiaComponent } from './Reporte/ventas-alcaldia/ventas-alcaldia.component';
 import { VentasImpuestosComponent } from './Reporte/ventas-impuestos/ventas-impuestos.component';
+import { DiferenciasComponent } from './Reporte/diferencias/diferencias.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { VentasImpuestosComponent } from './Reporte/ventas-impuestos/ventas-impu
     LibroMayorComponent,
     VentasAlcaldiaComponent,
     VentasImpuestosComponent,
+    DiferenciasComponent
   ],
   imports: [
     BrowserModule,
