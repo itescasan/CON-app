@@ -51,9 +51,14 @@ export class getReporteFinanciero{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientosContables/Get?Fecha=" + Fecha1);
     }
 
-    public GetDiferencias(Fecha1: String, EsMonedaLocal : Int16Array): Observable<string> {
+     public GetDiferencias(Fecha1: String, EsMonedaLocal : Int16Array): Observable<string> {
   
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/DiferenciasCXCvsCONT?FechaInicial=" + Fecha1 + "&Moneda=" + EsMonedaLocal);
-    }    
+    }
+    
+     public GetVentasBolsaAgropecuaria(Fecha1: String, EsMonedaLocal : Int16Array): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteVentasBolsaAgropecuaria?FechaInicial=" + Fecha1 + "&Moneda=" + EsMonedaLocal);
+    }
 
 }

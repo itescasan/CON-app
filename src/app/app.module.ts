@@ -69,6 +69,7 @@ import { LibroMayorComponent } from './Reporte/libro-mayor/libro-mayor.component
 import { VentasAlcaldiaComponent } from './Reporte/ventas-alcaldia/ventas-alcaldia.component';
 import { VentasImpuestosComponent } from './Reporte/ventas-impuestos/ventas-impuestos.component';
 import { DiferenciasComponent } from './Reporte/diferencias/diferencias.component';
+import { VentasBolsaAgropecuariaComponent } from './Reporte/ventas-bolsa-agropecuaria/ventas-bolsa-agropecuaria.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { DiferenciasComponent } from './Reporte/diferencias/diferencias.componen
     LibroMayorComponent,
     VentasAlcaldiaComponent,
     VentasImpuestosComponent,
-    DiferenciasComponent
+    DiferenciasComponent,
+    VentasBolsaAgropecuariaComponent
   ],
   imports: [
     BrowserModule,

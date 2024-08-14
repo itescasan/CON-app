@@ -45,6 +45,7 @@ import { LibroMayorComponent } from 'src/app/Reporte/libro-mayor/libro-mayor.com
 import { VentasAlcaldiaComponent } from 'src/app/Reporte/ventas-alcaldia/ventas-alcaldia.component';
 import { VentasImpuestosComponent } from 'src/app/Reporte/ventas-impuestos/ventas-impuestos.component';
 import { DiferenciasComponent } from 'src/app/Reporte/diferencias/diferencias.component';
+import { VentasBolsaAgropecuariaComponent } from 'src/app/Reporte/ventas-bolsa-agropecuaria/ventas-bolsa-agropecuaria.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -297,6 +298,15 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let BalanceDiferen: ComponentRef<DiferenciasComponent> = this.DynamicFrom.viewContainerRef.createComponent(DiferenciasComponent);
+
+    }
+
+
+    if(id == "aVentasBolsaAgropecuaria"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let BalanceVentasBolsaAgro: ComponentRef<VentasBolsaAgropecuariaComponent> = this.DynamicFrom.viewContainerRef.createComponent(VentasBolsaAgropecuariaComponent);
 
     }
 

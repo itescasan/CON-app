@@ -1,0 +1,32 @@
+@import "/src/assets/scss/media.scss";
+
+
+.contenedor-filtro {
+    position: fixed;
+    top: 0;
+    right: 0;
+    text-align: center;
+    z-index: 1;
+    background-color: var(--escan-fondo);
+
+    p {
+
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+
+
+    .contenedor-boton{
+        text-align: right;
+    }
+
+
+    
+@include Tamano_Menor(lg) {
+
+    button{
+        width: 100%;
+    }
+    
+}
+}
