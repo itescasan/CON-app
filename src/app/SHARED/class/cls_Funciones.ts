@@ -111,9 +111,19 @@ export class Funciones {
     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aIngresoCaja", Caption: "Ingreso Facturas Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRegistroCaja", Caption: "Registro Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
 
-      /**************************************ACCESO WEB**************************************/ 
 
-      {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"idNavAccesoWeb", Caption: "Acceso Web" , MenuPadre: "", Clase : "fa-solid fa-database", Modulo: "CON", Usuario: ""},
+
+  /**************************************CUENTAS POR PAGAR ************************************* */ 
+  {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavGastInt", Caption: "Gastos Interno" , MenuPadre: "", Clase : "fa-solid fa-gear fa-lg", Modulo: "CON", Usuario : ""},
+  {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"aGastInt", Caption: "Gastos Interno" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
+  {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"aRegGastInt", Caption: "Registros" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
+ 
+
+
+    
+    /**************************************ACCESO WEB**************************************/ 
+
+    {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"idNavAccesoWeb", Caption: "Acceso Web" , MenuPadre: "", Clase : "fa-solid fa-database", Modulo: "CON", Usuario: ""},
   
     
 

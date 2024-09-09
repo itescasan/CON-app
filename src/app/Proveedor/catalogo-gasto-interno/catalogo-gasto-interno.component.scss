@@ -1,0 +1,62 @@
+@import "/src/assets/scss/media.scss";
+
+.btn-contenedor-custom {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.botones {
+
+    position: relative;
+    width: 100%;
+    margin-right: 10px;
+    padding-right: 10px;
+
+    div {
+        text-align: left;
+        width: 50%;
+        display: inline-block;
+    }
+
+
+
+    div:last-child {
+        text-align: right;
+        position: flex;
+        right: 0;
+        bottom: 0;
+    }
+
+    .botones-edicion{
+
+        margin-top: 5px;
+        button:last-child{
+            margin-left: 20px;
+        }
+
+    }
+
+    
+
+    @include Tamano_Menor(md) {
+
+
+        div {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+
+        div:first-child{
+
+            button{
+                width: 100%;
+            }
+           
+        }
+    
+    }
+
+
+}

@@ -1,0 +1,167 @@
+ 
+    
+
+<form autocomplete="off" [formGroup]="val.ValForm">
+
+   
+
+    <div class="row">
+
+        <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-6">
+
+            <div class="card">
+                <div class="card-header card-escasan-header opcional">Catalogo de Gastos Interno
+
+                    <div class="escasan-dialog" if="esModal">
+                        <div class="btn-contenedor-custom">
+                            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+                                <i class="fa-solid fa-x fa-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                
+                    
+                </div>
+                <div class="card-body">
+
+
+
+
+                    <div class="row">
+
+                        <div class="col-6 col-sm-6 col-md-5 col-lg-4 col-xl-4   mb-1">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" placeholder="No" id="txt_Gast_Codigo"
+                                    formControlName="txt_Gast_Codigo">
+                                <label for="txt_Gast_Codigo">Código</label>
+                            </div>
+                        </div>
+
+
+                        <div
+                            class="col-6 col-sm-6 col-md-5 col-lg-4 col-xl-4 offset-md-2 offset-lg-4 offset-xl-4  mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Estado" id="cmb_Gast_Estado"
+                                        formControlName="cmb_Gast_Estado">
+                                        <option value="A">Activo</option>
+                                        <option value="I">Inactivo</option>
+                                    </select>
+                                    <label for="cmb_Gast_Estado">Estado</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-12  mb-1">
+                            <div class="input-group">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" placeholder="Descripcion"
+                                        id="txt_Gast_Descripcion" formControlName="txt_Gast_Descripcion">
+                                    <label for="txt_Gast_Descripcion">Descripcion</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12  mb-1">
+                            
+                            <igx-combo class="cmb_Gast_Cuenta" #cmb_Gast_Cuenta [data]="lstCuenta" valueKey="CuentaContable" displayKey="CuentaContable"
+                            id="cmb_Gast_Cuenta" formControlName="cmb_Gast_Cuenta" placeholder=""
+                            searchPlaceholder="Seleccione una Serie..." [autoFocusSearch]="true"
+                            (selectionChanging)="V_Select_Cuenta($event)"
+                            (keyup)="V_Enter_Cuenta($event);">
+                            <label igxLabel>Cuenta Contable</label>
+                            <igx-prefix><i class="fa-solid fa-list"></i></igx-prefix>
+                            
+
+                            <ng-template igxComboItem let-display let-key="valueKey">
+                                {{ display[key] }} {{ display.NombreCuenta }}
+              
+                            </ng-template>
+
+
+                            <ng-template igxComboClearIcon>
+                                <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                            </ng-template>
+                        </igx-combo>
+
+
+                 
+
+                        </div>
+
+            
+                    </div>
+
+                    <div class="row g-1">
+
+                      
+                        <div class="col-6 col-md-4 col-lg-4 col-xl-4 offset-md-4 mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Aplica En"
+                                        id="cmb_Gast_Aplica" formControlName="cmb_Gast_Aplica">
+                                        <option value="C">Compra</option>
+                                        <option value="L">Liquidación</option>
+                                    </select>
+                                    <label for="cmb_Gast_Aplica">Aplica En</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-6 col-md-4 col-lg-4 col-xl-4  mb-1">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Tipo" id="cmb_Gast_Tipo"
+                                        formControlName="cmb_Gast_Tipo">
+                                        <option value="D">Débito</option>
+                                        <option value="C">Credito</option>
+                                    </select>
+                                    <label for="cmb_Gast_Tipo">Estado</label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="card-footer">
+                    <div class="botones">
+                        <div>
+                            <button type="button" class="btn btn-secundario" id="btnRefrescar-Gast"
+                                (click)="V_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                                Refrescar</button>
+                        </div>
+
+                        <div class="botones-edicion">
+                            <button type="button" class="btn btn-primario" id="btnGuardar-Gast"
+                                (click)="V_Guardar();"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
+                                Guardar</button>
+
+                            <button type="button" class="btn btn-opcional" id="btnCanclar-Gast"
+                                (click)="V_Evento('Limpiar');"><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i>
+                                Cancelar</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</form>
