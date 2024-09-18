@@ -22,7 +22,7 @@ export class LibroDiarioComponent {
   public val = new Validacion();
 
 
-  @ViewChild("datepiker", { static: false })
+  @ViewChild("datepiker", { static: false }) 
   public datepiker: any;
   public overlaySettings: OverlaySettings = {};
 
