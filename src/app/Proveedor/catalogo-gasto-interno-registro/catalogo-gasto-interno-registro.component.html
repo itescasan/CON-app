@@ -1,12 +1,31 @@
 
 
 <div class="card">
-    <div class="card-header card-escasan-header opcional">Registros Catalogo de Gastos Interno   <button type="button" class="btn btn-secundario" id="btnRefrescar-GastInterno" (click)="V_CargarDatos();"><i
-        class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
-    Refrescar</button>
+    <div class="card-header card-escasan-header opcional">Registros Catalogo de Gastos Interno 
 </div>
     <div class="card-body">
 
+
+        <div class="row mb-3">
+            <form autocomplete="off" [formGroup]="val.ValForm">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+    
+                    <div class="form-floating">
+                        <input type="text" id="txtBuscar-GastInterno" class="form-control" placeholder="Buscar"
+                            aria-label="Buscar" formControlName="txtBuscar-GastInterno" (keyup)="V_Filtrar($event)">
+                        <label for="txtBuscar-GastInterno">Buscar</label>
+    
+                    </div>
+                    <span class="input-group-text"><button type="button" class="btn btn-secundario"
+                            id="btnRefrescar-GastInterno" (click)="V_CargarDatos();"><i
+                                class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button></span>
+    
+                </div>
+    
+            </form>
+            
+        </div>
 
 
 
@@ -15,60 +34,54 @@
                 <table class="table table-hover  table-sm tabla-layout" mat-table [dataSource]="lstRegistros">
         
         
-                    <ng-container matColumnDef="DESCRIPCION">
-                        <th mat-header-cell *matHeaderCellDef> Descripcion</th>
-                        <td mat-cell *matCellDef="let det">{{det.DESCRIPCION}}</td>
-                    </ng-container>
-        
-        
-                    <ng-container matColumnDef="CUENTACONTABLE">
-                        <th mat-header-cell *matHeaderCellDef> Cuenta</th>
-                        <td mat-cell *matCellDef="let det">{{det.CUENTACONTABLE}}</td>
-                    </ng-container>
-        
-        
-        
-                    <ng-container matColumnDef="APLICAREN">
-                        <th mat-header-cell *matHeaderCellDef> Aplica En</th>
-                        <td mat-cell *matCellDef="let det">{{det.APLICAREN == "C"? "Compra" : "Liquidacion"}}</td>
-                    </ng-container>
-        
-                    <ng-container matColumnDef="TIPO">
-                        <th mat-header-cell *matHeaderCellDef> Tipo</th>
-                        <td mat-cell *matCellDef="let det">{{det.TIPO == "D"? "Debito" : "Credito"}}</td>
-                    </ng-container>
-        
-        
-        
-        
-                    <ng-container matColumnDef="ESTADO">
-                        <th mat-header-cell *matHeaderCellDef> Estado</th>
-                        <td mat-cell *matCellDef="let det"><i
-                                [ngClass]="det.ESTADO == 'A' ? 'fa-solid fa-check fa-lg' : 'fa-solid fa-xmark fa-lg'"></i></td>
-                    </ng-container>
-        
-        
-        
-                    <ng-container matColumnDef="Accion">
-                        <th mat-header-cell *matHeaderCellDef> </th>
+                    <ng-container matColumnDef="CODIGO">
+
                         <td mat-cell *matCellDef="let det">
+
+                            <div class="row">
+
+                                <div class="col-12 col-md-3 col-lg-3">{{det.PROVEEDOR}}</div>
+
+                                <div class="col-12 col-md-4 col-lg-3">{{det.DESCRIPCION}}</div>
+
+
+                                <div class="col-12 col-md-3 col-lg-2">{{det.CUENTACONTABLE}}</div>
+
+
+                                <div class="col-md-2 mb-1 mobile-md"><i
+                                    [ngClass]="det.ESTADO == 'A' ? 'fa-solid fa-check fa-lg' : 'fa-solid fa-xmark fa-lg'"></i></div>
+
+
+                                <div class="col-12 col-md-2 col-lg-2">{{det.APLICAREN == "C"? "Compra" : "Liquidacion"}}</div>
+
+                                <div class="col-12  col-md-2 col-lg-1 mb-1">{{det.TIPO == "D"? "Debito" : "Credito"}}</div>
+
+
+                                <div class="col-12  col-lg-1 mb-2 desktop"><i
+                                    [ngClass]="det.ESTADO == 'A' ? 'fa-solid fa-check fa-lg' : 'fa-solid fa-xmark fa-lg'"></i></div>
+
+
         
-                            <button type="button" class="btn btn-primario" (click)="V_Editar(det);"><i
-                                    class="fa-solid fa-pen-to-square fa-xl"></i></button>
-        
-        
+                                    <div class="col-12 col-md-4 col-lg-4  offset-md-4 offset-lg-8 contenedor-boton">
+                                        <button type="button" class="btn btn-primario" (click)="V_Editar(det);"><i
+                                            class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                                    </div>
+                                    
+
+                            </div>
+
+                  
+                            
                         </td>
+
+                       
                     </ng-container>
+
         
+ 
+
         
-        
-        
-        
-        
-        
-        
-        
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns" class="columna-titulo"></tr>
+     
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed">
                     </tr>
         

@@ -12,13 +12,17 @@
             <div class="card">
                 <div class="card-header card-escasan-header opcional">Catalogo de Gastos Interno
 
-                    <div class="escasan-dialog" if="esModal">
-                        <div class="btn-contenedor-custom">
-                            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
-                                <i class="fa-solid fa-x fa-lg"></i>
-                            </button>
+                    @if(esModal)
+                    {
+                        <div class="escasan-dialog">
+                            <div class="btn-contenedor-custom">
+                                <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+                                    <i class="fa-solid fa-x fa-lg"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    }
+                    
                 
                     
                 </div>
@@ -58,6 +62,31 @@
 
 
                     <div class="row">
+
+                        <div class="col-12  mb-1">
+                            <igx-combo class="cmb_Gast_Prov" #cmb_Gast_Prov [data]="lstProveedor" valueKey="Codigo" displayKey="Proveedor1"
+                            id="cmb_Gast_Prov" formControlName="cmb_Gast_Prov" placeholder=""
+                            searchPlaceholder="Seleccione un proveedor..." [autoFocusSearch]="true"
+                            (selectionChanging)="V_Select_Proveedor($event)"
+                            (keyup)="V_Enter_Proveedor($event);">
+                            <label igxLabel>Proveedor</label>
+                            <igx-prefix><i class="fa-solid fa-list"></i></igx-prefix>
+                            
+
+                            <ng-template igxComboItem let-display let-key="valueKey">
+                                {{ display[key] }} {{ display.Proveedor1 }}
+              
+                            </ng-template>
+
+
+                            <ng-template igxComboClearIcon>
+                                <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                            </ng-template>
+                        </igx-combo>
+                        </div>
+
+                        
+                        
                         <div class="col-12  mb-1">
                             <div class="input-group">
                                 <div class="form-floating">

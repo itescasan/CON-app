@@ -9,9 +9,10 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iGastoInterno } from '../Interface/i-GastoInterno';
-import { getCuentaContable } from 'src/app/Contabilidad/catalogo-cuenta/CRUD/GET/get-CatalogoCuenta';
 import { postGastoInterno } from '../CRUD/POST/postGastoInterno';
 import { MatIconModule } from '@angular/material/icon';
+import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
+import { getGastoInterno } from '../CRUD/GET/getGastosInterno';
 
 @Component({
   selector: 'app-catalogo-gasto-interno',
@@ -23,27 +24,30 @@ import { MatIconModule } from '@angular/material/icon';
 export class CatalogoGastoInternoComponent {
   public val = new Validacion();
 
+  public lstProveedor : iProveedor[] = [];
   public lstCuenta: iCuenta[] = [];
   public esModal : boolean = false;
 
   @ViewChildren(IgxComboComponent)
   public lstCmb: QueryList<IgxComboComponent>;
 
-  public constructor(private cFunciones: Funciones, private POST : postGastoInterno, private GET: getCuentaContable,){
+  public constructor(private cFunciones: Funciones, private POST : postGastoInterno, private GET: getGastoInterno,){
 
     this.val.add("txt_Gast_Codigo", "1", "LEN>=", "0", "Gastos Internos", "");
     this.val.add("cmb_Gast_Estado", "1", "LEN>", "0", "Gastos Internos", "Seleccione un estado.");
+    this.val.add("cmb_Gast_Prov", "1", "LEN>", "0", "Gastos Internos", "Seleccione un proveedor.");
     this.val.add("txt_Gast_Descripcion", "1", "LEN>", "0", "Gastos Internos", "Ingrese una descripción.");
     this.val.add("cmb_Gast_Cuenta", "1", "LEN>", "0", "Gastos Internos", "Ingrese una cuenta.");
     this.val.add("cmb_Gast_Aplica", "1", "LEN>", "0", "Gastos Internos", "Seleccione una opción de aplicación.");
     this.val.add("cmb_Gast_Tipo", "1", "LEN>", "0", "Gastos Internos", "Seleccione un tipo.");
     this.V_Evento("Iniciar");
   }
-
+  
 
   public V_Evento(e: string): void {
     switch (e) {
       case "Iniciar":
+        this.esModal = false;
         this.V_Evento("Limpiar");
         this.V_CargarDatos();
 
@@ -51,17 +55,50 @@ export class CatalogoGastoInternoComponent {
 
       case "Limpiar":
 
-      this.val.Get("txt_Gast_Codigo").setValue("0");
-      this.val.Get("cmb_Gast_Estado").setValue("A");
-      this.val.Get("txt_Gast_Descripcion").setValue("");
-      this.val.Get("cmb_Gast_Aplica").setValue("");
-      this.val.Get("cmb_Gast_Tipo").setValue("");
+        this.val.Get("txt_Gast_Codigo").setValue("0");
+        this.val.Get("cmb_Gast_Estado").setValue("A");
+        this.val.Get("cmb_Gast_Prov").setValue("");
+        this.val.Get("txt_Gast_Descripcion").setValue("");
+        this.val.Get("cmb_Gast_Aplica").setValue("");
+        this.val.Get("cmb_Gast_Tipo").setValue("");
 
-      this.val.Get("txt_Gast_Codigo").disable();
-
+        this.val.Get("txt_Gast_Codigo").disable();
+        this.cmb_Gast_Prov?.deselectAllItems();
+        this.cmb_Gast_Cuenta?.deselectAllItems();
+      
         break;
     }
   }
+
+
+  
+  @ViewChild("cmb_Gast_Prov", { static: false })
+  public cmb_Gast_Prov: IgxComboComponent;
+
+  public V_Select_Proveedor(event: any) {
+
+    if (event.added.length == 1) {
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
+      let _Item = this.lstProveedor.find(f => f.Codigo == event.newValue[0]);
+
+      this.val.Get("cmb_Gast_Prov").setValue(event.newValue[0]);
+      
+
+      this.cmb_Gast_Prov.close();
+
+    }
+  }
+
+  public V_Enter_Proveedor(event: any) {
+    if (event.key == "Enter") {
+      let cmb: any = this.cmb_Gast_Prov.dropdown;
+      let _Item: iProveedor = cmb._focusedItem.value;
+      this.cmb_Gast_Prov.setSelectedItem(_Item.Codigo);
+      this.val.Get("cmb_Gast_Prov").setValue([_Item.Codigo]);
+    }
+  }
+
+
 
 
   @ViewChild("cmb_Gast_Cuenta", { static: false })
@@ -108,7 +145,7 @@ export class CatalogoGastoInternoComponent {
 
 
 
-    this.GET.Get().subscribe(
+    this.GET.GetDatos().subscribe(
       {
         next: (data) => {
 
@@ -127,8 +164,8 @@ export class CatalogoGastoInternoComponent {
 
             let Datos: iDatos[] = _json["d"];
  
-            this.lstCuenta = Datos.find(f => f.Nombre == "CUENTAS")?.d.filter((f : any) => f.ClaseCuenta == "D");
-
+            this.lstCuenta = Datos.find(f => f.Nombre == "CUENTAS")?.d;
+            this.lstProveedor = Datos.find(f => f.Nombre == "PROVEEDOR")?.d;
       
           }
 
@@ -184,14 +221,13 @@ export class CatalogoGastoInternoComponent {
     document.getElementById("btnGuardar-Gast")?.setAttribute("disabled", "disabled");
 
     let d : iGastoInterno = {} as iGastoInterno;
-    d.CODIGO = this.val.Get("txt_Gast_Codigo").value;
-    d.ESTADO = this.val.Get("cmb_Gast_Estado").value;
-    d.DESCRIPCION = this.val.Get("txt_Gast_Descripcion").value;
-    d.CUENTACONTABLE = this.val.Get("cmb_Gast_Cuenta").value[0];
-    d.APLICAREN = this.val.Get("cmb_Gast_Aplica").value;
-    d.TIPO = this.val.Get("cmb_Gast_Tipo").value;
-
-
+    d.CODIGO = this.val.GetValue("txt_Gast_Codigo");
+    d.ESTADO = this.val.GetValue("cmb_Gast_Estado");
+    d.DESCRIPCION = this.val.GetValue("txt_Gast_Descripcion");
+    d.CUENTACONTABLE = this.val.GetValue("cmb_Gast_Cuenta");
+    d.APLICAREN = this.val.GetValue("cmb_Gast_Aplica");
+    d.TIPO = this.val.GetValue("cmb_Gast_Tipo");
+    d.COD_PROV = this.val.GetValue("cmb_Gast_Prov");
     
     this.POST.Guardar(d).subscribe(
       {
@@ -252,12 +288,13 @@ export class CatalogoGastoInternoComponent {
   ngOnInit(){
     this.val.ComboOverLay(this.lstCmb, []);
 
-    this.val.addFocus("cmb_Gast_Estado", "txt_Gast_Descripcion", undefined);
+    this.val.addFocus("cmb_Gast_Estado", "cmb_Gast_Prov", undefined);
+    this.val.addFocus("cmb_Gast_Prov", "txt_Gast_Descripcion", undefined);
     this.val.addFocus("txt_Gast_Descripcion", "cmb_Gast_Cuenta",undefined);
     this.val.addFocus("cmb_Gast_Cuenta", "cmb_Gast_Aplica", undefined);
     this.val.addFocus("cmb_Gast_Aplica", "cmb_Gast_Tipo", undefined);
     this.val.addFocus("cmb_Gast_Tipo", "btnGuardar", "click");
-
+    
 
   }
 }

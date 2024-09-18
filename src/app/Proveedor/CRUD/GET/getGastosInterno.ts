@@ -26,5 +26,8 @@ export class getGastoInterno{
   }
 
 
+  public GetDatos() : Observable<any>{
+    return this.http.get<any>(this._Cnx.Url() + "Proveedor/GastosInternos/GetDatos");
+  }
 
 }

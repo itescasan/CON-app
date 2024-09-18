@@ -6,4 +6,6 @@ export interface iGastoInterno{
     APLICAREN: string;
     TIPO : string;
     ESTADO: string;
+    COD_PROV : string;
+    PROVEEDOR: string;
 }

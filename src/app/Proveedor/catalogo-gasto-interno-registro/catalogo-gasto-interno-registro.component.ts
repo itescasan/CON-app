@@ -11,6 +11,7 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CatalogoGastoInternoComponent } from '../catalogo-gasto-interno/catalogo-gasto-interno.component';
+import { Validacion } from 'src/app/SHARED/class/validacion';
 
 @Component({
   selector: 'app-catalogo-gasto-interno-registro',
@@ -21,15 +22,17 @@ import { CatalogoGastoInternoComponent } from '../catalogo-gasto-interno/catalog
 })
 export class CatalogoGastoInternoRegistroComponent {
 
-
+  public val = new Validacion();
   public lstRegistros :  MatTableDataSource<iGastoInterno>;
 
-  displayedColumns: string[] = ["DESCRIPCION",   "CUENTACONTABLE", "APLICAREN", "TIPO","ESTADO", "Accion"];
+  displayedColumns: string[] = ["CODIGO"];
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
 
   public constructor(private cFunciones: Funciones, private GET : getGastoInterno){
+
+    this.val.add("txtBuscar-GastInterno", "1", "LEN>=", "0", "Buscar", "");
 
     this.V_CargarDatos();
     
@@ -132,6 +135,7 @@ export class CatalogoGastoInternoRegistroComponent {
       dialog.componentInstance.cmb_Gast_Cuenta.select([det.CUENTACONTABLE])
       dialog.componentInstance.val.Get("cmb_Gast_Aplica").setValue(det.APLICAREN);
       dialog.componentInstance.val.Get("cmb_Gast_Tipo").setValue(det.TIPO);
+      dialog.componentInstance.cmb_Gast_Prov.select([det.COD_PROV]);
 
 
     });
@@ -144,4 +148,9 @@ export class CatalogoGastoInternoRegistroComponent {
   }
 
   
+  
+  public V_Filtrar(event : any){
+    this.lstRegistros.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  }
+
 }

@@ -1,3 +1,7 @@
+@import "/src/assets/scss/media.scss";
+
+
+
 p{
     text-align: center;
 }
@@ -6,6 +10,55 @@ th, p{
     font-weight: bold;
 }
 
-.mat-column-ESTADO{
-    text-align: center;
+.contenedor-boton{
+    text-align: right;
+
+    
+   
+
+    button{
+
+        @include Tamano_Menor(md) {
+
+           width: 100%;
+        }
+       
+    }
 }
+
+
+.desktop{
+
+    display:initial;
+    text-align: right;
+
+    @include Tamano_Menor(lg) {
+
+        display: none;
+    }
+
+    @include Tamano_Menor(md) {
+
+        display: initial;
+    }
+
+
+}
+
+.mobile-md{
+
+    display:none;
+
+    @include Tamano_Menor(lg) {
+
+        display: initial;
+    }
+
+    @include Tamano_Menor(md) {
+
+        display: none;
+    }
+
+
+}
+
