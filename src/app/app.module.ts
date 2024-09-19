@@ -71,6 +71,7 @@ import { VentasImpuestosComponent } from './Reporte/ventas-impuestos/ventas-impu
 import { DiferenciasComponent } from './Reporte/diferencias/diferencias.component';
 import { VentasBolsaAgropecuariaComponent } from './Reporte/ventas-bolsa-agropecuaria/ventas-bolsa-agropecuaria.component';
 import { AuxiliaresContablesComponent } from './Reporte/auxiliares-contables/auxiliares-contables.component';
+import { CreditoFiscalIvaComponent } from './Reporte/credito-fiscal-iva/credito-fiscal-iva.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { AuxiliaresContablesComponent } from './Reporte/auxiliares-contables/aux
     VentasImpuestosComponent,
     DiferenciasComponent,
     VentasBolsaAgropecuariaComponent,
-    AuxiliaresContablesComponent
+    AuxiliaresContablesComponent,
+    CreditoFiscalIvaComponent
   ],
   imports: [
     BrowserModule,

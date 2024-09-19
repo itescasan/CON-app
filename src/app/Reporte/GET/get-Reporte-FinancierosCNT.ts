@@ -74,4 +74,9 @@ export class getReporteFinanciero{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/AuxiliaresContables?FechaInicial=" + Fecha1 + "&FechaFinal=" + Fecha2 + "&CCInicial=" + CInicial + "&CCFinal=" + CFinal + "&CentroCosto=" + CentroCosto + "&Moneda=" + EsMonedaLocal);
     }
 
+    public GetCreditoFiscalIva(Fecha1: String, Fecha2: String, EsMonedaLocal : Int16Array): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteCreditoFiscalIva?FechaInicial=" + Fecha1 + "&FechaFinal=" + Fecha2 + "&Moneda=" + EsMonedaLocal);
+    }
+
 }
