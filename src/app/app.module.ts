@@ -72,6 +72,8 @@ import { DiferenciasComponent } from './Reporte/diferencias/diferencias.componen
 import { VentasBolsaAgropecuariaComponent } from './Reporte/ventas-bolsa-agropecuaria/ventas-bolsa-agropecuaria.component';
 import { AuxiliaresContablesComponent } from './Reporte/auxiliares-contables/auxiliares-contables.component';
 import { CreditoFiscalIvaComponent } from './Reporte/credito-fiscal-iva/credito-fiscal-iva.component';
+import { RetencionesAlcaldiasForaneasComponent } from './Reporte/retenciones-alcaldias-foraneas/retenciones-alcaldias-foraneas.component';
+import { ReporteIntegracionGastosAcumuladosComponent } from './Reporte/reporte-integracion-gastos-acumulados/reporte-integracion-gastos-acumulados.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +122,9 @@ import { CreditoFiscalIvaComponent } from './Reporte/credito-fiscal-iva/credito-
     DiferenciasComponent,
     VentasBolsaAgropecuariaComponent,
     AuxiliaresContablesComponent,
-    CreditoFiscalIvaComponent
+    CreditoFiscalIvaComponent,
+    RetencionesAlcaldiasForaneasComponent,
+    ReporteIntegracionGastosAcumuladosComponent
   ],
   imports: [
     BrowserModule,

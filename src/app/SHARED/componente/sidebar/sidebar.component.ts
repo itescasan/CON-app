@@ -50,6 +50,8 @@ import { CatalogoGastoInternoComponent } from 'src/app/Proveedor/catalogo-gasto-
 import { CatalogoGastoInternoRegistroComponent } from 'src/app/Proveedor/catalogo-gasto-interno-registro/catalogo-gasto-interno-registro.component';
 import { AuxiliaresContablesComponent } from 'src/app/Reporte/auxiliares-contables/auxiliares-contables.component';
 import { CreditoFiscalIvaComponent } from 'src/app/Reporte/credito-fiscal-iva/credito-fiscal-iva.component';
+import { RetencionesAlcaldiasForaneasComponent } from 'src/app/Reporte/retenciones-alcaldias-foraneas/retenciones-alcaldias-foraneas.component';
+import { ReporteIntegracionGastosAcumuladosComponent } from 'src/app/Reporte/reporte-integracion-gastos-acumulados/reporte-integracion-gastos-acumulados.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -350,6 +352,24 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let BalanceCreditoFiscalIva: ComponentRef<CreditoFiscalIvaComponent> = this.DynamicFrom.viewContainerRef.createComponent(CreditoFiscalIvaComponent);
+
+    }
+
+
+    if(id == "aRetencionesAlcaldiasForaneas"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let BalanceRetencionesAlcaldiasForaneas: ComponentRef<RetencionesAlcaldiasForaneasComponent> = this.DynamicFrom.viewContainerRef.createComponent(RetencionesAlcaldiasForaneasComponent);
+
+    }
+
+
+    if(id == "aReporteIntegracionGastosAcumulados"){
+      $("#btnMenu").trigger("click");
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let BalanceReporteIntegracionGastosAcumulados: ComponentRef<ReporteIntegracionGastosAcumuladosComponent> = this.DynamicFrom.viewContainerRef.createComponent(ReporteIntegracionGastosAcumuladosComponent);
 
     }
 

@@ -79,4 +79,14 @@ export class getReporteFinanciero{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteCreditoFiscalIva?FechaInicial=" + Fecha1 + "&FechaFinal=" + Fecha2 + "&Moneda=" + EsMonedaLocal);
     }
 
+    public GetRetencionesAlcaldiasForaneas(Fecha1: String, EsMonedaLocal : Int16Array): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteRetencionesAlcaldiasForaneas?FechaInicial=" + Fecha1 + "&Moneda=" + EsMonedaLocal);
+    }
+
+    public GetIntegracionGastosAcumulados(Fecha1: String, Rubro: String, CuentaCont: String, CentroCosto: String, EsMonedaLocal : Int16Array): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteIntegracionGastosAcumulados?FechaInicial=" + Fecha1 + "&Rubro=" + Rubro + "&CuentaContable=" + CuentaCont + "&CentroCosto=" + CentroCosto + "&Moneda=" + EsMonedaLocal);
+    }
+
 }
