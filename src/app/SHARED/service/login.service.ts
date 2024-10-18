@@ -57,11 +57,11 @@ export class LoginService {
               l.FechaServer = datos[1].d;
               l.TimeOut = Number(datos[2].d);
     
-              localStorage.removeItem("login");
+              localStorage.removeItem("CON_login");
 
               if(datos[0].d != undefined)
               {
-                localStorage.setItem("login", JSON.stringify(l));
+                localStorage.setItem("CON_login", JSON.stringify(l));
 
               this.isLogin();
               }
@@ -98,7 +98,7 @@ export class LoginService {
   
   public isLogin(){
 
-    let s : string = localStorage.getItem("login")!;
+    let s : string = localStorage.getItem("CON_login")!;
 
     if(s != undefined){
 
@@ -128,7 +128,7 @@ export class LoginService {
  
     }
 
-    localStorage.removeItem("login");
+    localStorage.removeItem("CON_login");
     this._Router.navigate(['/Login'], { skipLocationChange: false });
   }
 
@@ -143,14 +143,14 @@ export class LoginService {
 
   public UpdFecha(f : string){
 
-    let s : string = localStorage.getItem("login")!;
+    let s : string = localStorage.getItem("CON_login")!;
    
    if(s != undefined){
 
       let l : iLogin = JSON.parse(s);
       l.FechaLogin = f;
-      localStorage.removeItem("login");
-      localStorage.setItem("login", JSON.stringify(l));
+      localStorage.removeItem("CON_login");
+      localStorage.setItem("CON_login", JSON.stringify(l));
 
       this.isLogin();
     }
@@ -158,7 +158,7 @@ export class LoginService {
   }
 
   public CerrarSession(){
-    localStorage.removeItem("login");
+    localStorage.removeItem("CON_login");
     this._Router.navigate(['/Login'], { skipLocationChange: false });
   }
 
