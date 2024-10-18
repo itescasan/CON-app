@@ -633,6 +633,7 @@ export class SidebarComponent {
          
           this.ErrorServidor = true;
         
+          console.log(err.message)
           
           /*if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
           {
