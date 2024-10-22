@@ -1,8 +1,8 @@
-ng update @angular/cli
-ng update @angular/core
-ng update rxjs
-ng update 
-npm install
+ng update @angular/cli --allow-dirty
+ng update @angular/core --allow-dirty
+ng update rxjs --allow-dirty
+ng update  --allow-dirty
+npm install --allow-dirty
 
 
 
