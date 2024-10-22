@@ -53,45 +53,45 @@ $custom-datepicker-theme: calendar-theme($content-background: var(--escan-fondo)
 
 
         $year-hover-foreground: var(--escan-fondo),
-        $year-hover-background: var(--escan-secundario),
+        $ym-hover-background: var(--escan-secundario),
 
-        $year-current-foreground: var(--escan-fondo),
-        $year-current-background: var(--escan-primario),
-        $year-current-hover-foreground: var(--escan-fondo),
-        $year-current-hover-background: var(--escan-secundario),
+        $ym-current-foreground: var(--escan-fondo),
+        $ym-current-background: var(--escan-primario),
+        $ym-current-hover-foreground: var(--escan-fondo),
+        $ym-current-hover-background: var(--escan-secundario),
 
-        $year-selected-current-foreground: var(--escan-fondo),
-        $year-selected-current-background: var(--escan-primario),
-        $year-selected-current-hover-foreground: var(--escan-fondo),
-        $year-selected-current-hover-background: var(--escan-primario),
+        $ym-selected-current-foreground: var(--escan-fondo),
+        $ym-selected-current-background: var(--escan-primario),
+        $ym-selected-current-hover-foreground: var(--escan-fondo),
+        $ym-selected-current-hover-background: var(--escan-primario),
 
-        $year-selected-foreground: var(--escan-fondo),
-        $year-selected-background: var(--escan-primario),
-        $year-selected-hover-foreground: var(--escan-fondo),
-        $year-selected-hover-background: var(--escan-primario),
-
-
-
-
-        $month-hover-foreground: var(--escan-fondo),
-        $month-hover-background: var(--escan-secundario),
-
-        $month-current-foreground: var(--escan-fondo),
-        $month-current-background: var(--escan-primario),
-        $month-current-hover-foreground: var(--escan-fondo),
-        $month-current-hover-background: var(--escan-secundario),
+        $ym-selected-foreground: var(--escan-fondo),
+        $ym-selected-background: var(--escan-primario),
+        $ym-selected-hover-foreground: var(--escan-fondo),
+        $ym-selected-hover-background: var(--escan-primario),
 
 
 
-        $month-selected-current-foreground: var(--escan-fondo),
-        $month-selected-current-background: var(--escan-primario),
-        $month-selected-current-hover-foreground: var(--escan-fondo),
-        $month-selected-current-hover-background: var(--escan-primario),
 
-        $month-selected-foreground: var(--escan-fondo),
-        $month-selected-background: var(--escan-primario),
-        $month-selected-hover-foreground: var(--escan-fondo),
-        $month-selected-hover-background: var(--escan-primario),
+        $ym-hover-foreground: var(--escan-fondo),
+        $ym-hover-background: var(--escan-secundario),
+
+        $ym-current-foreground: var(--escan-fondo),
+        $ym-current-background: var(--escan-primario),
+        $ym-current-hover-foreground: var(--escan-fondo),
+        $ym-current-hover-background: var(--escan-secundario),
+
+
+
+        $ym-selected-current-foreground: var(--escan-fondo),
+        $ym-selected-current-background: var(--escan-primario),
+        $ym-selected-current-hover-foreground: var(--escan-fondo),
+        $ym-selected-current-hover-background: var(--escan-primario),
+
+        $ym-selected-foreground: var(--escan-fondo),
+        $ym-selected-background: var(--escan-primario),
+        $ym-selected-hover-foreground: var(--escan-fondo),
+        $ym-selected-hover-background: var(--escan-primario),
 
 
 

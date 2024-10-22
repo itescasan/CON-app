@@ -2,7 +2,11 @@ ng update @angular/cli --allow-dirty
 ng update @angular/core --allow-dirty
 ng update rxjs --allow-dirty
 ng update  --allow-dirty
+ng update @angular/cli --allow-dirty
+ng update @angular/material --allow-dirty
+ng update  --allow-dirty
 npm install --allow-dirty
+
 
 
 
