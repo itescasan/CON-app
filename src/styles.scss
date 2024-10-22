@@ -52,8 +52,7 @@ $custom-datepicker-theme: calendar-theme($content-background: var(--escan-fondo)
 
 
 
-        $year-hover-foreground: var(--escan-fondo),
-        $ym-hover-background: var(--escan-secundario),
+ 
 
         $ym-current-foreground: var(--escan-fondo),
         $ym-current-background: var(--escan-primario),
@@ -76,22 +75,7 @@ $custom-datepicker-theme: calendar-theme($content-background: var(--escan-fondo)
         $ym-hover-foreground: var(--escan-fondo),
         $ym-hover-background: var(--escan-secundario),
 
-        $ym-current-foreground: var(--escan-fondo),
-        $ym-current-background: var(--escan-primario),
-        $ym-current-hover-foreground: var(--escan-fondo),
-        $ym-current-hover-background: var(--escan-secundario),
-
-
-
-        $ym-selected-current-foreground: var(--escan-fondo),
-        $ym-selected-current-background: var(--escan-primario),
-        $ym-selected-current-hover-foreground: var(--escan-fondo),
-        $ym-selected-current-hover-background: var(--escan-primario),
-
-        $ym-selected-foreground: var(--escan-fondo),
-        $ym-selected-background: var(--escan-primario),
-        $ym-selected-hover-foreground: var(--escan-fondo),
-        $ym-selected-hover-background: var(--escan-primario),
+ 
 
 
 
