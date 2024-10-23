@@ -766,9 +766,10 @@ export class TransferenciaSaldoComponent {
 
         if(Number(String(r.Monto).replaceAll(",", "")) != 0)
         {
-          let Porc: number = r.PorcImpuesto;
-          let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
-          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((r.Porcentaje / 100), "4"), "2");
+          let Porc: number = this.cFunciones.Redondeo((r.Porcentaje / 100), "2");
+         // let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
+         let SubTotal: number = Importe;
+          let Ret: number = this.cFunciones.Redondeo(SubTotal * Porc, "2");
           r.Monto = this.cFunciones.NumFormat(Ret, "2");
         }
 
@@ -1647,6 +1648,8 @@ export class TransferenciaSaldoComponent {
         r.TieneImpuesto = f.TieneImpuesto;
         r.PorcImpuesto = f.PorcImpuesto;
         r.CuentaContable = f.CuentaContable;
+
+        console.log(r)
 
         if (esNuevo) this.lstRetencion.push(r);
 

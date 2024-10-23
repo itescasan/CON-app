@@ -1,4 +1,5 @@
-<div class="app-asiento-contable">
+<div  [ngClass]="esModal? 'app-asiento-contable no-top' : 'app-asiento-contable'">
+
     <div class="contenedor-asiento mb-1">
         <div class="escasan-dialog" *ngIf="esModal">
             <div class="btn-contenedor-custom">
