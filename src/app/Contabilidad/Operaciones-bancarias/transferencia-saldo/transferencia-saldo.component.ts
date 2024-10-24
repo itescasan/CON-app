@@ -1000,10 +1000,18 @@ export class TransferenciaSaldoComponent {
 
       });
 
+      dialogAsiento.beforeClosed().subscribe(s => {
+
+        
+        $("#offcanvasBottom-tranf-saldo").removeAttr("show");
+        $("#btnMostrarPie-tranf-saldo").trigger("click"); 
+
+      });
+
     });
 
 
-
+  
 
 
   }
