@@ -71,9 +71,9 @@ export class TransferenciaSaldoComponent {
   public dec_Aplicado: number = 0;
   public dec_Dif: number = 0;
   public dec_Retencion: number = 0;
-  private CuentaComision : string = "6113-11-03";
-  private CuentaDiferencialPerdida: string = "1113-04-01";
-  private CuentaDiferencialGancia : string = "1113-04-01";
+  private CuentaComision : string = "6101-04-01-07";
+  private CuentaDiferencialPerdida: string = "6101-04-01-04";
+  private CuentaDiferencialGancia : string = "6101-04-01-06";
 
 
   @ViewChildren(IgxComboComponent)
@@ -1050,8 +1050,8 @@ export class TransferenciaSaldoComponent {
 
 
 
-    this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "", "", "C", "");
-    this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "", "", "C", "");
+    this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), i_Banco.CuentaBancaria, "", "", "C", "");
+    this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), i_Banco.CuentaBancaria, "", "", "C", "");
     this.Nueva_Linea_Asiento(Comision, this.CuentaComision, "COMISION BANCARIA Doc:" + this.Asiento.NoDocOrigen, this.Asiento.NoDocOrigen, "", "D", "");
 
 
@@ -1649,7 +1649,7 @@ export class TransferenciaSaldoComponent {
         r.PorcImpuesto = f.PorcImpuesto;
         r.CuentaContable = f.CuentaContable;
 
-        console.log(r)
+        
 
         if (esNuevo) this.lstRetencion.push(r);
 
