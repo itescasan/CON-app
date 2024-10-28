@@ -2,8 +2,13 @@
 
 .app-asiento-contable{
     position: relative;
-    top:-60px;
-    height: 100vh;
+   
+   // height: 100vh;
+   top:-60px;
+}
+
+.no-top{
+    top:0px;
 }
 
 .contenedor-asiento{

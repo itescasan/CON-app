@@ -71,9 +71,9 @@ export class TransferenciaSaldoComponent {
   public dec_Aplicado: number = 0;
   public dec_Dif: number = 0;
   public dec_Retencion: number = 0;
-  private CuentaComision : string = "6113-11-03";
-  private CuentaDiferencialPerdida: string = "1113-04-01";
-  private CuentaDiferencialGancia : string = "1113-04-01";
+  private CuentaComision : string = "6101-04-01-07";
+  private CuentaDiferencialPerdida: string = "6101-04-01-04";
+  private CuentaDiferencialGancia : string = "6101-04-01-06";
 
 
   @ViewChildren(IgxComboComponent)
@@ -766,9 +766,10 @@ export class TransferenciaSaldoComponent {
 
         if(Number(String(r.Monto).replaceAll(",", "")) != 0)
         {
-          let Porc: number = r.PorcImpuesto;
-          let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
-          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((r.Porcentaje / 100), "4"), "2");
+          let Porc: number = this.cFunciones.Redondeo((r.Porcentaje / 100), "2");
+         // let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
+         let SubTotal: number = Importe;
+          let Ret: number = this.cFunciones.Redondeo(SubTotal * Porc, "2");
           r.Monto = this.cFunciones.NumFormat(Ret, "2");
         }
 
@@ -999,10 +1000,18 @@ export class TransferenciaSaldoComponent {
 
       });
 
+      dialogAsiento.beforeClosed().subscribe(s => {
+
+        
+        $("#offcanvasBottom-tranf-saldo").removeAttr("show");
+        $("#btnMostrarPie-tranf-saldo").trigger("click"); 
+
+      });
+
     });
 
 
-
+  
 
 
   }
@@ -1049,8 +1058,8 @@ export class TransferenciaSaldoComponent {
 
 
 
-    this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "", "", "C", "");
-    this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaC : i_Banco.CuentaD), i_Banco.CuentaBancaria, "", "", "C", "");
+    this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), i_Banco.CuentaBancaria, "", "", "C", "");
+    this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), i_Banco.CuentaBancaria, "", "", "C", "");
     this.Nueva_Linea_Asiento(Comision, this.CuentaComision, "COMISION BANCARIA Doc:" + this.Asiento.NoDocOrigen, this.Asiento.NoDocOrigen, "", "D", "");
 
 
@@ -1647,6 +1656,8 @@ export class TransferenciaSaldoComponent {
         r.TieneImpuesto = f.TieneImpuesto;
         r.PorcImpuesto = f.PorcImpuesto;
         r.CuentaContable = f.CuentaContable;
+
+        
 
         if (esNuevo) this.lstRetencion.push(r);
 
