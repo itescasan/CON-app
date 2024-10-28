@@ -57,6 +57,10 @@ export class getReporteContable{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/VentasConImpuestos?FechaI=" + Fecha + "&FechaF=" + FechaF );
     }
 
+    public GetFlujoEfectivo(Fecha: String, FechaF: String,Estado: boolean, EsMonedaLocal : boolean): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/FlujoEfectivo?Fecha=" + Fecha + "&FechaF=" + FechaF +  "&Estado=" + Estado  +  "&EsMonedaLocal=" + EsMonedaLocal);
+    }
+
     public Datos() : Observable<string>{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Datos");
      }

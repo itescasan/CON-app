@@ -117,7 +117,7 @@
                             <span class="input-group-text">C$</span>
                             <div class="form-floating">
                                 <input type="text" class="form-control" placeholder="Total Cordoba"
-                                    id="txtTotalCordoba" formControlName="txtTotalCordoba">
+                                    id="txtTotalCordoba" formControlName="txtTotalCordoba" >
                                 <label for="txtTotalCordoba">Valor</label>
                             </div>
                         </div>
@@ -127,7 +127,7 @@
                         <div class="input-group">
                             <span class="input-group-text">U$</span>
                             <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar"
+                                <input type="text" class="form-control" placeholder="Total Dolar" id="txtTotalDolar" 
                                     formControlName="txtTotalDolar" >
                                 <label for="txtTotalDolar">Valor</label>
                             </div>
@@ -190,8 +190,8 @@
                                     <span class="input-group-text">IR</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="IR en la fuente"
-                                            id="txtIrFuente" formControlName="txtIrFuente" (keypress)="HabiliarValor($event)"
-                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
+                                            id="txtIrFuente" formControlName="txtIrFuente" 
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" (keyup)="ValValor($event)">
                                         <label for="txtIrFuente">IR en la fuente</label>
                                     </div>
                                 </div>
@@ -200,9 +200,9 @@
                                 <div class="input-group">
                                     <span class="input-group-text">SP</span>
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtServP" 
-                                            formControlName="txtServP" (keypress)="HabiliarValor($event)"
-                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
+                                        <input type="number"  class="form-control" placeholder="Servicios Profesionales" id="txtServP" 
+                                            formControlName="txtServP" 
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" (keyup)="ValValor($event)">
                                         <label for="txtServP">Servicios Profesionales</label>
                                     </div>
                                 </div>
@@ -213,8 +213,8 @@
                                     <span class="input-group-text">AL</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="Servicios Profesionales" id="txtAlcaldias"
-                                            formControlName="txtAlcaldias" (keypress)="HabiliarValor($event)"
-                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
+                                            formControlName="txtAlcaldias" 
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" (keyup)="ValValor($event)">
                                         <label for="txtAlcaldias">Alcaldia</label>
                                     </div>
                                 </div>
@@ -224,9 +224,9 @@
                                 <div class="input-group">
                                     <span class="input-group-text">IVA</span>
                                     <div class="form-floating">
-                                        <input type="number" class="form-control" placeholder="IVA" id="txtIva"
-                                            formControlName="txtIva" (keypress)="HabiliarValor($event)"
-                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
+                                        <input type="number"  class="form-control" placeholder="IVA" id="txtIva"
+                                            formControlName="txtIva"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" (keyup)="ValValor($event)">
                                         <label for="txtIva">Ingrese el Valor</label>
                                     </div>
                                 </div>                                    
@@ -237,8 +237,8 @@
                                     <span class="input-group-text">TC</span>
                                     <div class="form-floating">
                                         <input type="number" class="form-control" placeholder="TC Compra Divisa" id="txtTcCompraD"
-                                            formControlName="txtTcCompraD" (keypress)="HabiliarValor($event)"
-                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')">
+                                            formControlName="txtTcCompraD" 
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')" (keyup)="ValValor($event)">
                                         <label for="txtTcCompraD">TC Compra Divisa</label>
                                     </div>
                                 </div>

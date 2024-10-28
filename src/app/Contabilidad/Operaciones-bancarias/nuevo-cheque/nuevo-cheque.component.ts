@@ -52,6 +52,8 @@ export class NuevoChequeComponent {
   private ret3 : number = 0.0;
   private ValorC : number = 0.0;
 
+  texto: string = '';
+
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria : iCuentaBancaria[] = [];
   lstBodega: iBodega[] = [];
@@ -168,7 +170,9 @@ export class NuevoChequeComponent {
         this.val.Get("txtTotalDolar").disable();
         this.val.Get("txtTotalCordoba").disable();
         
+        
         document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled");
+
         if (this.lstBodega.length > 0) this.cmbBodega?.setSelectedItem(this.lstBodega[0].Codigo);
        
 
@@ -198,7 +202,17 @@ export class NuevoChequeComponent {
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
       this.IdMoneda = String(_Item?.IdMoneda);
+      this.val.Get("txtTotalDolar").disable();
+      this.val.Get("txtTotalCordoba").disable();
+
+      this.val.Get("txtIrFuente").setValue("");
+      this.val.Get("txtServP").setValue("");
+      this.val.Get("txtAlcaldias").setValue("");
+      this.val.Get("txtIva").setValue("");
+      this.val.Get("txtTcCompraD").setValue("");
+
       
+     
 
       let i: number = this.V_Agregar(true);
 
@@ -587,7 +601,7 @@ public v_Enter_Reembolso(event: any) {
 
     }
 
-    this.V_Calcular();
+    //this.V_Calcular();
     
 
   }
@@ -1155,8 +1169,24 @@ public v_Enter_Reembolso(event: any) {
 
   }
 
-  public HabiliarValor(event: any): void {
 
+  public ValValor(event: any): void {
+    const nuevoValor = event.target.value;
+    if (this.val.Get("txtIrFuente").value == null) this.val.Get("txtIrFuente").value = ''
+    if (this.val.Get("txtServP").value == null) this.val.Get("txtServP").value = ''
+    if (this.val.Get("txtAlcaldias").value == null) this.val.Get("txtAlcaldias").value = ''
+    if (this.val.Get("txtIva").value == null) this.val.Get("txtIva").value = ''
+    if (this.val.Get("txtTcCompraD").value == null) this.val.Get("txtTcCompraD").value = ''
+
+    if (this.val.Get("txtIrFuente").value == '' && this.val.Get("txtServP").value == '' && this.val.Get("txtAlcaldias").value == '' && this.val.Get("txtIva").value == '' && this.val.Get("txtTcCompraD").value == '') {
+      document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled","disabled");
+      this.val.Get("txtTotalDolar").disable();
+      this.val.Get("txtTotalCordoba").disable();
+    }
+    else
+    {
+      document.getElementById("btnContabilizar-Cheques")?.removeAttribute("disabled");
+    }
     if ( this.val.Get("txtMoneda").value == "Cordobas" ) {
       this.val.Get("txtTotalDolar").disable();
       this.val.Get("txtTotalCordoba").enable();
@@ -1164,12 +1194,8 @@ public v_Enter_Reembolso(event: any) {
       this.val.Get("txtTotalDolar").enable();
         this.val.Get("txtTotalCordoba").disable();
     }
-
-
-
   }
-
-
+  
   public v_Contabilizar(): void{
 
     this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
@@ -1557,6 +1583,7 @@ public v_Enter_Reembolso(event: any) {
   ngOnInit(): void {
 
     this.overlaySettings = {};
+    document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled");
 
     if (window.innerWidth <= 992) {
       this.overlaySettings = {
@@ -1580,6 +1607,8 @@ public v_Enter_Reembolso(event: any) {
     this.val.addFocus("txtFecha", "txtBeneficiario", undefined);
     this.val.addFocus("txtBeneficiario", "txtConcepto", undefined);
     this.val.addNumberFocus("TxtTC", 4);
+    this.val.addNumberFocus("txtTotalCordoba", 2);
+    this.val.addNumberFocus("txtTotalDolar", 2);
 
 
 
