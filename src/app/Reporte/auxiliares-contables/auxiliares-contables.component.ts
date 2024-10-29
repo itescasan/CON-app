@@ -33,9 +33,9 @@ export class AuxiliaresContablesComponent {
 
     this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
     this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha", "Seleccione una fecha.");
-    this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Selecione una moneda");
-    this.val.add("cmbCuentasContables1", "1", "LEN>", "0", "Tipo Doc", "Selecione una Cuenta Contable");
-    this.val.add("cmbCuentasContables2", "1", "LEN>", "0", "Tipo Doc", "Selecione una Cuenta Contable");
+    this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda");
+    this.val.add("cmbCuentasContables1", "1", "LEN>", "0", "Tipo Doc", "Seleccione una Cuenta Contable");
+    this.val.add("cmbCuentasContables2", "1", "LEN>", "0", "Tipo Doc", "Seleccione una Cuenta Contable");
     this.val.add("cmbCentroCosto", "1", "LEN>", "0", "Tipo Doc", "Selecione un Centro Costo");
 
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));

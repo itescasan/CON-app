@@ -34,19 +34,40 @@
                         
                         <div class="col-12 col-md-12 col-lg-3  mb-1">
                             <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                                <span class="input-group-text"><i class="fas bi-app-indicator fa-lg"></i></span>
                                 <div class="form-floating">
                                     <select class="form-select form-select-lg" aria-label="Rubro"
                                     id="cmbRubro" formControlName="cmbRubro">
                                         <option value="0" >Seleccione un Rubro...</option>
                                         <option value="6101-01">Gasto Administracion</option>
-                                        <option value="6101-02">Gastos Ventas</option>
+                                        <!-- <option value="6101-02">Gastos Ventas</option> -->
                                         <option value="6101-03">Logistica y Operaciones</option>
                                         <option value="6101-04">Gastos Financieros</option>
                                     </select>
                                     <label for="cmbRubro">Rubro</label>
                                 </div>                                
                             </div>
+                        </div>
+
+
+                        <div class="col-12 col-md-12 col-lg-3 mb-1">
+                            <igx-combo #cmbBodega [data]="lstCuentasContables1" valueKey="CuentaContable" displayKey="Nombre" id="cmbCuentasContables1"
+                                formControlName="cmbCuentasContables1" 
+                                searchPlaceholder="Seleccione una Cuenta Contable..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CuentaContable1($event)"
+                                (keyup)="v_Enter_CuentaContable1($event);">
+                                <label igxLabel>Cuenta Contable</label>
+                                <igx-prefix><i class="bi bi-bar-chart-fill fa-lg"></i></igx-prefix>
+                            </igx-combo>
+                            <br>
+                            <igx-combo #cmbBodega [data]="lstCentroCosto" valueKey="Codigo" displayKey="CentroCosto" id="cmbCentroCosto"
+                                formControlName="cmbCentroCosto" 
+                                searchPlaceholder="Seleccione una Cuenta Contable..." [autoFocusSearch]="true"
+                                [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CentroCosto($event)"
+                                (keyup)="v_Enter_CentroCosto($event);">
+                                <label igxLabel>Centro Costo</label>
+                                <igx-prefix><i class="bi bi-bar-chart-fill fa-lg"></i></igx-prefix>
+                            </igx-combo>
                         </div>
 
 
@@ -67,6 +88,7 @@
                                     Imprimir</button></span>
                             </div>
                         </div>
+
 
                     </div>
                 </form>
