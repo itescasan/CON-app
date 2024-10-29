@@ -52,6 +52,7 @@ import { AuxiliaresContablesComponent } from 'src/app/Reporte/auxiliares-contabl
 import { CreditoFiscalIvaComponent } from 'src/app/Reporte/credito-fiscal-iva/credito-fiscal-iva.component';
 import { RetencionesAlcaldiasForaneasComponent } from 'src/app/Reporte/retenciones-alcaldias-foraneas/retenciones-alcaldias-foraneas.component';
 import { ReporteIntegracionGastosAcumuladosComponent } from 'src/app/Reporte/reporte-integracion-gastos-acumulados/reporte-integracion-gastos-acumulados.component';
+import { ComparativoGastosMensualComponent } from 'src/app/Reporte/comparativo-gastos-mensual/comparativo-gastos-mensual.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -452,6 +453,15 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let ventasImpuesto: ComponentRef<VentasImpuestosComponent> = this.DynamicFrom.viewContainerRef.createComponent(VentasImpuestosComponent);
+
+    }
+
+    if(id == "aComparativoGastosMensual"){
+      $("#btnMenu").trigger("click");
+      this.cFunciones.DIALOG.closeAll();
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let comparativogastosmensual: ComponentRef<ComparativoGastosMensualComponent> = this.DynamicFrom.viewContainerRef.createComponent(ComparativoGastosMensualComponent);
 
     }
 

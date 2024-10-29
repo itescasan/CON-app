@@ -61,6 +61,10 @@ export class getReporteContable{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/FlujoEfectivo?Fecha=" + Fecha + "&FechaF=" + FechaF +  "&Estado=" + Estado  +  "&EsMonedaLocal=" + EsMonedaLocal);
     }
 
+    public GetComparativoGastosMensual(Fecha: String, Estado: boolean, EsMonedaLocal : boolean, CuentaSucursalAdmon: string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ComparativoGastosMensual?Fecha=" + Fecha + "&Estado=" + Estado  + "&EsMonedaLocal=" + EsMonedaLocal + "&CuentaSucursalA=" + CuentaSucursalAdmon );
+    }
+
     public Datos() : Observable<string>{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Datos");
      }
