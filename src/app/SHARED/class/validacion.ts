@@ -212,7 +212,7 @@ export class Validacion {
     
 
       f.closing.subscribe(s => {   
-        document.getElementById("body")!.style.overflow = "auto";      
+        document.getElementById("body")!.style.overflow = "";      
       });
 
     });
