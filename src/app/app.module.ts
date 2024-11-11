@@ -77,6 +77,8 @@ import { ReporteIntegracionGastosAcumuladosComponent } from './Reporte/reporte-i
 import { ComparativoGastosMensualComponent } from './Reporte/comparativo-gastos-mensual/comparativo-gastos-mensual.component';
 import { BalanceGeneralComparativoComponent } from './Reporte/balance-general-comparativo/balance-general-comparativo.component';
 
+import { ReporteDiferenciasCXPvsContabilidadComponent } from './Reporte/reporte-diferencias-cxpvs-contabilidad/reporte-diferencias-cxpvs-contabilidad.component';
+
 @NgModule({
   declarations: [
     AppComponent,

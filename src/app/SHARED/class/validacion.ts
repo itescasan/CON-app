@@ -206,6 +206,15 @@ export class Validacion {
 
       if(temp == undefined) cmb.push(f);
 
+      f.opening.subscribe(s => {   
+        document.getElementById("body")!.style.overflow = "hidden";      
+      });
+    
+
+      f.closing.subscribe(s => {   
+        document.getElementById("body")!.style.overflow = "";      
+      });
+
     });
 
 
