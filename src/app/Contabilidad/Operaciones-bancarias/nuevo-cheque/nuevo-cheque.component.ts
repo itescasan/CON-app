@@ -257,7 +257,7 @@ export class NuevoChequeComponent {
       this.cmbBodega.close();
     }
   }
-
+ 
   public v_Enter_Bodega(event: any) {
     if (event.key == "Enter") {
       let cmb : any = this.cmbBodega.dropdown;
@@ -1315,45 +1315,7 @@ public v_Enter_Reembolso(event: any) {
 
   }
 
-  public v_ContabilizarR(CuentaC: string, Referencia: string, CC: string, Valor: number): void {
-
-    // this.lstReembolsoD.data.splice(0, this.lstReembolsoD.data.length);
-    
-    if ( this.IdMoneda == this.cFunciones.MonedaLocal) {
-
-      if (Number(this.Valor) == 0 ) {
-        this.val.add("txtTotalCordoba", "1", "NUM>", "0", "Total Cordoba", "Escriba el Valor en Córdobas");
-        if(!this.val.ItemValido(["txtTotalCordoba"])) return;
-      }
-      this.Valor = Number(this.val.Get("txtTotalCordoba").value)
-    } else {
-      if (Number(this.Valor) == 0) {
-        this.val.add("txtTotalDolar", "1", "NUM>", "0", "Total Dolar", "Escriba el Valor en Dolares");
-        if(!this.val.ItemValido(["txtTotalDolar"])) return;
-
-      }
-      this.Valor = Number(this.val.Get("txtTotalDolar").value)
-    }
-
-
-    if (this.val.Errores != "") {
-      this.cFunciones.DIALOG.open(DialogErrorComponent, {
-        data: this.val.Errores,
-      });
-
-      return;
-    } 
-    if(this.val.ItemValido(["cmbCuentaBancaria"]),this.val.ItemValido(["cmbCuentaC"]),this.val.ItemValido(["txtBeneficiario"]),this.val.ItemValido(["txtConcepto"])) {
-      
-      // let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
-      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        this.V_Add(CuentaC,Referencia,CC,Valor,"D");
-      } else {
-        //this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  - this.cFunciones.Redondeo(this.suma,"2") +  this.cFunciones.Redondeo(this.sumaDebito,"2")
-        this.V_Add(CuentaC,Referencia,CC,Valor ,"D");
-      }       
-    }
-  }
+ 
 
   private v_Visualizar()
   {

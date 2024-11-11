@@ -75,6 +75,8 @@ import { CreditoFiscalIvaComponent } from './Reporte/credito-fiscal-iva/credito-
 import { RetencionesAlcaldiasForaneasComponent } from './Reporte/retenciones-alcaldias-foraneas/retenciones-alcaldias-foraneas.component';
 import { ReporteIntegracionGastosAcumuladosComponent } from './Reporte/reporte-integracion-gastos-acumulados/reporte-integracion-gastos-acumulados.component';
 import { ComparativoGastosMensualComponent } from './Reporte/comparativo-gastos-mensual/comparativo-gastos-mensual.component';
+import { BalanceGeneralComparativoComponent } from './Reporte/balance-general-comparativo/balance-general-comparativo.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,7 +127,8 @@ import { ComparativoGastosMensualComponent } from './Reporte/comparativo-gastos-
     CreditoFiscalIvaComponent,
     RetencionesAlcaldiasForaneasComponent,
     ReporteIntegracionGastosAcumuladosComponent,
-    ComparativoGastosMensualComponent
+    ComparativoGastosMensualComponent,
+    BalanceGeneralComparativoComponent
   ],
   imports: [
     BrowserModule,
