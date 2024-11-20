@@ -130,6 +130,7 @@ export class SidebarComponent {
 
     if(id == "") return;
     if(id == "btnMenu") return;
+    if(this.V_TieneHijos(id) != -1) return;
 
 
     if(this.ErrorServidor && id != "aSalir"){
