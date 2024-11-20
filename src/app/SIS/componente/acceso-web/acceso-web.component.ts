@@ -274,9 +274,26 @@ export class AccesoWebComponent {
 
     
     let i : number = this.lstPerfil.data.findIndex(f => f.MenuPadre == element.MenuPadre && f.Activo && f.Modulo == "CON");
-    let p = this.lstPerfil.data.findIndex(f => f.Id == element.MenuPadre );
-    this.lstPerfil.data[p].Activo = false;
-    if(i != -1) this.lstPerfil.data[p].Activo = true;
+    let subm = this.lstPerfil.data.findIndex(f => f.Id == element.MenuPadre);
+    this.lstPerfil.data[subm].Activo = false;
+    if(i != -1) this.lstPerfil.data[subm].Activo = true;
+
+    let menu = this.lstPerfil.data.findIndex(f => f.Id == this.lstPerfil.data[subm].MenuPadre);
+    this.lstPerfil.data[menu].Activo = false;
+    if(i != -1) this.lstPerfil.data[menu].Activo = true;
+
+  }
+
+  V_Disable(element : any){
+
+    let disable = false;
+
+    if(element.EsMenu || element.EsSubMenu) disable = true;
+
+    let i : number = this.lstPerfil.data.findIndex(f => f.MenuPadre == element.Id && f.Modulo == "CON");
+    if(i == -1) disable = false;
+
+    return disable;
 
   }
 

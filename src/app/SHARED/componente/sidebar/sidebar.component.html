@@ -16,38 +16,92 @@
 
 
             
-            <ng-container *ngFor="let item of Menu(); let i = index">
+            <ng-container *ngFor="let Menu of Menu(); let i = index">
 
 
-                <li class="dropdown" *ngIf="item.EsMenu">
-                    <a href="#" class="nav-link dropdown-toggle  text-truncate" id="{{item.Id}}" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="{{item.Clase}}"></i><span class="ms-1  d-sm-inline">{{item.Caption}}</span>
+                @if(Menu.EsMenu || Menu.EsSubMenu){
+
+
+
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle  text-truncate" id="{{Menu.Id}}"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="{{Menu.Clase}}"></i><span class="ms-1  d-sm-inline">{{Menu.Caption}}</span>
                     </a>
-                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown" class="dropdown-menu">
-                        <li *ngFor="let subItem of SubMenu(item.Id);"><a class="dropdown-item" href="#" id="{{(subItem.Id)}}"><i class="{{subItem.Clase}}"></i> {{subItem.Caption}}</a></li>
+
+
+
+
+                    <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdown">
+
+
+                        <li *ngFor="let subMenu of SubItem(Menu.Id);" class="dropdown-submenu">
+                            <a
+                                [ngClass]="V_TieneHijos(subMenu.Id) == -1 ? 'dropdown-item' : 'dropdown-item dropdown-toggle'" href="#"
+                                role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                id="{{(subMenu.Id)}}">
+                                <i class="{{subMenu.Clase}}">
+
+
+                                </i> {{subMenu.Caption}}
+                            </a>
+
+                            @if(V_TieneHijos(subMenu.Id) != -1){
+                                <ul class="dropdown-menu" aria-labelledby="dropdown">
+                                    <li *ngFor="let Item of SubItem(subMenu.Id);"><a class="dropdown-item" href="#" id="{{(Item.Id)}}"><i
+                                                class="{{Item.Clase}}"></i> {{Item.Caption}}</a></li>
+                                </ul>
+                            }
+
+                           
+
+                            
+
+                        </li>
+
+
                     </ul>
+
+
+
+
+
+
+
                 </li>
 
-                
 
-      
-  
-                <li class="nav-item" *ngIf="!item.EsMenu">
 
-                    <a href="#" class="nav-link text-truncate" id="{{item.Id}}">
-                        <i class="{{item.Clase}}"></i> {{item.Caption}}
+
+
+                }
+                @else {
+                <li class="nav-item" *ngIf="!Menu.EsMenu">
+
+                    <a href="#" class="nav-link text-truncate" id="{{Menu.Id}}">
+                        <i class="{{Menu.Clase}}"></i> {{Menu.Caption}}
                     </a>
 
-    
+
                 </li>
-        
-     
+
+                }
 
 
-            
-  
-              </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </ng-container>
 
               
 

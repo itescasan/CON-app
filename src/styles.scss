@@ -699,3 +699,24 @@ li.error-mensaje::marker {
     transform: translateY(-50%);
 
 }
+
+
+
+//████████████████████████████████████████████DROPDOWN██████████████████████████████████████████████████████████████████████
+
+
+.dropdown-submenu:hover > .dropdown-menu,
+.dropend-submenu:hover > .dropdown-menu {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 100%;
+}
+
+/*
+.dropdown:hover > .dropdown-menu,
+.dropend:hover > .dropdown-menu {
+  display: block;
+  margin-top: 0.125em;
+  margin-left: 0.125em;
+}*/

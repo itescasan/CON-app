@@ -22,27 +22,38 @@ label{
 
 
 input:disabled,
-.menu{
+.Menu,
+.SubMenu{
   font-weight: bold;
   opacity: 1;
-
 }
 
 
-.menu{
 
+.Menu{
+  color: var(--escan-primario);
+  font-weight: bold;
   input{
     margin-left: 5px;
   }
   
 }
-.item{
+.SubMenu{
 
   input{
     margin-left: 15px;
   }
   
 }
+
+.item{
+
+  input{
+    margin-left: 30px;
+  }
+  
+}
+
 
 
 .btn-contenedor {

@@ -35,102 +35,102 @@ export class Funciones {
 
     /**************************************EJERCICIO FISCAL************************************* */ 
 
-    {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavEjercicio", Caption: "Ejercicio Fiscal" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aNewEjercicio", Caption: "Ejercicio Fiscal" , MenuPadre: "IdNavEjercicio", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRegEjercicio", Caption: "Registros" , MenuPadre: "IdNavEjercicio", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavEjercicio", Caption: "Ejercicio Fiscal" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewEjercicio", Caption: "Ejercicio Fiscal" , MenuPadre: "IdNavEjercicio", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegEjercicio", Caption: "Registros" , MenuPadre: "IdNavEjercicio", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
 
 
     /**************************************CUENTAS CONTABLES************************************* */ 
 
-    {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavCuentasContables", Caption: "Cuentas Contables" , MenuPadre: "", Clase : "fab fa-cuttlefish fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aNewCuenta", Caption: "Nueva Cuenta" , MenuPadre: "IdNavCuentasContables", Clase : "fab fa-cuttlefish fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRegCuenta", Caption: "Registros" , MenuPadre: "IdNavCuentasContables", Clase : "fa-solid fa-table-cells", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavCuentasContables", Caption: "Cuentas Contables" , MenuPadre: "", Clase : "fab fa-cuttlefish fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewCuenta", Caption: "Nueva Cuenta" , MenuPadre: "IdNavCuentasContables", Clase : "fab fa-cuttlefish fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegCuenta", Caption: "Registros" , MenuPadre: "IdNavCuentasContables", Clase : "fa-solid fa-table-cells", Modulo: "CON", Usuario : ""},
 
         
     /**************************************ASIENTO CONTABLE************************************* */ 
 
-    {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavAsientoContable", Caption: "Asiento Contable" , MenuPadre: "", Clase : "fas fa-book fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aNewAsiento", Caption: "Nueva Asiento" , MenuPadre: "IdNavAsientoContable", Clase : "fas fa-book fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRegAsiento", Caption: "Registros" , MenuPadre: "IdNavAsientoContable", Clase : "fa-solid fa-table-cells", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavAsientoContable", Caption: "Asiento Contable" , MenuPadre: "", Clase : "fas fa-book fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewAsiento", Caption: "Nueva Asiento" , MenuPadre: "IdNavAsientoContable", Clase : "fas fa-book fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegAsiento", Caption: "Registros" , MenuPadre: "IdNavAsientoContable", Clase : "fa-solid fa-table-cells", Modulo: "CON", Usuario : ""},
 
         
 
     /**************************************AUXILIAR CUENTA************************************* */ 
 
-      {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"IdNavAuxiliar", Caption: "Auxiliar Cuenta" , MenuPadre: "", Clase : "fa-solid fa-list-check fa-lg", Modulo: "CON", Usuario : ""},
+      {IdAcceso:0,  Activo: false, EsMenu: false,  EsSubMenu: false, Id:"IdNavAuxiliar", Caption: "Auxiliar Cuenta" , MenuPadre: "", Clase : "fa-solid fa-list-check fa-lg", Modulo: "CON", Usuario : ""},
 
 
       
     /**************************************TRANSFERENCIA************************************* */ 
 
-    {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavTransferencia", Caption: "Transferencias Bancarias" , MenuPadre: "", Clase : "fa-solid fa-building-columns fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aNewTransferenciaCuenta", Caption: "Nueva Transferencia (C)" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-transfer fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aNewTransferenciaSaldo", Caption: "Nueva Transferencia (S)" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-trend-up fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRegTransferencia", Caption: "Registros Transferencia" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-table-cells", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavTransferencia", Caption: "Transferencias Bancarias" , MenuPadre: "", Clase : "fa-solid fa-building-columns fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewTransferenciaCuenta", Caption: "Nueva Transferencia (C)" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-transfer fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewTransferenciaSaldo", Caption: "Nueva Transferencia (S)" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-trend-up fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegTransferencia", Caption: "Registros Transferencia" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-table-cells", Modulo: "CON", Usuario : ""},
 
     
      /**************************************CHEQUE************************************* */ 
 
-     {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavCheques", Caption: "Cheques" , MenuPadre: "", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aNewCheque", Caption: "Nuevo Cheque (C)" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aNewChequeSaldo", Caption: "Nuevo Cheque (S)" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRegCheques", Caption: "Registros Cheques" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-table-list", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavCheques", Caption: "Cheques" , MenuPadre: "", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewCheque", Caption: "Nuevo Cheque (C)" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewChequeSaldo", Caption: "Nuevo Cheque (S)" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegCheques", Caption: "Registros Cheques" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-table-list", Modulo: "CON", Usuario : ""},
  
      
       /**************************************CIERRE CONTABLE************************************* */ 
 
-      {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavCierre", Caption: "Cierre Contable" , MenuPadre: "", Clase : "fa-solid fa-school-lock", Modulo: "CON", Usuario : ""},
-      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCierreMensual", Caption: "Cierre Mensual" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-arrow-down-up-lock", Modulo: "CON", Usuario : ""},
-      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCierreFiscal", Caption: "Cierre Fiscal" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-building-lock", Modulo: "CON", Usuario : ""},
-      {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aModuloVsContabilidad", Caption: "Modulo VS Contabilidad" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-code-compare", Modulo: "CON", Usuario : ""},
+      {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavCierre", Caption: "Cierre Contable" , MenuPadre: "", Clase : "fa-solid fa-school-lock", Modulo: "CON", Usuario : ""},
+      {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aCierreMensual", Caption: "Cierre Mensual" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-arrow-down-up-lock", Modulo: "CON", Usuario : ""},
+      {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aCierreFiscal", Caption: "Cierre Fiscal" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-building-lock", Modulo: "CON", Usuario : ""},
+      {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aModuloVsContabilidad", Caption: "Modulo VS Contabilidad" , MenuPadre: "IdNavCierre", Clase : "fa-solid fa-code-compare", Modulo: "CON", Usuario : ""},
 
 
        /**************************************REPORTE************************************* */ 
 
-     {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavReporte", Caption: "Reporte" , MenuPadre: "", Clase : "fa-solid fa-print", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aBalanzaComprobacion", Caption: "Balanza Comprobación" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aBalanceGeneral", Caption: "Balance General" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aBalanceSituacionFinanciera", Caption: "Balance Situacion Financiera" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aComprobantes", Caption: "Comprobantes" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aDiferencias", Caption: "Diferencias Entre CXC vs Contabilidad" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aVentasBolsaAgropecuaria", Caption: "Ventas Bolsa Agropecuaria" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aAuxiliaresContables", Caption: "Auxiliares Contables" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCreditoFiscalIva", Caption: "Credito Fiscal Iva" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRetencionesAlcaldiasForaneas", Caption: "Retenciones 1% Alcadias Foraneas" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aReporteIntegracionGastosAcumulados", Caption: "Reporte Integracion Gastos Acumulados" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aReporteDiferenciasCXPvsContabilidad", Caption: "Reporte Diferencias CXP vs Contabilidad" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aEstadoResultado", Caption: "Estado Resultdo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aFlujoEfectivo", Caption: "Flujo Efectivo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aCambioPatrimonio", Caption: "Estado Cambio Patrimonio" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aGastosAcumulados", Caption: "Gastos Acumulados" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aGastosCCosto", Caption: "Gastos por Centro Costo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aLibroDiario", Caption: "Libro Diario" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aLibroMayor", Caption: "Libro Mayor" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aVentasAlcaldia", Caption: "Ventas Alcaldia" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aVentasImpuestos", Caption: "Ventas Con Impuesto" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aComparativoGastosMensual", Caption: "Comparativo Gastos Mensual" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aBalanceGeneralComparativo", Caption: "Balance General Comparativo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavReporte", Caption: "Reporte" , MenuPadre: "", Clase : "fa-solid fa-print", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aBalanzaComprobacion", Caption: "Balanza Comprobación" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aBalanceGeneral", Caption: "Balance General" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aBalanceSituacionFinanciera", Caption: "Balance Situacion Financiera" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aComprobantes", Caption: "Comprobantes" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aDiferencias", Caption: "Diferencias Entre CXC vs Contabilidad" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aVentasBolsaAgropecuaria", Caption: "Ventas Bolsa Agropecuaria" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aAuxiliaresContables", Caption: "Auxiliares Contables" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aCreditoFiscalIva", Caption: "Credito Fiscal Iva" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRetencionesAlcaldiasForaneas", Caption: "Retenciones 1% Alcadias Foraneas" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aReporteIntegracionGastosAcumulados", Caption: "Reporte Integracion Gastos Acumulados" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aReporteDiferenciasCXPvsContabilidad", Caption: "Reporte Diferencias CXP vs Contabilidad" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aEstadoResultado", Caption: "Estado Resultdo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aFlujoEfectivo", Caption: "Flujo Efectivo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aCambioPatrimonio", Caption: "Estado Cambio Patrimonio" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aGastosAcumulados", Caption: "Gastos Acumulados" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aGastosCCosto", Caption: "Gastos por Centro Costo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aLibroDiario", Caption: "Libro Diario" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aLibroMayor", Caption: "Libro Mayor" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aVentasAlcaldia", Caption: "Ventas Alcaldia" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aVentasImpuestos", Caption: "Ventas Con Impuesto" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aComparativoGastosMensual", Caption: "Comparativo Gastos Mensual" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aBalanceGeneralComparativo", Caption: "Balance General Comparativo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
     /**************************************ACCESO CAJA CHICA ************************************* */ 
 
-    {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavAccesoCaja", Caption: "Acceso Caja Chica" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aAccesoCajaChica", Caption: "Acceso Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aTechoCajaChica", Caption: "Configuración Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aIngresoCaja", Caption: "Ingreso Facturas Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, Id:"aRegistroCaja", Caption: "Registro Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavAccesoCaja", Caption: "Acceso Caja Chica" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aAccesoCajaChica", Caption: "Acceso Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aTechoCajaChica", Caption: "Configuración Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aIngresoCaja", Caption: "Ingreso Facturas Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegistroCaja", Caption: "Registro Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
 
 
 
   /**************************************CUENTAS POR PAGAR ************************************* */ 
-  {IdAcceso:0,  Activo: false, EsMenu: true,  Id:"IdNavGastInt", Caption: "Gastos Interno" , MenuPadre: "", Clase : "fa-solid fa-gear fa-lg", Modulo: "CON", Usuario : ""},
-  {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"aGastInt", Caption: "Gastos Interno" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
-  {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"aRegGastInt", Caption: "Registros" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
+  {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavGastInt", Caption: "Gastos Interno" , MenuPadre: "", Clase : "fa-solid fa-gear fa-lg", Modulo: "CON", Usuario : ""},
+  {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aGastInt", Caption: "Gastos Interno" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
+  {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegGastInt", Caption: "Registros" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
  
 
 
     
     /**************************************ACCESO WEB**************************************/ 
 
-    {IdAcceso:0,  Activo: false, EsMenu: false,  Id:"idNavAccesoWeb", Caption: "Acceso Web" , MenuPadre: "", Clase : "fa-solid fa-database", Modulo: "CON", Usuario: ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false,  EsSubMenu: false, Id:"idNavAccesoWeb", Caption: "Acceso Web" , MenuPadre: "", Clase : "fa-solid fa-database", Modulo: "CON", Usuario: ""},
   
     
 

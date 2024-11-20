@@ -684,14 +684,19 @@ export class SidebarComponent {
   }
 
 
-  public Menu() : any[]{
+  public Menu(): any[] {
     return this.Perfil.filter(f => f.MenuPadre == "")
   }
 
-  public SubMenu(Menu : string) : any[]{
-    return this.Perfil.filter(f => f.MenuPadre == Menu);
+
+  public SubItem(Id: string): any[] {
+    return this.Perfil.filter(f => f.MenuPadre == Id);
   }
 
+
+  public V_TieneHijos(Id: string): number {
+    return this.Perfil.findIndex(f => f.MenuPadre == Id);
+  }
 
 
 
