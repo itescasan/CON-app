@@ -130,7 +130,8 @@ import { ReporteDiferenciasCXPvsContabilidadComponent } from './Reporte/reporte-
     RetencionesAlcaldiasForaneasComponent,
     ReporteIntegracionGastosAcumuladosComponent,
     ComparativoGastosMensualComponent,
-    BalanceGeneralComparativoComponent
+    BalanceGeneralComparativoComponent,
+    ReporteDiferenciasCXPvsContabilidadComponent
   ],
   imports: [
     BrowserModule,
