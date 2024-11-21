@@ -200,6 +200,8 @@ export class Validacion {
 
   public Combo(c: QueryList<IgxComboComponent>) {
 
+    cmb = [];
+    
     c?.filter(f=> {
 
       let temp = cmb.find( w=> w.id == f.id);
