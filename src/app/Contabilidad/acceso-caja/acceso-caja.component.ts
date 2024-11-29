@@ -18,9 +18,10 @@ import { postAccesoCajaChica } from './CRUD/POST/post-Caja-Chica';
 import { iAccesoCaja } from 'src/app/Interface/Contabilidad/i-AccesoCajaChica';
 
 @Component({
-  selector: 'app-acceso-caja',   
-  templateUrl: './acceso-caja.component.html',
-  styleUrl: './acceso-caja.component.scss'
+    selector: 'app-acceso-caja',
+    templateUrl: './acceso-caja.component.html',
+    styleUrl: './acceso-caja.component.scss',
+    standalone: false
 })
 export class AccesoCajaComponent {
 

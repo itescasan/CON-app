@@ -20,11 +20,10 @@ export interface iMoneda {
 
 
 @Component({
-  selector: 'app-modulo-vs-contabilidad',
-  standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, MatTableModule, CommonModule, MatPaginatorModule, IgxComboModule, MatInputModule, IgxDatePickerModule, IgxIconModule ],
-  templateUrl: './modulo-vs-contabilidad.component.html',
-  styleUrl: './modulo-vs-contabilidad.component.scss'
+    selector: 'app-modulo-vs-contabilidad',
+    imports: [FormsModule, ReactiveFormsModule, MatTableModule, CommonModule, MatPaginatorModule, IgxComboModule, MatInputModule, IgxDatePickerModule, IgxIconModule],
+    templateUrl: './modulo-vs-contabilidad.component.html',
+    styleUrl: './modulo-vs-contabilidad.component.scss'
 })
 export class ModuloVSContabilidadComponent {
 

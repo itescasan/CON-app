@@ -22,9 +22,10 @@ import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 import { IReembolsos } from 'src/app/Interface/Contabilidad/i-Reembolsos';
 import { IReembolsosD } from 'src/app/Interface/Contabilidad/i-ReembolsoD';
 @Component({
-  selector: 'app-transferencia-cuenta',
-  templateUrl: './transferencia-cuenta.component.html',
-  styleUrls: ['./transferencia-cuenta.component.scss']
+    selector: 'app-transferencia-cuenta',
+    templateUrl: './transferencia-cuenta.component.html',
+    styleUrls: ['./transferencia-cuenta.component.scss'],
+    standalone: false
 })
 export class TransferenciaCuentaComponent {
   public overlaySettings: OverlaySettings = {};

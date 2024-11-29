@@ -32,9 +32,10 @@ import { uniqueDates } from 'igniteui-angular/lib/core/utils';
 
 
 @Component({
-  selector: 'app-nuevo-cheque',
-  templateUrl: './nuevo-cheque.component.html',
-  styleUrls: ['./nuevo-cheque.component.scss']
+    selector: 'app-nuevo-cheque',
+    templateUrl: './nuevo-cheque.component.html',
+    styleUrls: ['./nuevo-cheque.component.scss'],
+    standalone: false
 })
 export class NuevoChequeComponent {
 

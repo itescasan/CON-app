@@ -25,9 +25,10 @@ import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 
 
 @Component({
-  selector: 'app-ejercicio-fiscal',
-  templateUrl: './ejercicio-fiscal.component.html',
-  styleUrls: ['./ejercicio-fiscal.component.scss']
+    selector: 'app-ejercicio-fiscal',
+    templateUrl: './ejercicio-fiscal.component.html',
+    styleUrls: ['./ejercicio-fiscal.component.scss'],
+    standalone: false
 })
 export class EjercicioFiscalComponent {
   

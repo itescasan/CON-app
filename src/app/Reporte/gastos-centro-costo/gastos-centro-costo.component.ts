@@ -13,9 +13,10 @@ import { iAccesoCaja } from 'src/app/Interface/Contabilidad/i-AccesoCajaChica';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-gastos-centro-costo', 
-  templateUrl: './gastos-centro-costo.component.html',
-  styleUrl: './gastos-centro-costo.component.scss'
+    selector: 'app-gastos-centro-costo',
+    templateUrl: './gastos-centro-costo.component.html',
+    styleUrl: './gastos-centro-costo.component.scss',
+    standalone: false
 })
 export class GastosCentroCostoComponent {
   public val = new Validacion();

@@ -8,9 +8,10 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 
 @Component({
-  selector: 'app-reporte-diferencias-cxpvs-contabilidad',
-  templateUrl: './reporte-diferencias-cxpvs-contabilidad.component.html',
-  styleUrl: './reporte-diferencias-cxpvs-contabilidad.component.scss'
+    selector: 'app-reporte-diferencias-cxpvs-contabilidad',
+    templateUrl: './reporte-diferencias-cxpvs-contabilidad.component.html',
+    styleUrl: './reporte-diferencias-cxpvs-contabilidad.component.scss',
+    standalone: false
 })
 export class ReporteDiferenciasCXPvsContabilidadComponent {
 

@@ -12,9 +12,10 @@ import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 import { iAccesoCaja } from 'src/app/Interface/Contabilidad/i-AccesoCajaChica';
 import { FormControl, FormGroup } from '@angular/forms';
 @Component({
-  selector: 'app-ventas-impuestos',  
-  templateUrl: './ventas-impuestos.component.html',
-  styleUrl: './ventas-impuestos.component.scss'
+    selector: 'app-ventas-impuestos',
+    templateUrl: './ventas-impuestos.component.html',
+    styleUrl: './ventas-impuestos.component.scss',
+    standalone: false
 })
 export class VentasImpuestosComponent {
   public val = new Validacion();

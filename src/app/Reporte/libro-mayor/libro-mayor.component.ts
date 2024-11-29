@@ -13,9 +13,10 @@ import { iAccesoCaja } from 'src/app/Interface/Contabilidad/i-AccesoCajaChica';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-libro-mayor',  
-  templateUrl: './libro-mayor.component.html',
-  styleUrl: './libro-mayor.component.scss'
+    selector: 'app-libro-mayor',
+    templateUrl: './libro-mayor.component.html',
+    styleUrl: './libro-mayor.component.scss',
+    standalone: false
 })
 export class LibroMayorComponent {
 

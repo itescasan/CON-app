@@ -12,9 +12,10 @@ import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 import { iAccesoCaja } from 'src/app/Interface/Contabilidad/i-AccesoCajaChica';
 import { FormControl, FormGroup } from '@angular/forms';
 @Component({
-  selector: 'app-ventas-alcaldia',  
-  templateUrl: './ventas-alcaldia.component.html',
-  styleUrl: './ventas-alcaldia.component.scss'
+    selector: 'app-ventas-alcaldia',
+    templateUrl: './ventas-alcaldia.component.html',
+    styleUrl: './ventas-alcaldia.component.scss',
+    standalone: false
 })
 export class VentasAlcaldiaComponent {
 

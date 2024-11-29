@@ -17,9 +17,10 @@ import { iAsientosContables } from 'src/app/Interface/Contabilidad/i-AsientosCon
 
 
 @Component({
-  selector: 'app-comprobantes',  
-  templateUrl: './comprobantes.component.html',
-  styleUrl: './comprobantes.component.scss'
+    selector: 'app-comprobantes',
+    templateUrl: './comprobantes.component.html',
+    styleUrl: './comprobantes.component.scss',
+    standalone: false
 })
 export class ComprobantesComponent {
 

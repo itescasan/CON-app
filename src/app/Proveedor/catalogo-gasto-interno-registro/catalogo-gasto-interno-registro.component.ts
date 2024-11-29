@@ -14,11 +14,10 @@ import { CatalogoGastoInternoComponent } from '../catalogo-gasto-interno/catalog
 import { Validacion } from 'src/app/SHARED/class/validacion';
 
 @Component({
-  selector: 'app-catalogo-gasto-interno-registro',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatPaginatorModule, MatTableModule],
-  templateUrl: './catalogo-gasto-interno-registro.component.html',
-  styleUrl: './catalogo-gasto-interno-registro.component.scss'
+    selector: 'app-catalogo-gasto-interno-registro',
+    imports: [ReactiveFormsModule, CommonModule, MatPaginatorModule, MatTableModule],
+    templateUrl: './catalogo-gasto-interno-registro.component.html',
+    styleUrl: './catalogo-gasto-interno-registro.component.scss'
 })
 export class CatalogoGastoInternoRegistroComponent {
 

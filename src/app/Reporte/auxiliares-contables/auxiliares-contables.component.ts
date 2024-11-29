@@ -11,9 +11,10 @@ import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 
 @Component({
-  selector: 'app-auxiliares-contables',  
-  templateUrl: './auxiliares-contables.component.html',
-  styleUrl: './auxiliares-contables.component.scss'
+    selector: 'app-auxiliares-contables',
+    templateUrl: './auxiliares-contables.component.html',
+    styleUrl: './auxiliares-contables.component.scss',
+    standalone: false
 })
 export class AuxiliaresContablesComponent {
 

@@ -8,9 +8,10 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 
 @Component({
-  selector: 'app-retenciones-alcaldias-foraneas', 
-  templateUrl: './retenciones-alcaldias-foraneas.component.html',
-  styleUrl: './retenciones-alcaldias-foraneas.component.scss'
+    selector: 'app-retenciones-alcaldias-foraneas',
+    templateUrl: './retenciones-alcaldias-foraneas.component.html',
+    styleUrl: './retenciones-alcaldias-foraneas.component.scss',
+    standalone: false
 })
 export class RetencionesAlcaldiasForaneasComponent {
 

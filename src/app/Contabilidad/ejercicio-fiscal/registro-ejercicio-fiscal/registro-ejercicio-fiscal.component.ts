@@ -13,9 +13,10 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 
 @Component({
-  selector: 'app-registro-ejercicio-fiscal',
-  templateUrl: './registro-ejercicio-fiscal.component.html',
-  styleUrls: ['./registro-ejercicio-fiscal.component.scss']
+    selector: 'app-registro-ejercicio-fiscal',
+    templateUrl: './registro-ejercicio-fiscal.component.html',
+    styleUrls: ['./registro-ejercicio-fiscal.component.scss'],
+    standalone: false
 })
 export class RegistroEjercicioFiscalComponent {
   

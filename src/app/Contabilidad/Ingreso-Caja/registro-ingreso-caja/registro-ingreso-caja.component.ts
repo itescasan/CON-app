@@ -15,9 +15,10 @@ import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-con
 import { postIngresoCaja } from '../CRUD/POST/postIngresoCaja';
 
 @Component({
-  selector: 'app-registro-ingreso-caja',  
-  templateUrl: './registro-ingreso-caja.component.html',
-  styleUrl: './registro-ingreso-caja.component.scss'
+    selector: 'app-registro-ingreso-caja',
+    templateUrl: './registro-ingreso-caja.component.html',
+    styleUrl: './registro-ingreso-caja.component.scss',
+    standalone: false
 })
 export class RegistroIngresoCajaComponent {
   public val = new Validacion();

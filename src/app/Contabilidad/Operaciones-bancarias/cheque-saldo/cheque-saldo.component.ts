@@ -30,9 +30,10 @@ import { iRetencion } from 'src/app/Interface/Contabilidad/i-Retencion';
 import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
-  selector: 'app-cheque-saldo',
-  templateUrl: './cheque-saldo.component.html',
-  styleUrl: './cheque-saldo.component.scss'
+    selector: 'app-cheque-saldo',
+    templateUrl: './cheque-saldo.component.html',
+    styleUrl: './cheque-saldo.component.scss',
+    standalone: false
 })
 
 

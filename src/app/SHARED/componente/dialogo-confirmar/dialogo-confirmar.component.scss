@@ -1,4 +1,4 @@
-@import "/src/assets/scss/media.scss";
+@use "/src/assets/scss/media.scss" as *;
 #dialog-confirmar{
     width: 300px;
     max-width: 400px;

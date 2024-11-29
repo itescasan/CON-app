@@ -18,9 +18,10 @@ import { getBodega } from 'src/app/Inventario/Bodega/CRUD/GET/get-Bodega';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 
 @Component({
-  selector: 'app-auxiliar-cuenta',
-  templateUrl: './auxiliar-cuenta.component.html',
-  styleUrls: ['./auxiliar-cuenta.component.scss']
+    selector: 'app-auxiliar-cuenta',
+    templateUrl: './auxiliar-cuenta.component.html',
+    styleUrls: ['./auxiliar-cuenta.component.scss'],
+    standalone: false
 })
 export class AuxiliarCuentaComponent {
   public val = new Validacion();

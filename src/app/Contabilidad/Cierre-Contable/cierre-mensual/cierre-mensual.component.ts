@@ -7,9 +7,10 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { postCierreMes } from '../CRUD/POST/post-cierre-mes';
 @Component({
-  selector: 'app-cierre-mensual', 
-  templateUrl: './cierre-mensual.component.html',
-  styleUrl: './cierre-mensual.component.scss'
+    selector: 'app-cierre-mensual',
+    templateUrl: './cierre-mensual.component.html',
+    styleUrl: './cierre-mensual.component.scss',
+    standalone: false
 })
 export class CierreMensualComponent {
   public val = new Validacion();

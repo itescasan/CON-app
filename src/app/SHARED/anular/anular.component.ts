@@ -8,9 +8,10 @@ import { postAnular } from '../POST/post-anular';
 import { Funciones } from '../class/cls_Funciones';
 
 @Component({
-  selector: 'app-anular',
-  templateUrl: './anular.component.html',
-  styleUrls: ['./anular.component.scss']
+    selector: 'app-anular',
+    templateUrl: './anular.component.html',
+    styleUrls: ['./anular.component.scss'],
+    standalone: false
 })
 export class AnularComponent {
 

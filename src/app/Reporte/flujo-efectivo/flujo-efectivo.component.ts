@@ -14,9 +14,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-flujo-efectivo',
-  templateUrl: './flujo-efectivo.component.html',
-  styleUrl: './flujo-efectivo.component.scss'
+    selector: 'app-flujo-efectivo',
+    templateUrl: './flujo-efectivo.component.html',
+    styleUrl: './flujo-efectivo.component.scss',
+    standalone: false
 })
 export class FlujoEfectivoComponent {
   public val = new Validacion();

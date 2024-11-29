@@ -17,11 +17,10 @@ import { getServidor } from 'src/app/SHARED/GET/get-servidor';
 import { postServidor } from 'src/app/SHARED/POST/post-servidor';
 
 @Component({
-  selector: 'app-acceso-web',
-  standalone: true,
-  imports: [IgxComboModule, IgxIconModule, ReactiveFormsModule, MatPaginatorModule, MatTableModule, CommonModule, FormsModule],
-  templateUrl: './acceso-web.component.html',
-  styleUrl: './acceso-web.component.scss'
+    selector: 'app-acceso-web',
+    imports: [IgxComboModule, IgxIconModule, ReactiveFormsModule, MatPaginatorModule, MatTableModule, CommonModule, FormsModule],
+    templateUrl: './acceso-web.component.html',
+    styleUrl: './acceso-web.component.scss'
 })
 export class AccesoWebComponent {
 

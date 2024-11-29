@@ -4,9 +4,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
-  selector: 'app-dialog-error',
-  templateUrl: './dialog-error.component.html',
-  styleUrls: ['./dialog-error.component.scss']
+    selector: 'app-dialog-error',
+    templateUrl: './dialog-error.component.html',
+    styleUrls: ['./dialog-error.component.scss'],
+    standalone: false
 })
 export class DialogErrorComponent {
 

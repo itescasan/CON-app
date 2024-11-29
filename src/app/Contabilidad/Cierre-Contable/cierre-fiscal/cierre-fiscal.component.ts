@@ -7,9 +7,10 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 
 @Component({
-  selector: 'app-cierre-fiscal',  
-  templateUrl: './cierre-fiscal.component.html',
-  styleUrl: './cierre-fiscal.component.scss'
+    selector: 'app-cierre-fiscal',
+    templateUrl: './cierre-fiscal.component.html',
+    styleUrl: './cierre-fiscal.component.scss',
+    standalone: false
 })
 export class CierreFiscalComponent {
   public val = new Validacion();

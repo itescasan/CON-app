@@ -13,9 +13,10 @@ import { iAccesoCaja } from 'src/app/Interface/Contabilidad/i-AccesoCajaChica';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-libro-diario',  
-  templateUrl: './libro-diario.component.html',
-  styleUrl: './libro-diario.component.scss'
+    selector: 'app-libro-diario',
+    templateUrl: './libro-diario.component.html',
+    styleUrl: './libro-diario.component.scss',
+    standalone: false
 })
 export class LibroDiarioComponent {
 

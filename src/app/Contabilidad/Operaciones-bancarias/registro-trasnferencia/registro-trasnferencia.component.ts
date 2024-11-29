@@ -20,9 +20,10 @@ import { TransferenciaSaldoComponent } from '../transferencia-saldo/transferenci
 
 
 @Component({
-  selector: 'app-registro-trasnferencia',
-  templateUrl: './registro-trasnferencia.component.html',
-  styleUrls: ['./registro-trasnferencia.component.scss']
+    selector: 'app-registro-trasnferencia',
+    templateUrl: './registro-trasnferencia.component.html',
+    styleUrls: ['./registro-trasnferencia.component.scss'],
+    standalone: false
 })
 export class RegistroTrasnferenciaComponent {
 

@@ -13,9 +13,10 @@ import { iAccesoCaja } from 'src/app/Interface/Contabilidad/i-AccesoCajaChica';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-estado-resultado',
-  templateUrl: './estado-resultado.component.html',
-  styleUrl: './estado-resultado.component.scss'
+    selector: 'app-estado-resultado',
+    templateUrl: './estado-resultado.component.html',
+    styleUrl: './estado-resultado.component.scss',
+    standalone: false
 })
 export class EstadoResultadoComponent {
   public val = new Validacion();

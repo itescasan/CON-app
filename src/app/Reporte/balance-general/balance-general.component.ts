@@ -8,9 +8,10 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 
 @Component({
-  selector: 'app-balance-general',
-  templateUrl: './balance-general.component.html',
-  styleUrl: './balance-general.component.scss'
+    selector: 'app-balance-general',
+    templateUrl: './balance-general.component.html',
+    styleUrl: './balance-general.component.scss',
+    standalone: false
 })
 export class BalanceGeneralComponent {
   public val = new Validacion();

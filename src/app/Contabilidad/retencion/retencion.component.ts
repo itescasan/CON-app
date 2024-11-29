@@ -26,9 +26,10 @@ export interface iRet {
 
 
 @Component({
-  selector: 'app-retencion',
-  templateUrl: './retencion.component.html',
-  styleUrl: './retencion.component.scss'
+    selector: 'app-retencion',
+    templateUrl: './retencion.component.html',
+    styleUrl: './retencion.component.scss',
+    standalone: false
 })
 export class RetencionComponent {
 

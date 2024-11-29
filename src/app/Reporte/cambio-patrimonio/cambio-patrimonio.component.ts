@@ -8,9 +8,10 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 
 
 @Component({
-  selector: 'app-cambio-patrimonio',  
-  templateUrl: './cambio-patrimonio.component.html',
-  styleUrl: './cambio-patrimonio.component.scss'
+    selector: 'app-cambio-patrimonio',
+    templateUrl: './cambio-patrimonio.component.html',
+    styleUrl: './cambio-patrimonio.component.scss',
+    standalone: false
 })
 export class CambioPatrimonioComponent {
 

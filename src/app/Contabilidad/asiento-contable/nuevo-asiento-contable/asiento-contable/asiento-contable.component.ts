@@ -19,10 +19,10 @@ import { postAsientoContable } from '../../CRUD/POST/post-Asiento-contable';
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 
 @Component({
-  selector: 'app-asiento-contable',
-  templateUrl: './asiento-contable.component.html',
-  styleUrls: ['./asiento-contable.component.scss'],
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-asiento-contable',
+    templateUrl: './asiento-contable.component.html',
+    styleUrls: ['./asiento-contable.component.scss'],
+    standalone: false
 })
 export class AsientoContableComponent {
 

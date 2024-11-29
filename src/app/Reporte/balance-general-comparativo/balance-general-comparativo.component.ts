@@ -10,9 +10,10 @@ import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 
 import { FormControl, FormGroup } from '@angular/forms';
 @Component({
-  selector: 'app-balance-general-comparativo',  
-  templateUrl: './balance-general-comparativo.component.html',
-  styleUrl: './balance-general-comparativo.component.scss'
+    selector: 'app-balance-general-comparativo',
+    templateUrl: './balance-general-comparativo.component.html',
+    styleUrl: './balance-general-comparativo.component.scss',
+    standalone: false
 })
 export class BalanceGeneralComparativoComponent {
   public val = new Validacion();

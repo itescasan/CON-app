@@ -26,9 +26,10 @@ import { usaCa } from '@igniteui/material-icons-extended';
 import { iIngresoCajaPost } from 'src/app/Interface/Contabilidad/i-IngresoCaja-POST';
 
 @Component({
-  selector: 'app-nuevo-ingreso-caja', 
-  templateUrl: './nuevo-ingreso-caja.component.html',
-  styleUrl: './nuevo-ingreso-caja.component.scss'
+    selector: 'app-nuevo-ingreso-caja',
+    templateUrl: './nuevo-ingreso-caja.component.html',
+    styleUrl: './nuevo-ingreso-caja.component.scss',
+    standalone: false
 })
 export class NuevoIngresoCajaComponent {
 

@@ -7,9 +7,10 @@ import { DynamicFormDirective } from "src/app/SHARED/directive/dynamic-form.dire
 import { IgxComboComponent } from "igniteui-angular";
 
 @Component({
-  selector: "app-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"],
+    selector: "app-login",
+    templateUrl: "./login.component.html",
+    styleUrls: ["./login.component.scss"],
+    standalone: false
 })
 export class LoginComponent {
   public val = new Validacion();

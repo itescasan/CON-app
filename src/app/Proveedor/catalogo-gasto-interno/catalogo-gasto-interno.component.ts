@@ -15,11 +15,10 @@ import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
 import { getGastoInterno } from '../CRUD/GET/getGastosInterno';
 
 @Component({
-  selector: 'app-catalogo-gasto-interno',
-  standalone: true,
-  imports: [ReactiveFormsModule, IgxComboModule, IgxIconModule, MatIconModule, MatDialogModule],
-  templateUrl: './catalogo-gasto-interno.component.html',
-  styleUrl: './catalogo-gasto-interno.component.scss'
+    selector: 'app-catalogo-gasto-interno',
+    imports: [ReactiveFormsModule, IgxComboModule, IgxIconModule, MatIconModule, MatDialogModule],
+    templateUrl: './catalogo-gasto-interno.component.html',
+    styleUrl: './catalogo-gasto-interno.component.scss'
 })
 export class CatalogoGastoInternoComponent {
   public val = new Validacion();

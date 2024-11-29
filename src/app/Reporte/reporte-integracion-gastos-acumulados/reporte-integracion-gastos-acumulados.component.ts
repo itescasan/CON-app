@@ -11,9 +11,10 @@ import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 
 @Component({
-  selector: 'app-reporte-integracion-gastos-acumulados',
-  templateUrl: './reporte-integracion-gastos-acumulados.component.html',
-  styleUrl: './reporte-integracion-gastos-acumulados.component.scss'
+    selector: 'app-reporte-integracion-gastos-acumulados',
+    templateUrl: './reporte-integracion-gastos-acumulados.component.html',
+    styleUrl: './reporte-integracion-gastos-acumulados.component.scss',
+    standalone: false
 })
 export class ReporteIntegracionGastosAcumuladosComponent {
 

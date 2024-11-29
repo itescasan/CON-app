@@ -12,9 +12,10 @@ import * as printJS from 'print-js';
 
 
 @Component({
-  selector: 'app-balanza',
-  templateUrl: './balanza.component.html',
-  styleUrls: ['./balanza.component.scss']
+    selector: 'app-balanza',
+    templateUrl: './balanza.component.html',
+    styleUrls: ['./balanza.component.scss'],
+    standalone: false
 })
 export class BalanzaComponent {
 

@@ -4,10 +4,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Validacion } from '../../class/validacion';
 import { Funciones } from '../../class/cls_Funciones';
 @Component({
-  selector: 'app-dialog-input',
-  templateUrl: './dialog-input.component.html',
-  styleUrl: './dialog-input.component.scss',
-  
+    selector: 'app-dialog-input',
+    templateUrl: './dialog-input.component.html',
+    styleUrl: './dialog-input.component.scss',
+    standalone: false
 })
 export class DialogInputComponent {
   [x: string]: any;

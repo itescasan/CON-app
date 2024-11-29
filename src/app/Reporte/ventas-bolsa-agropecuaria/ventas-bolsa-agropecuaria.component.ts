@@ -8,9 +8,10 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 
 @Component({
-  selector: 'app-ventas-bolsa-agropecuaria',  
-  templateUrl: './ventas-bolsa-agropecuaria.component.html',
-  styleUrl: './ventas-bolsa-agropecuaria.component.scss'
+    selector: 'app-ventas-bolsa-agropecuaria',
+    templateUrl: './ventas-bolsa-agropecuaria.component.html',
+    styleUrl: './ventas-bolsa-agropecuaria.component.scss',
+    standalone: false
 })
 
 export class VentasBolsaAgropecuariaComponent {

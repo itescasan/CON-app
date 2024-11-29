@@ -12,9 +12,10 @@ import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-comparativo-gastos-mensual', 
-  templateUrl: './comparativo-gastos-mensual.component.html',
-  styleUrl: './comparativo-gastos-mensual.component.scss'
+    selector: 'app-comparativo-gastos-mensual',
+    templateUrl: './comparativo-gastos-mensual.component.html',
+    styleUrl: './comparativo-gastos-mensual.component.scss',
+    standalone: false
 })
 export class ComparativoGastosMensualComponent {
 

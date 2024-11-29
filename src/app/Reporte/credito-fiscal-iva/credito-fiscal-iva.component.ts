@@ -9,9 +9,10 @@ import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 
 @Component({
-  selector: 'app-credito-fiscal-iva',
-  templateUrl: './credito-fiscal-iva.component.html',
-  styleUrl: './credito-fiscal-iva.component.scss'
+    selector: 'app-credito-fiscal-iva',
+    templateUrl: './credito-fiscal-iva.component.html',
+    styleUrl: './credito-fiscal-iva.component.scss',
+    standalone: false
 })
 export class CreditoFiscalIvaComponent {
 

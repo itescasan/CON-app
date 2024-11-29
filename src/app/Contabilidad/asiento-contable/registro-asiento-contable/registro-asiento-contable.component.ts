@@ -17,9 +17,10 @@ import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-con
 import { postAsientoContable } from '../CRUD/POST/post-Asiento-contable';
 
 @Component({
-  selector: 'app-registro-asiento-contable',
-  templateUrl: './registro-asiento-contable.component.html',
-  styleUrls: ['./registro-asiento-contable.component.scss']
+    selector: 'app-registro-asiento-contable',
+    templateUrl: './registro-asiento-contable.component.html',
+    styleUrls: ['./registro-asiento-contable.component.scss'],
+    standalone: false
 })
 export class RegistroAsientoContableComponent {
   public val = new Validacion();

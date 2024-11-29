@@ -32,9 +32,10 @@ import { iRetencion } from 'src/app/Interface/Contabilidad/i-Retencion';
 
 
 @Component({
-  selector: 'app-transferencia-saldo',
-  templateUrl: './transferencia-saldo.component.html',
-  styleUrls: ['./transferencia-saldo.component.scss']
+    selector: 'app-transferencia-saldo',
+    templateUrl: './transferencia-saldo.component.html',
+    styleUrls: ['./transferencia-saldo.component.scss'],
+    standalone: false
 })
 export class TransferenciaSaldoComponent {
   public overlaySettings: OverlaySettings = {};

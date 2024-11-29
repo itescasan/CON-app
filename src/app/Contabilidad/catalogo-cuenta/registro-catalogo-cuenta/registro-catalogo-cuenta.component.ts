@@ -15,9 +15,10 @@ import { IgxComboComponent } from 'igniteui-angular';
 
 
 @Component({
-  selector: 'app-registro-catalogo-cuenta',
-  templateUrl: './registro-catalogo-cuenta.component.html',
-  styleUrls: ['./registro-catalogo-cuenta.component.scss'],
+    selector: 'app-registro-catalogo-cuenta',
+    templateUrl: './registro-catalogo-cuenta.component.html',
+    styleUrls: ['./registro-catalogo-cuenta.component.scss'],
+    standalone: false
 })
 export class RegistroCatalogoCuentaComponent {
 

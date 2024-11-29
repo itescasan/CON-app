@@ -3,9 +3,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-dialogo-confirmar',
-  templateUrl: './dialogo-confirmar.component.html',
-  styleUrls: ['./dialogo-confirmar.component.scss']
+    selector: 'app-dialogo-confirmar',
+    templateUrl: './dialogo-confirmar.component.html',
+    styleUrls: ['./dialogo-confirmar.component.scss'],
+    standalone: false
 })
 export class DialogoConfirmarComponent {
 

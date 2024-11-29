@@ -8,9 +8,10 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 
 @Component({
-  selector: 'app-balance-situacion-financiera',  
-  templateUrl: './balance-situacion-financiera.component.html',
-  styleUrl: './balance-situacion-financiera.component.scss'
+    selector: 'app-balance-situacion-financiera',
+    templateUrl: './balance-situacion-financiera.component.html',
+    styleUrl: './balance-situacion-financiera.component.scss',
+    standalone: false
 })
 export class BalanceSituacionFinancieraComponent {
 

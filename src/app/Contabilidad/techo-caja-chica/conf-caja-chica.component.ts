@@ -23,9 +23,10 @@ import { postConfCajaChica } from './CRUD/POST/post-ConfCajaChica';
 
 
 @Component({
-  selector: 'app-conf-caja-chica',  
-  templateUrl: './conf-caja-chica.component.html',
-  styleUrl: './conf-caja-chica.component.scss'
+    selector: 'app-conf-caja-chica',
+    templateUrl: './conf-caja-chica.component.html',
+    styleUrl: './conf-caja-chica.component.scss',
+    standalone: false
 })
 export class ConfCajaChicaComponent {
   public val = new Validacion();

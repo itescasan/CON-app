@@ -14,9 +14,10 @@ import { Funciones } from 'src/app/SHARED/class/cls_Funciones';
 import { IgxComboComponent } from 'igniteui-angular';
 
 @Component({
-  selector: 'app-catalogo-cuenta',
-  templateUrl: './catalogo-cuenta.component.html',
-  styleUrls: ['./catalogo-cuenta.component.scss']
+    selector: 'app-catalogo-cuenta',
+    templateUrl: './catalogo-cuenta.component.html',
+    styleUrls: ['./catalogo-cuenta.component.scss'],
+    standalone: false
 })
 export class CatalogoCuentaComponent {
 

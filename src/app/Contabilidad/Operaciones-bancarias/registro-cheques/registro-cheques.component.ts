@@ -30,9 +30,10 @@ import { NuevoChequeComponent } from '../nuevo-cheque/nuevo-cheque.component';
 import { ChequesSaldoComponent } from '../cheque-saldo/cheque-saldo.component';
 
 @Component({
-  selector: 'app-registro-cheques',
-  templateUrl: './registro-cheques.component.html',
-  styleUrls: ['./registro-cheques.component.scss']
+    selector: 'app-registro-cheques',
+    templateUrl: './registro-cheques.component.html',
+    styleUrls: ['./registro-cheques.component.scss'],
+    standalone: false
 })
 export class RegistroChequesComponent {
 
