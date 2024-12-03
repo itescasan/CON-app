@@ -201,7 +201,7 @@ export class Validacion {
   public Combo(c: QueryList<IgxComboComponent>) {
 
     cmb = [];
-    
+
     c?.filter(f=> {
 
       let temp = cmb.find( w=> w.id == f.id);
@@ -230,6 +230,7 @@ export class Validacion {
       f.itemsWidth = (window.innerWidth <= this.sm ? String(window.innerWidth) : this.sm) + "px";
       f.overlaySettings = this.overlaySettings;
       if(Permir_OutsideCLick_id.includes(f.id)) f.overlaySettings = this.overlaySettings2;
+
 
     });
 
@@ -268,6 +269,20 @@ export class Validacion {
     document.querySelectorAll('.igx-input-group').forEach((key : any) => {
       key.classList.remove('igx-input-group--invalid');
     });
+
+
+
+    this.lstReglas.forEach((f) => {
+
+      let elmento: any = document.getElementById(f.Id);
+      elmento?.parentElement?.classList.remove("contenedor-info-validacion");
+
+      let span = document.getElementById("info-validacion-" + f.Id);
+      span?.remove();
+
+    });
+
+    this.ValForm.reset();
 
 
     
@@ -310,7 +325,7 @@ export class Validacion {
     }
     
   }
-
+  
   public add(
     id: string,
     regla: string,
