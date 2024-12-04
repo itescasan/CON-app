@@ -119,7 +119,7 @@ export class EjercicioFiscalComponent {
    if (event.added.length == 1) {  
      if(event.newValue.length > 1) event.newValue.splice(0, 1);
      let _Item  = this.lstCuenta.find(f => f.CuentaContable == event.newValue[0]);
- 
+     this.cmbCuenta.close();
      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuenta.close();
     }
  }
@@ -130,6 +130,7 @@ export class EjercicioFiscalComponent {
      let _Item: iCuenta = cmb._focusedItem.value;
      this.cmbCuenta.setSelectedItem(_Item.CuentaContable);
      this.val.Get("cmbCuenta").setValue([_Item.CuentaContable]);
+     
  
    }
  }
@@ -140,8 +141,8 @@ export class EjercicioFiscalComponent {
     this.val.Get("cmbCuenta2").setValue("");
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
-      this.val.Get("cmbCuenta2").setValue(event.newValue);
-  
+      this.val.Get("cmbCuenta2").setValue(event.newValue);     
+      this.cmbCuenta2.close();
       if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuenta2.close();
     }
   }
@@ -164,7 +165,7 @@ export class EjercicioFiscalComponent {
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbCuenta3").setValue(event.newValue);
-  
+      this.cmbCuenta3.close();
       if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuenta3.close();
     }
   }
@@ -175,6 +176,8 @@ export class EjercicioFiscalComponent {
       let _Item: iCuenta = cmb._focusedItem.value;
       this.cmbCuenta3.setSelectedItem(_Item.CuentaContable);
       this.val.Get("cmbCuenta3").setValue([_Item.CuentaContable]);
+
+      
 
     }
   }
@@ -275,7 +278,7 @@ export class EjercicioFiscalComponent {
       console.log(this.val.Get("chkBloqueadaEF").value )      
       this.Fila.Estado = this.val.Get("chkBloqueadaEF").value  ?  'ABIERTO': 'CERRADO';   //this.val.Get("chkBloqueadoEQ").value = 'on' ? "ACTIVO" : "ANULADO";    
       this.Fila.FechaInicio = new Date(Number(this.val.Get("idFechaIni").value), 0, 1);
-      this.Fila.FechaFinal = new Date(this.val.Get("idFechaIni").value, 12, 31);
+      this.Fila.FechaFinal = new Date(Number(this.val.Get("idFechaIni").value), 11, 31);
       this.Fila.ClasePeriodos = "Mensuales";
       this.Fila.NumerosPeriodos = 12;     
       //let i_Cuenta: iCuenta = this.lstCuenta.find(f => f.Filtro ==this.val.Get("txtCuentaA").value)!;
