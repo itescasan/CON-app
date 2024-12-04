@@ -15,10 +15,12 @@ import { QueryList } from "@angular/core";
 import { IComboSelectionChangingEventArgs } from 'igniteui-angular';
 import { scaleInCenter, scaleOutCenter } from "igniteui-angular/animations";
 
+var KeyPress : string = "";
+
 
 function getRectArea(elmento: HTMLElement) {
 
-  let _element_next = lstFocus.find(f => f.Id == elmento.id)!;
+  let _element_next = (KeyPress == "Enter"?  lstFocus : lstTabFocus).find(f => f.Id == elmento.id)!;
   if (_element_next == undefined) return elmento;
 
   elmento = document?.getElementById(_element_next.IdNext)!;
@@ -34,7 +36,10 @@ function getRectArea(elmento: HTMLElement) {
 
 
 function onKeyEnter(event: any) {
-  if (event.key !== "Enter") return;
+
+  KeyPress = "";
+  if (event.key !== "Enter" && event.key != "Tab") return;
+  KeyPress = event.key;
 
 
   let id: string = event.target.id;
@@ -52,7 +57,7 @@ function onKeyEnter(event: any) {
 
   
 
-  let _element_next = lstFocus.find(f => f.Id == id);
+  let _element_next = (KeyPress == "Enter"?  lstFocus : lstTabFocus).find(f => f.Id == id);
 
   if (_element_next == undefined) return;
   if (_element_next.IdNext == "") return;
@@ -85,7 +90,7 @@ function onKeyEnter(event: any) {
 
     if (elment != undefined) elment.open();
 
-    let __next = lstFocus.find(f => f.Id == _element_next?.IdNext);
+    let __next = (KeyPress == "Enter"?  lstFocus : lstTabFocus).find(f => f.Id == _element_next?.IdNext);
 
 
 
@@ -164,6 +169,7 @@ interface iFormat {
 
 
 const lstFocus: iFocus[] = [];
+const lstTabFocus: iFocus[] = [];
 const lstFormat: iFormat[] = [];
 let cmb: IgxComboComponent[] = [];
 
@@ -371,6 +377,12 @@ export class Validacion {
 
   }
 
+  
+  public LimpiarEnterFocus()
+  {
+    lstFocus.splice(0, lstFocus.length);
+  }
+
   public addFocus(id: string, idNext: string, evento: any) {
     let i: number = lstFocus.findIndex(f => f.Id == id);
 
@@ -383,6 +395,31 @@ export class Validacion {
 
 
     document.querySelector('#' + id)?.addEventListener('keypress', onKeyEnter);
+    let elemento = document.getElementById(id);
+    if (elemento?.tagName == "IGX-COMBO") elemento.addEventListener("keyup", this.V_Forcer_Key_Enter_Combo);
+
+
+  }
+
+
+  public LimpiarTap()
+  {
+    lstTabFocus.splice(0, lstTabFocus.length);
+  }
+  
+  public addTab(id: string, idNext: string, evento: any) {
+    let i: number = lstTabFocus.findIndex(f => f.Id == id);
+
+    if (i != -1) {
+      lstTabFocus[i].IdNext == idNext;
+    }
+    else {
+      lstTabFocus.push({ Id: id, IdNext: idNext, Evento: evento });
+    }
+
+
+    document.querySelector('#' + id)?.addEventListener('keydown', onKeyEnter);
+
     let elemento = document.getElementById(id);
     if (elemento?.tagName == "IGX-COMBO") elemento.addEventListener("keyup", this.V_Forcer_Key_Enter_Combo);
 
@@ -412,7 +449,7 @@ export class Validacion {
 
   private V_Forcer_Key_Enter_Combo(event: any): void {
 
-    if (event.key == "Enter") {
+    if (["Enter", "Tab"].includes(event.key)) {
       let id = event.srcElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
 
       let elmento: HTMLElement = document?.getElementById(id)!;
@@ -422,7 +459,7 @@ export class Validacion {
       combo.close();
 
 
-      let _element_next = lstFocus.find(f => f.Id == id);
+      let _element_next = (KeyPress == "Enter"?  lstFocus : lstTabFocus).find(f => f.Id == id);
 
       if (_element_next == undefined) return;
       if (_element_next.IdNext == "") return;
@@ -446,6 +483,7 @@ export class Validacion {
 
 
   }
+
 
   onFocusIn(event: any) {
 
