@@ -47,7 +47,7 @@ export class EjercicioFiscalComponent {
   public esModal: boolean = false;
   public Fila : iEjercicioFiscal = {} as iEjercicioFiscal;
 
-   
+  
   // public Mascara: string = "";
   // public Prefix: string = "";
   
@@ -223,10 +223,14 @@ export class EjercicioFiscalComponent {
               });
             }
           } else {
+            let datos: iDatos[] = _json["d"];            
+            this.lstCuenta = datos[0].d.filter((f: any) => f.ClaseCuenta == "D");
 
-            this.iDatos = _json["d"];
-            this.lstCuenta = this.iDatos.find(f => f.Nombre == "CUENTAS")?.d;
 
+            // this.iDatos = _json["d"];
+            // this.lstCuenta = this.iDatos.find(f => f.Nombre == "CUENTAS")?.d.filter((f: any) => f.cuenta == "D");
+            // this.lstCuenta = this.iDatos[0].filter((f: any) => f.ClaseCuenta == "D");
+            
 
 
 
@@ -425,6 +429,7 @@ export class EjercicioFiscalComponent {
 
   ngOnInit() : void{
 
+    
     this.overlaySettings = {};
 
     if (window.innerWidth <= 992) {
@@ -442,4 +447,7 @@ export class EjercicioFiscalComponent {
       });
    
     }
+
+    
+   
 }

@@ -1,634 +1,559 @@
-<div class="contenedor-Cheque">
 
-    <div class="escasan-dialog" *ngIf="esModal">
-        <div class="btn-contenedor-custom">
-            <button class="close-button custom-cerrar" [mat-dialog-close]="true">
-                <mat-icon class="close-icon" color="warn">Cerrar</mat-icon>
-            </button>
-        </div>
-    </div>
+<div class="app-cheque-cuenta">
+    <div class="contenedor-padre">
+        <div class="contenedor-Cheque">
 
-    <form autocomplete="off" [formGroup]="val.ValForm">
-
-
-        <div class="card">
-            <div class="card-header card-escasan-header opcional">Ingreso Facturas Caja Chica</div>
-            <div class="card-body">
-                <div class="row ">
-
-                    
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
-                        <igx-combo #cmbBodega [data]="lstBodega" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbBodega"
-                            formControlName="cmbBodega" placeholder="Bodega"
-                            searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
-                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
-                            (keyup)="v_Enter_Bodega($event);">
-                            <label igxLabel>Bodega</label>
-                            <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
-                        </igx-combo>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
-
-                        <igx-combo #cmbRubro [data]="lstRubros" valueKey="CuentaContable" displayKey="NombreCuenta"
-                            id="cmbRubro" formControlName="cmbRubro" placeholder="Rubro"
-                            searchPlaceholder="Seleccione un Rubro..." [autoFocusSearch]="true"
-                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Rubro($event)"
-                            (keyup)="v_Enter_Rubro($event);">
-                            <label igxLabel>Rubro</label>
-                            <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
-                        </igx-combo>
-
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
-
-                        <igx-combo #cmbCentroCosto [data]="lstCentroCosto" valueKey="Codigo" displayKey="CentroCosto"
-                            id="cmbCentroCosto" formControlName="cmbCentroCosto" placeholder="Centro Costo"
-                            searchPlaceholder="Seleccione un centro costo..." [autoFocusSearch]="true"
-                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CentroCosto($event)"
-                            (keyup)="v_Enter_CentroCosto($event);">
-                            <label igxLabel>Centro Costo</label>
-                            <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
-                        </igx-combo>
-
-                    
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
-
-                        <div class="input-group">
-                            <span class="input-group-text secundario">#</span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="No" id="txtConsecutivo"                               
-                                    formControlName="txtConsecutivo">
-                                <label for="txtConsecutivo">No</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-2 mb-1">
-                        <div class="input-group">
-
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Referencia" id="txtReferencia"
-                                    formControlName="txtReferencia">
-                                <label for="txtReferencia">Referencia</label>
-                            </div>
-
-                        </div>
-                    </div>                    
-
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-1">
-                        <div class="input-group">
-
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Proveedor" id="txtProveedor"
-                                    formControlName="txtProveedor">
-                                <label for="txtProveedor">Proveedor</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
-                        <div class="input-group">
-                            <div class="form-group">
-                                <div class="form-time-picker">
-                                    <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
-                                        [inputFormat]="'dd/MM/yyyy'" >
-                                        <label igxLabel>Fecha</label>
-            
-                                        <igx-picker-toggle igxPrefix>
-                                            <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
-                                        </igx-picker-toggle>
-            
-                                        <igx-picker-clear igxSuffix>
-                                            <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
-                                        </igx-picker-clear>
-            
-                                    </igx-date-picker>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
-                        <div class="input-group">
-
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Concepto" id="txtConcepto"
-                                    formControlName="txtConcepto">
-                                <label for="txtConcepto">Concepto</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
-
-                        <div class="input-group">
-                            <span class="input-group-text">C$</span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Total Cordoba"
-                                    id="txtSubTotal" formControlName="txtSubTotal"
-                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                    (keyup)="V_Calcular()"                                   
-                                    (focusout)="v_FocusOut('txtSubTotal');" (change)="V_Calcular();">
-                                <label for="txtSubTotal">Sub Total</label> 
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
-                        <div class="input-group">
-                            <span class="input-group-text">C$</span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="IVA"
-                                    id="txtIVA" formControlName="txtIVA"
-                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                    (keyup)="V_Calcular()"                                   
-                                    (focusout)="v_FocusOut('txtIVA');" (change)="V_Calcular();">
-                                <label for="txtIVA">IVA</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
-                        <div class="input-group">
-                            <span class="input-group-text">C$</span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="Comición" id="txtTotal"
-                                    formControlName="txtTotal" (focusout)="v_FocusOut('txtComision');">
-                                <label for="txtTotal">Total</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-2 mt-2">
-                        <div>
-                            <button  type="button" class="btn btn-opcional btnImprimirIngCaja" id="btnImprimir-IngCaja" 
-                            (click)="v_ImprimirIngCaja();" ><i class="fa-solid fa-print fa-beat"></i>
-                            Imprimir</button>
-                        </div>                            
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
-
-                        <igx-combo #cmbEmpleado [data]="lstEmpleado" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbEmpleado"
-                            formControlName="cmbEmpleado" placeholder="Cuenta Empleado"
-                            searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
-                            [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Empleado($event)"
-                            (keyup)="v_Enter_Empleado($event);">
-                            <label igxLabel>Cuenta Empleado</label>
-                            <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
-                        </igx-combo>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-1 mt-2">
-                        <div>
-                            <button type="button" class="btn btn-primario" id="btnGuardar-IngCaja"
-                            (click)="v_Guardar();">
-                                <i class="fa-solid fa-file-circle-plus fa-beat"></i>
-                            Agregar</button>
-                        </div> 
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-1 mt-2">
-                        <div>
-                            <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento-saldo"
-                             (click)="v_Evento('Limpiar');" [disabled]="esModal" *ngIf="!Anulado"><i
-                            class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>               
-                        </div>
-                        
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-1 mt-2">
-                        <div>
-                            <button type="button" class="btn btn-secundario" id="btnRefrescar-Caja"
-                                (click)="v_CargarDatos();" *ngIf="!Anulado"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
-                                Refrescar</button>                
-                        </div>                        
-                    </div>
-
-                   
-
-
+            <div class="escasan-dialog" *ngIf="esModal">
+                <div class="btn-contenedor-custom">
+                    <button class="close-button custom-cerrar" [mat-dialog-close]="true">
+                        <mat-icon class="close-icon" color="warn">Cerrar</mat-icon>
+                    </button>
                 </div>
-<!-- 
-                <div class="row linea-bottom-secundario mt-2">
-                    
+            </div>
+        
+            <form autocomplete="off" [formGroup]="val.ValForm">
+        
+        
+                <div class="card">
+                    <div class="card-header card-escasan-header opcional">
+                        <div>
+                            Ingreso Facturas Caja Chica
+                        </div>                   
 
-                    
-
-                     <div class="col-6 col-sm-6 col-md-6 col-lg-2  mb-1">
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-money-bill-trend-up fa-lg"></i></span>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" placeholder="TC" id="TxtTC"
-                                    formControlName="TxtTC"
-                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                    (change)="V_CalcularSaldo();">
-                                <label for="TxtTC">TC</label>
-                            </div>
+                        <div class="Contenedor-offcanvas">
+                            <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasBottom-trans-cuenta" aria-controls="offcanvasBottom-trans-cuenta"
+                                id="btnMostrarPie-trans-cuenta"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
+                                Totales</button>
                         </div>
-                    </div> 
-
-                    
-
-                </div> -->
-
-                <div class="row mt-2">
-
-                    <div class="col-12 col-sm-12 col-md-8 col-lg-8">
-
-                        <div class="row">
-                            <div class="col-12 col-sm-12 col-md-9 col-lg-8">
-
-                                <div class="row">
-
-                                    <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-9 mb-1">
-                                        <igx-combo #cmbProveedor [data]="lstProveedor" valueKey="Codigo"
-                                            displayKey="DisplayKey" id="cmbProveedor" formControlName="cmbProveedor"
-                                            placeholder="Proveedor" searchPlaceholder="Seleccione una proveedor..."
-                                            [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
-                                            (selectionChanging)="v_Select_Proveedor($event)"
-                                            (keyup)="v_Enter_Proveedor($event);">
-                                            <label igxLabel>Proveedor</label>
-                                            <igx-prefix><i class="fa-solid fa-user-tie fa-lg"></i></igx-prefix>
-                                        </igx-combo>
-                                    </div> -->
-
-                                    <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-3 mb-1">
-                                        <button type="button" class="btn btn-opcional" id="btn-Documentos-Proveedor"
-                                            (click)="v_BuscarDocumentos();"><i
-                                                class="fa-solid fa-magnifying-glass fa-beat-fade fa-lg"></i>
-                                            Documentos</button>
-                                    </div> -->
-                                </div>
-
+                    </div>
+                    <div class="card-body">
+                        <div class="row ">
+        
+                            
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
+                                <igx-combo #cmbBodega [data]="lstBodega" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbBodega"
+                                    formControlName="cmbBodega" placeholder="Bodega"
+                                    searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Bodega($event)"
+                                    (keyup)="v_Enter_Bodega($event);">
+                                    <label igxLabel>Bodega</label>
+                                    <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                                </igx-combo>
                             </div>
-
-
-                            <!-- <div class="col-12 col-sm-12 col-md-3 col-lg-4 mb-1">
+        
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
+        
+                                <igx-combo #cmbRubro [data]="lstRubros" valueKey="CuentaContable" displayKey="NombreCuenta"
+                                    id="cmbRubro" formControlName="cmbRubro" placeholder="Rubro"
+                                    searchPlaceholder="Seleccione un Rubro..." [autoFocusSearch]="true"
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Rubro($event)"
+                                    (keyup)="v_Enter_Rubro($event);">
+                                    <label igxLabel>Rubro</label>
+                                    <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
+                                </igx-combo>
+        
+                            </div>
+        
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
+        
+                                <igx-combo #cmbCentroCosto [data]="lstCentroCosto" valueKey="Codigo" displayKey="CentroCosto"
+                                    id="cmbCentroCosto" formControlName="cmbCentroCosto" placeholder="Centro Costo"
+                                    searchPlaceholder="Seleccione un centro costo..." [autoFocusSearch]="true"
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_CentroCosto($event)"
+                                    (keyup)="v_Enter_CentroCosto($event);">
+                                    <label igxLabel>Centro Costo</label>
+                                    <igx-prefix><i class="fas fa-list fa-lg"></i></igx-prefix>
+                                </igx-combo>
+        
+                            
+                            </div>
+        
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
+        
                                 <div class="input-group">
+                                    <span class="input-group-text secundario">#</span>
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" placeholder="Beneficiario"
-                                            id="txtMoneda" formControlName="txtMoneda">
-                                        <label for="txtMoneda">Moneda</label>
+                                        <input type="text" class="form-control" placeholder="No" id="txtConsecutivo"                               
+                                            formControlName="txtConsecutivo">
+                                        <label for="txtConsecutivo">No</label>
                                     </div>
+        
                                 </div>
-                            </div> -->
-
-                            <!-- <div class="col-12  mb-1">
-                                <div class="concepto">
+                            </div>
+        
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-2 mb-1">
+                                <div class="input-group">
+        
                                     <div class="form-floating">
-                                        <textarea type="textarea" class="form-control" placeholder="Concepto"
-                                            id="txtConcepto" formControlName="txtConcepto"></textarea>
+                                        <input type="text" class="form-control" placeholder="Referencia" id="txtReferencia"
+                                            formControlName="txtReferencia">
+                                        <label for="txtReferencia">Referencia</label>
+                                    </div>
+        
+                                </div>
+                            </div>                    
+        
+                            <div class="col-12 col-sm-12 col-md-5 col-lg-5 mb-1">
+                                <div class="input-group">
+        
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Proveedor" id="txtProveedor"
+                                            formControlName="txtProveedor">
+                                        <label for="txtProveedor">Proveedor</label>
+                                    </div>
+        
+                                </div>
+                            </div>
+        
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-1">
+                                <div class="input-group">
+                                    <div class="form-group">
+                                        <div class="form-time-picker">
+                                            <igx-date-picker #datepiker formControlName="txtFecha" id="txtFecha"
+                                                [inputFormat]="'dd/MM/yyyy'" >
+                                                <label igxLabel>Fecha</label>
+                    
+                                                <igx-picker-toggle igxPrefix>
+                                                    <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                                </igx-picker-toggle>
+                    
+                                                <igx-picker-clear igxSuffix>
+                                                    <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                                </igx-picker-clear>
+                    
+                                            </igx-date-picker>
+                                        </div>
+                                    </div>
+        
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
+                                <div class="input-group">
+        
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Concepto" id="txtConcepto"
+                                            formControlName="txtConcepto">
                                         <label for="txtConcepto">Concepto</label>
                                     </div>
-                                </div>
-
-                            </div> -->
-
-                        </div>
-
-
-
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-
-                        <div class="row">                          
-
-                        </div>
-
-
-
-
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-
-
-    </form>
-</div>
-
-
-
-
-
-
-
-<div class="contenedor-Cheque mt-2">
-
-
-    <div class="row">
-        <div class="col-6 mb-1 orderby-mobile">
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                <div class="form-floating">
-                    <select class="form-select form-select-lg" aria-label="Columna" id="cmbColumna">
-                        <option *ngFor="let item of orderby" value="{{item.Columna}}">{{item.Columna}}</option>
-                    </select>
-                    <label for="cmbColumna">Ordenar</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 mb-1 orderby-mobile">
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
-                <div class="form-floating">
-                    <select class="form-select form-select-lg" aria-label="Direccion"
-                        id="cmbDireccion">
-                        <option value="ASC">ASC</option>
-                        <option value="DESC">DESC</option>
-                    </select>
-                    <label for="cmbDireccion">Dirección</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="row g-1 header">
-
-
-        <div class="col-8 col-lg-1 center"><span>Fecha <i
-                    *ngIf="orderby[0].Direccion != ''"
-                    [ngClass]="orderby[0].Direccion == 'ASC' ?   'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
-        </div>
-        <div class="col-8 col-lg-1 center"><span>Concepto <i
-                    *ngIf="orderby[1].Direccion != ''"
-                    [ngClass]="orderby[1].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
-        </div>
-
-        <div class="col-12 col-lg-1 center"><span>Referencia <i
-                    *ngIf="orderby[2].Direccion != ''"
-                    [ngClass]="orderby[2].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
-        </div>
-
-        <div class="col-12 col-lg-1 center"><span>Proveedor <i
-                    *ngIf="orderby[3].Direccion != ''"
-                    [ngClass]="orderby[3].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
-        </div>
-
-        <div class="col-6 col-lg-1  center"><span>Cuenta</span></div>
-
-        <div class="col-6 col-lg-1 center"><span>CentroCosto</span></div>
-
-        <div class="col-6 col-lg-1 center"><span>SubTotal</span></div>
-
-        <div class="col-6 col-lg-1 center"><span>IVA</span></div>
-
-        <div class="col-6 col-lg-2 center"><span>Total</span></div>
-
-        <div class="col-6 col-lg-2 center"><span>Empleado</span></div>
-
-    </div>
-
-
-    <div class="mat-elevation-z8 contenedor-tabla">
-        <table class="table table-hover  table-sm tabla-layout mat-elevation-z8" mat-table [dataSource]="lstDetalle">
-
-
-
-            <ng-container matColumnDef="col1">
-                <td mat-cell *matCellDef="let det" (contextmenu)="V_Popup($event, det)">
-                    <div class="row gx-0">
-
-                        <div class="col-6 col-lg-1">
-                            <div class="row">
-                                <div class="header-cell"><span>Fecha</span></div>
-                            </div>
-                            <div class="row">                           
-                                <!-- <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
-                                [ngModelOptions]="{standalone: true}" [ngModel]="det.FechaFactura |date:'dd MMM yyyy'"
-                                disabled> -->
-                                <span class="center" id="txtFecha{{det.IdDetalleIngresoCajaChica}}"> {{ det.FechaFactura |date:'dd MMM yyyy' }} </span>
-                            </div>
-
-
-
-                        </div>
-
-
-
-                        <div class="col-6 col-lg-1">
-                            <div class="row">
-                                <div class="header-cell"><span>Concepto</span></div>
-                            </div>
-                            <div class="row"> 
-                                <!-- <div class="row">                           
-                                    <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
-                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.Concepto"
-                                    disabled>
-                                </div> -->
-                                <span class="center" id="txtFecha{{det.IdDetalleIngresoCajaChica}}"> {{det.Concepto}} </span>
-
-                            </div>
-
-
-
-                        </div>
-
-
-
-                        <div class="col-12 col-lg-1">
-                            <div class="row">
-                                <div class="header-cell"><span>Referencia</span></div>
-                            </div>
-                            <div class="row">
-
-                                <div class="row">                           
-                                    <span class="center" id="txtFecha{{det.IdDetalleIngresoCajaChica}}"> {{ det.Referencia }}</span>
-                                </div>                         
-
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-lg-1">
-
-                            <div class="row">
-                                <div class="header-cell"><span>Proveedor</span></div>
-                            </div>
-                            <div class="row">
-
-                           
-                                <div class="row">                           
-                                    <span  class="center" id="txtProveedor2{{det.IdDetalleIngresoCajaChica}}"> {{ det.Proveedor }}</span>
-                                </div>
-                          
-
-
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="col-6 col-lg-1">
-                            <div class="row">
-                                <div class="header-cell"><span>Cuenta</span></div>
-                            </div>
-                            <div class="row">
-
-                             
-                                <div class="row">                           
-                                    <span class="center" id="txtCuenta{{det.IdDetalleIngresoCajaChica}}"> {{det.Cuenta}} </span>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-lg-1">
-                            <div class="row">
-                                <div class="header-cell"><span>CentroCosto</span></div>
-                            </div>
-                            <div class="row">
-
-                                <div class="row">
-                                    <span class="center" id="txtCentroCosto{{det.IdDetalleIngresoCajaChica}}"> {{det.CentroCosto}} </span>
-                                </div> 
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-6 col-lg-1">
-                            <div class="row">
-                                <div class="header-cell"><span>SubTotal</span></div>
-                            </div>
-                            <div class="row">
-
-                               
-                                <div class="row">                           
-                                    <span class="center" id="txtSubtotal2{{det.IdDetalleIngresoCajaChica}}"> {{det.SubTotal | number:'1.2-2' }} </span> 
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-lg-1">
-                            <div class="row">
-                                <div class="header-cell"><span>IVA</span></div>
-                            </div>
-                            <div class="row">
-
-                               
-                                <div class="row">                           
-                                    <span class="center" id="txtIva2{{det.IdDetalleIngresoCajaChica}}">{{det.Iva | number:'1.2-2' }} </span> 
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-lg-2">
-                            <div class="row">
-                                <div class="header-cell" ><span>Total</span></div>
-                            </div>
-                            <div class="row">
-
-                               
-                                <div class="row">                           
-                                    <!-- <input type="text" class="form-control center" id="txtTotal{{det.Index}}"
-                                    [ngModelOptions]="{standalone: true}" [ngModel]="det.Total"
-                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
-                                    disabled> -->
-                                    <span class="center" id="txtFecha{{det.IdDetalleIngresoCajaChica}}"> {{det.Total | number:'1.2-2' }}</span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-lg-2">
-                            <div class="row">
-                                <div class="header-cell center"><span>Empleado</span></div>
-                            </div>
-                            <div class="row">
-
-                               
-                                <div class="row">                           
-                                    <span type="text" class="center" id="txtCuentaEmpleado{{det.IdDetalleIngresoCajaChica}}"> {{det.CuentaEmpleado}} </span>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </td>
-            </ng-container>
-
-
-
-
-
-
-
-
-
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
-
-
-        </table>
-
-        <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
-                [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
-            </div>
-            <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
-                <ng-template matMenuContent let-item="item">                    
-                    <button mat-menu-item (click)="V_Eliminar(item)"><i
-                            class="fas fa-eraser fa-lg"></i>Eliminar</button>
-                </ng-template>
-            </mat-menu>
-
-        <!-- <div style="visibility: hidden; position: fixed" 
-             [matMenuTriggerFor]="contextMenu">
-        </div>
-        <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
-            <ng-template matMenuContent let-item="item">
-                <button mat-menu-item  id="btn-trans-retencion"><i
-                        class="fa-solid fa-sack-dollar primario"></i> Retención</button>
-            </ng-template>
-        </mat-menu> -->
-    </div>
-
-</div>
-
-
-
-
-<div class="contenedor-pie">
-    <div class="pie-Cheque">
-
-        <div class="totales">
-
-            <span class="diferencia"><span class="etiqueta">Monto Caja:</span><span class="valores dif">{{mont_Caja | number :
-                    "1.2-2"}}</span></span>
-
-            <span class="retencion"><span class="etiqueta">Gasto C$:</span><span class="valores">{{gas_Caja | number :
-                    "1.2-2"}}</span></span>
-
-            <span class="disponible"><span class="etiqueta">Saldo Caja:</span><span class="valores dif">{{sal_Disponible |
-                    number :
-                    "1.2-2"}}</span></span>
-           
-
-
-
-        </div>
-
         
+                                </div>
+                            </div>
+        
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
+        
+                                <div class="input-group">
+                                    <span class="input-group-text">C$</span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Total Cordoba"
+                                            id="txtSubTotal" formControlName="txtSubTotal"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                            (keyup)="V_Calcular()"                                   
+                                            (focusout)="v_FocusOut('txtSubTotal');" (change)="V_Calcular();">
+                                        <label for="txtSubTotal">Sub Total</label> 
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text">C$</span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="IVA"
+                                            id="txtIVA" formControlName="txtIVA"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                            (keyup)="V_Calcular()"                                   
+                                            (focusout)="v_FocusOut('txtIVA');" (change)="V_Calcular();">
+                                        <label for="txtIVA">IVA</label>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="col-6 col-sm-6 col-md-6 col-lg-2 mb-1">
+                                <div class="input-group">
+                                    <span class="input-group-text">C$</span>
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" placeholder="Comición" id="txtTotal"
+                                            formControlName="txtTotal" (focusout)="v_FocusOut('txtComision');">
+                                        <label for="txtTotal">Total</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-2 mt-2">
+                                <div>
+                                    <button  type="button" class="btn btn-opcional btnImprimirIngCaja" id="btnImprimir-IngCaja" 
+                                    (click)="v_ImprimirIngCaja();" ><i class="fa-solid fa-print fa-beat"></i>
+                                    Imprimir</button>
+                                </div>                            
+                            </div>
+        
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-4 mb-1">
+        
+                                <igx-combo #cmbEmpleado [data]="lstEmpleado" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbEmpleado"
+                                    formControlName="cmbEmpleado" placeholder="Cuenta Empleado"
+                                    searchPlaceholder="Seleccione una bodega..." [autoFocusSearch]="true"
+                                    [overlaySettings]="overlaySettings" (selectionChanging)="v_Select_Empleado($event)"
+                                    (keyup)="v_Enter_Empleado($event);">
+                                    <label igxLabel>Cuenta Empleado</label>
+                                    <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
+                                </igx-combo>
+                            </div>
+        
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-8 mt-2 button-container">
+                                <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-1 mt-2"> -->
+                                    <div>
+                                        <button type="button" class="btn btn-primario" id="btnGuardar-IngCaja"
+                                        (click)="v_Guardar();">
+                                            <i class="fa-solid fa-file-circle-plus fa-beat"></i>
+                                        Agregar</button>
+                                    <!-- </div>  -->
+                                </div>
+                                <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-1 mt-2"> -->
+                                    <div>
+                                        <button type="button" class="btn btn-opcional" id="btnCanclar-Asiento-saldo"
+                                         (click)="v_Evento('Limpiar');" [disabled]="esModal" *ngIf="!Anulado"><i
+                                        class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>               
+                                    </div>
+                                    
+                                <!-- </div> -->
+                                <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-1 mt-2"> -->
+                                    <div>
+                                        <button type="button" class="btn btn-secundario" id="btnRefrescar-Caja"
+                                            (click)="v_CargarDatos();" *ngIf="!Anulado"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
+                                            Refrescar</button>                
+                                    </div>                        
+                                <!-- </div> -->
+                            </div>              
+        
+                           
+        
+        
+                        </div>
+        
+                    </div>
+                </div>
+        
+        
+            </form>
+        </div> 
+        
+        
+        
+        <div class="contenedor-Cheque mt-2">
+        
+        
+            <div class="row">
+                <div class="col-6 mb-1 orderby-mobile">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                        <div class="form-floating">
+                            <select class="form-select form-select-lg" aria-label="Columna" id="cmbColumna">
+                                <option *ngFor="let item of orderby" value="{{item.Columna}}">{{item.Columna}}</option>
+                            </select>
+                            <label for="cmbColumna">Ordenar</label>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="col-6 mb-1 orderby-mobile">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                        <div class="form-floating">
+                            <select class="form-select form-select-lg" aria-label="Direccion"
+                                id="cmbDireccion">
+                                <option value="ASC">ASC</option>
+                                <option value="DESC">DESC</option>
+                            </select>
+                            <label for="cmbDireccion">Dirección</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        
+        
+            <div class="row g-1 header">
+        
+        
+                <div class="col-8 col-lg-1 center"><span>Fecha <i
+                            *ngIf="orderby[0].Direccion != ''"
+                            [ngClass]="orderby[0].Direccion == 'ASC' ?   'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
+                </div>
+                <div class="col-8 col-lg-1 center"><span>Concepto <i
+                            *ngIf="orderby[1].Direccion != ''"
+                            [ngClass]="orderby[1].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
+                </div>
+        
+                <div class="col-12 col-lg-1 center"><span>Referencia <i
+                            *ngIf="orderby[2].Direccion != ''"
+                            [ngClass]="orderby[2].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
+                </div>
+        
+                <div class="col-12 col-lg-1 center"><span>Proveedor <i
+                            *ngIf="orderby[3].Direccion != ''"
+                            [ngClass]="orderby[3].Direccion == 'ASC' ? 'fa-solid fa-arrow-up fa-2xs' : 'fa-solid fa-arrow-down fa-2xs'"></i></span>
+                </div>
+        
+                <div class="col-6 col-lg-1  center"><span>Cuenta</span></div>
+        
+                <div class="col-6 col-lg-1 center"><span>CentroCosto</span></div>
+        
+                <div class="col-6 col-lg-1 center"><span>SubTotal</span></div>
+        
+                <div class="col-6 col-lg-1 center"><span>IVA</span></div>
+        
+                <div class="col-6 col-lg-2 center"><span>Total</span></div>
+        
+                <div class="col-6 col-lg-2 center"><span>Empleado</span></div>
+        
+            </div>
+        
+        
+            <div class="mat-elevation-z8 contenedor-tabla">
+                <table class="table table-hover  table-sm tabla-layout mat-elevation-z8" mat-table [dataSource]="lstDetalle">
+        
+        
+        
+                    <ng-container matColumnDef="col1">
+                        <td mat-cell *matCellDef="let det" (contextmenu)="V_Popup($event, det)">
+                            <div class="row gx-0">
+        
+                                <div class="col-6 col-lg-1">
+                                    <div class="row">
+                                        <div class="header-cell"><span>Fecha</span></div>
+                                    </div>
+                                    <div class="row">                           
+                                        <!-- <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                        [ngModelOptions]="{standalone: true}" [ngModel]="det.FechaFactura |date:'dd MMM yyyy'"
+                                        disabled> -->
+                                        <span class="center" id="txtFecha{{det.IdDetalleIngresoCajaChica}}"> {{ det.FechaFactura |date:'dd MMM yyyy' }} </span>
+                                    </div>
+        
+        
+        
+                                </div>
+        
+        
+        
+                                <div class="col-6 col-lg-1">
+                                    <div class="row">
+                                        <div class="header-cell"><span>Concepto</span></div>
+                                    </div>
+                                    <div class="row"> 
+                                        <!-- <div class="row">                           
+                                            <input type="text" class="form-control center" id="txtFecha{{det.Index}}"
+                                            [ngModelOptions]="{standalone: true}" [ngModel]="det.Concepto"
+                                            disabled>
+                                        </div> -->
+                                        <span class="center" id="txtFecha{{det.IdDetalleIngresoCajaChica}}"> {{det.Concepto}} </span>
+        
+                                    </div>
+        
+        
+        
+                                </div>
+        
+        
+        
+                                <div class="col-12 col-lg-1">
+                                    <div class="row">
+                                        <div class="header-cell"><span>Referencia</span></div>
+                                    </div>
+                                    <div class="row">
+        
+                                        <div class="row">                           
+                                            <span class="center" id="txtFecha{{det.IdDetalleIngresoCajaChica}}"> {{ det.Referencia }}</span>
+                                        </div>                         
+        
+        
+                                    </div>
+        
+                                </div>
+        
+                                <div class="col-6 col-lg-1">
+        
+                                    <div class="row">
+                                        <div class="header-cell"><span>Proveedor</span></div>
+                                    </div>
+                                    <div class="row">
+        
+                                   
+                                        <div class="row">                           
+                                            <span  class="center" id="txtProveedor2{{det.IdDetalleIngresoCajaChica}}"> {{ det.Proveedor }}</span>
+                                        </div>
+                                  
+        
+        
+                                    </div>
+        
+        
+                                </div>
+        
+        
+                                <div class="col-6 col-lg-1">
+                                    <div class="row">
+                                        <div class="header-cell"><span>Cuenta</span></div>
+                                    </div>
+                                    <div class="row">
+        
+                                     
+                                        <div class="row">                           
+                                            <span class="center" id="txtCuenta{{det.IdDetalleIngresoCajaChica}}"> {{det.Cuenta}} </span>
+                                        </div>
+        
+                                    </div>
+        
+                                </div>
+        
+                                <div class="col-6 col-lg-1">
+                                    <div class="row">
+                                        <div class="header-cell"><span>CentroCosto</span></div>
+                                    </div>
+                                    <div class="row">
+        
+                                        <div class="row">
+                                            <span class="center" id="txtCentroCosto{{det.IdDetalleIngresoCajaChica}}"> {{det.CentroCosto}} </span>
+                                        </div> 
+                                    </div>
+        
+                                </div>
+        
+        
+                                <div class="col-6 col-lg-1">
+                                    <div class="row">
+                                        <div class="header-cell"><span>SubTotal</span></div>
+                                    </div>
+                                    <div class="row">
+        
+                                       
+                                        <div class="row">                           
+                                            <span class="center" id="txtSubtotal2{{det.IdDetalleIngresoCajaChica}}"> {{det.SubTotal | number:'1.2-2' }} </span> 
+                                        </div>
+                                    </div>
+        
+                                </div>
+        
+                                <div class="col-6 col-lg-1">
+                                    <div class="row">
+                                        <div class="header-cell"><span>IVA</span></div>
+                                    </div>
+                                    <div class="row">
+        
+                                       
+                                        <div class="row">                           
+                                            <span class="center" id="txtIva2{{det.IdDetalleIngresoCajaChica}}">{{det.Iva | number:'1.2-2' }} </span> 
+                                        </div>
+                                    </div>
+        
+                                </div>
+        
+                                <div class="col-6 col-lg-2">
+                                    <div class="row">
+                                        <div class="header-cell" ><span>Total</span></div>
+                                    </div>
+                                    <div class="row">
+        
+                                       
+                                        <div class="row">                           
+                                            <!-- <input type="text" class="form-control center" id="txtTotal{{det.Index}}"
+                                            [ngModelOptions]="{standalone: true}" [ngModel]="det.Total"
+                                            (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                            disabled> -->
+                                            <span class="center" id="txtFecha{{det.IdDetalleIngresoCajaChica}}"> {{det.Total | number:'1.2-2' }}</span>
+                                        </div>
+                                    </div>
+        
+                                </div>
+        
+                                <div class="col-6 col-lg-2">
+                                    <div class="row">
+                                        <div class="header-cell center"><span>Empleado</span></div>
+                                    </div>
+                                    <div class="row">
+        
+                                       
+                                        <div class="row">                           
+                                            <span type="text" class="center" id="txtCuentaEmpleado{{det.IdDetalleIngresoCajaChica}}"> {{det.CuentaEmpleado}} </span>
+                                        </div>
+                                    </div>
+        
+                                </div>
+        
+                            </div>
+        
+        
+                        </td>
+                    </ng-container>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
+        
+        
+                </table>
+        
+                <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+                        [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+                    </div>
+                    <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
+                        <ng-template matMenuContent let-item="item">                    
+                            <button mat-menu-item (click)="V_Eliminar(item)"><i
+                                    class="fas fa-eraser fa-lg"></i>Eliminar</button>
+                        </ng-template>
+                    </mat-menu>        
+               
+            </div>
+        
+        </div>
+        
+        
+        
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" data-bs-scroll="true" data-bs-backdrop="false"
+            id="offcanvasBottom-trans-cuenta" aria-labelledby="offcanvasBottomLabel">
+            <div class="offcanvas-header">
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body small">
+
+                <div class="contenedor-pie">
+                    <div class="pie-cheques">
+                
+                        <div class="totales">
+                            <div class="row">                                        
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                    <span class="diferencia"><span class="etiqueta">Monto Caja:</span><span class="valores dif">{{mont_Caja | number :
+                                "1.2-2"}}</span></span>
+                                </div>
+    
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                    <span class="retencion"><span class="etiqueta">Gasto C$:</span><span class="valores">{{gas_Caja | number :
+                                "1.2-2"}}</span></span>
+                                </div>
+    
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                    <span class="disponible"><span class="etiqueta">Saldo Caja:</span><span class="valores dif">{{sal_Disponible |
+                                        number :
+                                        "1.2-2"}}</span></span>  
+                                </div>
+                            </div>
+                
+                
+                        </div>         
+                    </div>
+                </div>
+    
+            </div>
+        </div>
 
     </div>
 </div>
+
+
+
