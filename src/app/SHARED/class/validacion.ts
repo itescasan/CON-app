@@ -275,7 +275,7 @@ export class Validacion {
   {
  
     document.querySelectorAll('.igx-input-group').forEach((key : any) => {
-      key?.classList.remove('igx-input-group--invalid');
+      key?.classList?.remove('igx-input-group--invalid');
     });
 
 
@@ -283,7 +283,7 @@ export class Validacion {
     this.lstReglas.forEach((f) => {
 
       let elmento: any = document.getElementById(f.Id);
-      elmento?.parentElement?.classList.remove("contenedor-info-validacion");
+      elmento?.parentElement?.classList?.remove("contenedor-info-validacion");
 
       let span = document.getElementById("info-validacion-" + f.Id);
       span?.remove();
@@ -612,7 +612,7 @@ export class Validacion {
       let hmtlValue = "";
 
       let elmento: any = document.getElementById(f.Id);
-      elmento?.parentElement?.classList.remove("contenedor-info-validacion");
+      elmento?.parentElement?.classList?.remove("contenedor-info-validacion");
 
   
    
@@ -662,7 +662,7 @@ export class Validacion {
 
       //AGREGANDO ICONO DE VALIDACION
       esError = reglas.filter(w => w.Id == f.Id && w.ErrorMensaje != "").length > 0 ? true : false;
-      span = document.getElementById("-info-validacion-" + f.Id);
+      span = document.getElementById("info-validacion-" + f.Id);
       if (span == undefined && esError) {
         esError = false;
         span = document.createElement("span");
@@ -672,18 +672,19 @@ export class Validacion {
         ei.className = "fa-solid fa-info fa-fade fa-xl opcional";
         span.appendChild(ei);
         elmento?.parentNode?.insertBefore(span, elmento);
-        elmento?.parentElement?.classList.add("contenedor-info-validacion");
+        
+        elmento?.parentElement?.classList?.add("contenedor-info-validacion");
      
       
         elmento?.querySelectorAll('.igx-input-group')?.forEach((key : HTMLElement) => {
-          key?.classList.add('igx-input-group--invalid');
+          key?.classList?.add('igx-input-group--invalid');
         });
 
       }
       else
       {
         elmento?.querySelectorAll('.igx-input-group--invalid')?.forEach((key : HTMLElement) => {
-          key?.classList.remove('igx-input-group--invalid');
+          key?.classList?.remove('igx-input-group--invalid');
         });
     
       }
