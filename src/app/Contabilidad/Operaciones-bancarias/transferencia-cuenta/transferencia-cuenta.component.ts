@@ -544,7 +544,7 @@ export class TransferenciaCuentaComponent {
       let i_Cuenta: iCuenta = this.lstCuenta.find(f => f?.CuentaContable == event.newValue[0])!;
 
 
-      det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
+      det.Descripcion = i_Cuenta?.NombreCuenta.replaceAll(i_Cuenta?.CuentaContable, "");
       det.Naturaleza = i_Cuenta?.Naturaleza;
 
       document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
@@ -718,6 +718,11 @@ export class TransferenciaCuentaComponent {
     this.valTabla.add("txtCuenta" + i, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
     this.valTabla.add("txtReferencia" + i, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
     this.valTabla.add("txtCentroCosto" + i, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+
+    if (esBanco) {
+      this.valTabla.Get("txtCuenta" + i).disable();
+      this.valTabla.Get("txtReferencia" + i).disable();
+    }
 
 
 

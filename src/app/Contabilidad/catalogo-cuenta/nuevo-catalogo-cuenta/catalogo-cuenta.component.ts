@@ -160,7 +160,7 @@ export class CatalogoCuentaComponent {
         break;
 
       case 6:
-        this.Mascara = "00";
+        this.Mascara = "0000";
         this.GetCuentaNueva();
         break;
 

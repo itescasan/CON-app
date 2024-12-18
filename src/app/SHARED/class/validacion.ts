@@ -214,13 +214,15 @@ export class Validacion {
 
       if(temp == undefined) cmb.push(f);
 
-      f.opening.subscribe(s => {   
-        document.getElementById("body")!.style.overflow = "hidden";      
+      f.opening?.subscribe(s => {   
+        var bod : any = document.getElementById("body");   
+        if(bod != undefined) bod.style.overflow = "hidden";     
       });
     
 
-      f.closing.subscribe(s => {   
-        document.getElementById("body")!.style.overflow = "";      
+      f.closing?.subscribe(s => {   
+        var bod : any = document.getElementById("body"); 
+        if(bod != undefined) bod.style.overflow = "";      
       });
 
     });
@@ -273,7 +275,7 @@ export class Validacion {
   {
  
     document.querySelectorAll('.igx-input-group').forEach((key : any) => {
-      key.classList.remove('igx-input-group--invalid');
+      key?.classList.remove('igx-input-group--invalid');
     });
 
 
@@ -671,17 +673,17 @@ export class Validacion {
         span.appendChild(ei);
         elmento?.parentNode?.insertBefore(span, elmento);
         elmento?.parentElement?.classList.add("contenedor-info-validacion");
-
+     
       
         elmento?.querySelectorAll('.igx-input-group')?.forEach((key : HTMLElement) => {
-          key.classList.add('igx-input-group--invalid');
+          key?.classList.add('igx-input-group--invalid');
         });
 
       }
       else
       {
         elmento?.querySelectorAll('.igx-input-group--invalid')?.forEach((key : HTMLElement) => {
-          key.classList.remove('igx-input-group--invalid');
+          key?.classList.remove('igx-input-group--invalid');
         });
     
       }
