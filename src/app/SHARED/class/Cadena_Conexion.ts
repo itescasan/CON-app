@@ -10,11 +10,7 @@ export class Conexion {
  
      
 
-<<<<<<< HEAD
-      private IP : string = "165.98.96.131";
-=======
      /*private IP : string = "165.98.96.131";
->>>>>>> cbf6f73 (fix fecha)
       private PORT : String =  "160";
 
 
