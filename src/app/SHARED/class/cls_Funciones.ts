@@ -190,11 +190,20 @@ export class Funciones {
   }
 
   
+
   public LastDay(Fecha: Date): string {
-    let f = new Date(Fecha.getFullYear(), Fecha.getMonth() + 1);
+    let f = new Date(Fecha.getFullYear(), Fecha.getMonth(), 1);
+    f = new Date(this.DateAdd("Month", f, 1));
 
     return this.DateFormat(f, 'yyyy-MM-dd');
   }
+
+  public FirstDay(Fecha: Date): string {
+    let f = new Date(Fecha.getFullYear(), Fecha.getMonth(), 1);
+
+    return this.DateFormat(f, 'yyyy-MM-dd');
+  }
+
 
   public DateFormat(fecha: Date, formart: string): string {
     return this.datePipe.transform(fecha, formart)!;

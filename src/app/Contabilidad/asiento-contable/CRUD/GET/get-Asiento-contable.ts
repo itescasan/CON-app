@@ -24,7 +24,7 @@ export class getAsientoContable{
       return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Datos");
    }
 
-   public Get(Fecha1 : Date, Fecha2 : Date) : Observable<string>{
+   public Get(Fecha1 : string, Fecha2 : string) : Observable<string>{
     return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2);
  }
    

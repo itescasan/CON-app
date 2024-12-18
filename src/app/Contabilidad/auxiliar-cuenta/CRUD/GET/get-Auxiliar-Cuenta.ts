@@ -19,7 +19,7 @@ export class getAuxiliarCuenta {
 
     }
 
-    public Get(Fecha1: Date, Fecha2: Date, CodBodega: string, Cuenta: string): Observable<string> {
+    public Get(Fecha1: string, Fecha2: string, CodBodega: string, Cuenta: string): Observable<string> {
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&CodBodega=" + CodBodega + "&Cuenta=" + Cuenta);
     }
 

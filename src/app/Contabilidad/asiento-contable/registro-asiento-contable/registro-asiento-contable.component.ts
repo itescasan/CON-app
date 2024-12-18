@@ -65,9 +65,11 @@ export class RegistroAsientoContableComponent {
       }
     );
 
+    let Fecha1 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd");
+    let Fecha2 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha2").value, "yyyy-MM-dd");
 
 
-    this.GET.Get(this.val.Get("txtFecha1").value, this.val.Get("txtFecha2").value).subscribe(
+    this.GET.Get(Fecha1, Fecha2).subscribe(
       {
         next: (data) => {
 
