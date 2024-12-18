@@ -64,9 +64,9 @@ export class Funciones {
     /**************************************TRANSFERENCIA************************************* */ 
 
     {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavTransferencia", Caption: "Transferencias Bancarias" , MenuPadre: "", Clase : "fa-solid fa-building-columns fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewTransferenciaCuenta", Caption: "Nueva Transferencia (C)" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-transfer fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewTransferenciaSaldo", Caption: "Nueva Transferencia (S)" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-trend-up fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegTransferencia", Caption: "Registros Transferencia" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-table-cells", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewTransferenciaCuenta", Caption: "Cuenta" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-transfer fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewTransferenciaSaldo", Caption: "Documentos" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-money-bill-trend-up fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegTransferencia", Caption: "Registros" , MenuPadre: "IdNavTransferencia", Clase : "fa-solid fa-table-cells", Modulo: "CON", Usuario : ""},
 
     
      /**************************************CHEQUE************************************* */ 
