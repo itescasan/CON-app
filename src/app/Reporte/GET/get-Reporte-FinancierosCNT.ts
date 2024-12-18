@@ -89,7 +89,6 @@ export class getReporteFinanciero{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteIntegracionGastosAcumulados?FechaInicial=" + Fecha1 + "&Rubro=" + Rubro + "&CuentaContable=" + CuentaCont + "&CentroCosto=" + CentroCosto + "&Moneda=" + EsMonedaLocal);
     }
 
-
     public GetDiferenciasCXPvsCONT(Fecha1: String, EsMonedaLocal : Int16Array): Observable<string> {
   
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteDiferenciasCXPvsContabilidad?FechaInicial=" + Fecha1 + "&Moneda=" + EsMonedaLocal);
