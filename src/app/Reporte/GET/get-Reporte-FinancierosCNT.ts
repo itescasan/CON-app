@@ -94,4 +94,14 @@ export class getReporteFinanciero{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteDiferenciasCXPvsContabilidad?FechaInicial=" + Fecha1 + "&Moneda=" + EsMonedaLocal);
     }
 
+    public GetIntegracionGastosAcumuladosVentas(Fecha1: String, CentroCosto: String, EsMonedaLocal : Int16Array): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/ReporteIntegracionGastosAcumuladosVentas?FechaInicial=" + Fecha1 + "&CentroCosto=" + CentroCosto + "&Moneda=" + EsMonedaLocal);
+    }
+
+    public GetEstadoCambioPatromonio(Fecha1: String, Fecha2: String, EsMonedaLocal : Int16Array): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/EstadoCambioPatrimonio?FechaInicial=" + Fecha1 + "&FechaFinal=" + Fecha2 + "&Moneda=" + EsMonedaLocal);
+    }
+
 }
