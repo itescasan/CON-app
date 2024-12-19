@@ -78,6 +78,7 @@ import { ComparativoGastosMensualComponent } from './Reporte/comparativo-gastos-
 import { BalanceGeneralComparativoComponent } from './Reporte/balance-general-comparativo/balance-general-comparativo.component';
 
 import { ReporteDiferenciasCXPvsContabilidadComponent } from './Reporte/reporte-diferencias-cxpvs-contabilidad/reporte-diferencias-cxpvs-contabilidad.component';
+import { ReporteIntegracionGastosAcumuladosVentasComponent } from './Reporte/reporte-integracion-gastos-acumulados-ventas/reporte-integracion-gastos-acumulados-ventas.component';
 
 @NgModule({
   declarations: [
@@ -131,7 +132,8 @@ import { ReporteDiferenciasCXPvsContabilidadComponent } from './Reporte/reporte-
     ReporteIntegracionGastosAcumuladosComponent,
     ComparativoGastosMensualComponent,
     BalanceGeneralComparativoComponent,
-    ReporteDiferenciasCXPvsContabilidadComponent
+    ReporteDiferenciasCXPvsContabilidadComponent,
+    ReporteIntegracionGastosAcumuladosVentasComponent
   ],
   imports: [
     BrowserModule,
