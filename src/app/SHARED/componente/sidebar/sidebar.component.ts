@@ -56,6 +56,7 @@ import { ComparativoGastosMensualComponent } from 'src/app/Reporte/comparativo-g
 import { ReporteDiferenciasCXPvsContabilidadComponent } from 'src/app/Reporte/reporte-diferencias-cxpvs-contabilidad/reporte-diferencias-cxpvs-contabilidad.component';
 import { BalanceGeneralComparativoComponent } from 'src/app/Reporte/balance-general-comparativo/balance-general-comparativo.component';
 import { ReporteIntegracionGastosAcumuladosVentasComponent } from 'src/app/Reporte/reporte-integracion-gastos-acumulados-ventas/reporte-integracion-gastos-acumulados-ventas.component';
+import { ReporteEstadoCambioPatrominioComponent } from 'src/app/Reporte/reporte-estado-cambio-patrominio/reporte-estado-cambio-patrominio.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -394,6 +395,16 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let BalanceaReporteDiferenciasCXPvsContabilidad: ComponentRef<ReporteDiferenciasCXPvsContabilidadComponent> = this.DynamicFrom.viewContainerRef.createComponent(ReporteDiferenciasCXPvsContabilidadComponent);
+
+    }
+
+
+    if(id == "aReporteEstadoCambioPatrimonio"){
+      $("#btnMenu").trigger("click");
+      this.cFunciones.DIALOG.closeAll();
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let BalanceReporteEstadoCambioPatrimonio: ComponentRef<ReporteEstadoCambioPatrominioComponent> = this.DynamicFrom.viewContainerRef.createComponent(ReporteEstadoCambioPatrominioComponent);
 
     }
 

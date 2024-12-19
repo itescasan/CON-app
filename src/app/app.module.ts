@@ -79,6 +79,7 @@ import { BalanceGeneralComparativoComponent } from './Reporte/balance-general-co
 
 import { ReporteDiferenciasCXPvsContabilidadComponent } from './Reporte/reporte-diferencias-cxpvs-contabilidad/reporte-diferencias-cxpvs-contabilidad.component';
 import { ReporteIntegracionGastosAcumuladosVentasComponent } from './Reporte/reporte-integracion-gastos-acumulados-ventas/reporte-integracion-gastos-acumulados-ventas.component';
+import { ReporteEstadoCambioPatrominioComponent } from './Reporte/reporte-estado-cambio-patrominio/reporte-estado-cambio-patrominio.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,8 @@ import { ReporteIntegracionGastosAcumuladosVentasComponent } from './Reporte/rep
     ComparativoGastosMensualComponent,
     BalanceGeneralComparativoComponent,
     ReporteDiferenciasCXPvsContabilidadComponent,
-    ReporteIntegracionGastosAcumuladosVentasComponent
+    ReporteIntegracionGastosAcumuladosVentasComponent,
+    ReporteEstadoCambioPatrominioComponent
   ],
   imports: [
     BrowserModule,
