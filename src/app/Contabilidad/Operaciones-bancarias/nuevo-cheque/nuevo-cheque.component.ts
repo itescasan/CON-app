@@ -1210,17 +1210,32 @@ public v_Enter_Reembolso(event: any) {
     this.ValorC = 0.0;
     this.sumaDebito = 0.0;
 
+    // this.val.EsValido();
+    // this.valTabla.EsValido();
+
+
+    // if (this.val.Errores != "") {
+    //   this.cFunciones.DIALOG.open(DialogErrorComponent, {
+    //     data: this.val.Errores,
+    //   });
+
+    //   return;
+    // }
+
     if ( this.IdMoneda == this.cFunciones.MonedaLocal) {
+
+      // this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
+      // this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
 
       if (Number(this.Valor) == 0 ) {
         this.val.add("txtTotalCordoba", "1", "NUM>", "0", "Total Cordoba", "Escriba el Valor en Córdobas");
-        if(!this.val.ItemValido(["txtTotalCordoba"])) return;
+         if(!this.val.ItemValido(["txtTotalCordoba"])) return;
       }
       this.Valor = Number(this.val.Get("txtTotalCordoba").value)
     } else {
       if (Number(this.Valor) == 0) {
         this.val.add("txtTotalDolar", "1", "NUM>", "0", "Total Dolar", "Escriba el Valor en Dolares");
-        if(!this.val.ItemValido(["txtTotalDolar"])) return;
+         if(!this.val.ItemValido(["txtTotalDolar"])) return;
 
       }
       this.Valor = Number(this.val.Get("txtTotalDolar").value)
@@ -1253,44 +1268,44 @@ public v_Enter_Reembolso(event: any) {
      }
       if (this.val.Get("txtIrFuente").value > 0 ) {
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          this.V_Add("1105-01-01-05","Ret. " + this.val.Get("txtBeneficiario").value,"",this.Valor * (Number(this.val.Get("txtIrFuente").value)/100),"C");
+          this.V_Add("2102-01-01-0004","Ret. " + this.val.Get("txtBeneficiario").value,"",this.Valor * (Number(this.val.Get("txtIrFuente").value)/100),"C");
           this.suma += this.Valor * (Number(this.val.Get("txtIrFuente").value)/100);
         }else{
           this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC ),"2") * this.cFunciones.Redondeo((Number(this.val.Get("txtIrFuente").value ) / 100),"2");
-          this.V_Add("1105-01-01-05","Ret. " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
+          this.V_Add("2102-01-01-0004","Ret. " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
           this.suma += this.ValorC
         }
         
       }
       if (this.val.Get("txtServP").value > 0 ) {
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,"",this.Valor * (Number(this.val.Get("txtServP").value)/100),"C");
+          this.V_Add("2102-01-01-0004","Ret. " + this.val.Get("txtBeneficiario").value,"",this.Valor * (Number(this.val.Get("txtServP").value)/100),"C");
         this.suma += this.Valor * (Number(this.val.Get("txtServP").value)/100)
         } else {
           this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2") * this.cFunciones.Redondeo((Number(this.val.Get("txtServP").value)/100),"2")
-          this.V_Add("1142-03","Ret. " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
+          this.V_Add("2102-01-01-0004","Ret. " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
           this.suma += this.ValorC;
         }
         
       }
       if (this.val.Get("txtAlcaldias").value > 0 ) {
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          this.V_Add("2101-01-01-64","Ret. " + this.val.Get("txtBeneficiario").value,"",this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100),"C");
+          this.V_Add("2102-01-02-0002","Ret. " + this.val.Get("txtBeneficiario").value,"",this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100),"C");
           this.suma += this.Valor * (Number(this.val.Get("txtAlcaldias").value)/100)
         } else {
           this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2") * this.cFunciones.Redondeo((Number(this.val.Get("txtAlcaldias").value)/100),"2")
-          this.V_Add("2101-01-01-64","Ret. " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
+          this.V_Add("2102-01-02-0002","Ret. " + this.val.Get("txtBeneficiario").value,"",this.ValorC,"C");
           this.suma += this.ValorC
         }
        
       }
       if (this.val.Get("txtIva").value > 0 ) {
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          this.V_Add("2102-01-01-01",this.val.Get("txtBeneficiario").value,"",this.Valor * (Number(this.val.Get("txtIva").value)/100),"D");
+          this.V_Add("1105-01-01-0001",this.val.Get("txtBeneficiario").value,"",this.Valor * (Number(this.val.Get("txtIva").value)/100),"D");
           this.sumaDebito = this.Valor * (Number(this.val.Get("txtIva").value)/100)
         } else {
           this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  * this.cFunciones.Redondeo((Number(this.val.Get("txtIva").value)/100),"2")
-          this.V_Add("2102-01-01-01",this.val.Get("txtBeneficiario").value,"",this.ValorC,"D");
+          this.V_Add("1105-01-01-0001",this.val.Get("txtBeneficiario").value,"",this.ValorC,"D");
           this.sumaDebito = this.ValorC 
         }
         
@@ -1313,7 +1328,7 @@ public v_Enter_Reembolso(event: any) {
         this.ret2 = this.Valor / Number(this.val.Get("txtTcCompraD").value)
         this.ret3 = Math.abs((this.ret2 - this.ret1) * this.TC)
 
-        this.V_Add("2102-01-01-04",this.val.Get("txtBeneficiario").value,"",this.cFunciones.Redondeo(this.ret3 , "2"),"D");
+        this.V_Add("7101-04-01-0004",this.val.Get("txtBeneficiario").value,"",this.cFunciones.Redondeo(this.ret3 , "2"),"D");
         // this.sumaDebito = this.cFunciones.Redondeo(this.ret3,"2")
       }
 

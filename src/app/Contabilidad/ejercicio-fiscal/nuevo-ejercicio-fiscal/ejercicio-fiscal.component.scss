@@ -76,7 +76,7 @@
     }
  }
 
-
+ 
  .botones{
 
     
@@ -84,6 +84,11 @@
         margin-top: 5px;
 
     }
+
+    .btn-opcional{
+        margin-right: 20px;
+    }
+    
     .btn-secundario{
         @include Tamano_Menor(lg) {
             width: 100%;

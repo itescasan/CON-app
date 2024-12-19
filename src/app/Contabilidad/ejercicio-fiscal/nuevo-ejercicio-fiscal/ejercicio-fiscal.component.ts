@@ -97,8 +97,8 @@ export class EjercicioFiscalComponent {
         this.lstPeriodo.data.splice(0, this.lstPeriodo.data.length);
         this.lstPeriodo = new MatTableDataSource<iPeriodo> ;
         
-        // let chk: any = document.querySelector("#chkBloqueadaEF");
-        // if (chk != undefined) chk.bootstrapToggle("on");
+        let chk: any = document.querySelector("#chkBloqueadaEF");
+        if (chk != undefined) chk.bootstrapToggle("on");
    
       break; 
     }
@@ -189,7 +189,7 @@ export class EjercicioFiscalComponent {
     
    
     document.getElementById("btnRefrescar")?.setAttribute("disabled", "disabled");
-
+    
     
     let dialogRef : any = this.cFunciones.DIALOG.getDialogById("wait") ;
      
@@ -359,7 +359,7 @@ export class EjercicioFiscalComponent {
         //  if(!this.esModal) chk.bootstrapToggle("on");
         //  return
       
-        document.getElementById("chkBloqueadaEF")?.setAttribute("disabled", "disabled");
+        //document.getElementById("chkBloqueadaEF")?.setAttribute("disabled", "disabled");
     }
 
   public v_Editar(){

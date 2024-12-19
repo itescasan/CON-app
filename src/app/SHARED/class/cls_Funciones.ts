@@ -72,9 +72,9 @@ export class Funciones {
      /**************************************CHEQUE************************************* */ 
 
      {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavCheques", Caption: "Cheques" , MenuPadre: "", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewCheque", Caption: "Nuevo Cheque (C)" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewChequeSaldo", Caption: "Nuevo Cheque (S)" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON", Usuario : ""},
-     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegCheques", Caption: "Registros Cheques" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-table-list", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewCheque", Caption: "Cuenta" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aNewChequeSaldo", Caption: "Documento" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-money-check-dollar", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegCheques", Caption: "Registros" , MenuPadre: "IdNavCheques", Clase : "fa-solid fa-table-list", Modulo: "CON", Usuario : ""},
  
      
       /**************************************CIERRE CONTABLE************************************* */ 
@@ -112,11 +112,11 @@ export class Funciones {
      {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aBalanceGeneralComparativo", Caption: "Balance General Comparativo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
     /**************************************ACCESO CAJA CHICA ************************************* */ 
 
-    {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavAccesoCaja", Caption: "Acceso Caja Chica" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aAccesoCajaChica", Caption: "Acceso Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aTechoCajaChica", Caption: "Configuración Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aIngresoCaja", Caption: "Ingreso Facturas Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
-    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegistroCaja", Caption: "Registro Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavAccesoCaja", Caption: "Caja Chica" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aAccesoCajaChica", Caption: "Accesos" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aTechoCajaChica", Caption: "Configuración" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aIngresoCaja", Caption: "Ingreso Facturas" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
+    {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegistroCaja", Caption: "Registros" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
 
 
 
