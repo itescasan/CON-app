@@ -201,13 +201,11 @@ export class ChequesSaldoComponent {
         this.lstDetalle._updateChangeSubscription();
         this.lstRetencion.splice(0, this.lstRetencion.length);
       }
-
-
-
       this.IdMoneda = String(_Item?.IdMoneda);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
 
     }
+    this.cmbCuentaBancaria.close();
 
     this.V_Calcular();
   }
@@ -233,6 +231,7 @@ export class ChequesSaldoComponent {
       this.val.Get("cmbCentroCosto").setValue(event.newValue);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCentroCosto.close();
     }
+    this.cmbCentroCosto.close();
   }
 
   public v_Enter_CentroCosto(event: any) {
@@ -259,6 +258,7 @@ export class ChequesSaldoComponent {
       this.val.Get("cmbBodega").setValue(event.newValue);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
     }
+    this.cmbBodega.close();
   }
 
   public v_Enter_Bodega(event: any) {
@@ -295,6 +295,7 @@ export class ChequesSaldoComponent {
 
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbProveedor.close();
     }
+    this.cmbProveedor.close();
   }
 
   public v_Enter_Proveedor(event: any) { 

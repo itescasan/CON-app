@@ -1228,13 +1228,13 @@ public v_Enter_Reembolso(event: any) {
       // this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
 
       if (Number(this.Valor) == 0 ) {
-        this.val.add("txtTotalCordoba", "1", "NUM>", "0", "Total Cordoba", "Escriba el Valor en Córdobas");
+        this.val.replace("txtTotalCordoba", "1", "NUM>", "0", "Total Cordoba");    
          if(!this.val.ItemValido(["txtTotalCordoba"])) return;
       }
       this.Valor = Number(this.val.Get("txtTotalCordoba").value)
     } else {
       if (Number(this.Valor) == 0) {
-        this.val.add("txtTotalDolar", "1", "NUM>", "0", "Total Dolar", "Escriba el Valor en Dolares");
+        this.val.replace("txtTotalDolar", "1", "NUM>", "0", "Total Dolares"); 
          if(!this.val.ItemValido(["txtTotalDolar"])) return;
 
       }
@@ -1613,7 +1613,7 @@ public v_Enter_Reembolso(event: any) {
 
           let cBanco : any = this.lstCuentabancaria.find(w => w.IdCuentaBanco == this.cmbCuentaBancaria?.value[0]);
 
-          txtCuenta.setSelectedItem(cBanco?.IdMoneda == this.cFunciones.MonedaLocal? cBanco?.CuentaNuevaC : cBanco?.CuentaNuevaD);
+          txtCuenta?.setSelectedItem(cBanco?.IdMoneda == this.cFunciones.MonedaLocal? cBanco?.CuentaNuevaC : cBanco?.CuentaNuevaD);
 
           document.getElementById("txtCuenta" + f.NoLinea)?.setAttribute("disabled", "disabled");
 
