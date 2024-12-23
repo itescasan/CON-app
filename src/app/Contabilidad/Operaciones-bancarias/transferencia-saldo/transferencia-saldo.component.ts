@@ -1077,7 +1077,7 @@ export class TransferenciaSaldoComponent {
 
      let OrdComp : iOrdenCompraCentroGasto[] =   this.lstOrdenCompraCentroGasto.filter( g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
    
-     if(OrdComp.length == 0)
+     if(OrdComp.length == 0 || det.TipoDocumento == "GASTO_CRE")
      {
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
         det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
@@ -1092,9 +1092,6 @@ export class TransferenciaSaldoComponent {
       det.DebitoMS += f.DiferencialMS;
  
  
-
-
-
      }
      else{
 
