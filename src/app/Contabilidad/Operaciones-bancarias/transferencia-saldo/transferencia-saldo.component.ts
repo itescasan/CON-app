@@ -27,6 +27,7 @@ import { iOrderBy } from 'src/app/SHARED/interface/i-OrderBy';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { RetencionComponent } from '../../retencion/retencion.component';
 import { iRetencion } from 'src/app/Interface/Contabilidad/i-Retencion';
+import { iOrdenCompraCentroGasto } from 'src/app/Interface/Proveedor/i-OrdenCompra-CentroGasto';
 
 
 
@@ -59,6 +60,7 @@ export class TransferenciaSaldoComponent {
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iTransferenciaDocumento>;
   private lstDetalleAsiento: iAsientoDetalle[] = [];
+  private lstOrdenCompraCentroGasto : iOrdenCompraCentroGasto[] = [];
 
 
   public FILA: iTransferencia = {} as iTransferencia;
@@ -137,6 +139,7 @@ export class TransferenciaSaldoComponent {
         this.dec_Dif = 0;
 
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+        this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
         this.lstDetalle = new MatTableDataSource<iTransferenciaDocumento>;
         this.lstRetencion.splice(0, this.lstRetencion.length);
 
@@ -209,6 +212,7 @@ export class TransferenciaSaldoComponent {
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
         this.lstDetalle._updateChangeSubscription();
         this.lstRetencion.splice(0, this.lstRetencion.length);
+        this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
       }
 
 
@@ -293,6 +297,7 @@ export class TransferenciaSaldoComponent {
 
     this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
     this.lstRetencion.splice(0, this.lstRetencion.length);
+    this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
     this.lstDetalle._updateChangeSubscription();
 
     if (event.added.length == 1) {
@@ -561,6 +566,7 @@ export class TransferenciaSaldoComponent {
 
 
     this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
     this.lstRetencion.splice(0, this.lstRetencion.length);
 
     document.getElementById("btn-Documentos-proveedor")?.setAttribute("disabled", "disabled");
@@ -601,13 +607,14 @@ export class TransferenciaSaldoComponent {
             }
           } else {
 
-            let datos: iDatos = _json["d"];
+            let datos: iDatos[] = _json["d"];
 
 
             this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+            this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
             this.lstRetencion.splice(0, this.lstRetencion.length);
-            this.lstDetalle.data = datos.d;
-
+            this.lstDetalle.data = datos[0].d;
+            this.lstOrdenCompraCentroGasto = datos[1].d;
 
             this.V_CalcularSaldo();
 
@@ -1066,8 +1073,12 @@ export class TransferenciaSaldoComponent {
 
     this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
 
-      let det: iAsientoDetalle;
+      let det: iAsientoDetalle = {} as iAsientoDetalle;
 
+     let OrdComp : iOrdenCompraCentroGasto[] =   this.lstOrdenCompraCentroGasto.filter( g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
+   
+     if(OrdComp.length == 0)
+     {
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
         det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
       }
@@ -1076,15 +1087,79 @@ export class TransferenciaSaldoComponent {
 
       }
 
+     
       det.DebitoML += f.DiferencialML;
       det.DebitoMS += f.DiferencialMS;
+ 
+ 
 
 
-      if (f.DiferencialML != 0 && f.DiferencialML < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
-      if (f.DiferencialMS != 0 && f.DiferencialMS < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
 
-      if (f.DiferencialML != 0 && f.DiferencialML > 0) this.Nueva_Linea_Asiento(f.DiferencialML,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
-      if (f.DiferencialMS != 0 && f.DiferencialMS > 0) this.Nueva_Linea_Asiento(f.DiferencialMS,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
+     }
+     else{
+
+
+      let ImporteAuxML : number = 0;
+      let ImporteAuxMS : number = 0;
+      let DifML : number = 0;
+      let DifMS : number = 0;
+      OrdComp.forEach(g =>{
+
+        let Importe = Number(f.Importe.replaceAll(",", ""));
+        
+        Importe = this.cFunciones.Redondeo((Importe * (g.Participacion1 / 100.00) ) * (g.Participacion2 / 100.00), "2");
+
+        if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+          det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+        }
+        else {
+          det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+  
+        }
+
+
+        DifML += f.DiferencialML;
+        DifMS += f.DiferencialMS;
+ 
+        
+            
+        ImporteAuxML += det.DebitoML;
+        ImporteAuxMS += det.DebitoMS;
+
+
+        
+
+        
+      });
+
+      det.DebitoML += this.cFunciones.Redondeo(f.ImporteML - ImporteAuxML, "2");
+      det.DebitoMS += this.cFunciones.Redondeo(f.ImporteMS - ImporteAuxMS, "2");
+
+
+
+      f.DiferencialML = this.cFunciones.Redondeo(DifML, "2");
+      f.DiferencialMS = this.cFunciones.Redondeo(DifMS, "2");
+ 
+
+      det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
+      det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
+
+
+     }
+
+   
+
+
+     if (f.DiferencialML != 0 && f.DiferencialML < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
+     if (f.DiferencialMS != 0 && f.DiferencialMS < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
+
+     if (f.DiferencialML != 0 && f.DiferencialML > 0) this.Nueva_Linea_Asiento(f.DiferencialML,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
+     if (f.DiferencialMS != 0 && f.DiferencialMS > 0) this.Nueva_Linea_Asiento(f.DiferencialMS,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
+
+   
+       
+
+
 
 
       let RetML : number = 0;
