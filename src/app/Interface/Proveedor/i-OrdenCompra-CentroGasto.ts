@@ -5,4 +5,5 @@ export interface iOrdenCompraCentroGasto{
     Participacion2: number;
     CuentaContable: string;
     Bodega: string;
+    CentroCosto : string;
 }

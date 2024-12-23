@@ -1087,7 +1087,7 @@ export class TransferenciaSaldoComponent {
 
       }
 
-     
+      
       det.DebitoML += f.DiferencialML;
       det.DebitoMS += f.DiferencialMS;
  
@@ -1117,7 +1117,7 @@ export class TransferenciaSaldoComponent {
   
         }
 
-
+        det.CentroCosto = g.CentroCosto;
         DifML += f.DiferencialML;
         DifMS += f.DiferencialMS;
  
