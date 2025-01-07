@@ -1274,164 +1274,165 @@ export class ChequesSaldoComponent {
     }
 
 
-  public v_Guardar(): void {
-
-    this.val.EsValido();
-    this.valTabla.EsValido();
-
-
-    if (this.val.Errores != "") {
-      this.cFunciones.DIALOG.open(DialogErrorComponent, {
-        data: this.val.Errores,
-      });
-
-      return;
-    }
-
-
-
-    if (this.valTabla.Errores != "") {
-      this.cFunciones.DIALOG.open(DialogErrorComponent, {
-        data: this.valTabla.Errores,
-      });
-
-      return;
-    }
-
-
-    
- 
-
-
-    if (this.dec_Dif != 0) {
-      this.cFunciones.DIALOG.open(DialogErrorComponent, {
-        data: "<span>Tiene una diferencia de: <b>" + this.cFunciones.NumFormat(this.dec_Dif, "2") + "</b></span>",
-      });
-
-      return;
-    }
-
-
-    let Comision : number = Number(String(this.val.Get("txtComision").value).replaceAll(",", ""));
-    let ComisionDolar: number = 0;
-    let ComisionCordoba : number = 0;
-
-
-    if (this.cFunciones.MonedaLocal == this.IdMoneda) {
-      ComisionCordoba = this.cFunciones.Redondeo(Comision, "2");
-      ComisionDolar = this.cFunciones.Redondeo(ComisionCordoba / this.TC, "2");
-    }
-    else {
-      ComisionDolar = this.cFunciones.Redondeo(Comision, "2");
-      ComisionCordoba = this.cFunciones.Redondeo(ComisionDolar * this.TC, "2");
-    }
-
-   
-    this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
-    this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
-    this.FILA.IdMoneda = this.IdMoneda;
-    this.FILA.IdSerie = "CK"
-    this.FILA.NoCheque = this.val.Get("txtNoDoc").value;
-    this.FILA.Fecha = this.val.Get("txtFecha").value;
-    this.FILA.Beneficiario = this.cmbProveedor.displayValue;
-    this.FILA.CodProveedor = this.val.Get("cmbProveedor").value[0];
-    this.FILA.TasaCambio = this.val.Get("TxtTC").value;
-    this.FILA.Concepto = this.val.Get("txtConcepto").value;
-    // this.FILA.Comision = Comision;
-    // this.FILA.ComisionCordoba = ComisionCordoba;
-    // this.FILA.ComisionDolar = ComisionDolar;
-    this.FILA.TotalCordoba = Number(String(this.val.Get("txtTotalCordoba").value).replaceAll(",", ""));
-    this.FILA.TotalDolar = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
-    this.FILA.Total = (this.cFunciones.MonedaLocal == this.IdMoneda ? this.FILA.TotalCordoba : this.FILA.TotalDolar);
-    this.FILA.UsuarioReg = this.cFunciones.User;
-    if (!this.esModal) this.FILA.Anulado = false;
-    this.FILA.TipoCheque = "S";
-    
-    this.FILA.ChequeDocumento = JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
-    this.FILA.ChequeRetencion = JSON.parse(JSON.stringify(this.lstRetencion));
-
-    this.V_Contabilizacion();
-
-
-    if (this.Asiento.AsientosContablesDetalle.findIndex(f => f.CuentaContable == "" || (f.Naturaleza == undefined  || f.Naturaleza == "")) != -1) {
-      this.cFunciones.DIALOG.open(DialogErrorComponent, {
-        data: "<span><b>Por favor revisar el asiento contable. (CUENTA / NATURALEZA)</b></span>",
-      });
-
-      return;
-    }
-
-
-
-
-
-    let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
-      WaitComponent,
-      {
-        panelClass: "escasan-dialog-full-blur",
-        data: "",
+    public v_Guardar(): void {
+  
+      this.val.EsValido();
+      this.valTabla.EsValido();
+  
+  
+      if (this.val.Errores != "") {
+        this.cFunciones.DIALOG.open(DialogErrorComponent, {
+          data: this.val.Errores,
+        });
+  
+        return;
       }
-    );
-
-    document.getElementById("btnGuardar-Cheque-Saldo")?.setAttribute("disabled", "disabled");
-
-
-    let Datos: iChequePOST = {} as iChequePOST;
-    Datos.C = this.FILA;
-    Datos.A = this.Asiento;
-
-    this.POST.GuardarCheque(Datos).subscribe(
-      {
-        next: (data) => {
-
-          dialogRef.close();
-          let _json: any = data;
-
-          if (_json["esError"] == 1) {
-            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+  
+  
+  
+      if (this.valTabla.Errores != "") {
+        this.cFunciones.DIALOG.open(DialogErrorComponent, {
+          data: this.valTabla.Errores,
+        });
+  
+        return;
+      }
+  
+  
+  
+  
+  
+  
+      if (this.dec_Dif != 0) {
+        this.cFunciones.DIALOG.open(DialogErrorComponent, {
+          data: "<span>Tiene una diferencia de: <b>" + this.cFunciones.NumFormat(this.dec_Dif, "2") + "</b></span>",
+        });
+  
+        return;
+      }
+  
+  
+      let Comision: number = Number(String(this.val.Get("txtComision").value).replaceAll(",", ""));
+      let ComisionDolar: number = 0;
+      let ComisionCordoba: number = 0;
+  
+  
+      if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+        ComisionCordoba = this.cFunciones.Redondeo(Comision, "2");
+        ComisionDolar = this.cFunciones.Redondeo(ComisionCordoba / this.TC, "2");
+      }
+      else {
+        ComisionDolar = this.cFunciones.Redondeo(Comision, "2");
+        ComisionCordoba = this.cFunciones.Redondeo(ComisionDolar * this.TC, "2");
+      }
+  
+  
+  
+  
+  
+      this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
+      this.FILA.CodBodega = this.val.Get("cmbBodega").value[0];
+      this.FILA.IdMoneda = this.IdMoneda;
+      this.FILA.IdSerie = "CK"
+      this.FILA.NoCheque = this.val.Get("txtNoDoc").value;
+      this.FILA.Fecha = this.val.Get("txtFecha").value;
+      this.FILA.Beneficiario = this.cmbProveedor.displayValue;
+      this.FILA.CodProveedor = this.val.Get("cmbProveedor").value[0];
+      this.FILA.TasaCambio = this.val.Get("TxtTC").value;
+      this.FILA.Concepto = this.val.Get("txtConcepto").value;
+      this.FILA.Comision = Comision;
+      this.FILA.ComisionCordoba = ComisionCordoba;
+      this.FILA.ComisionDolar = ComisionDolar;
+      this.FILA.TotalCordoba = Number(String(this.val.Get("txtTotalCordoba").value).replaceAll(",", ""));
+      this.FILA.TotalDolar = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
+      this.FILA.Total = (this.cFunciones.MonedaLocal == this.IdMoneda ? this.FILA.TotalCordoba : this.FILA.TotalDolar);
+      this.FILA.UsuarioReg = this.cFunciones.User;
+      if (!this.esModal) this.FILA.Anulado = false;
+      this.FILA.TipoCheque = "S";
+      this.FILA.ChequeDocumento = JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
+      this.FILA.ChequeRetencion = JSON.parse(JSON.stringify(this.lstRetencion));
+  
+  
+      this.V_Contabilizacion();
+  
+  
+      if (this.Asiento.AsientosContablesDetalle.findIndex(f => f.CuentaContable == "" || (f.Naturaleza == undefined || f.Naturaleza == "")) != -1) {
+        this.cFunciones.DIALOG.open(DialogErrorComponent, {
+          data: "<span><b>Por favor revisar el asiento contable. (CUENTA / NATURALEZA)</b></span>",
+        });
+  
+        return;
+      }
+  
+  
+  
+  
+  
+      let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+        }
+      );
+  
+      document.getElementById("btnGuardar-Transferencia-Saldo")?.setAttribute("disabled", "disabled");
+  
+  
+      let Datos: iChequePOST = {} as iChequePOST;
+      Datos.C = this.FILA;
+      Datos.A = this.Asiento;
+  
+      this.POST.GuardarCheque(Datos).subscribe(
+        {
+          next: (data) => {
+  
+            dialogRef.close();
+            let _json: any = data;
+  
+            if (_json["esError"] == 1) {
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                  id: "error-servidor-msj",
+                  data: _json["msj"].Mensaje,
+                });
+              }
+            }
+            else {
+  
+  
+              let Datos: iDatos[] = _json["d"];
+              let msj: string = Datos[0].d;
+  
               this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                id: "error-servidor-msj",
-                data: _json["msj"].Mensaje,
+                data: "<p><b class='bold'>" + msj + "</b></p>"
+              });
+  
+  
+              if (!this.esModal) this.v_Evento("Limpiar");
+  
+            }
+  
+          },
+          error: (err) => {
+            dialogRef.close();
+  
+            document.getElementById("btnGuardar-Transferencia-Saldo")?.removeAttribute("disabled");
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor",
+                data: "<b class='error'>" + err.message + "</b>",
               });
             }
+          },
+          complete: () => {
+            document.getElementById("btnGuardar-Transferencia-Saldo")?.removeAttribute("disabled");
           }
-          else {
-
-
-            let Datos: iDatos[] = _json["d"];
-            let msj: string = Datos[0].d;
-
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              data: "<p><b class='bold'>" + msj + "</b></p>"
-            });
-
-
-            if (!this.esModal) this.v_Evento("Limpiar");
-
-          }
-
-        },
-        error: (err) => {
-          dialogRef.close();
-
-          document.getElementById("btnGuardar-Cheque-Saldo")?.removeAttribute("disabled");
-          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              id: "error-servidor",
-              data: "<b class='error'>" + err.message + "</b>",
-            });
-          }
-        },
-        complete: () => {
-          document.getElementById("btnGuardar-Cheque-Saldo")?.removeAttribute("disabled");
         }
-      }
-    );
-
-
-  }
-
+      );
   
+  
+    }
 
 
   private v_Visualizar() {

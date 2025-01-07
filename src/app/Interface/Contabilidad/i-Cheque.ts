@@ -16,6 +16,9 @@ export interface iCheque {
     TasaCambio: number;
     Concepto : string;
     TipoCheque : string;
+    Comision: number;
+    ComisionCordoba: number;
+    ComisionDolar: number;
     Total: number;
     TotalCordoba: number;
     TotalDolar: number; 
