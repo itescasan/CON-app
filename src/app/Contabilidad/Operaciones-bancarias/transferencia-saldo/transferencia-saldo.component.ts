@@ -74,9 +74,9 @@ export class TransferenciaSaldoComponent {
   public dec_Aplicado: number = 0;
   public dec_Dif: number = 0;
   public dec_Retencion: number = 0;
-  private CuentaComision : string = "6101-04-01-07";
-  private CuentaDiferencialPerdida: string = "6101-04-01-04";
-  private CuentaDiferencialGancia : string = "6101-04-01-06";
+  private CuentaComision : string = "6101-04-01-0007";
+  private CuentaDiferencialPerdida: string = "6101-04-01-0004";
+  private CuentaDiferencialGancia : string = "6101-04-01-0006";
 
 
   @ViewChildren(IgxComboComponent)
