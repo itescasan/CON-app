@@ -1076,8 +1076,9 @@ export class TransferenciaSaldoComponent {
       let det: iAsientoDetalle = {} as iAsientoDetalle;
 
      let OrdComp : iOrdenCompraCentroGasto[] =   this.lstOrdenCompraCentroGasto.filter( g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
-   
-     if(OrdComp.length == 0 || det.TipoDocumento == "GASTO_CRE")
+    
+     let TipoDo : string[] = ["GASTO_CRE", "GASTO_CRE", "GASTO_REN" ];
+     if(OrdComp.length == 0 || TipoDo.includes( det.TipoDocumento ) )
      {
       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
         det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
