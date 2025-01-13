@@ -1221,11 +1221,11 @@ export class TransferenciaSaldoComponent {
         }
        
 
-         if (AjusteML < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
-         if (AjusteMS < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
+         if (AjusteML < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "DIF_ML");
+         if (AjusteMS < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "DIF_MS");
 
-         if (AjusteML> 0) this.Nueva_Linea_Asiento(AjusteML,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
-         if (AjusteMS > 0) this.Nueva_Linea_Asiento(AjusteMS,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
+         if (AjusteML> 0) this.Nueva_Linea_Asiento(AjusteML,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "DIF_ML");
+         if (AjusteMS > 0) this.Nueva_Linea_Asiento(AjusteMS,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "DIF_MS");
    
 
          
@@ -1284,6 +1284,20 @@ export class TransferenciaSaldoComponent {
           det.DebitoMS = Monto;
           det.DebitoML = 0;
           break;
+
+
+          case "DIF_ML":
+            det.Debito = (this.IdMoneda == this.cFunciones.MonedaLocal, "0", String(Monto));
+            det.DebitoML = Monto;
+            det.DebitoMS = 0;
+            break;
+          case "DIF_MS":
+            det.Debito = (this.IdMoneda != this.cFunciones.MonedaLocal, String(Monto), "0");
+            det.DebitoMS = Monto;
+            det.DebitoML = 0;
+            break;
+            
+          
         default:
 
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
@@ -1320,6 +1334,18 @@ export class TransferenciaSaldoComponent {
           det.CreditoMS = Monto;
           det.CreditoML = 0;
           break;
+
+          case "DIF_ML":
+            det.Credito = (this.IdMoneda == this.cFunciones.MonedaLocal, "0",  String(Monto));
+            det.CreditoML = Monto;
+            det.CreditoMS = 0;
+            break;
+          case "DIF_MS":
+            det.Credito = (this.IdMoneda != this.cFunciones.MonedaLocal,  String(Monto), "0");
+            det.CreditoMS = Monto;
+            det.CreditoML = 0;
+            break;
+
         default:
 
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
