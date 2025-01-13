@@ -1081,11 +1081,16 @@ export class TransferenciaSaldoComponent {
 
      let Cuenta : string = i_Prov.CUENTAXPAGAR;
 
-     if(!TipoDo.includes( det.TipoDocumento ))
+     if(TipoDo.includes( det.TipoDocumento ))
      {
       Cuenta = "";
-      if(OrdComp.length > 0) Cuenta = OrdComp[0].CuentaContable;
+      if(OrdComp.length > 0) 
+      {
+        Cuenta = OrdComp[0].CuentaContable;
+      }
      }
+
+
 
      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
       det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
