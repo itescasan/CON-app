@@ -504,14 +504,14 @@ export class AsientoContableComponent {
 
 
         let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + f.NoLinea);
-        txtCuenta.select([f.CuentaContable]);
+      //  txtCuenta.select([f.CuentaContable]);
 
         this.valTabla.Get("txtCuenta-asiento" + f.NoLinea).setValue(f.CuentaContable);
         this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
 
 
         let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-        txtCentro.select([f.CentroCosto]);
+      //  txtCentro.select([f.CentroCosto]);
 
 
       /*  if (!this.Editar) {

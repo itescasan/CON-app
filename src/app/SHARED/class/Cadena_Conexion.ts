@@ -1,6 +1,6 @@
 export class Conexion {
 
-      /*private IP : string = "localhost";
+     /* private IP : string = "localhost";
       private PORT : String =  "7193";
 
     
