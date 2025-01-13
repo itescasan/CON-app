@@ -1023,73 +1023,101 @@ export class ChequesSaldoComponent {
         let det: iAsientoDetalle = {} as iAsientoDetalle;
   
        let OrdComp : iOrdenCompraCentroGasto[] =   this.lstOrdenCompraCentroGasto.filter( g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
+
+       let TipoDo : string[] = ["GASTO_REN", "GASTO_VIA" ];
      
-       if(OrdComp.length == 0 || det.TipoDocumento == "GASTO_CRE")
+       let Cuenta : string = i_Prov.CUENTAXPAGAR;
+
+       if(TipoDo.includes( det.TipoDocumento ))
        {
+        Cuenta = "";
+        if(OrdComp.length > 0) 
+        {
+          Cuenta = OrdComp[0].CuentaContable;
+        }
+       }
+  
+  
+  
+       if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+        det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+      }
+      else {
+        det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+  
+      }
+      /*
+
+
+     if(OrdComp.length == 0 && !TipoDo.includes( det.TipoDocumento ) )
+     {
+      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+        det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+      }
+      else {
+        det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+
+      }
+
+      
+      det.DebitoML += f.DiferencialML;
+      det.DebitoMS += f.DiferencialMS;
+ 
+ 
+     }
+     else{
+
+
+      let ImporteAuxML : number = 0;
+      let ImporteAuxMS : number = 0;
+      let DifML : number = 0;
+      let DifMS : number = 0;
+      OrdComp.forEach(g =>{
+
+        let Importe = Number(f.Importe.replaceAll(",", ""));
+        
+        Importe = this.cFunciones.Redondeo((Importe * (g.Participacion1 / 100.00) ) * (g.Participacion2 / 100.00), "2");
+
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
         }
         else {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
   
         }
-  
+
+        det.CentroCosto = g.CentroCosto;
+        DifML += f.DiferencialML;
+        DifMS += f.DiferencialMS;
+ 
         
-        det.DebitoML += f.DiferencialML;
-        det.DebitoMS += f.DiferencialMS;
+            
+        ImporteAuxML += det.DebitoML;
+        ImporteAuxMS += det.DebitoMS;
+
+
+        
+
+        
+      });
+
+      det.DebitoML += this.cFunciones.Redondeo(f.ImporteML - ImporteAuxML, "2");
+      det.DebitoMS += this.cFunciones.Redondeo(f.ImporteMS - ImporteAuxMS, "2");
+
+
+
+      f.DiferencialML = this.cFunciones.Redondeo(DifML, "2");
+      f.DiferencialMS = this.cFunciones.Redondeo(DifMS, "2");
+ 
+
+      det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
+      det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
+
+
+     }
+
    
-   
-       }
-       else{
-  
-  
-        let ImporteAuxML : number = 0;
-        let ImporteAuxMS : number = 0;
-        let DifML : number = 0;
-        let DifMS : number = 0;
-        OrdComp.forEach(g =>{
-  
-          let Importe = Number(f.Importe.replaceAll(",", ""));
-          
-          Importe = this.cFunciones.Redondeo((Importe * (g.Participacion1 / 100.00) ) * (g.Participacion2 / 100.00), "2");
-  
-          if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-            det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
-          }
-          else {
-            det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
-    
-          }
-  
-          det.CentroCosto = g.CentroCosto;
-          DifML += f.DiferencialML;
-          DifMS += f.DiferencialMS;
-   
-          
-              
-          ImporteAuxML += det.DebitoML;
-          ImporteAuxMS += det.DebitoMS;
-  
-  
-          
-  
-          
-        });
-  
-        det.DebitoML += this.cFunciones.Redondeo(f.ImporteML - ImporteAuxML, "2");
-        det.DebitoMS += this.cFunciones.Redondeo(f.ImporteMS - ImporteAuxMS, "2");
-  
-  
-  
-        f.DiferencialML = this.cFunciones.Redondeo(DifML, "2");
-        f.DiferencialMS = this.cFunciones.Redondeo(DifMS, "2");
-   
-  
-        det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
-        det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
-  
-  
-       }
+*/
   
      
   
