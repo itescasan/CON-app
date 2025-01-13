@@ -774,10 +774,10 @@ export class TransferenciaSaldoComponent {
 
         if(Number(String(r.Monto).replaceAll(",", "")) != 0)
         {
-          let Porc: number = this.cFunciones.Redondeo((r.Porcentaje / 100), "2");
-         // let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
-         let SubTotal: number = Importe;
-          let Ret: number = this.cFunciones.Redondeo(SubTotal * Porc, "2");
+          let Porc: number =  1 + r.PorcImpuesto;
+          let SubTotal: number = this.cFunciones.Redondeo(Importe /  Porc, "2");
+         //let SubTotal: number = Importe;
+          let Ret: number = this.cFunciones.Redondeo(SubTotal *  this.cFunciones.Redondeo(r.Porcentaje /  100, "2"), "2");
           r.Monto = this.cFunciones.NumFormat(Ret, "2");
         }
 
@@ -1743,8 +1743,11 @@ export class TransferenciaSaldoComponent {
 
           i++;
 
+          dialogRef.componentInstance.V_Calcular(i);
 
         });
+        
+       
 
         dialogRef.componentInstance.lstRetencion._updateChangeSubscription();
       }
