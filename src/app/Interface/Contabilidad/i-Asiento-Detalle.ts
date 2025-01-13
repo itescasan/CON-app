@@ -16,4 +16,5 @@ export interface iAsientoDetalle{
     CentroCosto: any;
     NoDocumento : string;
     TipoDocumento : string;
+    Editar : boolean;
 }

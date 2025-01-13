@@ -504,7 +504,6 @@ export class AsientoContableComponent {
 
 
         let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + f.NoLinea);
-        //if (!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable);
         txtCuenta.select([f.CuentaContable]);
 
         this.valTabla.Get("txtCuenta-asiento" + f.NoLinea).setValue(f.CuentaContable);
@@ -512,13 +511,12 @@ export class AsientoContableComponent {
 
 
         let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-        //if(f.CentroCosto != undefined) if (!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0])) txtCentro.setSelectedItem(f.CentroCosto);
         txtCentro.select([f.CentroCosto]);
 
 
-        if (!this.Editar) {
-          txtCuenta.disabled = true;
-          txtCentro.disabled = true;
+      /*  if (!this.Editar) {
+         // txtCuenta.disabled = true;
+        //  txtCentro.disabled = true;
 
           document.getElementById("txtCuenta-asiento" + f.NoLinea)?.setAttribute("disabled", "disabled");
           document.getElementById("txtReferencia" + f.NoLinea)?.setAttribute("disabled", "disabled");
@@ -526,7 +524,7 @@ export class AsientoContableComponent {
           document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
           document.getElementById("txtCredito" + f.NoLinea)?.setAttribute("disabled", "disabled");
 
-        }
+        }*/
 
 
       });
@@ -556,6 +554,48 @@ export class AsientoContableComponent {
 
   }
 
+  public V_EditarFila(det : any)
+  {
+    det.Editar = !det.Editar;
+
+
+    setTimeout(() => {
+     
+
+      
+
+      let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + det.NoLinea);
+      txtCuenta.select([det.CuentaContable]);
+      this.val.Get("txtCuenta-asiento" + det.NoLinea).setValue([det.CuentaContable])
+  
+  
+  
+      let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + det.NoLinea);
+      txtCentro.select([det.CentroCosto]);
+     this.val.Get("txtCentroCosto" + det.NoLinea).setValue([det.CentroCosto])
+  
+
+
+      
+      if (!this.Editar) {
+         txtCuenta.disabled = true;
+        txtCentro.disabled = true;
+
+         document.getElementById("txtCuenta-asiento" + det.NoLinea)?.setAttribute("disabled", "disabled");
+         document.getElementById("txtReferencia" + det.NoLinea)?.setAttribute("disabled", "disabled");
+         document.getElementById("txtCentroCosto" + det.NoLinea)?.setAttribute("disabled", "disabled");
+         document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+         document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+
+       }
+
+
+
+    }, 250);
+
+
+
+  }
 
   //██████████████████████████████████████████CARGAR DATOS██████████████████████████████████████████████████████
 
@@ -982,6 +1022,8 @@ export class AsientoContableComponent {
     $("#btnMostrarPie-asiento").trigger("click"); 
 
   }
+
+
 
 
 
