@@ -248,7 +248,10 @@
                                         </igx-combo>
                                         }
                                         @else {
-                                            {{det.CuentaContable}}
+                                            <div >
+                                                {{det.CuentaContable}}
+                                            </div>
+                                            
                                         }
     
                                        
@@ -277,7 +280,10 @@
                                                 [(ngModel)]="det.Referencia" [ngModelOptions]="{standalone: true}">
                                             }
                                             @else {
-                                                {{det.Referencia}}
+                                                <div>
+                                                    {{det.Referencia}}
+                                                </div>
+                                               
                                             }
                                            
                                         </div>
@@ -307,7 +313,7 @@
                                         </igx-combo>
                                         }
                                         @else {
-                                            {{det.CentroCosto}}
+                                            <div>{{det.CentroCosto}}</div>
                                         }
     
     
@@ -335,7 +341,7 @@
                                                 autocomplete="off">
                                             }
                                             @else {
-                                                {{det.Debito}}
+                                                <div class="numero">{{det.Debito}}</div>
                                             }
                                             
                                         </div>
@@ -368,7 +374,7 @@
                                                 autocomplete="off">
                                             }
                                             @else {
-                                                {{det.Credito}}
+                                                <div class="numero">{{det.Credito}}</div>
                                             }
                                             
     

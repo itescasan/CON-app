@@ -363,7 +363,7 @@ export class RegistroAsientoContableComponent {
 
   V_Clonar(item: iAsiento) : void
   {
-    console.log(item)
+
     this.v_Editar(item, true);
   }
 

@@ -235,7 +235,8 @@ export class AsientoContableComponent {
       let cmb: any = txtCuenta.dropdown;
 
       let _Item: iCuenta = cmb._focusedItem.value;
-      if (!txtCuenta.selection[0]?.CuentaContable.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
+      //if (!txtCuenta.selection[0]?.CuentaContable.includes(det.CuentaContable[0])) txtCuenta.setSelectedItem(_Item.CuentaContable);
+      if (event.oldSelection[0] != event.added[0]) event.newSelection = event.added;
       this.valTabla.Get("txtCuenta-asiento" + det.NoLinea).setValue([_Item.CuentaContable]);
       det.Descripcion = _Item.NombreCuenta.replaceAll(_Item.CuentaContable, "");;
       det.Naturaleza = _Item.Naturaleza;
@@ -558,41 +559,57 @@ export class AsientoContableComponent {
   {
     det.Editar = !det.Editar;
 
-
-    setTimeout(() => {
+    if(det.Editar)
+    {
+      setTimeout(() => {
      
+        let Cuenta : any = det.CuentaContable;
+        let Centro : any = det.CentroCosto;
 
-      
 
-      let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + det.NoLinea);
-      txtCuenta.select([det.CuentaContable]);
-      this.val.Get("txtCuenta-asiento" + det.NoLinea).setValue([det.CuentaContable])
+        if(Cuenta instanceof Array){
+          Cuenta = det.CuentaContable[0]
+        }
+
+
+        
+        if(Centro instanceof Array){
+          Centro = det.CentroCosto[0]
+        }
+
+
+  
+        let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + det.NoLinea);
+       // txtCuenta.deselectAllItems();
+        txtCuenta.select([Cuenta]);
+  
+    
+    
+        let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + det.NoLinea);
+      //  txtCentro.deselectAllItems();
+        txtCentro.select([Centro]);
+ 
+  
+  
+        
+        if (!this.Editar) {
+           txtCuenta.disabled = true;
+          txtCentro.disabled = true;
+  
+           document.getElementById("txtCuenta-asiento" + det.NoLinea)?.setAttribute("disabled", "disabled");
+           document.getElementById("txtReferencia" + det.NoLinea)?.setAttribute("disabled", "disabled");
+           document.getElementById("txtCentroCosto" + det.NoLinea)?.setAttribute("disabled", "disabled");
+           document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+           document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+  
+         }
   
   
   
-      let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + det.NoLinea);
-      txtCentro.select([det.CentroCosto]);
-     this.val.Get("txtCentroCosto" + det.NoLinea).setValue([det.CentroCosto])
+      }, 250);
   
-
-
-      
-      if (!this.Editar) {
-         txtCuenta.disabled = true;
-        txtCentro.disabled = true;
-
-         document.getElementById("txtCuenta-asiento" + det.NoLinea)?.setAttribute("disabled", "disabled");
-         document.getElementById("txtReferencia" + det.NoLinea)?.setAttribute("disabled", "disabled");
-         document.getElementById("txtCentroCosto" + det.NoLinea)?.setAttribute("disabled", "disabled");
-         document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-         document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-
-       }
-
-
-
-    }, 250);
-
+    }
+ 
 
 
   }
