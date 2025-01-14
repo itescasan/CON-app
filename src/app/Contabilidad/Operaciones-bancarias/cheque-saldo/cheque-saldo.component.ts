@@ -42,7 +42,7 @@ export class ChequesSaldoComponent {
   public overlaySettings: OverlaySettings = {};
   public val = new Validacion();
   public valTabla = new Validacion();
-  public load :boolean = false;
+  // public load :boolean = false;
   private IdMoneda: string = "";
 
   lstProveedor: iProveedor[] = [];
@@ -78,16 +78,20 @@ export class ChequesSaldoComponent {
   private CuentaDiferencialPerdida: string = "6101-04-01-0004";
   private CuentaDiferencialGancia : string = "6101-04-01-0006";
 
+ 
+  @ViewChildren(IgxComboComponent)
+  public cmbCombo: QueryList<IgxComboComponent>; 
+
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
+
   public orderby: iOrderBy[] = [
     { Columna: "Operacion", Direccion: "" },
     { Columna: "TipoDocumento", Direccion: "" },
     { Columna: "Documento", Direccion: "" },
     { Columna: "Fecha", Direccion: "" },
   ];
-
-  @ViewChildren(IgxComboComponent)
-  public cmbCombo: QueryList<IgxComboComponent>; 
-
+ 
 
   constructor(public cFunciones: Funciones, private GET: getCheques, private POST: postCheque) {
 
@@ -133,6 +137,7 @@ export class ChequesSaldoComponent {
         this.dec_Dif = 0;
 
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+        this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
         this.lstDetalle = new MatTableDataSource<iChequeDocumento>;
         this.lstRetencion.splice(0, this.lstRetencion.length);
 
@@ -196,12 +201,13 @@ export class ChequesSaldoComponent {
       this.val.Get("txtBanco").setValue(_Item?.Banco);
       this.val.Get("txtMoneda").setValue(_Item?.Moneda);
       this.val.Get("txtNoDoc").setValue(_Item?.Consecutivo);
-
+      //this.v_Consecutivo();
 
       if (this.IdMoneda != _Item?.IdMoneda) {
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
         this.lstDetalle._updateChangeSubscription();
         this.lstRetencion.splice(0, this.lstRetencion.length);
+        this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
       }
       this.IdMoneda = String(_Item?.IdMoneda);
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCuentaBancaria.close();
@@ -229,11 +235,11 @@ export class ChequesSaldoComponent {
   public v_Select_CentroCosto(event: any) {
 
     if (event.added.length == 1) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbCentroCosto").setValue(event.newValue);
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbCentroCosto.close();
+      this.cmbCentroCosto.close();
     }
-    this.cmbCentroCosto.close();
   }
 
   public v_Enter_CentroCosto(event: any) {
@@ -250,17 +256,17 @@ export class ChequesSaldoComponent {
 
 
 
+
   @ViewChild("cmbBodega", { static: false })
   public cmbBodega: IgxComboComponent;
 
   public v_Select_Bodega(event: any) {
     this.val.Get("cmbBodega").setValue("");
     if (event.added.length == 1) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbBodega.close();
+      this.cmbBodega.close();
     }
-    this.cmbBodega.close();
   }
 
   public v_Enter_Bodega(event: any) {
@@ -277,15 +283,14 @@ export class ChequesSaldoComponent {
 
 
 
-
   @ViewChild("cmbProveedor", { static: false })
   public cmbProveedor: IgxComboComponent;
 
   public v_Select_Proveedor(event: any) {
 
-    
     this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
     this.lstRetencion.splice(0, this.lstRetencion.length);
+    this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
     this.lstDetalle._updateChangeSubscription();
 
     if (event.added.length == 1) {
@@ -295,12 +300,11 @@ export class ChequesSaldoComponent {
 
       this.val.Get("cmbProveedor").setValue(event.newValue);
 
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbProveedor.close();
+      this.cmbProveedor.close();
     }
-    this.cmbProveedor.close();
   }
 
-  public v_Enter_Proveedor(event: any) { 
+  public v_Enter_Proveedor(event: any) {
     if (event.key == "Enter") {
       let cmb: any = this.cmbProveedor.dropdown;
       let _Item: iProveedor = cmb._focusedItem.value;
@@ -454,6 +458,50 @@ export class ChequesSaldoComponent {
   }
 
 
+
+
+
+
+
+
+
+// public v_Consecutivo(): void {
+
+
+
+//     this.cFunciones.GET.Consecutivo("CK", this.val.Get("txtFecha").value).subscribe(
+//       {
+//         next: (data) => {
+
+//           let _json: any = data;
+
+//           if (_json["esError"] == 1) {
+//             if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+//               this.cFunciones.DIALOG.open(DialogErrorComponent, {
+//                 id: "error-servidor-msj",
+//                 data: _json["msj"].Mensaje,
+//               });
+//             }
+//           } else {
+
+//             let datos: iDatos = _json["d"];
+//             if (!this.esModal) this.val.Get("txtNoDoc").setValue(String(datos.d).replaceAll("$", this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "YYYYMM")));
+
+
+//           }
+
+//         },
+//         error: (err) => {
+
+//           this.cFunciones.DIALOG.open(DialogErrorComponent, {
+//             data: "<b class='error'>" + err.message + "</b>",
+//           });
+
+//         },
+//       }
+//     );
+//   }
+
   public V_TasaCambios(): void {
     if (this.val.Get("txtFecha").value == undefined) return;
 
@@ -520,6 +568,7 @@ export class ChequesSaldoComponent {
 
 
     this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
     this.lstRetencion.splice(0, this.lstRetencion.length);
 
     document.getElementById("btn-Documentos-proveedor")?.setAttribute("disabled", "disabled");
@@ -560,12 +609,14 @@ export class ChequesSaldoComponent {
             }
           } else {
 
-            let datos: iDatos = _json["d"];
+            let datos: iDatos[] = _json["d"];
 
 
             this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+            this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
             this.lstRetencion.splice(0, this.lstRetencion.length);
-            this.lstDetalle.data = datos.d;
+            this.lstDetalle.data = datos[0].d;
+            this.lstOrdenCompraCentroGasto = datos[1].d;
 
             this.V_CalcularSaldo();
   
@@ -592,7 +643,9 @@ export class ChequesSaldoComponent {
 
 
   }
-  public V_CalcularSaldo() {
+
+
+ public V_CalcularSaldo() {
 
     this.TC = this.cFunciones.Redondeo(Number(String(this.val.Get("TxtTC").value).replaceAll(",", "")), "4");
 
@@ -651,7 +704,6 @@ export class ChequesSaldoComponent {
 
     this.V_Calcular();
   }
-
 
   public V_Calcular(): void {
 
@@ -1046,6 +1098,10 @@ export class ChequesSaldoComponent {
         det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
   
       }
+
+
+      det.DebitoML += f.DiferencialML;
+      det.DebitoMS += f.DiferencialMS;
       /*
 
 
@@ -1122,14 +1178,12 @@ export class ChequesSaldoComponent {
      
   
   
-       if (f.DiferencialML != 0 && f.DiferencialML < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
-       if (f.DiferencialMS != 0 && f.DiferencialMS < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
-  
-       if (f.DiferencialML != 0 && f.DiferencialML > 0) this.Nueva_Linea_Asiento(f.DiferencialML,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
-       if (f.DiferencialMS != 0 && f.DiferencialMS > 0) this.Nueva_Linea_Asiento(f.DiferencialMS,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
-  
-     
-         
+  if (f.DiferencialML != 0 && f.DiferencialML < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
+  if (f.DiferencialMS != 0 && f.DiferencialMS < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
+
+  if (f.DiferencialML != 0 && f.DiferencialML > 0) this.Nueva_Linea_Asiento(f.DiferencialML,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
+  if (f.DiferencialMS != 0 && f.DiferencialMS > 0) this.Nueva_Linea_Asiento(f.DiferencialMS,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
+
   
   
   
@@ -1232,6 +1286,17 @@ export class ChequesSaldoComponent {
             det.DebitoMS = Monto;
             det.DebitoML = 0;
             break;
+            case "DIF_ML":
+              det.Debito = (this.IdMoneda == this.cFunciones.MonedaLocal, "0", String(Monto));
+              det.DebitoML = Monto;
+              det.DebitoMS = 0;
+              break;
+            case "DIF_MS":
+              det.Debito = (this.IdMoneda != this.cFunciones.MonedaLocal, String(Monto), "0");
+              det.DebitoMS = Monto;
+              det.DebitoML = 0;
+              break;
+
           default:
   
             if (this.cFunciones.MonedaLocal == this.IdMoneda) {
@@ -1268,6 +1333,18 @@ export class ChequesSaldoComponent {
             det.CreditoMS = Monto;
             det.CreditoML = 0;
             break;
+
+            case "DIF_ML":
+            det.Credito = (this.IdMoneda == this.cFunciones.MonedaLocal, "0",  String(Monto));
+            det.CreditoML = Monto;
+            det.CreditoMS = 0;
+            break;
+          case "DIF_MS":
+            det.Credito = (this.IdMoneda != this.cFunciones.MonedaLocal,  String(Monto), "0");
+            det.CreditoMS = Monto;
+            det.CreditoML = 0;
+            break;
+
           default:
   
             if (this.cFunciones.MonedaLocal == this.IdMoneda) {
@@ -1475,7 +1552,7 @@ export class ChequesSaldoComponent {
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
-
+    this.val.Get("txtComision").setValue(this.cFunciones.NumFormat(this.FILA.Comision, "2"));
 
 
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
@@ -1853,30 +1930,42 @@ export class ChequesSaldoComponent {
 
 
 
-  ngAfterViewInit(): void {
-    ///CAMBIO DE FOCO
+  ngDoCheck() {
     this.val.Combo(this.cmbCombo);
-    this.val.addFocus("cmbCuentaBancaria", "cmbCentroCosto", undefined);
-    this.val.addFocus("cmbCentroCosto", "cmbBodega", undefined);
-    this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
-    this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
-
-  }
-
-  ngDoCheck(){
-
-    this.val.addNumberFocus("TxtTC", 2);
+    this.val.addNumberFocus("TxtTC", 4);
     this.val.addNumberFocus("txtComision", 2);
     this.val.addNumberFocus("txtTotalCordoba", 2);
     this.val.addNumberFocus("txtTotalDolar", 2);
 
 
+    this.val.addFocus("cmbCuentaBancaria", "cmbCentroCosto", undefined);
+    this.val.addFocus("cmbCentroCosto", "cmbBodega", undefined);
+    this.val.addFocus("cmbBodega", "cmbProveedor", undefined);
+    this.val.addFocus("cmbProveedor", "txtConcepto", undefined);
+
+
+    if(this.cmbCuentaBancaria != undefined) this.cmbCuentaBancaria.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    if(this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    if(this.cmbCentroCosto != undefined) this.cmbCentroCosto.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    if(this.cmbProveedor != undefined) this.cmbProveedor.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+    
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+     
+
+
+
     this.lstDetalle.data.forEach(f => {
       this.val.addNumberFocus("txtImporte" + f.Index, 2);
-      this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1) , undefined);
+      this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1), undefined);
     });
 
-      
+
+  }
+
+  ngAfterViewInit(): void {
+    $("#offcanvasBottom-tranf-saldo").removeAttr("show");
+    $("#btnMostrarPie-tranf-saldo").trigger("click"); 
+
   }
 }
 
