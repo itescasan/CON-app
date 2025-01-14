@@ -2,7 +2,7 @@
 
 
 .contenedor-filtro {
-    position: fixed;
+    position: static;/*fixed, absolute*/
     top: 0;
     right: 0;
     text-align: center;
@@ -18,8 +18,7 @@
 
     .contenedor-boton{
         text-align: right;
-    }
-
+    }   
 
     
 @include Tamano_Menor(lg) {
@@ -30,3 +29,4 @@
     
 }
 }
+

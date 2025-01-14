@@ -17,12 +17,13 @@ import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-con
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { postAsientoContable } from '../../CRUD/POST/post-Asiento-contable';
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'app-asiento-contable',
-    templateUrl: './asiento-contable.component.html',
-    styleUrls: ['./asiento-contable.component.scss'],
-    standalone: false
+  selector: 'app-asiento-contable',
+  templateUrl: './asiento-contable.component.html',
+  styleUrls: ['./asiento-contable.component.scss'],
+  standalone: false
 })
 export class AsientoContableComponent {
 
@@ -51,7 +52,7 @@ export class AsientoContableComponent {
   public TC: number;
   public Estado: string = "Solicitado";
   public load: boolean = false;
-  public Clonar : boolean = false
+  public Clonar: boolean = false
 
   public overlaySettings: OverlaySettings = {};
 
@@ -323,7 +324,7 @@ export class AsientoContableComponent {
 
 
     let vacio = ["0.00", "0", ""];
-    if (columna == "txtDebito" &&  !vacio.includes(det.Debito) ) {
+    if (columna == "txtDebito" && !vacio.includes(det.Debito)) {
 
       if (Number(det.Credito.replaceAll(",", ""))) {
         det.Credito = "0.00";
@@ -333,7 +334,7 @@ export class AsientoContableComponent {
 
 
 
-    if (columna == "txtCredito" &&  !vacio.includes(det.Credito))  {
+    if (columna == "txtCredito" && !vacio.includes(det.Credito)) {
 
       if (Number(det.Debito.replaceAll(",", ""))) {
         det.Debito = "0.00";
@@ -354,7 +355,7 @@ export class AsientoContableComponent {
   contextMenuPosition = { x: '0px', y: '0px' };
   public V_Popup(event: MouseEvent, item: iAsientoDetalle): void {
     event.preventDefault();
-  
+
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
     this.contextMenu.menuData = { 'item': item };
@@ -505,27 +506,27 @@ export class AsientoContableComponent {
 
 
         let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + f.NoLinea);
-      //  txtCuenta.select([f.CuentaContable]);
+        //  txtCuenta.select([f.CuentaContable]);
 
         this.valTabla.Get("txtCuenta-asiento" + f.NoLinea).setValue(f.CuentaContable);
         this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
 
 
         let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + f.NoLinea);
-      //  txtCentro.select([f.CentroCosto]);
+        //  txtCentro.select([f.CentroCosto]);
 
 
-      /*  if (!this.Editar) {
-         // txtCuenta.disabled = true;
-        //  txtCentro.disabled = true;
-
-          document.getElementById("txtCuenta-asiento" + f.NoLinea)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtReferencia" + f.NoLinea)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
-          document.getElementById("txtCredito" + f.NoLinea)?.setAttribute("disabled", "disabled");
-
-        }*/
+        /*  if (!this.Editar) {
+           // txtCuenta.disabled = true;
+          //  txtCentro.disabled = true;
+  
+            document.getElementById("txtCuenta-asiento" + f.NoLinea)?.setAttribute("disabled", "disabled");
+            document.getElementById("txtReferencia" + f.NoLinea)?.setAttribute("disabled", "disabled");
+            document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
+            document.getElementById("txtDebito" + f.NoLinea)?.setAttribute("disabled", "disabled");
+            document.getElementById("txtCredito" + f.NoLinea)?.setAttribute("disabled", "disabled");
+  
+          }*/
 
 
       });
@@ -537,79 +538,76 @@ export class AsientoContableComponent {
 
       this.load = false;
 
-      if(this.Clonar)
-        {
-          this.Editar = false;
-          this.esModal = false;
-          this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
-          this.FILA = {} as iAsiento;
-          this.FILA.IdAsiento = -1;
-          this.Estado = "Solicitado";
-          this.V_TasaCambios();
-          this.v_Consecutivo();
-          
-        }
+      if (this.Clonar) {
+        this.Editar = false;
+        this.esModal = false;
+        this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
+        this.FILA = {} as iAsiento;
+        this.FILA.IdAsiento = -1;
+        this.Estado = "Solicitado";
+        this.V_TasaCambios();
+        this.v_Consecutivo();
+
+      }
     });
 
 
 
   }
 
-  public V_EditarFila(det : any)
-  {
+  public V_EditarFila(det: any) {
     det.Editar = !det.Editar;
 
-    if(det.Editar)
-    {
+    if (det.Editar) {
       setTimeout(() => {
-     
-        let Cuenta : any = det.CuentaContable;
-        let Centro : any = det.CentroCosto;
+
+        let Cuenta: any = det.CuentaContable;
+        let Centro: any = det.CentroCosto;
 
 
-        if(Cuenta instanceof Array){
+        if (Cuenta instanceof Array) {
           Cuenta = det.CuentaContable[0]
         }
 
 
-        
-        if(Centro instanceof Array){
+
+        if (Centro instanceof Array) {
           Centro = det.CentroCosto[0]
         }
 
 
-  
+
         let txtCuenta: any = this.lstCmb.find(y => y.id == "txtCuenta-asiento" + det.NoLinea);
-       // txtCuenta.deselectAllItems();
+        // txtCuenta.deselectAllItems();
         txtCuenta.select([Cuenta]);
-  
-    
-    
+
+
+
         let txtCentro: any = this.lstCmb.find(y => y.id == "txtCentroCosto" + det.NoLinea);
-      //  txtCentro.deselectAllItems();
+        //  txtCentro.deselectAllItems();
         txtCentro.select([Centro]);
- 
-  
-  
-        
+
+
+
+
         if (!this.Editar) {
-           txtCuenta.disabled = true;
+          txtCuenta.disabled = true;
           txtCentro.disabled = true;
-  
-           document.getElementById("txtCuenta-asiento" + det.NoLinea)?.setAttribute("disabled", "disabled");
-           document.getElementById("txtReferencia" + det.NoLinea)?.setAttribute("disabled", "disabled");
-           document.getElementById("txtCentroCosto" + det.NoLinea)?.setAttribute("disabled", "disabled");
-           document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-           document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
-  
-         }
-  
-  
-  
+
+          document.getElementById("txtCuenta-asiento" + det.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtReferencia" + det.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCentroCosto" + det.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+
+        }
+
+
+
       }, 250);
-  
+
     }
- 
+
 
 
   }
@@ -932,14 +930,20 @@ export class AsientoContableComponent {
 
 
             let Datos: iDatos[] = _json["d"];
-            let msj: string = Datos[0].d;
+            let msj: string = Datos[1].d;
 
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               data: "<p><b class='bold'>" + msj + "</b></p>"
             });
 
+   
 
-            if (!this.esModal) this.v_Evento("Limpiar");
+            if (!this.esModal)
+            {
+              this.V_GenerarDoc(Datos[0], false);
+              this.v_Evento("Limpiar");
+            }
+      
 
           }
 
@@ -1010,6 +1014,163 @@ export class AsientoContableComponent {
   }
 
 
+  public V_Imprimir(Exportar : boolean) {
+
+    let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+      DialogoConfirmarComponent,
+      {
+        panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+        disableClose: true
+      }
+    );
+
+
+
+    dialogRef.afterOpened().subscribe(s => {
+      dialogRef.componentInstance.textBoton1 = "CORDOBA";
+      dialogRef.componentInstance.textBoton2 = "DOLARES";
+      dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
+      dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
+      dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>"+ (Exportar ? "EXPORTAR" : "IMPRIMIR") +"</b></p><p style='text-align: center'><b style='color: blue'>" + this.val.Get("txtNoAsiento").value + "</b></p>")
+
+    });
+
+
+    dialogRef.afterClosed().subscribe(s => {
+
+      if (dialogRef.componentInstance.retorno == "0") {
+        this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal);
+      }
+
+      if (dialogRef.componentInstance.retorno == "1") {
+        this.V_ImprimirDoc(Exportar, "");
+      }
+
+    });
+
+
+
+  }
+
+
+
+
+  
+  
+
+  private V_ImprimirDoc(Exportar: boolean, Moneda : string): void {
+
+
+
+  document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.setAttribute("disabled", "disabled");
+
+  let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+
+  if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+          WaitComponent,
+          {
+              panelClass: "escasan-dialog-full-blur",
+              data: "",
+              id: "wait"
+          }
+      );
+
+  }
+
+
+
+
+  this.GET.GetReporte(this.FILA.IdAsiento, Moneda, Exportar).subscribe(
+      {
+          next: (data) => {
+
+
+              dialogRef.close();
+              let _json: any = data;
+    
+              if (_json["esError"] == 1) {
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    id: "error-servidor-msj",
+                    data: _json["msj"].Mensaje,
+                  });
+                }
+              }
+              else {
+    
+                this.V_GenerarDoc(_json["d"], Exportar);
+
+              }
+
+              
+
+          },
+          error: (err) => {
+
+              document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.removeAttribute("disabled");
+
+              dialogRef.close();
+
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                      id: "error-servidor",
+                      data: "<b class='error'>" + err.message + "</b>",
+                  });
+              }
+
+          },
+          complete: () => {
+              document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.removeAttribute("disabled");
+
+          }
+      }
+  );
+
+
+}
+
+
+private V_GenerarDoc(Datos: iDatos, Exportar: boolean) {
+
+
+  let byteArray = new Uint8Array(atob(Datos.d).split('').map(char => char.charCodeAt(0)));
+
+  var file = new Blob([byteArray], { type: (Exportar ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/pdf') });
+
+
+  let url = URL.createObjectURL(file);
+
+ 
+  var fileLink = document.createElement('a');
+  fileLink.href = url;
+  fileLink.download = Datos.Nombre;
+
+
+  if (Exportar) {
+
+      var fileLink = document.createElement('a');
+      fileLink.href = url;
+      fileLink.download = Datos.Nombre;
+      fileLink.click();
+      document.body.removeChild(fileLink);
+  }
+  else {
+      let tabOrWindow: any = window.open('',  '_blank');
+      tabOrWindow.document.body.appendChild(fileLink);
+
+      tabOrWindow.document.write("<html><head><title>"+Datos.Nombre+"</title></head><body>"
+          + '<embed width="100%" height="100%" name="plugin" src="'+ url+ '" '
+          + 'type="application/pdf" internalinstanceid="21"></body></html>');
+
+      tabOrWindow.focus();
+  }
+
+
+
+}
+
 
   ngOnInit(): void {
 
@@ -1036,7 +1197,7 @@ export class AsientoContableComponent {
     this.val.addFocus("cmbMoneda", "txtObservaciones", undefined);
 
     $("#offcanvasBottom-asiento").removeAttr("show");
-    $("#btnMostrarPie-asiento").trigger("click"); 
+    $("#btnMostrarPie-asiento").trigger("click");
 
   }
 
@@ -1046,12 +1207,12 @@ export class AsientoContableComponent {
 
 
   ngDoCheck() {
-    
+
     this.valTabla.Combo(this.lstCmb);
 
-    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
-     
-    
+    if (window.innerWidth < this.cFunciones.TamanoPantalla("md")) if (this.datepiker != undefined) this.datepiker.mode = "dialog";
+
+
     this.lstDetalle.data.forEach(f => {
 
       this.valTabla.addFocus("txtCuenta-asiento" + f.NoLinea, "txtReferencia" + f.NoLinea, undefined);

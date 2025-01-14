@@ -13,16 +13,57 @@
         <form autocomplete="off" [formGroup]="val.ValForm">
             <div class="card">
                 <div class="card-header card-escasan-header opcional">
-    
-                    <div>
-                        Asiento Contable
+                    <div class="row">
+               
+                        <div class="col-12 col-md-8 titulo">
+                            Asiento Contable
+                        </div>
+
+                        <div class="col-12 col-md-4">
+
+                            <div class="row">
+
+                                <div class="col-8">
+                                    @if(FILA.IdAsiento != -1)
+                                    {
+                                        <div class="row">
+
+                                            <div class="col-6">
+                                                <button class="btn btn-secundario" type="button" id="btnImprimir-asiento" (click)="V_Imprimir(false);"
+                                                ><i class="fa-solid fa-print fa-beat-fade fa-lg"></i>
+                                                 Imprimir</button>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <button class="btn btn-secundario" type="button" id="btnImprimir-asiento" (click)="V_Imprimir(true);"
+                                                ><i class="fa-solid fa-file-excel fa-beat-fade fa-lg"></i>
+                                                 Exportar</button>
+                                            </div>
+
+
+                                        </div>
+                                       
+                                         
+                                    }
+                                    
+                                </div>
+
+                                <div class="col-4">
+                                    <div class="Contenedor-offcanvas">
+                                        <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" id="btnMostrarPie-asiento"
+                                            data-bs-target="#offcanvasBottom-asiento" aria-controls="offcanvasBottom-asiento"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
+                                             Totales</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                           
+                        </div>
+
                     </div>
     
-                    <div class="Contenedor-offcanvas">
-                        <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" id="btnMostrarPie-asiento"
-                            data-bs-target="#offcanvasBottom-asiento" aria-controls="offcanvasBottom-asiento"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
-                             Totales</button>
-                    </div>
+    
+                   
                 </div>
                 <div class="card-body">
     
@@ -229,10 +270,15 @@
                                     </div>
                                     <div class="row">
 
-                                        <span>
-                                            <a  id="btn-editar-fila" (click)="V_EditarFila(det)"><i class="fa-solid fa-pen-to-square"></i></a>
-                                        </span>
+                                        @if(esModal)
+                                        {
+                                            <span>
+                                                <a  id="btn-editar-fila" (click)="V_EditarFila(det)"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            </span>
+    
+                                        }
 
+                                    
                                
 
     
