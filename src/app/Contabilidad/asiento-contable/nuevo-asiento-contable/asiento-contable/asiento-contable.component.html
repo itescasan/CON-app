@@ -15,28 +15,40 @@
                 <div class="card-header card-escasan-header opcional">
                     <div class="row">
                
-                        <div class="col-6 col-md-8 titulo">
+                        <div class="col-12 col-md-8 titulo">
                             Asiento Contable
                         </div>
 
-                        <div class="col-6 col-md-4">
+                        <div class="col-12 col-md-4">
 
                             <div class="row">
 
-                                <div class="col-6 contenedor-imprimir">
+                                <div class="col-8">
                                     @if(FILA.IdAsiento != -1)
                                     {
-                                        <button class="btn btn-secundario" type="button" id="btnImprimir-asiento" (click)="V_Imprimir(false);"
-                                        ><i class="fa-solid fa-print fa-beat-fade fa-lg"></i>
-                                         Imprimir</button>
-                                         <button class="btn btn-secundario" type="button" id="btnImprimir-asiento" (click)="V_Imprimir(true);"
-                                         ><i class="fa-solid fa-file-excel fa-beat-fade fa-lg"></i>
-                                          Exportar</button>
+                                        <div class="row">
+
+                                            <div class="col-6">
+                                                <button class="btn btn-secundario" type="button" id="btnImprimir-asiento" (click)="V_Imprimir(false);"
+                                                ><i class="fa-solid fa-print fa-beat-fade fa-lg"></i>
+                                                 Imprimir</button>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <button class="btn btn-secundario" type="button" id="btnImprimir-asiento" (click)="V_Imprimir(true);"
+                                                ><i class="fa-solid fa-file-excel fa-beat-fade fa-lg"></i>
+                                                 Exportar</button>
+                                            </div>
+
+
+                                        </div>
+                                       
+                                         
                                     }
                                     
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="Contenedor-offcanvas">
                                         <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" id="btnMostrarPie-asiento"
                                             data-bs-target="#offcanvasBottom-asiento" aria-controls="offcanvasBottom-asiento"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
