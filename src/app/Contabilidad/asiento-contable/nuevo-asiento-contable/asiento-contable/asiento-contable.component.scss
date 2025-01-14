@@ -32,6 +32,17 @@
 
 }
 
+.titulo{
+    color: var(--escan-fondo);
+    text-align: center;
+}
+
+.contenedor-imprimir{
+    button{
+        margin-left: 5px;
+    }
+}
+/*
 .card-escasan-header{
     
    div{
@@ -50,7 +61,7 @@
     }
 }
 
-
+*/
 //████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
 
 .numero {
