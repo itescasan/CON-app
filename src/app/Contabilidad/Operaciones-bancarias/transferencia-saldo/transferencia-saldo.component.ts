@@ -137,6 +137,8 @@ export class TransferenciaSaldoComponent {
         this.dec_Banco = 0;
         this.dec_Aplicado = 0;
         this.dec_Dif = 0;
+        this.Asiento = {} as iAsiento;
+        this.Asiento.IdAsiento = -1;
 
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
         this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
