@@ -913,6 +913,7 @@ export class TransferenciaCuentaComponent {
 
 
     let Asiento: iAsiento = {} as iAsiento;
+    if(this.esModal) Asiento.IdAsiento = -1;
     let CuentaBancaria = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.FILA.IdCuentaBanco);
 
 
