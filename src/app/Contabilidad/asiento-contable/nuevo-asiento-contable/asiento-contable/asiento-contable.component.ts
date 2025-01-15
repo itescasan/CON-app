@@ -26,6 +26,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   standalone: false
 })
 export class AsientoContableComponent {
+[x: string]: any;
 
   public val = new Validacion();
   public valTabla = new Validacion();
@@ -1039,11 +1040,12 @@ export class AsientoContableComponent {
     dialogRef.afterClosed().subscribe(s => {
 
       if (dialogRef.componentInstance.retorno == "0") {
-        this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal);
+        this.V_ImprimirDoc(Exportar, "");
       }
 
       if (dialogRef.componentInstance.retorno == "1") {
-        this.V_ImprimirDoc(Exportar, "");
+     
+        this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal);
       }
 
     });
