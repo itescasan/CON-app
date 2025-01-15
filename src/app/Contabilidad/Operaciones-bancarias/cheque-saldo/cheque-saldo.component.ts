@@ -1041,7 +1041,7 @@ export class ChequesSaldoComponent {
   
       this.Asiento.NoDocOrigen = this.val.Get("txtNoDoc").value;
       this.Asiento.IdSerieDocOrigen = i_Banco.IdSerie;
-      this.Asiento.TipoDocOrigen = "TRANSFERENCIA A DOCUMENTO";
+      this.Asiento.TipoDocOrigen = "TRANSFERENCIA A CHEQUE";
   
       this.Asiento.IdSerie = this.Asiento.IdSerieDocOrigen;
       this.Asiento.Bodega = this.val.Get("cmbBodega").value[0];
@@ -1202,33 +1202,34 @@ export class ChequesSaldoComponent {
   
   
            //AJUSTE
+        
+         let AjusteMS : number = 0;
+         let AjusteML : number = 0;
+
+         if (this.IdMoneda == this.cFunciones.MonedaLocal)
+        {
           
-           let AjusteMS : number = 0;
-           let AjusteML : number = 0;
-  
-           if (this.IdMoneda == this.cFunciones.MonedaLocal)
-          {
-            
-            AjusteMS = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteML - RetML, "2") / this.TC, "2");
-            AjusteMS = this.cFunciones.Redondeo(f.ImporteMS - (AjusteMS + RetMS), "2");
+          AjusteMS = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteML - RetML, "2") / this.TC, "2");
+          AjusteMS = this.cFunciones.Redondeo(f.ImporteMS - (AjusteMS + RetMS), "2");
+ 
+ 
+        }
+        else
+        {
+          
+          AjusteML = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteMS - RetMS, "2") * this.TC, "2");
+          AjusteML = this.cFunciones.Redondeo(f.ImporteML - (AjusteML + RetML), "2");
+ 
+        }
+       
+
+         if (AjusteML < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "DIF_ML");
+         if (AjusteMS < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "DIF_MS");
+
+         if (AjusteML> 0) this.Nueva_Linea_Asiento(AjusteML,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "DIF_ML");
+         if (AjusteMS > 0) this.Nueva_Linea_Asiento(AjusteMS,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "DIF_MS");
    
-   
-          }
-          else
-          {
-            
-            AjusteML = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteMS - RetMS, "2") * this.TC, "2");
-            AjusteML = this.cFunciones.Redondeo(f.ImporteML - (AjusteML + RetML), "2");
-   
-          }
-         
-  
-           if (AjusteML < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
-           if (AjusteMS < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
-  
-           if (AjusteML> 0) this.Nueva_Linea_Asiento(AjusteML,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
-           if (AjusteMS > 0) this.Nueva_Linea_Asiento(AjusteMS,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
-     
+
   
            
           
