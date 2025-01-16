@@ -121,7 +121,6 @@ export class LoginService {
 
 
 
-
           if (MostrarConfirmar) {
 
 
@@ -139,7 +138,7 @@ export class LoginService {
             dialogRef.afterOpened().subscribe(s => {
 
 
-              if (MostrarConfirmar) dialogRef.componentInstance.value = l.CON_CodMail;
+              //if (MostrarConfirmar) dialogRef.componentInstance.value = l.CON_CodMail;
               dialogRef.componentInstance.SetMensajeHtml("<b>Ingrese el codigo que se le envio al correo.</b>");
               dialogRef.componentInstance.MostrarCerrar = false;
               dialogRef.componentInstance.placeholder = "Ingrese le codigo que se le envio al correo.";
