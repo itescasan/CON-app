@@ -1,49 +1,47 @@
-<div class="escasan-dialog" id="dialog-confirmar">
+<div class="escasan-dialog" if="dialog-input">
+
+    <div class="btn-contenedor-cerrar">
+        @if(MostrarCerrar)
+        {
+            <button  class="close-button custom-cerrar" (click)="V_Cerrar();">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+              </button>
+        }
+       
+      </div>
+
 
     <div class="logo">
-        <img   src="../assets/images/LOGO_NAV.png">
+        <img   src="../assets/images/ISOLOGO.png">
       </div>
-      
-        <div mat-dialog-content class="margin">
-            <div class="msj" [innerHTML]="mensaje"></div>
-        </div>
+  
 
-        <form autocomplete="off" [formGroup]="val.ValForm">       
 
-            <div class="col-12 col-md-6 col-lg-12 mb-3 mt-00">
-                <div class="input-group">
-                    <span class="input-group-text secundario">C$</span>
-                    <div class="form-floating ">
-                        <input type="number" class="form-control" placeholder="No" id="txtMontoCajaChica"
-                            formControlName="txtMontoCajaChica">
-                        <label for="txtMontoCajaChica">Valor</label>
-                    </div> 
-                </div>
+    <div mat-dialog-content>
+
+        <form autocomplete="off" [formGroup]="val.ValForm">
+                 
+        <div class="input-group">
+            <span class="input-group-text"><i class="fa-solid fa-unlock fa-lg"></i></span>
+            <div class="form-floating">
+                
+                <input type="text" class="form-control" placeholder="{{placeholder}}" [(ngModel)]="value"
+                     id="txtInput-dialog" formControlName="txtInput-dialog">
+                <label for="txtInput-dialog">{{label}}</label>
             </div>
-            <div class="col-12 col-md-6 col-lg-12 mb-3 mt-00">
-                <div class="input-group">
-                    <span class="input-group-text secundario">S</span>
-                    <div class="form-floating ">
-                        <input type="text" class="form-control" placeholder="No" id="txtSerieCajaChica"
-                            formControlName="txtSerieCajaChica">
-                        <label for="txtSerieCajaChica">Serie</label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-12 mb-3 mt-00">
-                <div class="input-group">                
-                    <span class="input-group-text secundario">C</span>
-                    <div class="form-floating ">
-                        <input type="number" class="form-control" placeholder="No" id="txtConsecutivo"
-                            formControlName="txtConsecutivo">
-                        <label for="txtConsecutivo">Consecutivo</label>
-                    </div>
-                </div>
-            </div>
+        </div>   
         </form>
         
-        <div mat-dialog-actions class="btn-contenedor buton"> 
-            <button type="button" class="btn btn-primario" id="btn-confirmar-1-escasan-dialog" (click)="v_Confirmar();">{{textBoton1}}</button>
-            <button type="button" class="btn btn-opcional" id="btn-confirmar-2-escasan-dialog"  (click)="v_Cancelar();">{{textBoton2}}</button>
-        </div>        
+       
     </div>
+    
+    <div mat-dialog-actions class="btn-contenedor">
+        <button type="button" class="btn btn-primario" id="btn-confirmar-1-escasan-dialog" (click)="v_Confirmar();">{{textBoton1}}</button>
+        <button type="button" class="btn btn-opcional" id="btn-confirmar-2-escasan-dialog"  (click)="v_Cancelar();">{{textBoton2}}</button>
+    </div>
+    
+    
+</div>
+
+
+

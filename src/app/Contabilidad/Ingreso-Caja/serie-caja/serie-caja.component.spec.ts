@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogInputComponent } from './dialog-input.component';
+import { DialogInputComponent } from './serie-caja.component';
 
 describe('DialogInputComponent', () => {
   let component: DialogInputComponent;
@@ -11,7 +11,7 @@ describe('DialogInputComponent', () => {
       imports: [DialogInputComponent]
     })
     .compileComponents();
-
+    
     fixture = TestBed.createComponent(DialogInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
