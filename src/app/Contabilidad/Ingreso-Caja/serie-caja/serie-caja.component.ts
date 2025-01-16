@@ -9,7 +9,7 @@ import { Funciones } from '../../../SHARED/class/cls_Funciones';
     styleUrl: './serie-caja.component.scss',
     standalone: false
 })
-export class DialogInputComponent {
+export class SerieCajaComponent {
   [x: string]: any;
   public val = new Validacion();  
   public Serie: string;
@@ -20,7 +20,7 @@ export class DialogInputComponent {
   public textBoton2 : string ="";
 
 
-  constructor(public cFunciones: Funciones, private sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogInputComponent>) 
+  constructor(public cFunciones: Funciones, private sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<SerieCajaComponent>) 
   { 
     this.val.add("txtMontoCajaChica", "1", "NUM>=", "0", "Monto Caja", "Ingrese Monto Caja.");
     this.val.add("txtSerieCajaChica", "1", "LEN>=", "0", "Serie Caja", "Ingrese Monto Caja.");

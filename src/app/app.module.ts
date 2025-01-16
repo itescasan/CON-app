@@ -58,7 +58,6 @@ import { CierreMensualComponent } from './Contabilidad/Cierre-Contable/cierre-me
 import { CierreFiscalComponent } from './Contabilidad/Cierre-Contable/cierre-fiscal/cierre-fiscal.component';
 import { AccesoCajaComponent } from './Contabilidad/acceso-caja/acceso-caja.component';
 import { ConfCajaChicaComponent } from './Contabilidad/techo-caja-chica/conf-caja-chica.component';
-import { DialogInputComponent } from './SHARED/componente/dialog-input/dialog-input.component';
 import { NuevoIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/nuevo-ingreso-caja/nuevo-ingreso-caja.component';
 import { RegistroIngresoCajaComponent } from './Contabilidad/Ingreso-Caja/registro-ingreso-caja/registro-ingreso-caja.component';
 import { GastosCentroCostoComponent } from './Reporte/gastos-centro-costo/gastos-centro-costo.component';
@@ -80,6 +79,7 @@ import { BalanceGeneralComparativoComponent } from './Reporte/balance-general-co
 import { ReporteDiferenciasCXPvsContabilidadComponent } from './Reporte/reporte-diferencias-cxpvs-contabilidad/reporte-diferencias-cxpvs-contabilidad.component';
 import { ReporteIntegracionGastosAcumuladosVentasComponent } from './Reporte/reporte-integracion-gastos-acumulados-ventas/reporte-integracion-gastos-acumulados-ventas.component';
 import { ReporteEstadoCambioPatrominioComponent } from './Reporte/reporte-estado-cambio-patrominio/reporte-estado-cambio-patrominio.component';
+import { SerieCajaComponent } from './Contabilidad/Ingreso-Caja/serie-caja/serie-caja.component';
 
 @NgModule({
   declarations: [
@@ -115,7 +115,7 @@ import { ReporteEstadoCambioPatrominioComponent } from './Reporte/reporte-estado
     CierreFiscalComponent,
     AccesoCajaComponent,
     ConfCajaChicaComponent,
-    DialogInputComponent,
+    SerieCajaComponent,
     NuevoIngresoCajaComponent,
     RegistroIngresoCajaComponent,
     GastosCentroCostoComponent,
