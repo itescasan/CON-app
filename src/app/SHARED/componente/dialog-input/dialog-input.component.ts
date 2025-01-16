@@ -29,6 +29,7 @@ export class DialogInputComponent {
 
   constructor(private cFunciones: Funciones, private sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogInputComponent>) {
     this.val.add("txtInput-dialog", "1", "LEN>", "0", "Codigo Confirmacion", "Ingrese le codigo que se le envio al correo.");
+    
 
   }
 
@@ -82,6 +83,19 @@ export class DialogInputComponent {
     document.getElementById("msj-confirmar")?.removeAttribute("class");
     this.mensaje = this.sanitizer.bypassSecurityTrustHtml(mensaje);
   }
+
+
+   ngOnInit(): void {
+
+
+    this.val.addFocus("txtInput-dialog", "btn-confirmar-input-1-escasan-dialog", "click");
+  
+  
+  
+  
+  
+  
+    }
 
 
 }
