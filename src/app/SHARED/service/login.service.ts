@@ -10,6 +10,7 @@ import { DialogErrorComponent } from '../componente/dialog-error/dialog-error.co
 import { iDatos } from '../interface/i-Datos';
 import { DialogoConfirmarComponent } from '../componente/dialogo-confirmar/dialogo-confirmar.component';
 import { DialogInputComponent } from '../componente/dialog-input/dialog-input.component';
+import { postServidor } from '../POST/post-servidor';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class LoginService {
 
 
   constructor(private _Router: Router, private cFunciones: Funciones,
-    private DIALOG: MatDialog, private GET: getServidor) { }
+    private DIALOG: MatDialog, private GET: getServidor, private POST: postServidor) { }
 
 
   public Session(user: string, pwd: string): void {
@@ -122,7 +123,7 @@ export class LoginService {
 
 
           if (MostrarConfirmar) {
-            
+
 
             let dialogRef: MatDialogRef<DialogInputComponent> = this.cFunciones.DIALOG.open(
               DialogInputComponent,
@@ -131,10 +132,10 @@ export class LoginService {
                 disableClose: true
               }
             );
-  
-  
-  
-  
+
+
+
+
             dialogRef.afterOpened().subscribe(s => {
 
 
@@ -147,7 +148,7 @@ export class LoginService {
               dialogRef.componentInstance.textBoton2 = "CANCELAR";
               dialogRef.componentInstance.Set_StyleBtn1("width: 110px");
               dialogRef.componentInstance.Set_StyleBtn2("width: 110px");
-  
+
             });
 
 
@@ -205,21 +206,20 @@ export class LoginService {
 
           if (_json["esError"] == 1) {
 
-           
+
 
             if (DesdeConfirmar) {
 
-               
-            let dialog = this.DIALOG.open(DialogErrorComponent, {
-              data: _json["msj"].Mensaje,
-            });
+
+              let dialog = this.DIALOG.open(DialogErrorComponent, {
+                data: _json["msj"].Mensaje,
+              });
 
               dialog.afterClosed().subscribe(s => {
                 this.isLogin(true);
               });
             }
-            else
-            {
+            else {
               localStorage.removeItem("CON_login");
               this._Router.navigate(['/Login'], { skipLocationChange: false });
             }
@@ -293,8 +293,58 @@ export class LoginService {
   }
 
   public CerrarSession() {
-    localStorage.removeItem("CON_login");
-    this._Router.navigate(['/Login'], { skipLocationChange: false });
+
+
+    let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+      WaitComponent,
+      {
+        panelClass: "escasan-dialog-full-blur",
+        data: "",
+      }
+    );
+
+    this.POST.CerrarSession(this.cFunciones.User).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            this.DIALOG.open(DialogErrorComponent, {
+              data: _json["msj"].Mensaje,
+            });
+          } else {
+
+            localStorage.removeItem("CON_login");
+            this._Router.navigate(['/Login'], { skipLocationChange: false });
+
+          }
+
+        },
+        error: (err) => {
+
+
+          dialogRef.close();
+
+          if (this.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+     
+        }
+      }
+    );
+
+
+
+
   }
 
 

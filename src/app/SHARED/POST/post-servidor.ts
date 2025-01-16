@@ -25,4 +25,9 @@ export class postServidor{
     }
 
 
+    CerrarSession(user : string) : Observable<string> { 
+        return this.http.post<any>(this._Cnx.Url() + "Sistema/CerrarSession?user=" + user, { headers: { 'content-type': 'application/text' } });
+    }
+
+
 }
