@@ -122,6 +122,7 @@ export class LoginService {
 
 
           if (MostrarConfirmar) {
+            
 
             let dialogRef: MatDialogRef<DialogInputComponent> = this.cFunciones.DIALOG.open(
               DialogInputComponent,
@@ -135,7 +136,10 @@ export class LoginService {
   
   
             dialogRef.afterOpened().subscribe(s => {
+
+
               if (MostrarConfirmar) dialogRef.componentInstance.value = l.CON_CodMail;
+              dialogRef.componentInstance.SetMensajeHtml("<b>Ingrese el codigo que se le envio al correo.</b>");
               dialogRef.componentInstance.MostrarCerrar = false;
               dialogRef.componentInstance.placeholder = "Ingrese le codigo que se le envio al correo.";
               dialogRef.componentInstance.label = "Codigo Confirmacion";
@@ -209,7 +213,7 @@ export class LoginService {
             let dialog = this.DIALOG.open(DialogErrorComponent, {
               data: _json["msj"].Mensaje,
             });
-            
+
               dialog.afterClosed().subscribe(s => {
                 this.isLogin(true);
               });

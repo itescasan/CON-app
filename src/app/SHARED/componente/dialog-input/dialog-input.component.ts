@@ -1,4 +1,4 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Validacion } from '../../class/validacion';
@@ -15,6 +15,9 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class DialogInputComponent {
 
+   @ViewChild("msj", { static: false })
+    public msj: HTMLElement;
+    public mensaje: any;
   public retorno: string = "0";
   public textBoton1: string = "";
   public textBoton2: string = "";
@@ -24,7 +27,7 @@ export class DialogInputComponent {
   public placeholder : string = "";
   public label : string = "";
 
-  constructor(private cFunciones: Funciones, sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogInputComponent>) {
+  constructor(private cFunciones: Funciones, private sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogInputComponent>) {
     this.val.add("txtInput-dialog", "1", "LEN>", "0", "Codigo Confirmacion", "Ingrese le codigo que se le envio al correo.");
 
   }
@@ -70,6 +73,14 @@ export class DialogInputComponent {
 
   public Set_StyleBtn2(style: string) {
     document.getElementById("btn-confirmar-2-escasan-dialog")?.setAttribute("style", style);
+  }
+
+   
+  public SetMensajeHtml(mensaje : string)
+  {
+
+    document.getElementById("msj-confirmar")?.removeAttribute("class");
+    this.mensaje = this.sanitizer.bypassSecurityTrustHtml(mensaje);
   }
 
 
