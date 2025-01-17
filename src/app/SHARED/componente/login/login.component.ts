@@ -45,7 +45,7 @@ export class LoginComponent {
 
    
     this.v_Limpiar();
-    this._SrvLogin.isLogin();
+    this._SrvLogin.isLogin(false);
   }
 
   private v_Limpiar() {

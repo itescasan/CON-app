@@ -29,6 +29,10 @@ export class getServidor{
     return this.http.get<any>(this._Cnx.Url() + "Sistema/Login?user=" + user + "&pass=" + pass + "&Modulo=CON");
  }
 
+ public ValidarCodigo(user: string, cod : string) : Observable<any>{
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/ValidarCodigo?user=" + user + "&cod=" + cod );
+}
+
  public TC(f : Date) : Observable<any>{
   return this.http.get<any>(this._Cnx.Url() + "Sistema/TC?f="+ f);
 }

@@ -7,4 +7,5 @@ export interface iLogin{
     Desconecion : boolean;
     FechaServer : string;
     TimeOut: number;
+    CON_CodMail : string
 }

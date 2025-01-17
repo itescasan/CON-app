@@ -18,7 +18,7 @@ import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 import { iConfCaja } from 'src/app/Interface/Contabilidad/i-ConfCajaChica';
 import { iConfC } from 'src/app/Interface/Contabilidad/i-ConfCaja';
 import { getConfCajaChica } from './CRUD/GET/get-ConfCajaChica';
-import { DialogInputComponent } from 'src/app/SHARED/componente/dialog-input/dialog-input.component';
+import { SerieCajaComponent } from 'src/app/Contabilidad/Ingreso-Caja/serie-caja/serie-caja.component';
 import { postConfCajaChica } from './CRUD/POST/post-ConfCajaChica';
 
 
@@ -180,8 +180,8 @@ export class ConfCajaChicaComponent {
   }
 
   public E_ditar(det: iConfCaja) {
-    let dialogRef: MatDialogRef<DialogInputComponent> =  this.cFunciones.DIALOG.open(
-      DialogInputComponent,
+    let dialogRef: MatDialogRef<SerieCajaComponent> =  this.cFunciones.DIALOG.open(
+      SerieCajaComponent,
       {
         disableClose: true
 

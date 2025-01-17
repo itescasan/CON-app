@@ -1,65 +1,101 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Validacion } from '../../class/validacion';
+import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
 import { Funciones } from '../../class/cls_Funciones';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIcon } from '@angular/material/icon';
+
 @Component({
-    selector: 'app-dialog-input',
-    templateUrl: './dialog-input.component.html',
-    styleUrl: './dialog-input.component.scss',
-    standalone: false
+  selector: 'app-dialog-input',
+  imports: [ ReactiveFormsModule, FormsModule, MatIcon],
+  templateUrl: './dialog-input.component.html',
+  styleUrl: './dialog-input.component.scss'
 })
 export class DialogInputComponent {
-  [x: string]: any;
-  public val = new Validacion();  
-  public Serie: string;
-  public Consecutivo: number;
-  public valor : string;
-  public mensaje: any;
-  public textBoton1 : string ="";
-  public textBoton2 : string ="";
 
+   @ViewChild("msj", { static: false })
+    public msj: HTMLElement;
+    public mensaje: any;
+  public retorno: string = "0";
+  public textBoton1: string = "";
+  public textBoton2: string = "";
+  public value : string = "";
+  public val = new Validacion();
+  public MostrarCerrar : boolean = true;
+  public placeholder : string = "";
+  public label : string = "";
 
-  constructor(public cFunciones: Funciones, private sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogInputComponent>) 
-  { 
-    this.val.add("txtMontoCajaChica", "1", "NUM>=", "0", "Monto Caja", "Ingrese Monto Caja.");
-    this.val.add("txtSerieCajaChica", "1", "LEN>=", "0", "Serie Caja", "Ingrese Monto Caja.");
-    this.val.add("txtConsecutivo", "1", "NUM>=", "0", "Consecutivo Caja", "Ingrese Monto Caja.");
-          
+  constructor(private cFunciones: Funciones, private sanitizer: DomSanitizer, public hostElement: ElementRef, public dialogRef: MatDialogRef<DialogInputComponent>) {
+    this.val.add("txtInput-dialog", "1", "LEN>", "0", "Codigo Confirmacion", "Ingrese le codigo que se le envio al correo.");
+    
+
   }
 
-  public v_Confirmar(){    
+  public v_Confirmar() {
+
+
+
+    this.val.EsValido();
+
+
+    if (this.val.Errores != "") {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+        data: this.val.Errores,
+      });
+
+      return;
+    }
+
+
     this.dialogRef.close();
-    this.valor = this.cFunciones.NumFormat(Number(this.val.Get("txtMontoCajaChica").value),"2"); 
-    this.Serie = this.val.Get("txtSerieCajaChica").value;
-    this.Consecutivo = this.val.Get("txtConsecutivo").value;
-       
+    this.retorno = "1";
+
   }
 
-  public v_Cancelar(){
+
+
+  public v_Cancelar() {
     this.dialogRef.close();
-    this.valor = '0.00';
-    this.Serie = '';
-    this.Consecutivo = 0;
-  
+    this.retorno = "0";
+
   }
 
-  public Set_StyleBtn1(style : string)
-  {
+  public V_Cerrar() {
+    this.dialogRef.close();
+    this.retorno = "-1";
+
+  }
+
+  public Set_StyleBtn1(style: string) {
     document.getElementById("btn-confirmar-1-escasan-dialog")?.setAttribute("style", style);
   }
 
-  public Set_StyleBtn2(style : string)
-  {
+  public Set_StyleBtn2(style: string) {
     document.getElementById("btn-confirmar-2-escasan-dialog")?.setAttribute("style", style);
   }
-  
-   public SetMensajeHtml(mensaje : string)
+
+   
+  public SetMensajeHtml(mensaje : string)
   {
+
+    document.getElementById("msj-confirmar")?.removeAttribute("class");
     this.mensaje = this.sanitizer.bypassSecurityTrustHtml(mensaje);
   }
 
+
+   ngOnInit(): void {
+
+
+    this.val.addFocus("txtInput-dialog", "btn-confirmar-input-1-escasan-dialog", "click");
+  
+  
+  
+  
+  
+  
+    }
+
+
 }
-
-
-

@@ -1,34 +1,28 @@
-
-#dialog-confirmar{
-    width: 370px !important;
+@use "/src/assets/scss/media.scss" as *;
+#dialog-input{
+    width: 300px;
     max-width: 400px;
     padding: 5px;
     box-shadow: 3px 4px 14px 6px rgba(0, 0, 0, 0.76);
 }
 
-/*
-.msj{
-
-    text-align: justify;
-    text-justify: inter-word;
-    word-wrap: break-word;
-
-}*/
 
 .msj{
     float: right;
     display: flex;
     align-items: center;
     word-break:break-all;
-    margin: 0 0 1em 1em;
+    padding: 10px;
 }
+
+.input-group{
+    margin-top: 10px;
+}
+
 
 .bold{
     font-weight: bold;
-    font-weight: bold;
-    font-size: 1.2em;
     color: black,
-    
 }
 
 .logo{
@@ -45,32 +39,37 @@ img{
 }
 
 button{
-    min-width: 100px;
+    width: 100px;
 }
 
 button:first-child{
     margin-right: 25px;
 }
 
-.margin{
-    margin-top: 2%;
-    margin-left: 4%;
-    margin-right: 4%;
-    font-weight: bold;
-    font-size: 1.2em;
+.input-group{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.btn-contenedor{
+    margin-top: 10px;
+    padding: 5px;
 }
 
-.buton {
- margin-bottom: 4%;
- margin-left: 3%;
- margin-right: 4%;
-}
-.mt-00 {
-    margin-right: 4%;
-}
 
-.ml {
-    margin-left: 2%;
-    margin-right: 2%;
-}
+  
+.btn-contenedor-cerrar{
+    background-color: var(--escan-primario);
+    font-size: 1em;
+    padding: 5px;
+    text-align: right;
 
+
+    button{
+        font-size: 1.2em;
+        margin: 0;
+        padding: 0;
+        width: auto;
+      }
+    
+  }
+ 
