@@ -1083,7 +1083,7 @@ export class TransferenciaSaldoComponent {
 
      let Cuenta : string = i_Prov.CUENTAXPAGAR;
 
-     if(TipoDo.includes( det.TipoDocumento ))
+     if(TipoDo.includes( f.TipoDocumento ))
      {
       Cuenta = "";
       if(OrdComp.length > 0) 
