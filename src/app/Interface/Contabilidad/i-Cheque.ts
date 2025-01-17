@@ -9,7 +9,7 @@ export interface iCheque {
     CodProveedor: string;
     IdMoneda: string;
     CodBodega: string;
-    IdSerie: string;
+    IdSerie: string; 
     NoCheque: string;
     Fecha: Date,
     Beneficiario: string;   

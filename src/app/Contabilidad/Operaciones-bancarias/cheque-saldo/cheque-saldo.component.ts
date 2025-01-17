@@ -1679,51 +1679,51 @@ export class ChequesSaldoComponent {
 
 
 
-    this.GET.GetRptCheque(this.val.Get("txtNoDoc").value).subscribe(
-      {
-        next: (data) => {
+    // this.GET.GetRptCheque(this.val.Get("txtNoDoc").value).subscribe(
+    //   {
+    //     next: (data) => {
 
 
-          dialogRef.close();
-          let _json: any = data;
+    //       dialogRef.close();
+    //       let _json: any = data;
 
-          if (_json["esError"] == 1) {
-            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-              this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                id: "error-servidor-msj",
-                data: _json["msj"].Mensaje,
-              });
-            }
-          } else {
+    //       if (_json["esError"] == 1) {
+    //         if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+    //           this.cFunciones.DIALOG.open(DialogErrorComponent, {
+    //             id: "error-servidor-msj",
+    //             data: _json["msj"].Mensaje,
+    //           });
+    //         }
+    //       } else {
 
-            let datos: iDatos = _json["d"];
-            this.printPDFS(datos.d);
-
-
-
-          }
-
-        },
-        error: (err) => {
+    //         let datos: iDatos = _json["d"];
+    //         this.printPDFS(datos.d);
 
 
-          dialogRef.close();
-          document.getElementById("btnReporte-Cheque")?.removeAttribute("disabled");
-          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              id: "error-servidor",
-              data: "<b class='error'>" + err.message + "</b>",
-            });
-          }
 
-        },
-        complete: () => {
-          document.getElementById("btnImprimir-Cheques")?.removeAttribute("disabled");
+    //       }
+
+    //     },
+    //     error: (err) => {
 
 
-        }
-      }
-    );
+    //       dialogRef.close();
+    //       document.getElementById("btnReporte-Cheque")?.removeAttribute("disabled");
+    //       if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+    //         this.cFunciones.DIALOG.open(DialogErrorComponent, {
+    //           id: "error-servidor",
+    //           data: "<b class='error'>" + err.message + "</b>",
+    //         });
+    //       }
+
+    //     },
+    //     complete: () => {
+    //       document.getElementById("btnImprimir-Cheques")?.removeAttribute("disabled");
+
+
+    //     }
+    //   }
+    // );
 
 
   }

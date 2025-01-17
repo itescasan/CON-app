@@ -16,7 +16,6 @@ import { iAsientoDetalle } from 'src/app/Interface/Contabilidad/i-Asiento-Detall
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { getCheques } from '../CRUD/GET/get-Cheques';
 import { Observable, catchError, iif, map, startWith, tap } from 'rxjs';
-import { reference } from '@popperjs/core';
 import { ideaGeneration } from '@igniteui/material-icons-extended';
 import { iCheque } from '../../../Interface/Contabilidad/i-Cheque';
 import { iChequePOST } from '../../../Interface/Contabilidad/i-Cheque-POST';
@@ -27,9 +26,8 @@ import { PDFDocument } from 'pdf-lib';
 import * as printJS from 'print-js';
 import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
 import { IReembolsosD } from 'src/app/Interface/Contabilidad/i-ReembolsoD';
-import { DecimalPipe } from '@angular/common';
-import { uniqueDates } from 'igniteui-angular/lib/core/utils';
-
+import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
+import { getReporteContable } from 'src/app/Reporte/GET/get-Reporte-Contable';
 
 @Component({
     selector: 'app-nuevo-cheque',
@@ -81,6 +79,7 @@ export class NuevoChequeComponent {
   filteredCuenta: Observable<iCuenta[]> | undefined;
 
   public esModal: boolean = false;
+  public Editar: boolean = true;
   public dec_TotalDebe: number = 0;
   public dec_TotalHaber: number = 0;
   public dec_Dif: number = 0; 
@@ -454,8 +453,9 @@ public v_Enter_Reembolso(event: any) {
         next: (data) => {
 
 
-          dialogRef.close();
+          if (!this.esModal) dialogRef.close();
           let _json: any = data;
+
 
           if (_json["esError"] == 1) {
             if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
@@ -521,18 +521,18 @@ public v_Enter_Reembolso(event: any) {
 
   public SetDt(): void {
 
-    let i: number = this.V_Agregar(true);
+    // let i: number = this.V_Agregar(true);
 
 
-    setTimeout(() => {
+    // setTimeout(() => {
      
-      let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i); 
+    //   let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i); 
       
-      let det = this.lstDetalle.data.find(y => y.NoLinea == i);
-      let Doc = this.val.Get("txtNoDoc").value;
-      det!.Referencia = Doc == undefined ? this.val.Get("txtBeneficiario").value : this.val.Get("txtNoDoc").value  + ' ' + this.val.Get("txtBeneficiario").value ;         
+    //   let det = this.lstDetalle.data.find(y => y.NoLinea == i);
+    //   let Doc = this.val.Get("txtNoDoc").value;
+    //   det!.Referencia = Doc == undefined ? this.val.Get("txtBeneficiario").value : this.val.Get("txtNoDoc").value  + ' ' + this.val.Get("txtBeneficiario").value ;         
        
-    }, 250);
+    // }, 250);
 
   }
 
@@ -590,7 +590,7 @@ public v_Enter_Reembolso(event: any) {
       let i_Cuenta: iCuenta = this.lstCuenta.find(f => f?.CuentaContable == event.newValue[0])!;
 
 
-      det.Descripcion = i_Cuenta.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
+      det.Descripcion = i_Cuenta?.NombreCuenta.replaceAll(i_Cuenta.CuentaContable, "");
       det.Naturaleza = i_Cuenta?.Naturaleza;
 
       document.getElementById("txtReferencia" + det.NoLinea)?.removeAttribute("disabled");
@@ -631,34 +631,34 @@ public v_Enter_Reembolso(event: any) {
   // }
 
   public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
- 
+
     if (event.added.length == 1) {
       let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + det.NoLinea);
 
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
       det.CentroCosto = event.newValue[0];
 
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) txtCentro.close();
+      txtCentro.close();
 
     }
 
 
   }
-
   public v_Enter_CentroCosto(event: any, det: iAsientoDetalle) {
 
     if (event.key == "Enter") {
       let txtCentro: any = this.cmbCombo.find(f => f.id == "txtCentroCosto" + det.NoLinea);
 
-      let cmb : any = txtCentro.dropdown;
+      let cmb: any = txtCentro.dropdown;
 
       let _Item: iCentroCosto = cmb._focusedItem.value;
-      if(!txtCentro.selection.includes(det.CentroCosto)) txtCentro.setSelectedItem(_Item.Codigo);
+      if (!txtCentro.selection.includes(det.CentroCosto)) txtCentro.setSelectedItem(_Item.Codigo);
       this.valTabla.Get("txtCentroCosto" + det.NoLinea).setValue([_Item.Codigo]);
       txtCentro.close();
     }
 
   }
+
 
   public V_FocusOut(columna: string, det: iAsientoDetalle) {
 
@@ -1004,7 +1004,8 @@ public v_Enter_Reembolso(event: any) {
 
   
   public v_Guardar() : void{
-    this.val.Combo(this.cmbCombo);
+    
+    //this.val.Combo(this.cmbCombo);
 
     this.val.EsValido();
     this.valTabla.EsValido();
@@ -1049,6 +1050,9 @@ public v_Enter_Reembolso(event: any) {
     this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;
     this.FILA.TasaCambio = this.val.Get("TxtTC").value;
     this.FILA.Concepto = this.val.Get("txtConcepto").value;
+    this.FILA.Comision = 0;
+    this.FILA.ComisionCordoba = 0;
+    this.FILA.ComisionDolar = 0;
     this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
     this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
     this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
@@ -1061,9 +1065,12 @@ public v_Enter_Reembolso(event: any) {
       let i_C = this.lstReembolsos.find(f => f.NombreCuenta == this.val.Get("cmbReembolsoC").value[0])
       let id = i_C?.IdIngresoCajaChica;
       this.FILA.IdIngresoCaja = id;
-      this.FILA.CuentaIngCaja = i_C?.Cuenta!;
+      this.FILA.CuentaIngCaja = i_C?.Cuenta!;      
     }
-   
+    else {
+      this.FILA.IdIngresoCaja = 0;
+      this.FILA.CuentaIngCaja = "0";
+    }
 
 
 
@@ -1073,10 +1080,10 @@ public v_Enter_Reembolso(event: any) {
 
     Asiento.NoDocOrigen = this.FILA.NoCheque;
     Asiento.IdSerieDocOrigen = this.FILA.IdSerie;
-    Asiento.TipoDocOrigen = "CHEQUE";
+    Asiento.TipoDocOrigen = "CHEQUE A CUENTA";
 
     Asiento.IdSerie = Asiento.IdSerieDocOrigen;
-    if(!this.esModal) Asiento.NoAsiento = "";
+    //if(!this.esModal) Asiento.NoAsiento = "";
     Asiento.Bodega = this.FILA.CodBodega;
     Asiento.Fecha = this.FILA.Fecha;
     Asiento.Referencia = this.FILA.Beneficiario;
@@ -1084,24 +1091,25 @@ public v_Enter_Reembolso(event: any) {
     Asiento.IdMoneda = String(CuentaBancaria?.IdMoneda);
     Asiento.TasaCambio = this.val.Get("TxtTC").value;
     Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalle.data));
-    Asiento.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
-    Asiento.TotalML = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
-    Asiento.TotalMS = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    Asiento.Total = this.FILA.Total;
+    Asiento.TotalML = this.FILA.TotalCordoba;
+    Asiento.TotalMS = this.FILA.TotalDolar;
     Asiento.UsuarioReg = this.FILA.UsuarioReg;
     Asiento.FechaReg = new Date();
+    Asiento.Estado = "";
 
-    Asiento.AsientosContablesDetalle.forEach(f =>{
-      f.CuentaContable = f.CuentaContable[0]      
-      if(f.CentroCosto != undefined) f.CentroCosto = f.CentroCosto[0];
+    Asiento.AsientosContablesDetalle.forEach(f => {
+      f.CuentaContable = f.CuentaContable[0];
+      if (f.CentroCosto != undefined) f.CentroCosto = f.CentroCosto[0];
     });
 
 
-    if (!this.esModal) {
+    //if (!this.esModal) {
       Asiento.IdPeriodo = 0;
       Asiento.Estado = "AUTORIZADO";
       Asiento.TipoAsiento = "ASIENTO BASE"
-
-    }
+      Asiento.NoAsiento = "";
+    //}
 
 
     let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
@@ -1196,36 +1204,44 @@ public v_Enter_Reembolso(event: any) {
         this.val.Get("txtTotalCordoba").disable();
     }
   }
+
+
   
-  public v_Contabilizar(): void{
+  
+  public v_Contabilizar(): void{    
 
-    //this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+    let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+    
+    this.lstDetalle.data.forEach(f =>{
 
-    this.lstDetalle.data.splice(1);
+      this.valTabla.del("txtCuenta" + f.NoLinea);
+      this.valTabla.del("txtReferencia" + f.NoLinea);
+      this.valTabla.del("txtCentroCosto" + f.NoLinea);
+      this.valTabla.del("txtDebito" + f.NoLinea);
+      this.valTabla.del("txtCredito" + f.NoLinea);
 
+    });
+
+    this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
+      this.valTabla = new Validacion();
+      this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+      this.valTabla.add("txtReferencia1", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+      this.valTabla.add("txtCentroCosto1", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+
+
+      this.lstDetalle.data.push(detBanco);
+
+      this.lstDetalle._updateChangeSubscription();
+  
+    
     this.suma = 0.0;
     this.ret1 = 0.0;
     this.ret2 = 0.0;
     this.ret3 = 0.0;
     this.ValorC = 0.0;
-    this.sumaDebito = 0.0;
+    this.sumaDebito = 0.0;    
 
-    // this.val.EsValido();
-    // this.valTabla.EsValido();
-
-
-    // if (this.val.Errores != "") {
-    //   this.cFunciones.DIALOG.open(DialogErrorComponent, {
-    //     data: this.val.Errores,
-    //   });
-
-    //   return;
-    // }
-
-    if ( this.IdMoneda == this.cFunciones.MonedaLocal) {
-
-      // this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
-      // this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
+    if ( this.IdMoneda == this.cFunciones.MonedaLocal) {      
 
       if (Number(this.Valor) == 0 ) {
         this.val.replace("txtTotalCordoba", "1", "NUM>", "0", "Total Cordoba");    
@@ -1311,17 +1327,19 @@ public v_Enter_Reembolso(event: any) {
         
       }
 
-      if(this.val.ItemValido(["cmbCuentaBancaria"])) {
-        let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
-        if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          this.V_Add(item.CuentaNuevaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",(this.Valor - this.suma) +  this.sumaDebito ,"C");
-        } else {
-          this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  - this.cFunciones.Redondeo(this.suma,"2") +  this.cFunciones.Redondeo(this.sumaDebito,"2")
-          this.V_Add(item.CuentaNuevaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC ,"C");
-        }
+      // if(this.val.ItemValido(["cmbCuentaBancaria"])) {
+      //   let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
+      //   if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+      //     this.V_Add(item.CuentaNuevaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",(this.Valor - this.suma) +  this.sumaDebito ,"C");
+      //   } else {
+      //     this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  - this.cFunciones.Redondeo(this.suma,"2") +  this.cFunciones.Redondeo(this.sumaDebito,"2")
+      //     this.V_Add(item.CuentaNuevaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC ,"C");
+      //   }
         
 
-       }
+      //  }
+
+
        if (this.val.Get("txtTcCompraD").value > 0) {
 
         this.ret1 = this.Valor / this.TC
@@ -1331,6 +1349,9 @@ public v_Enter_Reembolso(event: any) {
         this.V_Add("7101-04-01-0004",this.val.Get("txtBeneficiario").value,"",this.cFunciones.Redondeo(this.ret3 , "2"),"D");
         // this.sumaDebito = this.cFunciones.Redondeo(this.ret3,"2")
       }
+
+      detBanco.Credito = (this.Valor - this.suma).toString();
+      this.V_Calcular();
 
   }
 
@@ -1438,7 +1459,7 @@ public v_Enter_Reembolso(event: any) {
 
 
 
-    this.GET.GetRptCheque(this.val.Get("txtNoDoc").value).subscribe(
+    this.GET.GetRptCheques(this.val.Get("txtNoDoc").value).subscribe(
       {
         next: (data) => {
 
@@ -1486,6 +1507,160 @@ public v_Enter_Reembolso(event: any) {
 
 
   }
+
+
+  public V_Imprimir(Exportar : boolean) {
+  
+      let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+        DialogoConfirmarComponent,
+        {
+          panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+          disableClose: true
+        }
+      );
+  
+  
+  
+      dialogRef.afterOpened().subscribe(s => {
+        dialogRef.componentInstance.textBoton1 = "CORDOBA";
+        dialogRef.componentInstance.textBoton2 = "DOLARES";
+        dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
+        dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
+        dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>"+ (Exportar ? "EXPORTAR" : "IMPRIMIR") +"</b></p><p style='text-align: center'><b style='color: blue'>" + this.val.Get("txtNoDoc").value + "</b></p>")
+  
+      });
+  
+  
+      dialogRef.afterClosed().subscribe(s => {
+  
+        if (dialogRef.componentInstance.retorno == "0") {
+          this.V_ImprimirDoc(Exportar, "");
+        }
+  
+        if (dialogRef.componentInstance.retorno == "1") {
+       
+          this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal);
+        }
+  
+      });
+  
+  
+  
+    }
+
+
+  private V_ImprimirDoc(Exportar: boolean, Moneda : string): void {
+
+
+
+  document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.setAttribute("disabled", "disabled");
+
+  let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+
+  if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+          WaitComponent,
+          {
+              panelClass: "escasan-dialog-full-blur",
+              data: "",
+              id: "wait"
+          }
+      );
+
+  }
+
+
+
+
+  this.GET.GetRptCheque(this.FILA.IdCheque, Moneda, Exportar).subscribe(
+      {
+          next: (data) => {
+
+
+              dialogRef.close();
+              let _json: any = data;
+    
+              if (_json["esError"] == 1) {
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    id: "error-servidor-msj",
+                    data: _json["msj"].Mensaje,
+                  });
+                }
+              }
+              else {
+    
+                this.V_GenerarDoc(_json["d"], Exportar);
+
+              }
+
+              
+
+          },
+          error: (err) => {
+
+              document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.removeAttribute("disabled");
+
+              dialogRef.close();
+
+              if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                      id: "error-servidor",
+                      data: "<b class='error'>" + err.message + "</b>",
+                  });
+              }
+
+          },
+          complete: () => {
+              document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.removeAttribute("disabled");
+
+          }
+      }
+  );
+
+
+}
+
+private V_GenerarDoc(Datos: iDatos, Exportar: boolean) {
+
+
+  let byteArray = new Uint8Array(atob(Datos.d).split('').map(char => char.charCodeAt(0)));
+
+  var file = new Blob([byteArray], { type: (Exportar ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/pdf') });
+
+
+  let url = URL.createObjectURL(file);
+
+ 
+  var fileLink = document.createElement('a');
+  fileLink.href = url;
+  fileLink.download = Datos.Nombre;
+
+
+  if (Exportar) {
+
+      var fileLink = document.createElement('a');
+      fileLink.href = url;
+      fileLink.download = Datos.Nombre;
+      fileLink.click();
+      document.body.removeChild(fileLink);
+  }
+  else {
+      let tabOrWindow: any = window.open('',  '_blank');
+      tabOrWindow.document.body.appendChild(fileLink);
+
+      tabOrWindow.document.write("<html><head><title>"+Datos.Nombre+"</title></head><body>"
+          + '<embed width="100%" height="100%" name="plugin" src="'+ url+ '" '
+          + 'type="application/pdf" internalinstanceid="21"></body></html>');
+
+      tabOrWindow.focus();
+  }
+
+
+
+}
+
 
 
   async printPDFS(datos: any) {
@@ -1613,7 +1788,7 @@ public v_Enter_Reembolso(event: any) {
 
           let cBanco : any = this.lstCuentabancaria.find(w => w.IdCuentaBanco == this.cmbCuentaBancaria?.value[0]);
 
-          txtCuenta?.setSelectedItem(cBanco?.IdMoneda == this.cFunciones.MonedaLocal? cBanco?.CuentaNuevaC : cBanco?.CuentaNuevaD);
+          txtCuenta.setSelectedItem(cBanco?.IdMoneda == this.cFunciones.MonedaLocal? cBanco?.CuentaNuevaC : cBanco?.CuentaNuevaD);
 
           document.getElementById("txtCuenta" + f.NoLinea)?.setAttribute("disabled", "disabled");
 
@@ -1643,8 +1818,8 @@ public v_Enter_Reembolso(event: any) {
 
 
   ngAfterViewInit(): void {
-    $("#offcanvasBottom-trans-cuenta").removeAttr("show");
-    $("#btnMostrarPie-trans-cuenta").trigger("click"); 
+    $("#offcanvasBottom-cheque-cuenta").removeAttr("show");
+    $("#btnMostrarPie-cheque").trigger("click");
 
   }
 

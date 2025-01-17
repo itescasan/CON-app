@@ -42,8 +42,12 @@ export class getCheques{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Cheques/GetDetalleDocumentos?IdCheque=" + IdCheque); 
     }
     
-    public GetRptCheque(NoAsiento: string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Cheque?NoAsiento=" + NoAsiento);
+    public GetRptCheque(NoAsiento: string,IdMoneda : string, Exportar : boolean): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Cheque?NoAsiento=" + NoAsiento + IdMoneda + "&Exportar=" + Exportar);
+    }
+
+    public GetRptCheques(NoAsiento: string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/Cheque?NoAsiento=" + NoAsiento );
     }
 
     public GetReembolsoD(id : any): Observable<string> {

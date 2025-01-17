@@ -1,28 +1,68 @@
-<div class="app-cheque-cuenta">
-    <div class="contenedor-padre">
-        <div class="contenedor-cheques">
-            <div class="escasan-dialog" *ngIf="esModal">
-                <div class="btn-contenedor-custom">
-                    <button class="close-button custom-cerrar" [mat-dialog-close]="true">
-                        <mat-icon class="close-icon" color="warn">close</mat-icon>
-                    </button>
-                </div>
+<div  [ngClass]="esModal? 'app-cheque no-top' : 'app-cheque'">
+
+    <div class="contenedor-cheques mb-1">
+        <div class="escasan-dialog" *ngIf="esModal">
+            <div class="btn-contenedor-custom">
+                <button mat-button class="close-button custom-cerrar" [mat-dialog-close]="true">
+                    <mat-icon class="close-icon" color="warn">close</mat-icon>
+                </button>
             </div>
+        </div>
             
             <form autocomplete="off" [formGroup]="val.ValForm">
                 <div class="card">
                     <div class="card-header card-escasan-header opcional">
-                        <div>
-                            Cheques
-                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-8 titulo">
+                                Cheques
+                            </div>
         
-                        <div class="Contenedor-offcanvas">
-                            <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasBottom-trans-cuenta" aria-controls="offcanvasBottom-trans-cuenta"
-                                id="btnMostrarPie-trans-cuenta"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
-                                Totales</button>
+                            <div class="col-12 col-md-4">
+
+                                <div class="row">
+
+                                    <div class="col-8">
+                                        @if(FILA.IdCheque != "00000000-0000-0000-0000-000000000000")
+                                        {
+                                            <div class="row">
+
+                                                <div class="col-6">
+                                                    <button class="btn btn-secundario" type="button" id="btnImprimir-cheque" (click)="v_ImprimirCheque();"
+                                                    ><i class="fa-solid fa-print fa-beat-fade fa-lg"></i>
+                                                    Imprimir</button>
+                                                </div>
+
+                                                <!-- <div class="col-6">
+                                                    <button class="btn btn-secundario" type="button" id="btnImprimir-cheque" (click)="V_Imprimir(true);"
+                                                    ><i class="fa-solid fa-file-excel fa-beat-fade fa-lg"></i>
+                                                    Exportar</button>
+                                                </div> -->
+
+
+                                            </div>
+                                        
+                                            
+                                        }
+                                        
+                                    </div>
+
+                                    <div class="col-4">
+                                        <div class="Contenedor-offcanvas">
+                                            <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas"
+                                                data-bs-target="#offcanvasBottom-cheque-cuenta" aria-controls="offcanvasBottom-cheque-cuenta" id="btnMostrarPie-cheque"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
+                                                Totales</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            
+                            </div>
                         </div>
+                        
+                        
                     </div>
+
+
                     <div class="card-body">
                         <div class="row linea-bottom-primario">
         
@@ -171,7 +211,7 @@
                                         <div class="input-group">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" placeholder="A Nombre de" id="txtBeneficiario"
-                                                    formControlName="txtBeneficiario" (keyup)="SetDt()">
+                                                    formControlName="txtBeneficiario">
                                                 <label for="txtBeneficiario">A Nombre de</label>
                                             </div>
                 
@@ -286,8 +326,8 @@
         
         
             </form>
-        </div>
 
+        </div>    
 
         <div class="contenedor-cheques mt-2">
             <div class="row g-1 header">
@@ -446,18 +486,17 @@
                 </div>
                 <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
                     <ng-template matMenuContent let-item="item">
-                        <button mat-menu-item (click)="V_Agregar(false)"><i class="fas fa-plus fa-lg"></i>Agregar</button>
-                        <button mat-menu-item (click)="V_Eliminar(item)" *ngIf="lstDetalle.data.length > 1"><i
+                        <button mat-menu-item (click)="V_Agregar(false)" id="btn-FilaNueva-Transferencia"><i class="fas fa-plus fa-lg"></i>Agregar</button>
+                        <button mat-menu-item (click)="V_Eliminar(item)" *ngIf=" item.NoLinea != 1"><i
                                 class="fas fa-eraser fa-lg"></i>Eliminar</button>
-                    </ng-template>
+                    </ng-template>                   
                 </mat-menu>
             </div>
         
         </div>
         
 
-        <div class="offcanvas offcanvas-bottom" tabindex="-1" data-bs-scroll="true" data-bs-backdrop="false"
-            id="offcanvasBottom-trans-cuenta" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasBottom-cheque-cuenta" aria-labelledby="offcanvasBottomLabel">
             <div class="offcanvas-header">
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
@@ -498,13 +537,13 @@
     
                         <div class="botones" *ngIf="!Anulado">
                             <div>
-                                <button type="button" class="btn btn-secundario" id="btnRefrescar-Transferencia"
+                                <button type="button" class="btn btn-secundario" id="btnRefrescar-Cheques"
                                     (click)="v_CargarDatos();"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>
                                     Refrescar</button>
                             </div>
     
                             <div class="botones-edicion">
-                                <button type="button" class="btn btn-primario" id="btnGuardar-Transferencia-Cuenta"
+                                <button type="button" class="btn btn-primario" id="btnGuardar-Asiento"
                                     (click)="v_Guardar();"><i class="fa-solid fa-floppy-disk fa-beat-fade fa-lg"></i>
                                     Guardar</button>
     
@@ -519,7 +558,7 @@
             </div>
         </div>
 
-    </div>
+    
 </div>
 
 
