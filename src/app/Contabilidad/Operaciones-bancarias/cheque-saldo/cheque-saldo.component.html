@@ -1,4 +1,4 @@
-<div  [ngClass]="esModal? 'app-cheque no-top' : 'app-cheque'">
+<div  [ngClass]="esModal? 'app-cheque-saldo no-top' : 'app-cheque-saldo'">
 
 <div class="contenedor-cheques mb-1">
     <div class="escasan-dialog" *ngIf="esModal">
@@ -10,10 +10,7 @@
     </div>
 
             <form autocomplete="off" [formGroup]="val.ValForm">
-
-
                 <div class="card">
-
                     <div class="card-header card-escasan-header opcional">
                         <div class="row">
                             <div class="col-12 col-md-8 titulo">
@@ -52,7 +49,7 @@
                                     <div class="col-4">
                                         <div class="Contenedor-offcanvas">
                                             <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas"
-                                                data-bs-target="#offcanvasBottom-cheque-cuenta" aria-controls="offcanvasBottom-cheque-cuenta" id="btnMostrarPie-cheque"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
+                                                data-bs-target="#offcanvasBottom-cheque-saldo" aria-controls="offcanvasBottom-cheque-saldo" id="btnMostrarPie-cheque"><i class="fa-solid fa-eye fa-beat-fade fa-lg"></i>
                                                 Totales</button>
                                         </div>
                                     </div>
@@ -534,7 +531,7 @@
 
 
 
-        <div class="offcanvas offcanvas-bottom" tabindex="-1" data-bs-scroll="true" data-bs-backdrop="false"  id="offcanvasBottom-tranf-saldo" aria-labelledby="offcanvasBottomLabel">
+        <div class="offcanvas offcanvas-bottom" tabindex="-1" data-bs-scroll="true" data-bs-backdrop="false"  id="offcanvasBottom-cheque-saldo" aria-labelledby="offcanvasBottomLabel">
             <div class="offcanvas-header">
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
@@ -558,7 +555,7 @@
 
                         </div>
 
-                        <div class="botones">
+                        <div class="botones" *ngIf="!Anulado">
                             <div>
                                 <button type="button" class="btn btn-secundario" id="btnRefrescar-Cheque"
                                     (click)="v_CargarDatos();" *ngIf="!Anulado"><i class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>

@@ -1061,7 +1061,7 @@ export class ChequesSaldoComponent {
       this.Asiento.IdPeriodo = 0;
       this.Asiento.Estado = "AUTORIZADO";
       this.Asiento.TipoAsiento = "ASIENTO BASE";
-      this.Asiento.NoAsiento = "";
+      this.Asiento.NoAsiento = ""; 
   
   
   
@@ -1080,7 +1080,7 @@ export class ChequesSaldoComponent {
      
        let Cuenta : string = i_Prov.CUENTAXPAGAR;
 
-       if(TipoDo.includes( det.TipoDocumento ))
+       if(TipoDo.includes( f.TipoDocumento ))
        {
         Cuenta = "";
         if(OrdComp.length > 0) 
@@ -1660,74 +1660,73 @@ export class ChequesSaldoComponent {
   }
 
 
-  public v_ImprimirCheque() {
-    document.getElementById("btnImprimir-Cheques")?.setAttribute("disabled", "disabled");
-    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
-
-
-    if (dialogRef == undefined) {
-      dialogRef = this.cFunciones.DIALOG.open(
-        WaitComponent,
-        {
-          panelClass: "escasan-dialog-full-blur",
-          data: "",
-          id: "wait"
-        }
-      );
-
-    }
-
-
-
-    // this.GET.GetRptCheque(this.val.Get("txtNoDoc").value).subscribe(
-    //   {
-    //     next: (data) => {
-
-
-    //       dialogRef.close();
-    //       let _json: any = data;
-
-    //       if (_json["esError"] == 1) {
-    //         if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-    //           this.cFunciones.DIALOG.open(DialogErrorComponent, {
-    //             id: "error-servidor-msj",
-    //             data: _json["msj"].Mensaje,
-    //           });
-    //         }
-    //       } else {
-
-    //         let datos: iDatos = _json["d"];
-    //         this.printPDFS(datos.d);
-
-
-
-    //       }
-
-    //     },
-    //     error: (err) => {
-
-
-    //       dialogRef.close();
-    //       document.getElementById("btnReporte-Cheque")?.removeAttribute("disabled");
-    //       if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-    //         this.cFunciones.DIALOG.open(DialogErrorComponent, {
-    //           id: "error-servidor",
-    //           data: "<b class='error'>" + err.message + "</b>",
-    //         });
-    //       }
-
-    //     },
-    //     complete: () => {
-    //       document.getElementById("btnImprimir-Cheques")?.removeAttribute("disabled");
-
-
-    //     }
-    //   }
-    // );
-
-
-  }
-  
+ public v_ImprimirCheque() {
+     document.getElementById("btnImprimir-Cheques")?.setAttribute("disabled", "disabled");
+     let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+ 
+ 
+     if (dialogRef == undefined) {
+       dialogRef = this.cFunciones.DIALOG.open(
+         WaitComponent,
+         {
+           panelClass: "escasan-dialog-full-blur",
+           data: "",
+           id: "wait"
+         }
+       );
+ 
+     }
+ 
+ 
+ 
+     this.GET.GetRptCheques(this.val.Get("txtNoDoc").value).subscribe(
+       {
+         next: (data) => {
+ 
+ 
+           dialogRef.close();
+           let _json: any = data;
+ 
+           if (_json["esError"] == 1) {
+             if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+               this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                 id: "error-servidor-msj",
+                 data: _json["msj"].Mensaje,
+               });
+             }
+           } else {
+ 
+             let datos: iDatos = _json["d"];
+             this.printPDFS(datos.d);
+ 
+ 
+ 
+           }
+ 
+         },
+         error: (err) => {
+ 
+ 
+           dialogRef.close();
+           document.getElementById("btnReporte-Cheque")?.removeAttribute("disabled");
+           if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+             this.cFunciones.DIALOG.open(DialogErrorComponent, {
+               id: "error-servidor",
+               data: "<b class='error'>" + err.message + "</b>",
+             });
+           }
+ 
+         },
+         complete: () => {
+           document.getElementById("btnImprimir-Cheques")?.removeAttribute("disabled");
+ 
+ 
+         }
+       }
+     );
+ 
+ 
+   }
    //██████████████████████████████████████████POPUP██████████████████████████████████████████████████████
 
    @ViewChild(MatMenuTrigger)
@@ -1964,8 +1963,8 @@ export class ChequesSaldoComponent {
   }
 
   ngAfterViewInit(): void {
-    $("#offcanvasBottom-tranf-saldo").removeAttr("show");
-    $("#btnMostrarPie-tranf-saldo").trigger("click"); 
+    $("#offcanvasBottom-cheque-saldo").removeAttr("show");
+    $("#btnMostrarPie-cheque-saldo").trigger("click"); 
 
   }
 }
