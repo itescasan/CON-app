@@ -548,6 +548,8 @@ export class TransferenciaSaldoComponent {
 
 
   public V_Selecionar(det: any) {
+
+    if(det.Operacion != "Cancelación") det.Seleccionar = false
 /*
     setTimeout(() => {
 
@@ -773,6 +775,8 @@ export class TransferenciaSaldoComponent {
       }
 
       if (NuevoSaldo == 0) f.Operacion = "Cancelación";
+      
+      if(f.Operacion != "Cancelación" && f.Seleccionar) f.Seleccionar = false;
 
 
       f.Importe = this.cFunciones.NumFormat(Importe, "2");
@@ -802,7 +806,7 @@ export class TransferenciaSaldoComponent {
           let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
           //let SubTotal: number = Importe;
           let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "2");
-          r.Monto = this.cFunciones.NumFormat(Ret, "2");
+          if(!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "2");
         }
 
 
@@ -1772,12 +1776,13 @@ export class TransferenciaSaldoComponent {
             Monto: f.Monto,
             PorcImpuesto: f.PorcImpuesto,
             TieneImpuesto: f.TieneImpuesto,
-            CuentaContable: f.CuentaContable
+            CuentaContable: f.CuentaContable,
+            RetManual : f.RetManual
           });
 
           i++;
 
-          dialogRef.componentInstance.V_Calcular(i);
+          dialogRef.componentInstance.V_Calcular(i, undefined);
 
         });
 
@@ -1807,12 +1812,13 @@ export class TransferenciaSaldoComponent {
             Monto: f.Monto,
             PorcImpuesto: f.PorcImpuesto,
             TieneImpuesto: f.TieneImpuesto,
-            CuentaContable: f.CuentaContable
+            CuentaContable: f.CuentaContable,
+            RetManual : f.RetManual
           });
 
           i++;
 
-          dialogRef.componentInstance.V_Calcular(i);
+          dialogRef.componentInstance.V_Calcular(i, undefined);
 
         });
 
@@ -1863,6 +1869,7 @@ export class TransferenciaSaldoComponent {
         r.TieneImpuesto = f.TieneImpuesto;
         r.PorcImpuesto = f.PorcImpuesto;
         r.CuentaContable = f.CuentaContable;
+        r.RetManual = f.RetManual;
 
 
 

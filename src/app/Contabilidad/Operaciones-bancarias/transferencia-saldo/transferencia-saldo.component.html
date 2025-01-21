@@ -356,13 +356,17 @@
                                     <div class="row">
 
                                         <span *ngIf="det.Retenido"><i class="fa-solid fa-r"></i></span>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"  id="txtOperacion{{det.Index}}"
-                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Seleccionar" (click)="V_Selecionar(det)">
-                                            <label class="form-check-label center blue blod" for="txtOperacion{{det.Index}}">
-                                              {{det.Operacion}}
-                                            </label>
-                                          </div>
+                                         @if(det.Operacion == 'Cancelación')
+                                         {
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox"  id="txtOperacion{{det.Index}}"
+                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Seleccionar" (click)="V_Selecionar(det)">
+                                                <label class="form-check-label center blue blod" for="txtOperacion{{det.Index}}">
+                                                  {{det.Operacion}}
+                                                </label>
+                                              </div>
+                                         }
+                                       
 
 
         
@@ -502,14 +506,21 @@
         
         
                 </table>
+
+            
         
                 <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
                     [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
                 </div>
                 <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
                     <ng-template matMenuContent let-item="item">
+                        @if(item.Operacion == 'Cancelación')
+                        {
+                             
                         <button mat-menu-item (click)="V_Retener(item)" id="btn-trans-retencion"><i
-                                class="fa-solid fa-sack-dollar primario"></i> Retención</button>
+                            class="fa-solid fa-sack-dollar primario"></i> Retención</button>
+                        }
+                       
                     </ng-template>
                 </mat-menu>
             </div>

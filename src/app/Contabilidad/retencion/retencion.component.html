@@ -27,7 +27,7 @@
                                 <div class="row"><span class="cell">
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="chk{{det.Index}}"  [(ngModel)]="det.Seleccionar" (click)="V_Calcular(det.Index)">
+                                        <input class="form-check-input" type="checkbox" value="" id="chk{{det.Index}}"  [(ngModel)]="det.Seleccionar" (click)="V_Calcular(det.Index, false)">
                                         <label class="form-check-label" for="chk{{det.Index}}">
                                             {{det.Retencion}}
                                         </label>
@@ -53,7 +53,19 @@
 
 
                             <div class="col-6">
-                                <div class="row"><span class="right">{{det.Monto == "0" ? "" : det.Monto }}</span></div>
+
+
+                                <div class="row">
+                                    <!-- <span class="right">{{det.Monto == "0" ? "" : det.Monto }}</span>
+                                -->
+
+                                    <input type="text" class="form-control numero importe" id="Importe{{det.Index}}"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Monto"
+                                    (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
+                                    (change)="V_Calcular(det.Index, true);" autocomplete="off">
+
+                                   
+                                </div>
     
     
     
