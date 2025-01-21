@@ -50,6 +50,7 @@ export class NuevoChequeComponent {
   private ret2 : number = 0.0;
   private ret3 : number = 0.0;
   private ValorC : number = 0.0;
+  private ValorCheque : number = 0.0;
 
   texto: string = '';
 
@@ -1056,6 +1057,7 @@ public v_Enter_Reembolso(event: any) {
     this.FILA.Total = this.lstDetalle.data.reduce((acc, cur) => acc + Number(String(cur.Credito).replaceAll(",", "")), 0);
     this.FILA.TotalCordoba = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
     this.FILA.TotalDolar = this.lstDetalle.data.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+    this.FILA.ValorCheque = this.ValorCheque;
     this.FILA.UsuarioReg = this.cFunciones.User;    
     if(!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoCheque = "C";
@@ -1093,7 +1095,7 @@ public v_Enter_Reembolso(event: any) {
     Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalle.data));
     Asiento.Total = this.FILA.Total;
     Asiento.TotalML = this.FILA.TotalCordoba;
-    Asiento.TotalMS = this.FILA.TotalDolar;
+    Asiento.TotalMS = this.FILA.TotalDolar;    
     Asiento.UsuarioReg = this.FILA.UsuarioReg;
     Asiento.FechaReg = new Date();
     Asiento.Estado = "";
@@ -1351,6 +1353,8 @@ public v_Enter_Reembolso(event: any) {
       }
 
       detBanco.Credito = (this.Valor - this.suma).toString();
+      this.ValorCheque = Number(detBanco.Credito);
+      
       this.V_Calcular();
 
   }

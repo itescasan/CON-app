@@ -406,7 +406,7 @@ export class EjercicioFiscalComponent {
       
 
       let Fecha : Date = new Date(this.val.Get("idFechaIni").value, i, 1);
-      let FechaFin = new Date(this.cFunciones.LastDay(Fecha));
+      let FechaFin = this.cFunciones.LastDay(Fecha);
       let mesActual = new Intl.DateTimeFormat('es-ES', { month: 'short'}).format(new Date(Fecha));
       //pipe = new DatePipe('en-US');
 
@@ -415,8 +415,8 @@ export class EjercicioFiscalComponent {
       periodo.NoPeriodo = i + 1;
       periodo.NombrePeriodo = mesActual.toUpperCase() + "-" + this.val.Get("idFechaIni").value;
       periodo.ClasePeriodo = 'Mensuales';
-      periodo.FechaInicio = new Date(Fecha).toDateString();
-      periodo.FechaFinal = new Date(FechaFin).toDateString();
+      periodo.FechaInicio = this.cFunciones.DateFormat(Fecha, "yyyy-MM-dd");
+      periodo.FechaFinal = FechaFin;
       periodo.Estado = 'BLOQUEADO';
       periodo.FechaReg = new Date();      
       periodo.UsuarioReg = this.cFunciones.User;

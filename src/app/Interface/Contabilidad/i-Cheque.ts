@@ -26,6 +26,7 @@ export interface iCheque {
     UsuarioReg : string;
     IdIngresoCaja: any;
     CuentaIngCaja: string;
+    ValorCheque: number;
     ChequeDocumento: iChequeDocumento[];
     ChequeRetencion: iRetencion[];
 }
