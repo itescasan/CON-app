@@ -354,11 +354,23 @@
                                         <div class="header-cell"><span>Operacion</span></div>
                                     </div>
                                     <div class="row">
-        
-        
+
                                         <span *ngIf="det.Retenido"><i class="fa-solid fa-r"></i></span>
-                                        <input type="text" class="form-control center blue blod" id="txtOperacion{{det.Index}}"
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"  id="txtOperacion{{det.Index}}"
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Seleccionar" (click)="V_Selecionar(det)">
+                                            <label class="form-check-label center blue blod" for="txtOperacion{{det.Index}}">
+                                              {{det.Operacion}}
+                                            </label>
+                                          </div>
+
+
+        
+        
+                                       <!--  <input type="text" class="form-control center blue blod" id="txtOperacion{{det.Index}}"
                                             [ngModelOptions]="{standalone: true}" [ngModel]="det.Operacion" disabled>
+                                          -->
+                                      
         
         
                                     </div>

@@ -139,6 +139,11 @@ input.center {
 
         margin-bottom: 150px;
 
+        input[type='checkbox']{
+            margin-left: 0px;
+            margin-right: 2px;
+        }
+
         input:disabled {
             background-color: transparent;
             border: 0;

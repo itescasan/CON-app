@@ -27,4 +27,5 @@ export interface iTransferenciaDocumento{
     SubTotal : number;
     Impuesto : number;
     PorcImpuesto : number;
+    Seleccionar : boolean;
 }
