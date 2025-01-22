@@ -229,6 +229,8 @@ export class TransferenciaCuentaComponent {
   
   public v_Select_Reembolso(event: any) {
    
+    let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+
     this.val.Get("cmbReembolsoC").setValue("");
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
@@ -238,7 +240,8 @@ export class TransferenciaCuentaComponent {
 
       if(this.Visualizando ) return;
     
-      let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+      
+     
 
       this.lstDetalle.data.forEach(f =>{
 
@@ -311,6 +314,9 @@ export class TransferenciaCuentaComponent {
      else{
 
       if(this.Visualizando ) return;
+
+      detBanco.Debito = "0";
+      detBanco.Credito = "0";
 
       let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
 
