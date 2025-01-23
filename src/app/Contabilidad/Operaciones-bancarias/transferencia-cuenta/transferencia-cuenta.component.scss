@@ -30,27 +30,12 @@
 
 }
 
+.titulo{
+    color: var(--escan-fondo);
+    text-align: center;
+}
 
-.card-escasan-header{
-    
-    div{
-     display: inline-block;
-    }
- 
- 
-     div:first-child{
-         color: var(--escan-fondo);
-         width: 80%;
-     }
- 
-     div:last-child{
-         color: var(--escan-fondo);
-         width: 20%;
-     }
- }
- 
 
-  
 
 //████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
 

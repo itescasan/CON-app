@@ -21,6 +21,7 @@ import { iTransferencia } from 'src/app/Interface/Contabilidad/i-Transferencia';
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 import { IReembolsos } from 'src/app/Interface/Contabilidad/i-Reembolsos';
 import { IReembolsosD } from 'src/app/Interface/Contabilidad/i-ReembolsoD';
+import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 @Component({
     selector: 'app-transferencia-cuenta',
     templateUrl: './transferencia-cuenta.component.html',
@@ -1110,6 +1111,127 @@ export class TransferenciaCuentaComponent {
     });
   }
 
+
+
+  
+  
+    public V_Imprimir(Exportar : boolean) {
+  
+      let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+        DialogoConfirmarComponent,
+        {
+          panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+          disableClose: true
+        }
+      );
+  
+  
+  
+      dialogRef.afterOpened().subscribe(s => {
+
+        dialogRef.componentInstance.textBoton1 = "CORDOBA";
+        dialogRef.componentInstance.textBoton2 = "DOLARES";
+        dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
+        dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
+        dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>"+ (Exportar ? "EXPORTAR" : "IMPRIMIR") +"</b></p><p style='text-align: center'><b style='color: blue'>" + this.val.Get("txtNoDoc").value + "</b></p>")
+  
+      });
+  
+  
+      dialogRef.afterClosed().subscribe(s => {
+  
+        if (dialogRef.componentInstance.retorno == "0") {
+          this.V_ImprimirDoc(Exportar, "",);
+        }
+  
+        if (dialogRef.componentInstance.retorno == "1") {
+       
+          this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal);
+        }
+  
+      });
+  
+  
+  
+    }
+  
+
+
+    
+      private V_ImprimirDoc(Exportar: boolean, Moneda : string): void {
+    
+    
+    
+      document.getElementById("btnImprimir-asiento-transferencia")?.setAttribute("disabled", "disabled");
+    
+      let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+    
+    
+      if (dialogRef == undefined) {
+          dialogRef = this.cFunciones.DIALOG.open(
+              WaitComponent,
+              {
+                  panelClass: "escasan-dialog-full-blur",
+                  data: "",
+                  id: "wait"
+              }
+          );
+    
+      }
+    
+    
+    
+    
+      this.GET.GetReporteAsiento(this.FILA.IdTransferencia, Moneda, Exportar).subscribe(
+          {
+              next: (data) => {
+    
+    
+                  dialogRef.close();
+                  let _json: any = data;
+        
+                  if (_json["esError"] == 1) {
+                    if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                        id: "error-servidor-msj",
+                        data: _json["msj"].Mensaje,
+                      });
+                    }
+                  }
+                  else {
+        
+                    this.V_GenerarDoc(_json["d"], Exportar);
+    
+                  }
+    
+                  
+    
+              },
+              error: (err) => {
+    
+                  document.getElementById("btnImprimir-asiento-transferencia")?.removeAttribute("disabled");
+    
+                  dialogRef.close();
+    
+                  if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                          id: "error-servidor",
+                          data: "<b class='error'>" + err.message + "</b>",
+                      });
+                  }
+    
+              },
+              complete: () => {
+                  document.getElementById("btnImprimir-asiento-transferencia")?.removeAttribute("disabled");
+    
+              }
+          }
+      );
+    
+    
+    }
+    
+  
 
   private V_GenerarDoc(Datos: iDatos, Exportar: boolean) {
 

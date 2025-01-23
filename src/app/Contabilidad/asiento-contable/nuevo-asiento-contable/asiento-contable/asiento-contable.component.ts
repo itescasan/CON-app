@@ -1082,7 +1082,7 @@ export class AsientoContableComponent {
 
 
 
-  document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.setAttribute("disabled", "disabled");
+  document.getElementById("btnImprimir-asiento")?.setAttribute("disabled", "disabled");
 
   let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
 
@@ -1129,7 +1129,7 @@ export class AsientoContableComponent {
           },
           error: (err) => {
 
-              document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.removeAttribute("disabled");
+              document.getElementById("btnImprimir-asiento")?.removeAttribute("disabled");
 
               dialogRef.close();
 
@@ -1142,7 +1142,7 @@ export class AsientoContableComponent {
 
           },
           complete: () => {
-              document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.removeAttribute("disabled");
+              document.getElementById("btnImprimir-asiento")?.removeAttribute("disabled");
 
           }
       }
