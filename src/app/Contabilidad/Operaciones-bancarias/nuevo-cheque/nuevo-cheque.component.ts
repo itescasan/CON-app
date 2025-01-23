@@ -305,9 +305,7 @@ public cmbReembolsoC: IgxComboComponent;
 
 public v_Select_Reembolso(event: any) {
 
-  // this.val.Get("txtTotalDolar").setValue("0.00");
-  // this.val.Get("txtTotalCordoba").setValue("0.00");
-
+  let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
   this.val.Get("cmbReembolsoC").setValue("");
   if (event.added.length == 1) {
     if(event.newValue.length > 1) event.newValue.splice(0, 1);
@@ -390,6 +388,9 @@ public v_Select_Reembolso(event: any) {
    else{
 
     if(this.Visualizando ) return;
+
+    detBanco.Debito = "0";
+    detBanco.Credito = "0";
 
     let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
 
