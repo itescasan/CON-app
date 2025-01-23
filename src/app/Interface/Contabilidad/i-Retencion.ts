@@ -16,4 +16,5 @@ export interface iRetencion{
     PorcImpuesto : number;
     TieneImpuesto : boolean;
     CuentaContable : string;
+    RetManual : boolean;
 }

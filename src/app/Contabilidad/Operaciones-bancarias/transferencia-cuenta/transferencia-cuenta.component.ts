@@ -229,6 +229,8 @@ export class TransferenciaCuentaComponent {
   
   public v_Select_Reembolso(event: any) {
    
+    let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+
     this.val.Get("cmbReembolsoC").setValue("");
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
@@ -238,7 +240,8 @@ export class TransferenciaCuentaComponent {
 
       if(this.Visualizando ) return;
     
-      let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+      
+     
 
       this.lstDetalle.data.forEach(f =>{
 
@@ -311,6 +314,9 @@ export class TransferenciaCuentaComponent {
      else{
 
       if(this.Visualizando ) return;
+
+      detBanco.Debito = "0";
+      detBanco.Credito = "0";
 
       let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
 
@@ -982,14 +988,22 @@ export class TransferenciaCuentaComponent {
 
 
             let Datos: iDatos[] = _json["d"];
-            let msj: string = Datos[0].d;
+            let msj: string = Datos[1].d;
 
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               data: "<p><b class='bold'>" + msj + "</b></p>"
             });
 
 
-            if (!this.esModal) this.v_Evento("Limpiar");
+
+            if (!this.esModal)
+              {
+                this.V_GenerarDoc(Datos[0], false);
+                this.v_Evento("Limpiar");
+              }
+
+            
+    
 
           }
 
@@ -1096,6 +1110,47 @@ export class TransferenciaCuentaComponent {
     });
   }
 
+
+  private V_GenerarDoc(Datos: iDatos, Exportar: boolean) {
+
+
+    let byteArray = new Uint8Array(atob(Datos.d).split('').map(char => char.charCodeAt(0)));
+  
+    var file = new Blob([byteArray], { type: (Exportar ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/pdf') });
+  
+  
+    let url = URL.createObjectURL(file);
+  
+   
+    var fileLink = document.createElement('a');
+    fileLink.href = url;
+    fileLink.download = Datos.Nombre;
+  
+  
+    if (Exportar) {
+  
+        var fileLink = document.createElement('a');
+        fileLink.href = url;
+        fileLink.download = Datos.Nombre;
+        fileLink.click();
+        document.body.removeChild(fileLink);
+    }
+    else {
+        let tabOrWindow: any = window.open('',  '_blank');
+        tabOrWindow.document.body.appendChild(fileLink);
+  
+        tabOrWindow.document.write("<html><head><title>"+Datos.Nombre+"</title></head><body>"
+            + '<embed width="100%" height="100%" name="plugin" src="'+ url+ '" '
+            + 'type="application/pdf" internalinstanceid="21"></body></html>');
+  
+        tabOrWindow.focus();
+    }
+  
+  
+  
+  }
+
+  
   ngOnInit(): void {
 
 

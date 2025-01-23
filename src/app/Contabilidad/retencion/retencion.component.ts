@@ -7,6 +7,7 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { getTransferencia } from '../Operaciones-bancarias/CRUD/GET/get-Transferencia';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { MatTableDataSource } from '@angular/material/table';
+import { Validacion } from 'src/app/SHARED/class/validacion';
 
 export interface iRet {
   Seleccionar: boolean;
@@ -22,6 +23,7 @@ export interface iRet {
   PorcImpuesto : number;
   TieneImpuesto : boolean;
   CuentaContable : string;
+  RetManual : boolean;
 }
 
 
@@ -32,18 +34,21 @@ export interface iRet {
     standalone: false
 })
 export class RetencionComponent {
-
+  public val = new Validacion();
   public lstRetencion = new MatTableDataSource<iRet>;
   displayedColumns: string[] = ["col1"];
 
 
-  public Doc: any;
+  public Doc: any[];
+  public NoDocumento: string = "";
 
 
 
   constructor(private dialog: MatDialog, public dialogRef: MatDialogRef<RetencionComponent>,
-    private cFunciones: Funciones, private GET: getTransferencia, @Inject(MAT_DIALOG_DATA) public data: any[],) {
+    public cFunciones: Funciones, private GET: getTransferencia, @Inject(MAT_DIALOG_DATA) public data: any[],) {
     this.Doc = data[0];
+    this.NoDocumento = data[1];
+
 
 
   }
@@ -75,7 +80,19 @@ export class RetencionComponent {
 
 
 
-    this.GET.BuscarTiposRetenciones(this.Doc.Documento, this.Doc.TipoDocumento).subscribe(
+
+    let Docs : string = "";
+    this.Doc.forEach(f =>{
+
+      Docs += f.Documento + f.TipoDocumento + ";";
+
+    });
+
+
+    Docs = Docs.substring(0, Docs.length -1);
+
+
+    this.GET.BuscarTiposRetenciones(Docs).subscribe(
       {
         next: (data) => {
 
@@ -96,32 +113,46 @@ export class RetencionComponent {
 
             let i: number = 0;
 
-            datos[0].d.forEach((f: any) => {
+            
 
-              let r: iRet = {} as iRet;
+            datos[1].d.forEach((doc : any) =>{
 
-              r.IdDetRetencion = "00000000-0000-0000-0000-000000000000";
-              r.Seleccionar = false;
-              r.Index = i;
-              r.IdRetencion = f.IdRetencion;
-              r.Retencion = f.Retencion;
-              r.Porcentaje = f.Porcentaje;
-              r.Documento = this.Doc.Documento;
-              r.TipoDocumento = this.Doc.TipoDocumento;
-              r.Serie = this.Doc.Serie;
-              r.Monto = "0";
-              r.TieneImpuesto = datos[1].d.Impuesto == 0 ? false : true;
-              r.PorcImpuesto = 0;
-              if(r.TieneImpuesto) r.PorcImpuesto = this.cFunciones.Redondeo( datos[1].d.Impuesto / datos[1].d.SubTotal, "2");
-              r.CuentaContable = f.CuentaContable;
-             
-              this.lstRetencion.data.push(r);
+              this.val.del("txtImporte" + i);
+              this.val.add("txtImporte" + i, "1", "LEN>=", "0", "Importe", "");
 
-              i++;
+
+
+              datos[0].d.forEach((f: any) => {
+
+                let r: iRet = {} as iRet;
+  
+                r.IdDetRetencion = "00000000-0000-0000-0000-000000000000";
+                r.Seleccionar = false;
+                r.Index = i;
+                r.IdRetencion = f.IdRetencion;
+                r.Retencion = f.Retencion;
+                r.Porcentaje = f.Porcentaje;
+                r.Documento = doc.NoDocOrigen;
+                r.TipoDocumento = doc.TipoDocumentoOrigen;
+                r.Serie = doc.Serie;
+                r.Monto = "0";
+                r.TieneImpuesto = doc.Impuesto == 0 ? false : true;
+                r.PorcImpuesto = 0;
+                if(r.TieneImpuesto) r.PorcImpuesto = this.cFunciones.Redondeo( doc.Impuesto / doc.d.SubTotal, "2");
+                r.CuentaContable = f.CuentaContable;
+                r.RetManual = false;
+               
+                this.lstRetencion.data.push(r);
+  
+                i++;
+
+
+              });
+
+              
             });
 
-
-
+            this.lstRetencion.filter = this.NoDocumento;
 
 
           }
@@ -153,29 +184,65 @@ export class RetencionComponent {
 
 
 
-  public V_Calcular(i: number): void {
+  public V_Calcular(i: number, RetManual : any): void {
 
 
 
 
     setTimeout(() => {
 
-      this.lstRetencion.data.forEach(f => {
-        if (!f.Seleccionar) {
-          f.Monto = "0";
+
+      this.lstRetencion.filter = "";
+
+
+      let ret  = this.lstRetencion.data[i];
+      ret.RetManual = RetManual;
+
+      this.lstRetencion.data.forEach(w =>{
+
+       if(ret.IdRetencion == w.IdRetencion && w.Index != i) {
+        w.Seleccionar = ret.Seleccionar;
+        w.RetManual = ret.RetManual;
+        if(w.RetManual)
+        {
+          w.Monto = ret.Monto;
         }
-        else {
-          let Importe: number = Number(this.Doc.Importe.replaceAll(",", ""));
-          let Porc: number = 1 + f.PorcImpuesto;
-          let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
-          let Retencion: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((f.Porcentaje / 100), "4"), "2");
-          f.Monto = this.cFunciones.NumFormat(Retencion, "2");
-        }
+
+       }
+
+      });
+
+
+  
+
+      this.Doc.forEach(doc =>{
+
+        this.lstRetencion.data.filter(w=> w.Documento == doc.Documento && w.TipoDocumento == doc.TipoDocumento).forEach(f => {
+          if (!f.Seleccionar) {
+            f.Monto = "0";
+          }
+          else {
+
+
+            f.RetManual = RetManual == undefined ? f.RetManual : RetManual;
+            let Importe: number = Number(doc.Importe.replaceAll(",", ""));
+            let Porc: number = 1 + f.PorcImpuesto;
+            let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
+            let Retencion: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((f.Porcentaje / 100), "4"), "2");
+            if(!f.RetManual) f.Monto = this.cFunciones.NumFormat(Retencion, "2");
+          }
+  
+  
+        });
 
 
       });
-    });
 
+
+      this.lstRetencion.filter = this.NoDocumento;
+
+    
+    });
 
 
 
@@ -184,8 +251,21 @@ export class RetencionComponent {
   }
 
 
+
+
   public v_Cancelar(): void {
     this.dialogRef.close();
+  }
+
+
+  ngDoCheck() {
+
+    this.lstRetencion.data.forEach(f => {
+      this.val.addNumberFocus("txtImporte" + f.Index, 2);
+      this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1), undefined);
+    });
+
+
   }
 
 

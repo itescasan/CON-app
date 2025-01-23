@@ -31,7 +31,9 @@
 
   //████████████████████████████████████████████TABLA████████████████████████████████████████████████████████████████████████
 
-
+.no-visible{
+    display: none;
+}
 
   .right {
       text-align: right;
@@ -41,4 +43,12 @@
       text-align: center;
   }
 
+  .numero {
+    text-align: right;
+}
+  .importe {
 
+    background-color: rgba(220, 115, 34, 0.25); // #D9F5D6
+    color: var(--escan-opcional);
+    font-weight: bold;
+}

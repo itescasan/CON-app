@@ -43,8 +43,8 @@ export class getTransferencia {
     }
 
 
-    public BuscarTiposRetenciones(NoDocumento: string, TipoDocumento: string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/BuscarTiposRetenciones?NoDocumento=" + NoDocumento + "&TipoDocumento=" + TipoDocumento);
+    public BuscarTiposRetenciones(NoDocumento: string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/BuscarTiposRetenciones?NoDocumento=" + NoDocumento);
     }
 
     public GetReembolsoD(id : any): Observable<string> {

@@ -1792,7 +1792,8 @@ export class ChequesSaldoComponent {
              Monto: f.Monto,
              PorcImpuesto: f.PorcImpuesto,
              TieneImpuesto: f.TieneImpuesto,
-             CuentaContable: f.CuentaContable
+             CuentaContable: f.CuentaContable,
+             RetManual : f.RetManual
            });
  
            i++;

@@ -82,8 +82,8 @@ export class CatalogoCuentaComponent {
 
 
         this.val.Get("txtCuenta").enable();
-        this.val.Get("txtDescripcion").disable();
-        this.val.Get("txtCuentaPadre").disable();
+       // this.val.Get("txtDescripcion").disable();
+       // this.val.Get("txtCuentaPadre").disable();
         this.val.Get("txtDescripcionPadre").disable();
 
         let chk: any = document.querySelector("#chkCuentaBloqueada");
@@ -197,12 +197,12 @@ export class CatalogoCuentaComponent {
 
     if (nivel != "1") {
       this.val.Get("txtCuenta").disable();
-      this.val.Get("txtDescripcion").disable();
+     // this.val.Get("txtDescripcion").disable();
       this.val.Get("txtCuentaPadre").enable();
     }
     else {
       this.val.Get("txtCuenta").enable();
-      this.val.Get("txtDescripcion").enable();
+      //this.val.Get("txtDescripcion").enable();
       this.val.Get("txtCuentaPadre").disable();
     }
 
