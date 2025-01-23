@@ -55,6 +55,7 @@ export class AccesoWebComponent {
 
       this.val.Get("cmbUsuario").setValue(event.newValue[0]);
       this.LlenarDatos();
+      this.cmbUsuario.close();
 
     }
   }

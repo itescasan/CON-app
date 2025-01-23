@@ -18,6 +18,7 @@ import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { postAsientoContable } from '../../CRUD/POST/post-Asiento-contable';
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ImprimirAsientoComponent } from './imprimir-asiento/imprimir-asiento.component';
 
 @Component({
   selector: 'app-asiento-contable',
@@ -492,8 +493,24 @@ export class AsientoContableComponent {
 
 
 
+     // if (this.load) return;
+
+
+    this.dec_TotalDebe = 0;
+    this.dec_TotalHaber = 0;
+    this.dec_Dif = 0;
+
+
+
+  
 
       this.lstDetalle.data.forEach(f => {
+
+        
+      let Debe = Number(String(f.Debito).replaceAll(",", ""));
+      let Haber = Number(String(f.Credito).replaceAll(",", ""));
+
+
         this.valTabla.add("txtCuenta-asiento" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
         this.valTabla.add("txtReferencia" + f.NoLinea, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
         this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
@@ -529,8 +546,13 @@ export class AsientoContableComponent {
   
           }*/
 
+            this.dec_TotalDebe += Debe;
+            this.dec_TotalHaber += Haber;
 
       });
+
+
+      this.dec_Dif = this.cFunciones.Redondeo(this.dec_TotalDebe - this.dec_TotalHaber, "2");
 
 
       let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
@@ -1017,8 +1039,8 @@ export class AsientoContableComponent {
 
   public V_Imprimir(Exportar : boolean) {
 
-    let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
-      DialogoConfirmarComponent,
+    let dialogRef: MatDialogRef<ImprimirAsientoComponent> = this.cFunciones.DIALOG.open(
+      ImprimirAsientoComponent,
       {
         panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
         disableClose: true
@@ -1028,10 +1050,6 @@ export class AsientoContableComponent {
 
 
     dialogRef.afterOpened().subscribe(s => {
-      dialogRef.componentInstance.textBoton1 = "CORDOBA";
-      dialogRef.componentInstance.textBoton2 = "DOLARES";
-      dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
-      dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
       dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>"+ (Exportar ? "EXPORTAR" : "IMPRIMIR") +"</b></p><p style='text-align: center'><b style='color: blue'>" + this.val.Get("txtNoAsiento").value + "</b></p>")
 
     });
@@ -1040,12 +1058,12 @@ export class AsientoContableComponent {
     dialogRef.afterClosed().subscribe(s => {
 
       if (dialogRef.componentInstance.retorno == "0") {
-        this.V_ImprimirDoc(Exportar, "");
+        this.V_ImprimirDoc(Exportar, "", dialogRef.componentInstance.Consolidado);
       }
 
       if (dialogRef.componentInstance.retorno == "1") {
      
-        this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal);
+        this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal, dialogRef.componentInstance.Consolidado);
       }
 
     });
@@ -1060,11 +1078,11 @@ export class AsientoContableComponent {
   
   
 
-  private V_ImprimirDoc(Exportar: boolean, Moneda : string): void {
+  private V_ImprimirDoc(Exportar: boolean, Moneda : string, Consolidado : boolean): void {
 
 
 
-  document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.setAttribute("disabled", "disabled");
+  document.getElementById("btnImprimir-asiento")?.setAttribute("disabled", "disabled");
 
   let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
 
@@ -1084,7 +1102,7 @@ export class AsientoContableComponent {
 
 
 
-  this.GET.GetReporte(this.FILA.IdAsiento, Moneda, Exportar).subscribe(
+  this.GET.GetReporte(this.FILA.IdAsiento, Moneda, Exportar, Consolidado).subscribe(
       {
           next: (data) => {
 
@@ -1111,7 +1129,7 @@ export class AsientoContableComponent {
           },
           error: (err) => {
 
-              document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.removeAttribute("disabled");
+              document.getElementById("btnImprimir-asiento")?.removeAttribute("disabled");
 
               dialogRef.close();
 
@@ -1124,7 +1142,7 @@ export class AsientoContableComponent {
 
           },
           complete: () => {
-              document.getElementById("btnImprimir-reporte-cxc-antiguedad-bodega")?.removeAttribute("disabled");
+              document.getElementById("btnImprimir-asiento")?.removeAttribute("disabled");
 
           }
       }

@@ -52,4 +52,9 @@ export class getTransferencia {
     }
 
 
+    
+    public GetReporteAsiento(IdTransferencia : string, Moneda : string, Exportar : boolean): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetReporteAsiento?IdTransferencia=" + IdTransferencia + "&Moneda=" + Moneda + "&Exportar=" + Exportar);
+    }
+
 }

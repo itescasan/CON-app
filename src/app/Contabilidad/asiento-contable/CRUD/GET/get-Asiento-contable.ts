@@ -34,8 +34,8 @@ export class getAsientoContable{
 
 
    
- public GetReporte(IdAsiento : number, IdMoneda : string, Exportar : boolean) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/GetReporte?IdAsiento=" + IdAsiento + "&IdMoneda=" + IdMoneda + "&Exportar=" + Exportar);
+ public GetReporte(IdAsiento : number, IdMoneda : string, Exportar : boolean, Consolidado : boolean) : Observable<string>{
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/GetReporte?IdAsiento=" + IdAsiento + "&IdMoneda=" + IdMoneda + "&Exportar=" + Exportar + "&Consolidado=" + Consolidado);
  }
 
 
