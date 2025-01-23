@@ -43,4 +43,9 @@ export class getIngresoCaja{
     return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Registro2");
   }
 
+  public Validar(Consecutivo : number,CuentaPadre : string) : Observable<string>{
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/ValidarCaja?Consecutivo=" + Consecutivo  + "&CuentaPadre=" +  CuentaPadre);
+ }
+
+
 }

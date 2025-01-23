@@ -24,6 +24,7 @@ import { iConfCaja } from 'src/app/Interface/Contabilidad/i-ConfCajaChica';
 import { iConfC } from 'src/app/Interface/Contabilidad/i-ConfCaja';
 import { usaCa } from '@igniteui/material-icons-extended';
 import { iIngresoCajaPost } from 'src/app/Interface/Contabilidad/i-IngresoCaja-POST';
+import { iValCaja } from 'src/app/Interface/Contabilidad/i-Validacion-Caja';
 
 @Component({
     selector: 'app-nuevo-ingreso-caja',
@@ -43,6 +44,8 @@ export class NuevoIngresoCajaComponent {
   lstCentroCosto: iCentroCosto[] = [];
   lstEmpleado : iAccesoCaja[] = [];
   lstInfoCaja : iConfC[] = [];
+  
+
   lstCount : {} = {};
 
   @ViewChildren(IgxComboComponent)
@@ -50,6 +53,7 @@ export class NuevoIngresoCajaComponent {
 
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iIngCajaDetalle>;
+  public LstValCaja = new MatTableDataSource<iValCaja>;
 
   public FILA: iIngCaja= {} as iIngCaja;
 
@@ -134,7 +138,7 @@ export class NuevoIngresoCajaComponent {
         this.val.Get("cmbRubro").setValue("");
         this.val.Get("cmbCentroCosto").setValue("");
         this.val.Get("cmbEmpleado").setValue("");
-        this.val.Get("txtConsecutivo").setValue("");
+        this.val.Get("txtConsecutivo").setValue("");//SVGAElement
         this.val.Get("txtReferencia").setValue("");
         this.val.Get("txtProveedor").setValue("");
         this.val.Get("txtFecha").setValue(this.cFunciones.ShortFechaServidor());
@@ -166,7 +170,9 @@ export class NuevoIngresoCajaComponent {
   public cmbBodega: IgxComboComponent;
 
   public v_Select_Bodega(event: any) {
-    this.val.Get("cmbBodega").setValue("");   
+    
+    this.val.Get("cmbBodega").setValue("");
+    
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbBodega").setValue(event.newValue);
@@ -390,20 +396,17 @@ export class NuevoIngresoCajaComponent {
             let datos: iDatos[] = _json["d"];
             this.lstRubros = datos[0].d;
             this.lstInfoCaja = datos[1].d;
-            this.lstEmpleado = datos[2].d;
-            this.lstCount = datos[3].d;
+            this.lstEmpleado = datos[2].d;            
             if (!this.esModal) this.val.Get("txtConsecutivo").setValue(this.lstInfoCaja[0].Consecutivo);
-            this.mont_Caja = this.cFunciones.Redondeo(this.lstInfoCaja[0].Valor, "2");            
+            this.mont_Caja = this.cFunciones.Redondeo(this.lstInfoCaja[0].Valor, "2");
             this.v_llenarDatos(this.lstInfoCaja[0].Consecutivo,this.cFunciones.User,this.lstInfoCaja[0].CuentaContable);
-            if (Number(this.lstCount) === 0) {
-              document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
-              document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");              
-
-            }else
-            {
-              document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
-              document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
-            }
+            
+            if ( this.lstDetalle.data.length > 0) {
+              this.v_ValidarCaja(this.lstInfoCaja[0].Consecutivo,this.lstInfoCaja[0].CuentaContable);
+            }else{
+              
+            }         
+           
 
           }
 
@@ -430,50 +433,6 @@ export class NuevoIngresoCajaComponent {
       let saldoDolar: number = 0
       let saldoCordoba: number = 0
 
-      // f.SaldoAnt = (f.IdMoneda == this.cFunciones.MonedaLocal ? f.SaldoCordoba : f.SaldoDolar);
-      // f.SaldoAntML = f.SaldoCordoba;
-      // f.SaldoAntMS = f.SaldoDolar;
-
-
-      // if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-
-
-      //   saldo = f.SaldoCordoba;
-      //   saldoCordoba = saldo;
-      //   saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
-
-
-      //   if (f.IdMoneda != this.cFunciones.MonedaLocal) {
-      //     saldo = f.SaldoDolar;
-      //     saldoDolar = saldo;
-      //     saldoCordoba = this.cFunciones.Redondeo(saldoDolar * this.TC, "2");
-
-      //   }
-
-      //   saldo = this.cFunciones.Redondeo(saldoCordoba, "2");
-
-      // }
-
-      // else {
-
-      //   saldo = f.SaldoDolar;
-      //   saldoDolar = saldo;
-      //   saldoCordoba = this.cFunciones.Redondeo(saldo * this.TC, "2");
-
-      //   if (f.IdMoneda == this.cFunciones.MonedaLocal) {
-      //     saldo = f.SaldoCordoba;
-      //     saldoCordoba = saldo;
-      //     saldoDolar = this.cFunciones.Redondeo(saldoCordoba / this.TC, "2");
-      //   }
-
-      //   saldo = this.cFunciones.Redondeo(saldoDolar, "2");
-      // }
-
-      // if(f.Retenido == undefined) f.Retenido = false;
-      // if (f.Importe == undefined) f.Importe = "0.00";
-      // f.Saldo = this.cFunciones.NumFormat(saldo, "2");
-      // f.SaldoCordoba = this.cFunciones.Redondeo(saldoCordoba, "2");
-      // f.SaldoDolar = this.cFunciones.Redondeo(saldoDolar, "2");
 
     });
 
@@ -680,12 +639,99 @@ export class NuevoIngresoCajaComponent {
 
             let datos: iDatos[] = _json["d"];
 
-            this.lstDetalle.data = datos[0].d;        
+            this.lstDetalle.data = datos[0].d;
+            if (!(this.lstDetalle.data.length > 0)) {
+              this.IdCaja = 0;
+            }               
             this.V_Calcular();
             
 
 
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.CuentaContable);
+            
+            //if (this.esModal) this.v_Visualizar();
+
+
+      }
+
+    },
+    error: (err) => {
+
+
+      dialogRef.close();
+
+      document.getElementById("btnRefrescar-Caja")?.removeAttribute("disabled");
+      if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+        this.cFunciones.DIALOG.open(DialogErrorComponent, {
+          id: "error-servidor",
+          data: "<b class='error'>" + err.message + "</b>",
+        });
+      }
+
+    },
+    complete: () => { document.getElementById("btnRefrescar-Caja")?.removeAttribute("disabled"); }
+    } 
+  );
+   
+  }
+
+
+  public v_ValidarCaja(Consecutivo : number, CuentaPadre : string) {
+
+    document.getElementById("btnRefrescar-Caja")?.setAttribute("disabled", "disabled");
+
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+    this.GET.Validar(Consecutivo,CuentaPadre).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+            let datos: iDatos[] = _json["d"];
+
+            this.LstValCaja.data = datos[0].d;         
+            
+            
+            if (this.LstValCaja.data[0].Enviado == true && this.LstValCaja.data[0].Corregir == true) {
+              document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+              document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
+              document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+              document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
+            }else
+            {
+              document.getElementById("btnGuardar-IngCaja")?.removeAttribute("enabled");
+              document.getElementById("btnImprimir-IngCaja")?.removeAttribute("enabled");
+              document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+              document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");
+            }
+
+            //if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.CuentaContable);
             
             //if (this.esModal) this.v_Visualizar();
 
