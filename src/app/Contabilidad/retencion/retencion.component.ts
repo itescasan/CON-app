@@ -138,7 +138,7 @@ export class RetencionComponent {
                 r.Monto = "0";
                 r.TieneImpuesto = doc.Impuesto == 0 ? false : true;
                 r.PorcImpuesto = 0;
-                if(r.TieneImpuesto) r.PorcImpuesto = this.cFunciones.Redondeo( doc.Impuesto / doc.d.SubTotal, "2");
+                if(r.TieneImpuesto) r.PorcImpuesto = this.cFunciones.Redondeo( doc.Impuesto / doc.SubTotal, "2");
                 r.CuentaContable = f.CuentaContable;
                 r.RetManual = false;
                
