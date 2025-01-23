@@ -1,0 +1,45 @@
+<div class="escasan-dialog" if="dialog-imprimir-asiento">
+
+    <div class="btn-contenedor-cerrar">
+        <button  class="close-button custom-cerrar" (click)="V_Cerrar();">
+            <mat-icon class="close-icon" color="warn">close</mat-icon>
+          </button>
+      </div>
+
+
+    <div class="logo">
+        <img   src="../assets/images/ISOLOGO.png">
+      </div>
+  
+
+
+    <div mat-dialog-content>
+
+        <div class="msj" [innerHTML]="mensaje" id="msj-confirmar"></div>
+
+
+        
+        <div class="contenedor">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="txtImpirmir-asiento-dialog" formControlName="txtImpirmir-asiento-dialog" [ngModel]="Consolidado" (click)="v_Consolidado()">
+                <label class="form-check-label" for="txtImpirmir-asiento-dialog">
+                  Consolidado
+                </label>
+              </div>
+        </div>
+
+        
+       
+       
+    </div>
+    
+    <div mat-dialog-actions class="btn-contenedor">
+        <button type="button" class="btn btn-primario" id="btn-imprimir-asiento-1-escasan-dialog" (click)="v_Confirmar();">CORDOBA</button>
+        <button type="button" class="btn btn-opcional" id="btn-imprimir-asiento-2-escasan-dialog"  (click)="v_Cancelar();">DOLAR</button>
+    </div>
+    
+    
+</div>
+
+
+

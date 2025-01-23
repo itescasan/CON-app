@@ -1,0 +1,79 @@
+@use "/src/assets/scss/media.scss" as *;
+#dialog-imprimir-asiento{
+    width: 300px;
+    max-width: 400px;
+    padding: 5px;
+    box-shadow: 3px 4px 14px 6px rgba(0, 0, 0, 0.76);
+}
+
+
+.msj{
+    float: right;
+    display: flex;
+    align-items: center;
+    word-break:break-all;
+    padding: 10px;
+}
+
+
+
+.bold{
+    font-weight: bold;
+    color: black,
+}
+
+.logo{
+    display: flex;
+    justify-content:center;
+    width: 100%;
+    padding: 10px;
+}
+
+img{
+   
+    width:220px;
+    height:60px;
+}
+
+button{
+    width: 100px;
+}
+
+button:first-child{
+    margin-right: 25px;
+}
+
+.input-group{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.btn-contenedor{
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.contenedor{
+    width: 100;
+    font-size: 1.2em;font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+  
+.btn-contenedor-cerrar{
+    background-color: var(--escan-primario);
+    font-size: 1em;
+    padding: 5px;
+    text-align: right;
+
+
+    button{
+        font-size: 1.2em;
+        margin: 0;
+        padding: 0;
+        width: auto;
+      }
+    
+  }
+ 
