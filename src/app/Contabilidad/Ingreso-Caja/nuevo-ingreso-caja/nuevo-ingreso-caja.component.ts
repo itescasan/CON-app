@@ -25,6 +25,7 @@ import { iConfC } from 'src/app/Interface/Contabilidad/i-ConfCaja';
 import { usaCa } from '@igniteui/material-icons-extended';
 import { iIngresoCajaPost } from 'src/app/Interface/Contabilidad/i-IngresoCaja-POST';
 import { iValCaja } from 'src/app/Interface/Contabilidad/i-Validacion-Caja';
+import { faShopSlash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-nuevo-ingreso-caja',
@@ -66,6 +67,7 @@ export class NuevoIngresoCajaComponent {
   public sal_Disponible: number = 0; 
   public mont_Caja: number = 0;
   public IdCaja: number = 0; 
+  private Eliminar : boolean = false;
   
 
   public orderby: iOrderBy[] = [
@@ -723,12 +725,23 @@ export class NuevoIngresoCajaComponent {
               document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
               document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
               document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
-            }else
+              this.Eliminar = true;
+            }else            
             {
-              document.getElementById("btnGuardar-IngCaja")?.removeAttribute("enabled");
-              document.getElementById("btnImprimir-IngCaja")?.removeAttribute("enabled");
-              document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
-              document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");
+              if (this.LstValCaja.data[0].Enviado == false && this.LstValCaja.data[0].Corregir == false) {
+                document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+                document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
+                document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+                document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
+                this.Eliminar = true;
+              }else{
+                document.getElementById("btnGuardar-IngCaja")?.removeAttribute("enabled");
+                document.getElementById("btnImprimir-IngCaja")?.removeAttribute("enabled");
+                document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+                document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");
+                this.Eliminar = false;
+              }
+              
             }
 
             //if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.CuentaContable);
@@ -759,6 +772,7 @@ export class NuevoIngresoCajaComponent {
    
   }
 
+  
   V_Eliminar(item: iIngCajaDetalle) {
     
 
@@ -772,14 +786,24 @@ export class NuevoIngresoCajaComponent {
 
       }
     );
+    if (!(this.Eliminar)) {
+      dialogRef.componentInstance.mensaje = "<p class='Bold'>No Puede Eliminar Este Registro Pendiente de Revision</p>";
+    } else {
+      dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Eliminar Este Registro</p>";
+    }
 
-    dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Eliminar Este Registro</p>";
+   
     dialogRef.componentInstance.textBoton1 = ("ACEPTAR");
     dialogRef.componentInstance.textBoton2 = "CANCELAR";
 
     dialogRef.afterClosed().subscribe(s => {
       if (dialogRef.componentInstance.retorno == "1") {
-        this.v_Eliminar_IngCaja(item.IdDetalleIngresoCajaChica)
+        if (this.Eliminar) {
+          this.v_Eliminar_IngCaja(item.IdDetalleIngresoCajaChica)
+        } else {
+          
+        }
+        
       }
     });
        
