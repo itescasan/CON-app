@@ -80,6 +80,7 @@ import { ReporteDiferenciasCXPvsContabilidadComponent } from './Reporte/reporte-
 import { ReporteIntegracionGastosAcumuladosVentasComponent } from './Reporte/reporte-integracion-gastos-acumulados-ventas/reporte-integracion-gastos-acumulados-ventas.component';
 import { ReporteEstadoCambioPatrominioComponent } from './Reporte/reporte-estado-cambio-patrominio/reporte-estado-cambio-patrominio.component';
 import { SerieCajaComponent } from './Contabilidad/Ingreso-Caja/serie-caja/serie-caja.component';
+import { AplicarCajaChicaComponent } from './Contabilidad/Ingreso-Caja/aplicar-caja-chica/aplicar-caja-chica.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,8 @@ import { SerieCajaComponent } from './Contabilidad/Ingreso-Caja/serie-caja/serie
     BalanceGeneralComparativoComponent,
     ReporteDiferenciasCXPvsContabilidadComponent,
     ReporteIntegracionGastosAcumuladosVentasComponent,
-    ReporteEstadoCambioPatrominioComponent
+    ReporteEstadoCambioPatrominioComponent,
+    AplicarCajaChicaComponent
   ],
   imports: [
     BrowserModule,

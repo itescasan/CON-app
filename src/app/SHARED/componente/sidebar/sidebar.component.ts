@@ -57,6 +57,7 @@ import { ReporteDiferenciasCXPvsContabilidadComponent } from 'src/app/Reporte/re
 import { BalanceGeneralComparativoComponent } from 'src/app/Reporte/balance-general-comparativo/balance-general-comparativo.component';
 import { ReporteIntegracionGastosAcumuladosVentasComponent } from 'src/app/Reporte/reporte-integracion-gastos-acumulados-ventas/reporte-integracion-gastos-acumulados-ventas.component';
 import { ReporteEstadoCambioPatrominioComponent } from 'src/app/Reporte/reporte-estado-cambio-patrominio/reporte-estado-cambio-patrominio.component';
+import { AplicarCajaChicaComponent } from 'src/app/Contabilidad/Ingreso-Caja/aplicar-caja-chica/aplicar-caja-chica.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -571,9 +572,15 @@ export class SidebarComponent {
       let RegistroCC: ComponentRef<RegistroIngresoCajaComponent> = this.DynamicFrom.viewContainerRef.createComponent(RegistroIngresoCajaComponent);
 
     }   
-    
 
+    if(id == "aAplicaCaja"){
+      $("#btnMenu").trigger("click");
+      this.cFunciones.DIALOG.closeAll();
+      this.DynamicFrom.viewContainerRef.clear();
 
+      let AplicaCC: ComponentRef<AplicarCajaChicaComponent> = this.DynamicFrom.viewContainerRef.createComponent(AplicarCajaChicaComponent);
+
+    } 
 
 
 

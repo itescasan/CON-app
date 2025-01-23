@@ -7,6 +7,8 @@ export interface iIngCaja {
     Consecutivo : number;    
     Usuario : string;
     UsuarioModifica : string;
+    Enviado : Boolean;
     Aplicado : Boolean;
-    Contabilizado : Boolean;    
+    Contabilizado : Boolean;
+    Corregir : Boolean;   
 }

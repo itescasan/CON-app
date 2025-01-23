@@ -39,4 +39,8 @@ export class getIngresoCaja{
     return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Registro?User=" + Usuario);
   }
 
+  public GetRegistro2(): Observable<string> {
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Registro2");
+  }
+
 }

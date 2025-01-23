@@ -102,7 +102,7 @@ export class NuevoIngresoCajaComponent {
     
  
 
-    this.v_Evento("Iniciar");
+    this.v_Evento("Iniciar"); 
 
   }
 
@@ -395,7 +395,7 @@ export class NuevoIngresoCajaComponent {
             if (!this.esModal) this.val.Get("txtConsecutivo").setValue(this.lstInfoCaja[0].Consecutivo);
             this.mont_Caja = this.cFunciones.Redondeo(this.lstInfoCaja[0].Valor, "2");            
             this.v_llenarDatos(this.lstInfoCaja[0].Consecutivo,this.cFunciones.User,this.lstInfoCaja[0].CuentaContable);
-            if (Number(this.lstCount) > 0) {
+            if (Number(this.lstCount) === 0) {
               document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
               document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");              
 

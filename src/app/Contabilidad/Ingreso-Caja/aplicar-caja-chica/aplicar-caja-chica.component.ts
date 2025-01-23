@@ -15,26 +15,26 @@ import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-con
 import { postIngresoCaja } from '../CRUD/POST/postIngresoCaja';
 
 @Component({
-    selector: 'app-registro-ingreso-caja',
-    templateUrl: './registro-ingreso-caja.component.html',
-    styleUrl: './registro-ingreso-caja.component.scss',
-    standalone: false
+  selector: 'app-aplicar-caja-chica',  
+  templateUrl: './aplicar-caja-chica.component.html',
+  styleUrl: './aplicar-caja-chica.component.scss',
+  standalone: false
 })
-export class RegistroIngresoCajaComponent {
-  public val = new Validacion();
+export class AplicarCajaChicaComponent {
+ public val = new Validacion();
   // displayedColumns: string[] = ["col1"];
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
- 
+   
  
   public iDatos: iDatos[] = [];
 
   public lstRegIngCaja : MatTableDataSource<iIngCaja>;
   
 
-  displayedColumns: string[] = ["Nombre_Cuenta","Fecha_Registro","Consecutivo","Usuario","Enviado","Corregir","Aplicado","Contabilizado","Aplicar", "Imprimir"];
+  displayedColumns: string[] = ["Nombre_Cuenta","Fecha_Registro","Consecutivo","Usuario","Enviado",'Corregir',"Aplicado","Correcion","Contabilizado","Aplicar", "Imprimir"];
 
-  constructor(private GET: getIngresoCaja, private cFunciones : Funciones, private POST:postIngresoCaja)  
+  constructor(private GET: getIngresoCaja, private cFunciones : Funciones, private POST:postIngresoCaja) 
   {
       this.val.add("txtBuscar-Cuenta", "1", "LEN>=", "0", "Buscar", "");
   
@@ -55,7 +55,7 @@ export class RegistroIngresoCajaComponent {
       }
     );
 
-    this.GET.GetRegistro(this.cFunciones.User).subscribe(
+    this.GET.GetRegistro2().subscribe(
       {
         next: (data) => {
 
@@ -176,103 +176,199 @@ export class RegistroIngresoCajaComponent {
     }
 
     
-    v_Enviar(item: iIngCaja) {
+    v_EnviarACorreccion(item: iIngCaja) {
+        
+        if (item.Corregir == true) return;
     
-    if (item.Enviado == true) return;
-
-    let i = this.lstRegIngCaja.data.findIndex(f => f.IdIngresoCajaChica == item.IdIngresoCajaChica);
-
-    if (i == -1) return;
-    let dialogRef: MatDialogRef<DialogoConfirmarComponent> =  this.cFunciones.DIALOG.open(
-      DialogoConfirmarComponent,
-      {
-        disableClose: true
-
+        let i = this.lstRegIngCaja.data.findIndex(f => f.IdIngresoCajaChica == item.IdIngresoCajaChica);
+    
+        if (i == -1) return;
+        let dialogRef: MatDialogRef<DialogoConfirmarComponent> =  this.cFunciones.DIALOG.open(
+          DialogoConfirmarComponent,
+          {
+            disableClose: true
+    
+          }
+        );   
+    
+        dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Enviar Este Reembolso Para Su Correccion?. </p>";
+        dialogRef.componentInstance.textBoton1 = ("ACEPTAR");
+        dialogRef.componentInstance.textBoton2 = "CANCELAR";
+    
+        dialogRef.afterClosed().subscribe(s => {
+          if (dialogRef.componentInstance.retorno == "1") {
+            this.v_Corregir_IngCaja(item.IdIngresoCajaChica)
+          }
+        });
+           
+    
       }
-    );   
-
-    dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Enviar Este Reembolso Para Su Revision?. </p>";
-    dialogRef.componentInstance.textBoton1 = ("ACEPTAR");
-    dialogRef.componentInstance.textBoton2 = "CANCELAR";
-
-    dialogRef.afterClosed().subscribe(s => {
-      if (dialogRef.componentInstance.retorno == "1") {
-        this.v_Aplicar_IngCaja(item.IdIngresoCajaChica)
-      }
-    });
-       
-
-  }
-
-  v_Aplicar_IngCaja(id : number)  {
-      let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
-        WaitComponent,
-        {
-          panelClass: "escasan-dialog-full-blur",
-          data: "",
-        }
-      );
-  
-      document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
-  
-  
-      // let Datos : iIngresoCajaPost = {} as iIngresoCajaPost;
-      // Datos.I = this.FILA;
-      // Datos.D = det;
-  
-      this.POST.EnviarIngCaja(id, this.cFunciones.User).subscribe(
-        {
-          next: (data) => {
-  
-            dialogRef.close();
-            let _json: any = data;
-  
-            if (_json["esError"] == 1){
-              if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined){
-                this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                  id: "error-servidor-msj",
-                  data: _json["msj"].Mensaje,
-                });
+    
+      v_Corregir_IngCaja(id : number)  {
+          let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+            WaitComponent,
+            {
+              panelClass: "escasan-dialog-full-blur",
+              data: "",
+            }
+          );
+      
+          document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+      
+      
+          // let Datos : iIngresoCajaPost = {} as iIngresoCajaPost;
+          // Datos.I = this.FILA;
+          // Datos.D = det;
+      
+          this.POST.CorreccionIngCaja(id, this.cFunciones.User).subscribe(
+            {
+              next: (data) => {
+      
+                dialogRef.close();
+                let _json: any = data;
+      
+                if (_json["esError"] == 1){
+                  if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined){
+                    this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                      id: "error-servidor-msj",
+                      data: _json["msj"].Mensaje,
+                    });
+                  }
+                }
+                else {
+      
+      
+                  let Datos: iDatos[] = _json["d"];
+                  let msj: string = Datos[0].d;
+      
+      
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    data: "<p><b class='bold'>" + msj + "</b></p>"
+                  });
+      
+                  this.v_CargarDatos();             
+      
+                }
+      
+              },
+              error: (err) => {
+                dialogRef.close();
+      
+                document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+                  this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                    id: "error-servidor",
+                    data: "<b class='error'>" + err.message + "</b>",
+                  });
+                }
+              },
+              complete: () => {
+                document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
               }
             }
-            else {
-  
-  
-              let Datos: iDatos[] = _json["d"];
-              let msj: string = Datos[0].d;
-  
-  
-              this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                data: "<p><b class='bold'>" + msj + "</b></p>"
-              });
-  
-              this.v_CargarDatos();             
-  
-            }
-  
-          },
-          error: (err) => {
-            dialogRef.close();
-  
-            document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
-            if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-              this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                id: "error-servidor",
-                data: "<b class='error'>" + err.message + "</b>",
-              });
-            }
-          },
-          complete: () => {
-            document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
-          }
+          );
         }
-      );
-    }
+
+     v_Enviar(item: iIngCaja) {
+     
+     if (item.Aplicado == true) return;
+ 
+     let i = this.lstRegIngCaja.data.findIndex(f => f.IdIngresoCajaChica == item.IdIngresoCajaChica);
+ 
+     if (i == -1) return;
+     let dialogRef: MatDialogRef<DialogoConfirmarComponent> =  this.cFunciones.DIALOG.open(
+       DialogoConfirmarComponent,
+       {
+         disableClose: true
+ 
+       }
+     );   
+ 
+     dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Aplicar Este Reembolso Para Su Contabilizacion?. </p>";
+     dialogRef.componentInstance.textBoton1 = ("ACEPTAR");
+     dialogRef.componentInstance.textBoton2 = "CANCELAR";
+ 
+     dialogRef.afterClosed().subscribe(s => {
+       if (dialogRef.componentInstance.retorno == "1") {
+         this.v_Aplicar_IngCaja(item.IdIngresoCajaChica)
+       }
+     });
+        
+ 
+   }
+ 
+   v_Aplicar_IngCaja(id : number)  {
+       let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
+         WaitComponent,
+         {
+           panelClass: "escasan-dialog-full-blur",
+           data: "",
+         }
+       );
+   
+       document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+   
+   
+       // let Datos : iIngresoCajaPost = {} as iIngresoCajaPost;
+       // Datos.I = this.FILA;
+       // Datos.D = det;
+   
+       this.POST.AplicarIngCaja(id, this.cFunciones.User).subscribe(
+         {
+           next: (data) => {
+   
+             dialogRef.close();
+             let _json: any = data;
+   
+             if (_json["esError"] == 1){
+               if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined){
+                 this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                   id: "error-servidor-msj",
+                   data: _json["msj"].Mensaje,
+                 });
+               }
+             }
+             else {
+   
+   
+               let Datos: iDatos[] = _json["d"];
+               let msj: string = Datos[0].d;
+   
+   
+               this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                 data: "<p><b class='bold'>" + msj + "</b></p>"
+               });
+   
+               this.v_CargarDatos();             
+   
+             }
+   
+           },
+           error: (err) => {
+             dialogRef.close();
+   
+             document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+             if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+               this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                 id: "error-servidor",
+                 data: "<b class='error'>" + err.message + "</b>",
+               });
+             }
+           },
+           complete: () => {
+             document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+           }
+         }
+       );
+     }
+ 
+
+
   
 
    
     public v_Filtrar(event : any){
-      this.lstRegIngCaja.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
+      this.lstRegIngCaja.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();      
     }
 
     async printPDFS(datos: any) {

@@ -30,10 +30,22 @@ export class postIngresoCaja{
     {        
         return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Eliminar?IdIngCajaDetalle=" + id, { headers: { 'content-type': 'application/text' } });        
     }
+
+    EnviarIngCaja(id : number, user: string) : Observable<string> 
+    {        
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Enviar?IdIngresoCaja=" + id + "&user=" + user, { headers: { 'content-type': 'application/text' } });        
+    }
+
+    CorreccionIngCaja(id : number, user: string) : Observable<string> 
+    {        
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Corregir?IdIngresoCaja=" + id + "&user=" + user, { headers: { 'content-type': 'application/text' } });        
+    }
     
     AplicarIngCaja(id : number, user: string) : Observable<string> 
     {        
         return this.http.post<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Aplicar?IdIngresoCaja=" + id + "&user=" + user, { headers: { 'content-type': 'application/text' } });        
-    }   
+    }
+
+   
 
 }
