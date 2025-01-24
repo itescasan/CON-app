@@ -642,9 +642,9 @@ export class NuevoIngresoCajaComponent {
             let datos: iDatos[] = _json["d"];
 
             this.lstDetalle.data = datos[0].d;
-            if (!(this.lstDetalle.data.length > 0)) {
-              this.IdCaja = 0;
-            }               
+            // if (!(this.lstDetalle.data.length > 0)) {
+            //   this.IdCaja = 0;
+            // }               
             this.V_Calcular();
             
 
@@ -719,30 +719,39 @@ export class NuevoIngresoCajaComponent {
 
             this.LstValCaja.data = datos[0].d;         
             
-            
-            if (this.LstValCaja.data[0].Enviado == true && this.LstValCaja.data[0].Corregir == true) {
-              document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
-              document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
-              document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
-              document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
-              this.Eliminar = true;
-            }else            
-            {
-              if (this.LstValCaja.data[0].Enviado == false && this.LstValCaja.data[0].Corregir == false) {
+            if (this.LstValCaja.data.length > 0) {
+              if (this.LstValCaja.data[0].Enviado == true && this.LstValCaja.data[0].Corregir == true) {
                 document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
                 document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
                 document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
                 document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
                 this.Eliminar = true;
-              }else{
-                document.getElementById("btnGuardar-IngCaja")?.removeAttribute("enabled");
-                document.getElementById("btnImprimir-IngCaja")?.removeAttribute("enabled");
-                document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
-                document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");
-                this.Eliminar = false;
+              }else            
+              {
+                if (this.LstValCaja.data[0].Enviado == false && this.LstValCaja.data[0].Corregir == false) {
+                  document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+                  document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
+                  document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+                  document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
+                  this.Eliminar = true;
+                }else{
+                  document.getElementById("btnGuardar-IngCaja")?.removeAttribute("enabled");
+                  document.getElementById("btnImprimir-IngCaja")?.removeAttribute("enabled");
+                  document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+                  document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");
+                  this.Eliminar = false;
+                }
+                
               }
-              
+            } else {
+                  document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+                  document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
+                  document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+                  document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
+                  this.Eliminar = true;
             }
+            
+            
 
             //if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.CuentaContable);
             
