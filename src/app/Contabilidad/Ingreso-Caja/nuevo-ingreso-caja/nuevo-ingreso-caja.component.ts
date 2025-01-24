@@ -717,7 +717,7 @@ export class NuevoIngresoCajaComponent {
 
             let datos: iDatos[] = _json["d"];
 
-            this.LstValCaja.data = datos[0].d;         
+            this.LstValCaja.data = datos[0].d; 
             
             if (this.LstValCaja.data.length > 0) {
               if (this.LstValCaja.data[0].Enviado == true && this.LstValCaja.data[0].Corregir == true) {
