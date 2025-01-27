@@ -32,7 +32,7 @@ export class AplicarCajaChicaComponent {
   public lstRegIngCaja : MatTableDataSource<iIngCaja>;
   
 
-  displayedColumns: string[] = ["Nombre_Cuenta","Fecha_Registro","Consecutivo","Usuario","Enviado",'Corregir',"Aplicado","Correcion","Contabilizado","Aplicar", "Imprimir"];
+  displayedColumns: string[] = ["Nombre_Cuenta","Fecha_Registro","Consecutivo","Usuario","Enviado",'Corregir',"Aplicado","Contabilizado","Correcion","Aplicar", "Imprimir"];
 
   constructor(private GET: getIngresoCaja, private cFunciones : Funciones, private POST:postIngresoCaja) 
   {
