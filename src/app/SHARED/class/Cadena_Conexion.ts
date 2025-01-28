@@ -2,6 +2,7 @@ export class Conexion {
 
      /*private IP : string = "localhost";
       private PORT : String =  "7193";
+      public Timeout : number = 30000;
 
     
       Url() : string{
