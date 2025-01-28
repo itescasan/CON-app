@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 import { iConfC } from "src/app/Interface/Contabilidad/i-ConfCaja";
+import { timeout } from "rxjs";
 
 @Injectable({
     providedIn: 'root',
@@ -21,7 +22,7 @@ export class postConfCajaChica{
     }
 
     GuardarTechoCajaChica(d : iConfC[]) : Observable<string> { 
-        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/GuardarConfCajaChica", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/GuardarConfCajaChica", JSON.stringify(d), { headers: { 'content-type': 'application/json' } }).pipe(timeout(this._Cnx.Timeout));
     }
 
 

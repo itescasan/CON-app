@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "../class/Cadena_Conexion";
+import { timeout } from "rxjs";
 
 
 @Injectable({
@@ -22,42 +23,42 @@ export class getServidor{
     }
 
     public DatosServidor(user : string) : Observable<any>{
-      return this.http.get<any>(this._Cnx.Url() + "Sistema/DatosServidor?user="+ user + "&Modulo=CON");
+      return this.http.get<any>(this._Cnx.Url() + "Sistema/DatosServidor?user="+ user + "&Modulo=CON").pipe(timeout(this._Cnx.Timeout));
    }
     
    public Login(user: string, pass : string) : Observable<any>{
-    return this.http.get<any>(this._Cnx.Url() + "Sistema/Login?user=" + user + "&pass=" + pass + "&Modulo=CON");
+    return this.http.get<any>(this._Cnx.Url() + "Sistema/Login?user=" + user + "&pass=" + pass + "&Modulo=CON").pipe(timeout(this._Cnx.Timeout));
  }
 
  public ValidarCodigo(user: string, cod : string) : Observable<any>{
-  return this.http.get<any>(this._Cnx.Url() + "Sistema/ValidarCodigo?user=" + user + "&cod=" + cod );
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/ValidarCodigo?user=" + user + "&cod=" + cod ).pipe(timeout(this._Cnx.Timeout));
 }
 
  public TC(f : Date) : Observable<any>{
-  return this.http.get<any>(this._Cnx.Url() + "Sistema/TC?f="+ f);
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/TC?f="+ f).pipe(timeout(this._Cnx.Timeout));
 }
   
 
 
 public Serie(CodBodega : string, Tipo : string) : Observable<any>{
-  return this.http.get<any>(this._Cnx.Url() + "Sistema/Serie?CodBodega="+ CodBodega + "&Tipo=" + Tipo);
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/Serie?CodBodega="+ CodBodega + "&Tipo=" + Tipo).pipe(timeout(this._Cnx.Timeout));
 }
   
 
 
 public Consecutivo(Serie : string, Tipo : string) : Observable<any>{
-  return this.http.get<any>(this._Cnx.Url() + "Sistema/Consecutivo?Serie="+ Serie + "&Tipo=" + Tipo);
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/Consecutivo?Serie="+ Serie + "&Tipo=" + Tipo).pipe(timeout(this._Cnx.Timeout));
 }
   
 
 
 public ConsecutivoContabilidad(Serie : string, Fecha : Date) : Observable<any>{
-  return this.http.get<any>(this._Cnx.Url() + "Sistema/ConsecutivoContabilidad?Serie="+ Serie + "&Fecha=" + Fecha);
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/ConsecutivoContabilidad?Serie="+ Serie + "&Fecha=" + Fecha).pipe(timeout(this._Cnx.Timeout));
 }
   
  
 public AccesoWeb(user : string) : Observable<any>{
-  return this.http.get<any>(this._Cnx.Url() + "Sistema/AccesoWeb?user=" + user);
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/AccesoWeb?user=" + user).pipe(timeout(this._Cnx.Timeout));
 }
 
 

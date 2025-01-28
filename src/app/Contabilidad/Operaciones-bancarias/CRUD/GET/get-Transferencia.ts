@@ -1,5 +1,6 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { timeout } from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 
@@ -21,40 +22,40 @@ export class getTransferencia {
 
 
     public Datos(): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/Datos");
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/Datos").pipe(timeout(this._Cnx.Timeout));
     }
 
     public GetDocumentos(CodProveedor : string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDocumentos?CodProveedor=" + CodProveedor);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDocumentos?CodProveedor=" + CodProveedor).pipe(timeout(this._Cnx.Timeout));
     }
 
 
     public Get(Fecha1: string, Fecha2: string, CodBodega: string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&CodBodega=" + CodBodega);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&CodBodega=" + CodBodega).pipe(timeout(this._Cnx.Timeout));
     }
 
 
     public GetDetalleCuenta(IdTransferencia: string) {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDetalleCuenta?IdTransferencia=" + IdTransferencia);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDetalleCuenta?IdTransferencia=" + IdTransferencia).pipe(timeout(this._Cnx.Timeout));
     }
 
     public GetDetalleDocumentos(IdTransferencia: string) {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDetalleDocumentos?IdTransferencia=" + IdTransferencia);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetDetalleDocumentos?IdTransferencia=" + IdTransferencia).pipe(timeout(this._Cnx.Timeout));
     }
 
 
     public BuscarTiposRetenciones(NoDocumento: string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/BuscarTiposRetenciones?NoDocumento=" + NoDocumento);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/BuscarTiposRetenciones?NoDocumento=" + NoDocumento).pipe(timeout(this._Cnx.Timeout));
     }
 
     public GetReembolsoD(id : any): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Cheques/GetDetalleReembolso?id=" + id);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Cheques/GetDetalleReembolso?id=" + id).pipe(timeout(this._Cnx.Timeout));
     }
 
 
     
     public GetReporteAsiento(IdTransferencia : string, Moneda : string, Exportar : boolean): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetReporteAsiento?IdTransferencia=" + IdTransferencia + "&Moneda=" + Moneda + "&Exportar=" + Exportar);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetReporteAsiento?IdTransferencia=" + IdTransferencia + "&Moneda=" + Moneda + "&Exportar=" + Exportar).pipe(timeout(this._Cnx.Timeout));
     }
 
 }

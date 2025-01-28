@@ -1,5 +1,6 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { timeout } from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 
@@ -21,21 +22,21 @@ export class getAsientoContable{
 
  
    public Datos() : Observable<string>{
-      return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Datos");
+      return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Datos").pipe(timeout(this._Cnx.Timeout));
    }
 
    public Get(Fecha1 : string, Fecha2 : string) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2);
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2).pipe(timeout(this._Cnx.Timeout));
  }
    
  public GetDetalle(IdAsiento : number) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/GetDetalle?IdAsiento=" + IdAsiento);
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/GetDetalle?IdAsiento=" + IdAsiento).pipe(timeout(this._Cnx.Timeout));
  }
 
 
    
  public GetReporte(IdAsiento : number, IdMoneda : string, Exportar : boolean, Consolidado : boolean) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/GetReporte?IdAsiento=" + IdAsiento + "&IdMoneda=" + IdMoneda + "&Exportar=" + Exportar + "&Consolidado=" + Consolidado);
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/GetReporte?IdAsiento=" + IdAsiento + "&IdMoneda=" + IdMoneda + "&Exportar=" + Exportar + "&Consolidado=" + Consolidado).pipe(timeout(this._Cnx.Timeout));
  }
 
 

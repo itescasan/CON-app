@@ -1,5 +1,6 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { timeout } from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 
@@ -21,30 +22,30 @@ export class getIngresoCaja{
 
  
    public Datos(Usuario : string) : Observable<string>{
-      return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Datos?User=" + Usuario);
+      return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Datos?User=" + Usuario).pipe(timeout(this._Cnx.Timeout));
    }
 
    public Rubro(CuentaPadre : string) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Rubro?CuentaPadre=" + CuentaPadre);
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Rubro?CuentaPadre=" + CuentaPadre).pipe(timeout(this._Cnx.Timeout));
  }
 
    public Get(Consecutivo : number ,Usuario :string, CuentaBodega : string ) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Get?Consecutivo=" + Consecutivo  + "&USuario=" + Usuario + "&CuentaBodega=" + CuentaBodega);
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Get?Consecutivo=" + Consecutivo  + "&USuario=" + Usuario + "&CuentaBodega=" + CuentaBodega).pipe(timeout(this._Cnx.Timeout));
  }
     public GetRptIngCaja(Id: number): Observable<string> {
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/IngresosCaja?Id=" + Id);
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/IngresosCaja?Id=" + Id).pipe(timeout(this._Cnx.Timeout));
   }
  
   public GetRegistro(Usuario: string): Observable<string> {
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Registro?User=" + Usuario);
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Registro?User=" + Usuario).pipe(timeout(this._Cnx.Timeout));
   }
 
   public GetRegistro2(): Observable<string> {
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Registro2");
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Registro2").pipe(timeout(this._Cnx.Timeout));
   }
 
   public Validar(Consecutivo : number,CuentaPadre : string) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/ValidarCaja?Consecutivo=" + Consecutivo  + "&CuentaPadre=" +  CuentaPadre);
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/ValidarCaja?Consecutivo=" + Consecutivo  + "&CuentaPadre=" +  CuentaPadre).pipe(timeout(this._Cnx.Timeout));
  }
 
 

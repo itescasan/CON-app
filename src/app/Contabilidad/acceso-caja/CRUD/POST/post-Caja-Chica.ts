@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 import { iAccesoCaja } from "src/app/Interface/Contabilidad/i-AccesoCajaChica";
+import { timeout } from "rxjs";
 @Injectable({
     providedIn: 'root',
   })
@@ -20,7 +21,7 @@ export class postAccesoCajaChica{
     }
 
     GuardarAccesoCajaChica(d : iAccesoCaja[]) : Observable<string> { 
-        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/GuardarAccesoCajaChica", JSON.stringify(d), { headers: { 'content-type': 'application/json' } });
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/GuardarAccesoCajaChica", JSON.stringify(d), { headers: { 'content-type': 'application/json' } }).pipe(timeout(this._Cnx.Timeout));
     }
 
 

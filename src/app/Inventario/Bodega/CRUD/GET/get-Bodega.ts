@@ -1,5 +1,6 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { timeout } from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 
@@ -20,7 +21,7 @@ export class getBodega {
     }
 
     public Get(): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Inventario/Bodega/Get");
+        return this.http.get<any>(this._Cnx.Url() + "Inventario/Bodega/Get").pipe(timeout(this._Cnx.Timeout)).pipe(timeout(this._Cnx.Timeout));
     }
 
 

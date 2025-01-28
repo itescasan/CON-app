@@ -1,5 +1,6 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { timeout } from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 
@@ -20,12 +21,12 @@ export class getAuxiliarCuenta {
     }
 
     public Get(Fecha1: string, Fecha2: string, CodBodega: string, Cuenta: string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&CodBodega=" + CodBodega + "&Cuenta=" + Cuenta);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&CodBodega=" + CodBodega + "&Cuenta=" + Cuenta).pipe(timeout(this._Cnx.Timeout));
     }
 
 
     public GetAsiento(IdAsiento: number, NoDoc : string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/GetAsiento?IdAsiento=" + IdAsiento + "&NoDoc=" + NoDoc);
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/GetAsiento?IdAsiento=" + IdAsiento + "&NoDoc=" + NoDoc).pipe(timeout(this._Cnx.Timeout));
     }
 
 
