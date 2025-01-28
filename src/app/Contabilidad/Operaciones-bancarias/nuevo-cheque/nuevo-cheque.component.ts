@@ -57,6 +57,7 @@ export class NuevoChequeComponent {
   private IVA : number = 0.0;
   private CompraD : number = 0.0;
   private Test : any;
+  private ValorD : number = 0.0;
 
   texto: string = '';
 
@@ -1266,11 +1267,7 @@ public v_Enter_Reembolso(event: any) {
     this.IVA = 0.0;
     this.CompraD= 0.0;
 
-    //  this.val.replace("txtTotalCordoba", "1", "LEN>", "0", "Total Cordoba");
-    //  this.val.replace("txtTotalDolar", "1", "LEN>", "0", "Total Dolares"); 
-
-    // this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
-    // this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
+  
     
 
     if ( this.IdMoneda == this.cFunciones.MonedaLocal) {
@@ -1302,7 +1299,8 @@ public v_Enter_Reembolso(event: any) {
 
      if(this.val.ItemValido(["cmbCuentaC"])) {
       let cuenta : iCuenta = this.cmbCuentaC.dropdown.focusedItem.value;
-      if (this.val.Get("txtTcCompraD").value > 0) {
+      this.ValorD =  Number(String(this.val.Get("txtTcCompraD").value).replaceAll(",", ""));
+      if (this.ValorD > 0) {
         this.ret1 = this.Valor / this.TC
         this.ret2 = this.Valor / Number(this.val.Get("txtTcCompraD").value)
         this.ret3 = Math.abs((this.ret2 - this.ret1) * this.TC)
@@ -1364,18 +1362,7 @@ public v_Enter_Reembolso(event: any) {
         
       }
 
-      // if(this.val.ItemValido(["cmbCuentaBancaria"])) {
-      //   let item :iCuentaBancaria = this.cmbCuentaBancaria.dropdown.focusedItem.value;
-      //   if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-      //     this.V_Add(item.CuentaNuevaC,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",(this.Valor - this.suma) +  this.sumaDebito ,"C");
-      //   } else {
-      //     this.ValorC = this.cFunciones.Redondeo((this.Valor * this.TC),"2")  - this.cFunciones.Redondeo(this.suma,"2") +  this.cFunciones.Redondeo(this.sumaDebito,"2")
-      //     this.V_Add(item.CuentaNuevaD,this.val.Get("txtNoDoc").value + " " + this.val.Get("txtBeneficiario").value,"",this.ValorC ,"C");
-      //   }
-        
-
-      //  }
-
+     
        this.CompraD = Number(this.val.Get("txtTcCompraD").value);
        if (this.CompraD > 0) {
 
@@ -1386,11 +1373,16 @@ public v_Enter_Reembolso(event: any) {
         this.V_Add("7101-04-01-0004",this.val.Get("txtBeneficiario").value,"",this.cFunciones.Redondeo(this.ret3 , "2"),"D");
         // this.sumaDebito = this.cFunciones.Redondeo(this.ret3,"2")
       }
-     
+      if ( this.IdMoneda == this.cFunciones.MonedaLocal) {
+        detBanco.Credito = (this.cFunciones.NumFormat(this.Valor - this.suma, "2")).toString();
+        detBanco.Debito = (this.cFunciones.NumFormat(Number(0), "2")).toString();
+        this.ValorCheque = Number(detBanco.Credito);
+      }else{
+        detBanco.Credito = (this.cFunciones.NumFormat((this.Valor * this.TC) - this.suma, "2")).toString();
+        detBanco.Debito = (this.cFunciones.NumFormat(Number(0), "2")).toString();
+      }
 
-      detBanco.Credito = (this.cFunciones.NumFormat(this.Valor - this.suma, "2")).toString();
-      detBanco.Debito = (this.cFunciones.NumFormat(Number(0), "2")).toString();
-      this.ValorCheque = Number(detBanco.Credito);
+      
       
       this.V_Calcular();
 
