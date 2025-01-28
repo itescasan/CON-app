@@ -1150,7 +1150,7 @@ public v_Enter_Reembolso(event: any) {
             if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
               this.cFunciones.DIALOG.open(DialogErrorComponent, {
                 id: "error-servidor-msj",
-                data: _json["msj"].Mensaje,
+                data: _json["msj"].Mensaje, 
               });
             }
           }
@@ -1158,14 +1158,18 @@ public v_Enter_Reembolso(event: any) {
 
 
             let Datos: iDatos[] = _json["d"];
-            let msj: string = Datos[0].d;
+            let msj: string = Datos[1].d;
 
             this.cFunciones.DIALOG.open(DialogErrorComponent, {
               data: "<p><b class='bold'>" + msj + "</b></p>" 
             });
 
 
-            if (!this.esModal) this.v_Evento("Limpiar");
+            if (!this.esModal){
+              this.V_GenerarDoc(Datos[0], false);
+              this.v_Evento("Limpiar");
+            }
+               
 
           }
 
@@ -1278,7 +1282,7 @@ public v_Enter_Reembolso(event: any) {
          if(!this.val.ItemValido(["txtTotalCordoba"])) return;
       } 
         } else {
-      this.Valor = Number(String(this.val.Get("txtTotalCordoba").value).replaceAll(",", ""));
+      this.Valor = Number(String(this.val.Get("txtTotalDolar").value).replaceAll(",", ""));
       if ( this.Valor == 0) {
         this.val.replace("txtTotalDolar", "1", "NUM>", "0", "Total Dolares"); 
          if(!this.val.ItemValido(["txtTotalDolar"])) return;

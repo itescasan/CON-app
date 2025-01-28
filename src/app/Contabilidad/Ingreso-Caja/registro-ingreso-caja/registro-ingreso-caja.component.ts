@@ -178,7 +178,8 @@ export class RegistroIngresoCajaComponent {
     
     v_Enviar(item: iIngCaja) {
     
-    if (item.Enviado == true) return;
+    if (item.Enviado == true && item.Corregir == "") return;
+    if (item.Enviado == true && item.Corregir == "Completado") return;
 
     let i = this.lstRegIngCaja.data.findIndex(f => f.IdIngresoCajaChica == item.IdIngresoCajaChica);
 

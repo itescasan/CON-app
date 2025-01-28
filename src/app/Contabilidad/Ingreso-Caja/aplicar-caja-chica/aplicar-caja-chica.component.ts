@@ -178,7 +178,7 @@ export class AplicarCajaChicaComponent {
     
     v_EnviarACorreccion(item: iIngCaja) {
         
-        if (item.Corregir == true) return;
+        if (item.Corregir == "Pendiente"  ) return;
     
         let i = this.lstRegIngCaja.data.findIndex(f => f.IdIngresoCajaChica == item.IdIngresoCajaChica);
     
@@ -189,9 +189,15 @@ export class AplicarCajaChicaComponent {
             disableClose: true
     
           }
-        );   
+        );  
+
+        if (item.Corregir == "Completado") {
+          dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Enviar Este Reembolso Nuevamente Para Su Correccion?. </p>";
+        }else {
+          dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Enviar Este Reembolso Para Su Correccion?. </p>";
+        }
     
-        dialogRef.componentInstance.mensaje = "<p class='Bold'>Esta Seguro Enviar Este Reembolso Para Su Correccion?. </p>";
+       
         dialogRef.componentInstance.textBoton1 = ("ACEPTAR");
         dialogRef.componentInstance.textBoton2 = "CANCELAR";
     
@@ -271,7 +277,7 @@ export class AplicarCajaChicaComponent {
 
      v_Enviar(item: iIngCaja) {
      
-     if (item.Aplicado == true) return;
+     if (item.Aplicado == true || item.Corregir == "Pendiente") return;
  
      let i = this.lstRegIngCaja.data.findIndex(f => f.IdIngresoCajaChica == item.IdIngresoCajaChica);
  

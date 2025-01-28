@@ -10,5 +10,5 @@ export interface iIngCaja {
     Enviado : Boolean;
     Aplicado : Boolean;
     Contabilizado : Boolean;
-    Corregir : Boolean;   
+    Corregir : string;   
 }

@@ -71,7 +71,7 @@
 
             <ng-container matColumnDef="Corregir">
                 <th mat-header-cell *matHeaderCellDef> Corregir </th>
-                <td mat-cell *matCellDef="let det" class="center"> <i class="primario" [ngClass]="det.Corregir== true ? 'fa-solid fa-check fa-2xl': '' "></i> </td>
+                <td mat-cell *matCellDef="let det" class="center"> {{ det.Corregir }}</td>
             </ng-container>
 
             <ng-container matColumnDef="Aplicado">

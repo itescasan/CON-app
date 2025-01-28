@@ -498,6 +498,7 @@ export class NuevoIngresoCajaComponent {
       this.FILA.UsuarioModifica = this.cFunciones.User;
       this.FILA.Aplicado = false;
       this.FILA.Contabilizado = false;
+      this.FILA.Corregir = "";
       
 
       let det: iIngCajaDetalle  = {} as iIngCajaDetalle;
@@ -720,7 +721,7 @@ export class NuevoIngresoCajaComponent {
             this.LstValCaja.data = datos[0].d; 
             
             if (this.LstValCaja.data.length > 0) {
-              if (this.LstValCaja.data[0].Enviado == true && this.LstValCaja.data[0].Corregir == true) {
+              if (this.LstValCaja.data[0].Enviado == true && this.LstValCaja.data[0].Corregir == "Pendiente") {
                 document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
                 document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
                 document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
@@ -728,7 +729,7 @@ export class NuevoIngresoCajaComponent {
                 this.Eliminar = true;
               }else            
               {
-                if (this.LstValCaja.data[0].Enviado == false && this.LstValCaja.data[0].Corregir == false) {
+                if (this.LstValCaja.data[0].Enviado == false && this.LstValCaja.data[0].Corregir == "") {
                   document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
                   document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
                   document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");

@@ -8,5 +8,5 @@ export interface iValCaja {
     Enviado : Boolean;
     Aplicado : Boolean;
     Contabilizado : Boolean;
-    Corregir : Boolean;   
+    Corregir : string;   
 }
