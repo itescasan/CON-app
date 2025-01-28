@@ -1,5 +1,6 @@
 import { HttpClient, HttpXhrBackend } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { timeout } from "rxjs";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "src/app/SHARED/class/Cadena_Conexion";
 
@@ -22,7 +23,7 @@ export class postCierreMes {
 
     Procesar(Codigo: String, Fecha : String): Observable<string> {
 
-        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/CierreMensual?Codigo=" + Codigo + "&Fecha=" + Fecha, { headers: { 'content-type': 'text/plain' } });
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/CierreMensual?Codigo=" + Codigo + "&Fecha=" + Fecha, { headers: { 'content-type': 'text/plain' } }).pipe(timeout(660000));
 
     }
 
