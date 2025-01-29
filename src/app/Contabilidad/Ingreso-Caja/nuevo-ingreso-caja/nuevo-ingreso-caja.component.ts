@@ -446,24 +446,32 @@ export class NuevoIngresoCajaComponent {
     let Subtotal =  Number(this.val.Get("txtSubTotal").value.toString().replaceAll(",", ""));
     let IVA = Number(this.val.Get("txtIVA").value.toString().replaceAll(",", ""));
     let Total = this.cFunciones.NumFormat(Number(Subtotal + IVA), "2");
-    this.val.Get("txtTotal").setValue(Total);
-       
-  
+    this.val.Get("txtTotal").setValue(Total);    
 
     this.sal_Disponible = 0;
     //this.mont_Caja = 0;
     this.gas_Caja = 0;
-
-
-
-    this.lstDetalle.data.forEach(f => {
-      this.IdCaja = f.IdIngresoCajaC
-      if (f.IdIngresoCajaC == undefined) f.IdIngresoCajaC = 0;
-
-      this.gas_Caja += f.SubTotal
-      this.sal_Disponible = this.mont_Caja - this.gas_Caja      
-
-    });
+        
+    if (this.lstDetalle.data.length > 0) {
+      this.lstDetalle.data.forEach(f => {
+        this.IdCaja = f.IdIngresoCajaC
+        if (f.IdIngresoCajaC == undefined) f.IdIngresoCajaC = 0;
+  
+        this.gas_Caja += f.SubTotal
+        this.sal_Disponible = this.mont_Caja - this.gas_Caja
+  
+      });
+    }else{
+      this.sal_Disponible = this.mont_Caja - Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""))
+    }
+    this.sal_Disponible = this.sal_Disponible - Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""))
+    if (this.sal_Disponible < 0) {
+      document.getElementById("btnGuardar-IngCaja")?.removeAttribute("enabled");
+      document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+    }else{
+      document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+      document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+    }
 
   }
 
@@ -715,6 +723,7 @@ export class NuevoIngresoCajaComponent {
               });
             }
           } else {
+            
 
             let datos: iDatos[] = _json["d"];
 
