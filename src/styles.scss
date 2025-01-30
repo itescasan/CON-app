@@ -421,14 +421,35 @@ textarea:disabled {
 
 //████████████████████████████████████████████CHECBOX TOGGE████████████████████████████████████████████████████████████████
 
-.check-escasan:checked {
+.check-escasan:checked,
+.check-escasan-primario:checked {
     background-color: var(--escan-primario);
 }
 
-.toggle-check-escasan:checked {
+.toggle-check-escasan:checked,
+.toggle-check-escasan-primario:checked {
     background-color: var(--escan-primario);
     border-color: var(--escan-primario);
 }
+
+.check-escasan-secundario:checked {
+    background-color: var(--escan-secundario);
+}
+
+.toggle-check-escasan-secundario:checked {
+    background-color: var(--escan-secundario);
+    border-color: var(--escan-secundario);
+}
+
+.check-escasan-opcional:checked {
+    background-color: var(--escan-opcional);
+}
+
+.toggle-check-escasan-opcional:checked {
+    background-color: var(--escan-opcional);
+    border-color: var(--escan-opcional);
+}
+
 
 //TOGGLET BOTON
 
