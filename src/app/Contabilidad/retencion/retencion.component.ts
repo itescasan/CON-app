@@ -117,8 +117,8 @@ export class RetencionComponent {
 
             datos[1].d.forEach((doc : any) =>{
 
-              this.val.del("txtImporte" + i);
-              this.val.add("txtImporte" + i, "1", "LEN>=", "0", "Importe", "");
+             /* this.val.del("txtRerImporte" + i);
+              this.val.add("txtRerImporte" + i, "1", "LEN>=", "0", "Importe", "");*/
 
 
 
@@ -261,8 +261,8 @@ export class RetencionComponent {
   ngDoCheck() {
 
     this.lstRetencion.data.forEach(f => {
-      this.val.addNumberFocus("txtImporte" + f.Index, 2);
-      this.val.addFocus("txtImporte" + f.Index, "txtImporte" + (f.Index + 1), undefined);
+      this.val.addNumberFocus("txtRerImporte" + f.Index, 2);
+      this.val.addFocus("txtRerImporte" + f.Index, "txtRerImporte" + (f.Index + 1), undefined);
     });
 
 

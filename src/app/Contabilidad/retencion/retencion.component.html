@@ -59,7 +59,7 @@
                                     <!-- <span class="right">{{det.Monto == "0" ? "" : det.Monto }}</span>
                                 -->
 
-                                    <input type="text" class="form-control numero importe" id="Importe{{det.Index}}"
+                                    <input type="text" class="form-control numero importe" id="txtRerImporte{{det.Index}}"
                                     [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Monto"
                                     (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal');"
                                     (change)="V_Calcular(det.Index, true);" autocomplete="off">
