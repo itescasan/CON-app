@@ -261,10 +261,17 @@ export class ModuloVSContabilidadComponent {
 
 
     //HABILITANDO CHECKBOK POR PROBLEMAS DE VIZUALIZACION
-    let lstcheckbox: any = document.querySelectorAll("input[type='checkbox']");
+
+    
+    let checkbox: any =  document.getElementById("chkSoloDiferencia")
+
+     if(checkbox != undefined)checkbox.bootstrapToggle();
+
+
+    /*let lstcheckbox: any = document.querySelectorAll("input[type='checkbox']");
     lstcheckbox.forEach((f: any) => {
-      f.bootstrapToggle();
-    });
+        f.bootstrapToggle();
+    });*/
 
   }
 
