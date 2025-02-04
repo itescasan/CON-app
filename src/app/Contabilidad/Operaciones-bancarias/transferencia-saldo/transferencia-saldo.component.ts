@@ -1195,17 +1195,22 @@ export class TransferenciaSaldoComponent {
 
           let ImporteAuxML: number = 0;
           let ImporteAuxMS: number = 0;
+          let Importe_ML : number = 0;
+          let Importe_MS : number = 0;
           let DifML: number = 0;
           let DifMS: number = 0;
+
           OrdComp.forEach(g => {
 
             let Importe = 0;//Number(f.Importe.replaceAll(",", ""));
 
             if (this.IdMoneda == this.cFunciones.MonedaLocal) {
               Importe = g.SubTotalCordoba;
+              Importe_ML = g.SubTotalCordoba;
             }
             else {
               Importe = g.SubTotalDolar;
+              Importe_MS = g.SubTotalDolar;
             }
 
 
@@ -1239,8 +1244,8 @@ export class TransferenciaSaldoComponent {
 
 
 
-          det.DebitoML += this.cFunciones.Redondeo(f.ImporteML - ImporteAuxML, "2");
-          det.DebitoMS += this.cFunciones.Redondeo(f.ImporteMS - ImporteAuxMS, "2");
+          det.DebitoML += this.cFunciones.Redondeo(Importe_ML - ImporteAuxML, "2");
+          det.DebitoMS += this.cFunciones.Redondeo(Importe_MS - ImporteAuxMS, "2");
 
 
 
