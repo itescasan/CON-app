@@ -1199,7 +1199,16 @@ export class TransferenciaSaldoComponent {
           let DifMS: number = 0;
           OrdComp.forEach(g => {
 
-            let Importe = Number(f.Importe.replaceAll(",", ""));
+            let Importe = 0;//Number(f.Importe.replaceAll(",", ""));
+
+            if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+              Importe = g.SubTotalCordoba;
+            }
+            else {
+              Importe = g.SubTotalDolar;
+            }
+
+
 
             Importe = this.cFunciones.Redondeo((Importe * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
 

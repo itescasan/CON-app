@@ -7,4 +7,7 @@ export interface iOrdenCompraCentroGasto{
     CuentaContable : string;
     Bodega: string;
     CentroCosto : string;
+    SubTotal: number;
+    SubTotalDolar: number;
+    SubTotalCordoba: number;
 }
