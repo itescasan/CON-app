@@ -1206,12 +1206,13 @@ export class TransferenciaSaldoComponent {
 
             if (this.IdMoneda == this.cFunciones.MonedaLocal) {
               Importe = g.SubTotalCordoba;
-              Importe_ML = g.SubTotalCordoba;
             }
             else {
               Importe = g.SubTotalDolar;
-              Importe_MS = g.SubTotalDolar;
             }
+
+            Importe_MS = g.SubTotalDolar;
+            Importe_ML = g.SubTotalCordoba;
 
 
 
