@@ -768,6 +768,18 @@ export class TransferenciaSaldoComponent {
       let Saldo: number = Number(String(f.Saldo).replaceAll(",", ""));
 
 
+      
+     
+      let OrdComp: iOrdenCompraCentroGasto[] = this.lstOrdenCompraCentroGasto.filter(g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
+
+      let TipoDo: string[] = ["GASTO_ANT"];
+
+
+
+
+
+
+
       let NuevoSaldo: number = Saldo;
 
       if (Importe < 0) Importe = 0;
@@ -784,6 +796,24 @@ export class TransferenciaSaldoComponent {
       if (NuevoSaldo == 0) f.Operacion = "Cancelación";
 
       if (f.Operacion != "Cancelación" && f.Seleccionar) f.Seleccionar = false;
+
+
+      
+      if(TipoDo.includes(f.TipoDocumento))
+        {
+          if(OrdComp.length > 0 && f.Operacion == "Cancelación")
+          {
+            if(!OrdComp[0].PuedeCancelar)
+            {
+              Importe = 0;
+              f.Operacion = "";
+              NuevoSaldo = Saldo;
+            }
+            
+          }
+        }
+
+
 
 
       f.Importe = this.cFunciones.NumFormat(Importe, "2");

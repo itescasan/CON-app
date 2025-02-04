@@ -10,4 +10,5 @@ export interface iOrdenCompraCentroGasto{
     SubTotal: number;
     SubTotalDolar: number;
     SubTotalCordoba: number;
+    PuedeCancelar:boolean;
 }
