@@ -1377,21 +1377,25 @@ export class TransferenciaSaldoComponent {
       let RetML: number = 0;
       let RetMS: number = 0;
 
-      let l_retenciones: iRetencion[] = this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
+      let l_retenciones: iRetencion[] = this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && Number(w.Monto.toString().replaceAll(",", "")) != 0);
 
 
 
-      if (l_retenciones.length == 0) l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
+      if (l_retenciones.length == 0) l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && Number(w.Monto.toString().replaceAll(",", "")) != 0);
 
 
-      l_retenciones.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(w => {
-        this.Nueva_Linea_Asiento(Number(w.Monto.toString().replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, w.Naturaleza, "");
-
-
-        RetML += w.MontoML;
-        RetMS += w.MontoMS;
-      });
-
+      if(f.Operacion == "Cancelación")
+      {
+        l_retenciones.forEach(w => {
+          this.Nueva_Linea_Asiento(Number(w.Monto.toString().replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, w.Naturaleza, "");
+  
+  
+          RetML += w.MontoML;
+          RetMS += w.MontoMS;
+        });
+  
+      }
+     
 
 
       //AJUSTE
