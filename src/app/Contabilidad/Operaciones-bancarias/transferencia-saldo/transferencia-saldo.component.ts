@@ -28,6 +28,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { RetencionComponent } from '../../retencion/retencion.component';
 import { iRetencion } from 'src/app/Interface/Contabilidad/i-Retencion';
 import { iOrdenCompraCentroGasto } from 'src/app/Interface/Proveedor/i-OrdenCompra-CentroGasto';
+import { iAnticipoDoc } from 'src/app/Interface/Contabilidad/i-Anticipo-Doc';
 
 
 
@@ -52,6 +53,8 @@ export class TransferenciaSaldoComponent {
   lstBodega: iBodega[] = [];
   lstCentroCosto: iCentroCosto[] = [];
   lstRetencion: iRetencion[] = [];
+  lstRetencionAutomatica: iRetencion[] = [];
+
 
 
   @ViewChildren(IgxComboComponent)
@@ -61,6 +64,7 @@ export class TransferenciaSaldoComponent {
   public lstDetalle = new MatTableDataSource<iTransferenciaDocumento>;
   private lstDetalleAsiento: iAsientoDetalle[] = [];
   private lstOrdenCompraCentroGasto: iOrdenCompraCentroGasto[] = [];
+  private lstAnticipo: iAnticipoDoc[] = [];
 
 
   public FILA: iTransferencia = {} as iTransferencia;
@@ -99,20 +103,20 @@ export class TransferenciaSaldoComponent {
 
 
 
-    this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "No Cuenta", "Seleccione una cuenta bancaria.");
-    this.val.add("txtNombreCuenta", "1", "LEN>", "0", "No Cuenta", "No se ha definido el nombre de la cuenta.");
-    this.val.add("cmbCentroCosto", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro costo.");
-    this.val.add("txtBanco", "1", "LEN>", "0", "Banco", "No se ha definido el banco.");
-    this.val.add("cmbBodega", "1", "LEN>", "0", "Sucursal", "Seleccione una sucursal.");
-    this.val.add("txtNoDoc", "1", "LEN>", "0", "No Doc", "No se ha definido el número de consecutivo.");
-    this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
-    this.val.add("cmbProveedor", "1", "LEN>", "0", "Proveedor", "Seleccione un proveedor.");
-    this.val.add("txtMoneda", "1", "LEN>", "0", "Moneda", "No se ha especificado la moneda de la cuenta.");
-    this.val.add("TxtTC", "1", "NUM>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
-    this.val.add("txtComision", "1", "NUM>=", "0", "Banco", "Revisar la comisión bancaria.");
-    this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
-    this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
-    this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
+    this.val.add("cmbCuentaBancaria", "1", "LEN>", "0", "Transferencia", "Seleccione una cuenta bancaria.");
+    this.val.add("txtNombreCuenta", "1", "LEN>", "0", "Transferencia", "No se ha definido el nombre de la cuenta.");
+    this.val.add("cmbCentroCosto", "1", "LEN>=", "0", "Transferencia", "Seleccione un centro costo.");
+    this.val.add("txtBanco", "1", "LEN>", "0", "Transferencia", "No se ha definido el banco.");
+    this.val.add("cmbBodega", "1", "LEN>", "0", "Transferencia", "Seleccione una sucursal.");
+    this.val.add("txtNoDoc", "1", "LEN>", "0", "Transferencia", "No se ha definido el número de consecutivo.");
+    this.val.add("txtFecha", "1", "LEN>", "0", "Transferencia", "Ingrese una fecha valida.");
+    this.val.add("cmbProveedor", "1", "LEN>", "0", "Transferencia", "Seleccione un proveedor.");
+    this.val.add("txtMoneda", "1", "LEN>", "0", "Transferencia", "No se ha especificado la moneda de la cuenta.");
+    this.val.add("TxtTC", "1", "NUM>", "0", "Transferencia", "No se ha configurado el tipo de cambio.");
+    this.val.add("txtComision", "1", "NUM>=", "0", "Transferencia", "Revisar la comisión bancaria.");
+    this.val.add("txtConcepto", "1", "LEN>", "0", "Transferencia", "Ingrese un concepto.");
+    this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Transferencia", "");
+    this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Transferencia", "");
 
 
 
@@ -549,27 +553,27 @@ export class TransferenciaSaldoComponent {
 
   public V_Selecionar(det: any) {
 
-    if(det.Operacion != "Cancelación") det.Seleccionar = false
-/*
-    setTimeout(() => {
-
-
-
-      if (det.Seleccionar) {
-        det.Importe = det.Saldo;
-        det.Operacion = "Cancelación";
-        
-      }
-      else
-      {
-        det.Importe = "0";
-        det.Operacion = "";
-      }
-
-
-      this.V_Calcular();
-    });
-*/
+    if (det.Operacion != "Cancelación") det.Seleccionar = false
+    /*
+        setTimeout(() => {
+    
+    
+    
+          if (det.Seleccionar) {
+            det.Importe = det.Saldo;
+            det.Operacion = "Cancelación";
+            
+          }
+          else
+          {
+            det.Importe = "0";
+            det.Operacion = "";
+          }
+    
+    
+          this.V_Calcular();
+        });
+    */
 
 
   }
@@ -580,7 +584,7 @@ export class TransferenciaSaldoComponent {
     if (this.esModal) return;
 
 
-    this.val.ItemValido(["cmbProveedor", "TxtTC"]);
+    this.val.ItemValido(["cmbCuentaBancaria", "cmbProveedor", "TxtTC"]);
 
     if (this.val.Errores != "") {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -640,8 +644,11 @@ export class TransferenciaSaldoComponent {
             this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
             this.lstOrdenCompraCentroGasto.splice(0, this.lstOrdenCompraCentroGasto.length);
             this.lstRetencion.splice(0, this.lstRetencion.length);
+            this.lstRetencionAutomatica.splice(0, this.lstRetencionAutomatica.length);
             this.lstDetalle.data = datos[0].d;
             this.lstOrdenCompraCentroGasto = datos[1].d;
+            this.lstAnticipo = datos[2].d;
+            this.lstRetencionAutomatica = datos[3].d;
 
             this.V_CalcularSaldo();
 
@@ -775,8 +782,8 @@ export class TransferenciaSaldoComponent {
       }
 
       if (NuevoSaldo == 0) f.Operacion = "Cancelación";
-      
-      if(f.Operacion != "Cancelación" && f.Seleccionar) f.Seleccionar = false;
+
+      if (f.Operacion != "Cancelación" && f.Seleccionar) f.Seleccionar = false;
 
 
       f.Importe = this.cFunciones.NumFormat(Importe, "2");
@@ -799,14 +806,25 @@ export class TransferenciaSaldoComponent {
 
       //RETENCIONES
 
-      this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(r => {
+
+      
+      let l_retenciones: iRetencion[] = this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
+
+
+
+      if (l_retenciones.length == 0 && f.Operacion == "Cancelación") l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
+
+
+
+
+      l_retenciones.forEach(r => {
 
         if (Number(String(r.Monto).replaceAll(",", "")) != 0) {
           let Porc: number = 1 + r.PorcImpuesto;
-          let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
+          let SubTotal: number = r.SubTotal; //this.cFunciones.Redondeo(Importe / Porc, "2");
           //let SubTotal: number = Importe;
           let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "2");
-          if(!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "2");
+          if (!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "2");
         }
 
 
@@ -831,6 +849,15 @@ export class TransferenciaSaldoComponent {
         if (Retencion != 0) f.Retenido = true;
 
 
+        if (f.Operacion == "Abono") {
+          f.Retenido = false;
+          r.Monto = "0.00";
+          r.MontoML = 0;
+          r.MontoMS = 0;
+          this.dec_Retencion -= Retencion;
+        }
+
+        if (r.Naturaleza == "D") this.dec_Retencion -= Retencion;
 
 
       })
@@ -939,6 +966,7 @@ export class TransferenciaSaldoComponent {
 
 
       this.v_ConvertirTotal("");
+    
     }
 
 
@@ -1064,6 +1092,7 @@ export class TransferenciaSaldoComponent {
     let Comision: number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
 
 
+
     if (i_Banco == undefined) return;
 
 
@@ -1105,30 +1134,144 @@ export class TransferenciaSaldoComponent {
 
       let OrdComp: iOrdenCompraCentroGasto[] = this.lstOrdenCompraCentroGasto.filter(g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
 
-      let TipoDo: string[] = ["GASTO_REN", "GASTO_VIA"];
+      let TipoDo: string[] = ["GASTO_ANT"];
 
       let Cuenta: string = i_Prov.CUENTAXPAGAR;
 
       if (TipoDo.includes(f.TipoDocumento)) {
         Cuenta = "";
         if (OrdComp.length > 0) {
-          Cuenta = OrdComp[0].CuentaContable;
+          Cuenta = OrdComp[0].CuentaContableSolicitante;
         }
       }
 
 
 
-      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-        det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+      if (TipoDo.includes(f.TipoDocumento)) {
+
+        if (f.Operacion == "Abono") {
+
+
+          if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          }
+          else {
+            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+
+          }
+
+
+          det.DebitoML += f.DiferencialML;
+          det.DebitoMS += f.DiferencialMS;
+
+
+        }
+        else {
+
+
+          let Anticipo: number = 0;
+
+
+
+
+
+
+
+          if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+            Anticipo = this.lstAnticipo.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie).reduce((acc, cur) => acc + Number(cur.AnticipoCordoba), 0);
+          }
+          else {
+            Anticipo = this.lstAnticipo.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie).reduce((acc, cur) => acc + Number(cur.AnticipoDolar), 0);
+          }
+
+
+          if (Anticipo != 0) {
+            det = this.Nueva_Linea_Asiento(Anticipo, Cuenta, "Anticipo. " + f.Documento, f.Documento, f.TipoDocumento, "C", "");
+          }
+
+
+
+
+
+          let ImporteAuxML: number = 0;
+          let ImporteAuxMS: number = 0;
+          let DifML: number = 0;
+          let DifMS: number = 0;
+          OrdComp.forEach(g => {
+
+            let Importe = Number(f.Importe.replaceAll(",", ""));
+
+            Importe = this.cFunciones.Redondeo((Importe * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
+
+            if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+              det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+            }
+            else {
+              det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+
+            }
+
+            det.CentroCosto = g.CentroCosto;
+            DifML += f.DiferencialML;
+            DifMS += f.DiferencialMS;
+
+
+
+            ImporteAuxML += det.DebitoML;
+            ImporteAuxMS += det.DebitoMS;
+
+
+
+
+
+
+          });
+
+
+
+
+          det.DebitoML += this.cFunciones.Redondeo(f.ImporteML - ImporteAuxML, "2");
+          det.DebitoMS += this.cFunciones.Redondeo(f.ImporteMS - ImporteAuxMS, "2");
+
+
+
+          if (f.ImporteML - ImporteAuxML != 0) {
+            f.DiferencialML = this.cFunciones.Redondeo(DifML, "2");
+          }
+
+          if (f.ImporteMS - ImporteAuxMS != 0) {
+
+            f.DiferencialMS = this.cFunciones.Redondeo(DifMS, "2");
+
+          }
+
+
+
+          det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
+          det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
+
+
+
+        }
+
       }
       else {
-        det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
+        if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+        }
+        else {
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+
+        }
+
+
+        det.DebitoML += f.DiferencialML;
+        det.DebitoMS += f.DiferencialMS;
       }
 
 
-      det.DebitoML += f.DiferencialML;
-      det.DebitoMS += f.DiferencialMS;
+
 
 
 
@@ -1220,8 +1363,15 @@ export class TransferenciaSaldoComponent {
       let RetML: number = 0;
       let RetMS: number = 0;
 
-      this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(w => {
-        this.Nueva_Linea_Asiento(Number(w.Monto.replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "");
+      let l_retenciones: iRetencion[] = this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
+
+
+
+      if (l_retenciones.length == 0) l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
+
+
+      l_retenciones.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(w => {
+        this.Nueva_Linea_Asiento(Number(w.Monto.toString().replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, w.Naturaleza, "");
 
 
         RetML += w.MontoML;
@@ -1263,6 +1413,33 @@ export class TransferenciaSaldoComponent {
 
 
 
+    let TotalCreditoML: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+    let TotalCreditoMS: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
+
+    let TotalDebitoML: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.DebitoML), 0);
+    let TotalDebitoMS: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.DebitoMS), 0);
+
+    let AjusteML = this.cFunciones.Redondeo(TotalCreditoML - TotalDebitoML, "2");
+    let AjusteMS = this.cFunciones.Redondeo(TotalCreditoMS - TotalDebitoMS, "2");
+
+    if (AjusteML > 0) {
+      this.Nueva_Linea_Asiento(AjusteML, this.CuentaDiferencialGancia, "AJUSTE DIFERENCIAL", "", "", "D", "DIF_ML");
+    }
+
+    if (AjusteML < 0) {
+      this.Nueva_Linea_Asiento(AjusteML, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
+    }
+
+
+
+
+    if (AjusteMS > 0) {
+      this.Nueva_Linea_Asiento(AjusteMS, this.CuentaDiferencialGancia, "AJUSTE DIFERENCIAL", "", "", "D", "DIF_MS");
+    }
+
+    if (AjusteMS < 0) {
+      this.Nueva_Linea_Asiento(AjusteMS, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
+    }
 
 
 
@@ -1484,7 +1661,31 @@ export class TransferenciaSaldoComponent {
     if (!this.esModal) this.FILA.Anulado = false;
     this.FILA.TipoTransferencia = "S";
     this.FILA.TransferenciaDocumento = JSON.parse(JSON.stringify(this.lstDetalle.data.filter(f => f.Operacion != "")));
-    this.FILA.TranferenciaRetencion = JSON.parse(JSON.stringify(this.lstRetencion));
+
+
+
+    
+    this.lstDetalle.data.filter(f => f.Operacion != "").forEach(w =>{
+
+      if(this.lstRetencion.filter(ff => ff.Documento == w.Documento && ff.Serie == w.Serie && ff.TipoDocumento == w.TipoDocumento).length == 0)
+      {
+
+        this.lstRetencionAutomatica.filter(ff => ff.Documento == w.Documento && ff.Serie == w.Serie && ff.TipoDocumento == w.TipoDocumento).forEach(y =>{
+
+
+          this.lstRetencion.push(y);
+
+        });
+
+
+      }
+      
+
+    })
+
+
+
+    this.FILA.TranferenciaRetencion = JSON.parse(JSON.stringify(this.lstRetencion.filter(w => Number(w.Monto.toString().replaceAll(",", "")) != 0)));
 
 
     this.V_Contabilizacion();
@@ -1543,8 +1744,7 @@ export class TransferenciaSaldoComponent {
             });
 
 
-            if (!this.esModal) 
-            {
+            if (!this.esModal) {
               this.V_GenerarDoc(Datos[0], false);
               this.v_Evento("Limpiar");
             }
@@ -1732,11 +1932,10 @@ export class TransferenciaSaldoComponent {
 
     let Datos: iTransferenciaDocumento[] = [];
 
-    
+
     Datos.push(item);
 
-    if(item.Seleccionar)
-    {
+    if (item.Seleccionar) {
       this.lstDetalle.data.filter(f => f.Seleccionar && f.Index != item.Index).forEach(f => {
         Datos.push(f);
       });
@@ -1777,14 +1976,23 @@ export class TransferenciaSaldoComponent {
             Documento: f.Documento,
             TipoDocumento: f.TipoDocumento,
             Serie: f.Serie,
+            SubTotal: f.SubTotal,
+            SubTotalMS: f.SubTotalMS,
+            SubTotalML: f.SubTotalML,
             Monto: f.Monto,
             PorcImpuesto: f.PorcImpuesto,
             TieneImpuesto: f.TieneImpuesto,
             CuentaContable: f.CuentaContable,
-            RetManual : f.RetManual
+            RetManual: f.RetManual,
+            Naturaleza: f.Naturaleza
+
+
+
+
           });
 
           i++;
+
 
           dialogRef.componentInstance.V_Calcular(i, undefined);
 
@@ -1813,11 +2021,15 @@ export class TransferenciaSaldoComponent {
             Documento: f.Documento,
             TipoDocumento: f.TipoDocumento,
             Serie: f.Serie,
+            SubTotal: f.SubTotal,
+            SubTotalMS: f.SubTotalMS,
+            SubTotalML: f.SubTotalML,
             Monto: f.Monto,
             PorcImpuesto: f.PorcImpuesto,
             TieneImpuesto: f.TieneImpuesto,
             CuentaContable: f.CuentaContable,
-            RetManual : f.RetManual
+            RetManual: f.RetManual,
+            Naturaleza: f.Naturaleza
           });
 
           i++;
@@ -1867,6 +2079,7 @@ export class TransferenciaSaldoComponent {
         r.TipoDocumento = f.TipoDocumento;
         r.IdMoneda = this.IdMoneda;
         r.TasaCambio = this.TC;
+        r.SubTotal = f.SubTotal;
         r.Monto = f.Monto;
         r.MontoMS = 0;
         r.MontoML = 0;
@@ -1874,6 +2087,7 @@ export class TransferenciaSaldoComponent {
         r.PorcImpuesto = f.PorcImpuesto;
         r.CuentaContable = f.CuentaContable;
         r.RetManual = f.RetManual;
+        r.Naturaleza = f.Naturaleza;
 
 
 
@@ -1893,42 +2107,42 @@ export class TransferenciaSaldoComponent {
 
 
     let byteArray = new Uint8Array(atob(Datos.d).split('').map(char => char.charCodeAt(0)));
-  
+
     var file = new Blob([byteArray], { type: (Exportar ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/pdf') });
-  
-  
+
+
     let url = URL.createObjectURL(file);
-  
-   
+
+
     var fileLink = document.createElement('a');
     fileLink.href = url;
     fileLink.download = Datos.Nombre;
-  
-  
+
+
     if (Exportar) {
-  
-        var fileLink = document.createElement('a');
-        fileLink.href = url;
-        fileLink.download = Datos.Nombre;
-        fileLink.click();
-        document.body.removeChild(fileLink);
+
+      var fileLink = document.createElement('a');
+      fileLink.href = url;
+      fileLink.download = Datos.Nombre;
+      fileLink.click();
+      document.body.removeChild(fileLink);
     }
     else {
-        let tabOrWindow: any = window.open('',  '_blank');
-        tabOrWindow.document.body.appendChild(fileLink);
-  
-        tabOrWindow.document.write("<html><head><title>"+Datos.Nombre+"</title></head><body>"
-            + '<embed width="100%" height="100%" name="plugin" src="'+ url+ '" '
-            + 'type="application/pdf" internalinstanceid="21"></body></html>');
-  
-        tabOrWindow.focus();
+      let tabOrWindow: any = window.open('', '_blank');
+      tabOrWindow.document.body.appendChild(fileLink);
+
+      tabOrWindow.document.write("<html><head><title>" + Datos.Nombre + "</title></head><body>"
+        + '<embed width="100%" height="100%" name="plugin" src="' + url + '" '
+        + 'type="application/pdf" internalinstanceid="21"></body></html>');
+
+      tabOrWindow.focus();
     }
-  
-  
-  
+
+
+
   }
-  
-  
+
+
 
 
 

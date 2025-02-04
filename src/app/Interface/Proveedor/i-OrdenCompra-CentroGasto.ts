@@ -3,7 +3,8 @@ export interface iOrdenCompraCentroGasto{
     TipoDocOrigen: string;
     Participacion1: number;
     Participacion2: number;
-    CuentaContable: string;
+    CuentaContableSolicitante: string;
+    CuentaContable : string;
     Bodega: string;
     CentroCosto : string;
 }

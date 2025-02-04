@@ -10,6 +10,9 @@ export interface iRetencion{
     TipoDocumento: string;
     IdMoneda: string;
     TasaCambio:number;
+    SubTotal : number;
+    SubTotalMS : number;
+    SubTotalML : number;
     Monto : string;
     MontoMS: number;
     MontoML : number;
@@ -17,4 +20,5 @@ export interface iRetencion{
     TieneImpuesto : boolean;
     CuentaContable : string;
     RetManual : boolean;
+    Naturaleza : string;
 }

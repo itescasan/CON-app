@@ -24,7 +24,6 @@ export interface iTransferenciaDocumento{
     DiferencialML : number;
     DiferencialMS : number;
     Retenido : boolean;
-    SubTotal : number;
     Impuesto : number;
     PorcImpuesto : number;
     Seleccionar : boolean;

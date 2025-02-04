@@ -1789,11 +1789,15 @@ export class ChequesSaldoComponent {
              Documento: f.Documento,
              TipoDocumento: f.TipoDocumento,
              Serie: f.Serie,
+             SubTotal : f.SubTotal,
+             SubTotalMS : f.SubTotalMS,
+             SubTotalML : f.SubTotalML,
              Monto: f.Monto,
              PorcImpuesto: f.PorcImpuesto,
              TieneImpuesto: f.TieneImpuesto,
              CuentaContable: f.CuentaContable,
-             RetManual : f.RetManual
+             RetManual : f.RetManual,
+             Naturaleza : f.Naturaleza
            });
  
            i++;

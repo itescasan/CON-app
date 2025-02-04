@@ -1192,6 +1192,10 @@ private V_GenerarDoc(Datos: iDatos, Exportar: boolean) {
 }
 
 
+public V_NombreCuenta(CuentaContable : string) : any{
+  return this.lstCuenta.find(f => f.CuentaContable == CuentaContable)?.NombreCuenta;
+}
+
   ngOnInit(): void {
 
 

@@ -157,13 +157,13 @@
 
 
                             <div class="col-4 col-sm-8 col-md-3 col-lg-3 mb-2">
-                                <span>{{det.NoDocumento }}</span>
+                                <span>{{det.NoDocumento }}  @if(Nivel == 4) {<b class="ncodBog">{{det.CodigoBodega }}</b>}</span>
                             </div>
 
 
                 
                             <div class="col-12">
-                                <span>{{(det.Referencia == '' ? det.Tabla : det.Referencia)}}</span>
+                                <span>{{(det.Referencia == '' ? det.Tabla : det.Referencia)}} </span>
                             </div>
 
 
