@@ -24,4 +24,7 @@ export interface iChequeDocumento{
     DiferencialML : number;
     DiferencialMS : number;
     Retenido : boolean;
+    Impuesto : number;
+    PorcImpuesto : number;
+    Seleccionar : boolean;
 }
