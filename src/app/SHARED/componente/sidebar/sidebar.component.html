@@ -13,6 +13,7 @@
                     <i class="fs-5 bi-house"></i><span class="ms-1  d-sm-inline">Inicio</span>
                 </a>
             </li>
+            
 
 
             
@@ -38,7 +39,7 @@
                         <li *ngFor="let subMenu of SubItem(Menu.Id);" class="dropdown-submenu">
                             <a
                                 [ngClass]="V_TieneHijos(subMenu.Id) == -1 ? 'dropdown-item' : 'dropdown-item dropdown-toggle'" href="#"
-                                role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                role="button" aria-haspopup="true" aria-expanded="false"
                                 id="{{(subMenu.Id)}}">
                                 <i class="{{subMenu.Clase}}">
 
