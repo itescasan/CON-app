@@ -31,7 +31,7 @@ export class getServidor{
  }
 
  public ValidarCodigo(user: string, cod : string) : Observable<any>{
-  return this.http.get<any>(this._Cnx.Url() + "Sistema/ValidarCodigo?user=" + user + "&cod=" + cod ).pipe(timeout(this._Cnx.Timeout));
+  return this.http.get<any>(this._Cnx.Url() + "Sistema/ValidarCodigo?user=" + user + "&cod=" + cod + "&Modulo=CON" ).pipe(timeout(this._Cnx.Timeout));
 }
 
  public TC(f : Date) : Observable<any>{
