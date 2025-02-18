@@ -164,6 +164,8 @@ export class Funciones {
 
   public DateAdd(Tipo: string, Fecha: Date, Num: number): string {
     let f = new Date(Fecha);
+    Num -=1;
+    if(Num < 0) Num = 0;
     switch (Tipo) {
       case 'Day':
         return this.DateFormat(new Date(f.setDate( f.getDate() + Num)), 'yyyy-MM-dd');
