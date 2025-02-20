@@ -154,6 +154,16 @@ export class LoginService {
             dialogRef.afterClosed().subscribe(s => {
 
               if (dialogRef.componentInstance.retorno == "1") {
+
+                this.DIALOG.open(
+                  WaitComponent,
+                  {
+                    panelClass: "escasan-dialog-full-blur",
+                    data: "",
+                    id: "dialog-wait"
+                  }
+                );
+                
                 l.CON_CodMail = dialogRef.componentInstance.value;
                 this.ValidarCodigo(l, true);
 
