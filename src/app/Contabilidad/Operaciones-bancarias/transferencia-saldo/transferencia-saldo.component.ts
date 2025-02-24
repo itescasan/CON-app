@@ -1164,7 +1164,7 @@ export class TransferenciaSaldoComponent {
 
       let OrdComp: iOrdenCompraCentroGasto[] = this.lstOrdenCompraCentroGasto.filter(g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
 
-      let TipoDo: string[] = ["GASTO_ANT"];
+      let TipoDo: string[] = ["GASTO_ANT", "GASTO_REN", "GASTO_VIA"];
 
       let Cuenta: string = i_Prov.CUENTAXPAGAR;
 
@@ -1177,7 +1177,7 @@ export class TransferenciaSaldoComponent {
 
 
 
-      if (TipoDo.includes(f.TipoDocumento)) {
+      if (f.TipoDocumento == "GASTO_ANT") {
 
         if (f.Operacion == "Abono") {
 
