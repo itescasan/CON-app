@@ -1200,6 +1200,7 @@ export class TransferenciaSaldoComponent {
 
 
           let Anticipo: number = 0;
+          let Impuesto: number = 0;
 
 
 
@@ -1209,9 +1210,15 @@ export class TransferenciaSaldoComponent {
 
           if (this.IdMoneda == this.cFunciones.MonedaLocal) {
             Anticipo = this.lstAnticipo.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie).reduce((acc, cur) => acc + Number(cur.AnticipoCordoba), 0);
+        
+            Impuesto = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie && w.TieneImpuesto).reduce((acc, cur) => acc + Number(cur.MontoML), 0);
+        
           }
           else {
             Anticipo = this.lstAnticipo.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie).reduce((acc, cur) => acc + Number(cur.AnticipoDolar), 0);
+            Impuesto = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie && w.TieneImpuesto).reduce((acc, cur) => acc + Number(cur.MontoMS), 0);
+        
+
           }
 
 
@@ -1246,13 +1253,13 @@ export class TransferenciaSaldoComponent {
 
 
 
-            Importe = this.cFunciones.Redondeo((Importe * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
+            Importe = this.cFunciones.Redondeo(((Importe - Impuesto) * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
 
             if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-              det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
             }
             else {
-              det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
             }
 
@@ -1302,11 +1309,35 @@ export class TransferenciaSaldoComponent {
       }
       else {
 
+
+        let Impuesto: number = 0;
+
+
+        if (f.Operacion != "Abono")
+        {
+          if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+
+            Impuesto = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie && w.TieneImpuesto).reduce((acc, cur) => acc + Number(cur.MontoML), 0);
+        
+          }
+          else {
+          
+            Impuesto = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie && w.TieneImpuesto).reduce((acc, cur) => acc + Number(cur.MontoMS), 0);
+        
+  
+          }
+        }
+        
+       
+
+
+        
+
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
         }
         else {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
         }
 

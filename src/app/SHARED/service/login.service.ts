@@ -32,6 +32,7 @@ export class LoginService {
       {
         panelClass: "escasan-dialog-full-blur",
         data: "",
+        id:"dialog-wait"
       }
     );
 
@@ -47,6 +48,8 @@ export class LoginService {
             this.DIALOG.open(DialogErrorComponent, {
               data: _json["msj"].Mensaje,
             });
+
+            
           } else {
 
             let datos: iDatos[] = _json["d"];
@@ -138,6 +141,8 @@ export class LoginService {
             dialogRef.afterOpened().subscribe(s => {
 
 
+
+
               //if (MostrarConfirmar) dialogRef.componentInstance.value = l.CON_CodMail;
               dialogRef.componentInstance.SetMensajeHtml("<b>Ingrese el codigo que se le envio al correo.</b>");
               dialogRef.componentInstance.MostrarCerrar = false;
@@ -213,16 +218,19 @@ export class LoginService {
 
           let _json: any = data;
 
+        
           if (_json["esError"] == 1) {
 
 
-
             if (DesdeConfirmar) {
+
+              this.DIALOG.getDialogById("dialog-wait")?.close();
 
 
               let dialog = this.DIALOG.open(DialogErrorComponent, {
                 data: _json["msj"].Mensaje,
               });
+         
 
               dialog.afterClosed().subscribe(s => {
                 this.isLogin(true);

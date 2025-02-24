@@ -752,6 +752,9 @@ export class SidebarComponent {
   }
 
   ngAfterContentInit() {
+    this.cFunciones.DIALOG.getDialogById("dialog-wait")?.close();
+
+
     $("#btnMenu").trigger("click"); // MOSTRAR MENU DESDE EL INICIO
 
 
