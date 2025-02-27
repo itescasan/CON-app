@@ -786,12 +786,33 @@ export class ChequesSaldoComponent {
 
       if (NuevoSaldo == 0) f.Operacion = "Cancelación";
 
+      if (f.Operacion != "Cancelación" && f.Seleccionar) f.Seleccionar = false;
+      // f.Importe = this.cFunciones.NumFormat(Importe, "2");
+      // f.NuevoSaldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
+      // f.NuevoSaldoML = 0;
+      // f.NuevoSaldoMS = 0;
+      // this.dec_Aplicado += Importe;
 
-      f.Importe = this.cFunciones.NumFormat(Importe, "2");
-      f.NuevoSaldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
-      f.NuevoSaldoML = 0;
-      f.NuevoSaldoMS = 0;
-      this.dec_Aplicado += Importe;
+      if(TipoDo.includes(f.TipoDocumento))
+        {
+          if(OrdComp.length > 0 && f.Operacion == "Cancelación")
+          {
+            if(!OrdComp[0].PuedeCancelar)
+            {
+              Importe = 0;
+              f.Operacion = "";
+              NuevoSaldo = Saldo;
+            }
+            
+          }
+        }
+
+
+        f.Importe = this.cFunciones.NumFormat(Importe, "2");
+        f.NuevoSaldo = this.cFunciones.NumFormat(NuevoSaldo, "2");
+        f.NuevoSaldoML = 0;
+        f.NuevoSaldoMS = 0;
+        this.dec_Aplicado += Importe;
     
 
       if (this.cFunciones.MonedaLocal == this.IdMoneda) {
@@ -806,44 +827,62 @@ export class ChequesSaldoComponent {
 
 
       //RETENCIONES
-      
-      this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento).forEach(r => {
 
-        if(Number(String(r.Monto).replaceAll(",", "")) != 0)
-        {
-          let Porc: number = this.cFunciones.Redondeo((r.Porcentaje / 100), "2");
-         // let SubTotal: number = this.cFunciones.Redondeo(Importe / Porc, "2");
-         let SubTotal: number = Importe;
-          let Ret: number = this.cFunciones.Redondeo(SubTotal * Porc, "2");
-          r.Monto = this.cFunciones.NumFormat(Ret, "2");
+
+      let l_retenciones: iRetencion[] = this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
+
+
+
+      if (l_retenciones.length == 0 && f.Operacion == "Cancelación") l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
+    
+      
+      l_retenciones.forEach(r => {
+
+        if (Number(String(r.Monto).replaceAll(",", "")) != 0) {
+          let Porc: number = 1 + r.PorcImpuesto;
+          let SubTotal: number = r.SubTotal; //this.cFunciones.Redondeo(Importe / Porc, "2");
+          //let SubTotal: number = Importe;
+          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "2");
+          if (!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "2");
         }
 
 
         if (Importe == 0) r.Monto = "0";
         r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "2");
-        
+
 
         let Retencion: number = Number(String(r.Monto).replaceAll(",", ""));
-          this.dec_Retencion += Retencion;
-  
-
-          if (this.cFunciones.MonedaLocal == this.IdMoneda) {
-            r.MontoML = this.cFunciones.Redondeo(Retencion, "2");
-            r.MontoMS = this.cFunciones.Redondeo(r.MontoML / this.TC, "2");
-
-          }
-          else {
-            r.MontoMS = this.cFunciones.Redondeo(Retencion, "2");
-            r.MontoML = this.cFunciones.Redondeo(r.MontoMS * this.TC, "2");
-          }
-
-          if (Retencion != 0) f.Retenido = true;
+        this.dec_Retencion += Retencion;
 
 
-   
+        if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+          r.MontoML = this.cFunciones.Redondeo(Retencion, "2");
+          r.MontoMS = this.cFunciones.Redondeo(r.MontoML / this.TC, "2");
+
+        }
+        else {
+          r.MontoMS = this.cFunciones.Redondeo(Retencion, "2");
+          r.MontoML = this.cFunciones.Redondeo(r.MontoMS * this.TC, "2");
+        }
+
+        if (Retencion != 0) f.Retenido = true;
+
+
+        if (f.Operacion == "Abono") {
+          f.Retenido = false;
+          r.Monto = "0.00";
+          r.MontoML = 0;
+          r.MontoMS = 0;
+          this.dec_Retencion -= Retencion;
+        }
+
+        if (r.Naturaleza == "D") this.dec_Retencion -= Retencion;
+
 
       })
 
+
+    
 
 
       //DIFERENCIAL CAMBIARIO (ANTERIOR - ACTUAL)
@@ -1113,7 +1152,7 @@ export class ChequesSaldoComponent {
   
        let OrdComp : iOrdenCompraCentroGasto[] =   this.lstOrdenCompraCentroGasto.filter( g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
 
-       let TipoDo: string[] = ["GASTO_ANT"];
+       let TipoDo: string[] = ["GASTO_ANT", "GASTO_REN", "GASTO_VIA"];
      
        let Cuenta : string = i_Prov.CUENTAXPAGAR;
 
@@ -1126,7 +1165,8 @@ export class ChequesSaldoComponent {
         }
        }
 
-       if (TipoDo.includes(f.TipoDocumento)) {
+
+       if (f.TipoDocumento == "GASTO_ANT") {
 
         if (f.Operacion == "Abono") {
 
@@ -1149,20 +1189,35 @@ export class ChequesSaldoComponent {
 
 
           let Anticipo: number = 0;
-  
-  
-  
+          let Impuesto: number = 0;
+
+
+
+
+
+
+
           if (this.IdMoneda == this.cFunciones.MonedaLocal) {
             Anticipo = this.lstAnticipo.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie).reduce((acc, cur) => acc + Number(cur.AnticipoCordoba), 0);
+        
+            Impuesto = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie && w.TieneImpuesto).reduce((acc, cur) => acc + Number(cur.MontoML), 0);
+        
           }
           else {
             Anticipo = this.lstAnticipo.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie).reduce((acc, cur) => acc + Number(cur.AnticipoDolar), 0);
+            Impuesto = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie && w.TieneImpuesto).reduce((acc, cur) => acc + Number(cur.MontoMS), 0);
+        
+
           }
 
 
           if (Anticipo != 0) {
             det = this.Nueva_Linea_Asiento(Anticipo, Cuenta, "Anticipo. " + f.Documento, f.Documento, f.TipoDocumento, "C", "");
           }
+
+
+
+
 
           let ImporteAuxML: number = 0;
           let ImporteAuxMS: number = 0;
@@ -1187,13 +1242,13 @@ export class ChequesSaldoComponent {
 
 
 
-            Importe = this.cFunciones.Redondeo((Importe * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
+            Importe = this.cFunciones.Redondeo(((Importe - Impuesto) * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
 
             if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-              det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
             }
             else {
-              det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
             }
 
@@ -1243,11 +1298,35 @@ export class ChequesSaldoComponent {
       }
       else {
 
+
+        let Impuesto: number = 0;
+
+
+        if (f.Operacion != "Abono")
+        {
+          if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+
+            Impuesto = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie && w.TieneImpuesto).reduce((acc, cur) => acc + Number(cur.MontoML), 0);
+        
+          }
+          else {
+          
+            Impuesto = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && w.Serie == f.Serie && w.TieneImpuesto).reduce((acc, cur) => acc + Number(cur.MontoMS), 0);
+        
+  
+          }
+        }
+        
+       
+
+
+        
+
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
         }
         else {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
         }
 
@@ -1255,7 +1334,6 @@ export class ChequesSaldoComponent {
         det.DebitoML += f.DiferencialML;
         det.DebitoMS += f.DiferencialMS;
       }
-
 
      
   
@@ -1328,7 +1406,9 @@ export class ChequesSaldoComponent {
            
           
       });
-      let TotalCreditoML: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
+
+    
+    let TotalCreditoML: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
     let TotalCreditoMS: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
 
     let TotalDebitoML: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.DebitoML), 0);
@@ -1655,7 +1735,10 @@ export class ChequesSaldoComponent {
               });
   
   
-              if (!this.esModal) this.v_Evento("Limpiar");
+              if (!this.esModal) {
+                //this.V_GenerarDoc(Datos[0], false);
+                this.v_Evento("Limpiar");
+              }
   
             }
   
@@ -1770,10 +1853,7 @@ export class ChequesSaldoComponent {
       return 0 - (a.Index > b.Index ? -1 : 1);
 
     });
-
-
-    this.lstDetalle._updateChangeSubscription()
-
+   
 
     // Ascending
     //this.lstDetalle.data.sort((a,b) => 0 - (a > b ? -1 : 1));
