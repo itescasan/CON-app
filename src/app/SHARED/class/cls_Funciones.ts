@@ -165,13 +165,14 @@ export class Funciones {
   public DateAdd(Tipo: string, Fecha: Date, Num: number): string {
     let f = new Date(Fecha);
     Num -=1;
-    if(Num < 0) Num = 0;
+        if(Num < 0) Num = 0;
     switch (Tipo) {
       case 'Day':
-        return this.DateFormat(new Date(f.setDate( f.getDate() + Num)), 'yyyy-MM-dd');
+        return this.DateFormat(new Date(f.setDate(f.getDate() + Num)), 'yyyy-MM-dd');
         break;
 
       case 'Month':
+       
         return this.DateFormat(
           new Date(f.setMonth(f.getMonth() + Num)),
           'yyyy-MM-dd'
@@ -189,18 +190,13 @@ export class Funciones {
     return this.DateFormat(f, 'yyyy-MM-dd');
   }
 
-  
-
   public LastDay(Fecha: Date): string {
-    let f = new Date(Fecha.getFullYear(), Fecha.getMonth(), 1);
-    f = new Date(this.DateAdd("Month", f, 1));
-
+    let f =   new Date(Fecha.getFullYear(), Fecha.getMonth() + 1, 0);
     return this.DateFormat(f, 'yyyy-MM-dd');
   }
 
   public FirstDay(Fecha: Date): string {
     let f = new Date(Fecha.getFullYear(), Fecha.getMonth(), 1);
-
     return this.DateFormat(f, 'yyyy-MM-dd');
   }
 
