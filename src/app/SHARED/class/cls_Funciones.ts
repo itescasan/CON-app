@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { getServidor } from '../GET/get-servidor';
 import { MatDialog } from '@angular/material/dialog';
 import { iPerfil } from '../interface/i-Perfiles';
+import { DialogErrorComponent } from '../componente/dialog-error/dialog-error.component';
 
 @Injectable({
   providedIn: 'root',
