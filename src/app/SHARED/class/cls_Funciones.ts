@@ -341,6 +341,17 @@ export class Funciones {
     return x;
 
   }
+
+
+  public handleError(message: string, id: string = "error-servidor") {
+    if (this.DIALOG.getDialogById(id) == undefined) {
+      this.DIALOG.open(DialogErrorComponent, {
+        id: id,
+        data: "<b class='error'>" + message + "</b>",
+      });
+    }
+  }
+
 }
 
 
