@@ -1445,7 +1445,6 @@ export class TransferenciaSaldoComponent {
 
       if (l_retenciones.length == 0) l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && Number(w.Monto.toString().replaceAll(",", "")) != 0);
 
-      console.log("asdsadsa");
       if(f.Operacion == "Cancelación")
       {
         l_retenciones.forEach(w => {
