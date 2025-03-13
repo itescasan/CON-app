@@ -1445,7 +1445,7 @@ export class TransferenciaSaldoComponent {
 
       if (l_retenciones.length == 0) l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && Number(w.Monto.toString().replaceAll(",", "")) != 0);
 
-
+      console.log("asdsadsa");
       if(f.Operacion == "Cancelación")
       {
         l_retenciones.forEach(w => {
@@ -2027,7 +2027,7 @@ export class TransferenciaSaldoComponent {
       {
         panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
         disableClose: true,
-        data: [Datos, item.Documento]
+        data: [Datos, item.Documento, this.IdMoneda]
       }
     );
 
@@ -2064,9 +2064,8 @@ export class TransferenciaSaldoComponent {
             TieneImpuesto: f.TieneImpuesto,
             CuentaContable: f.CuentaContable,
             RetManual: f.RetManual,
-            Naturaleza: f.Naturaleza
-
-
+            Naturaleza: f.Naturaleza,
+            AplicarAutomatico : f.AplicarAutomatico
 
 
           });
@@ -2109,7 +2108,8 @@ export class TransferenciaSaldoComponent {
             TieneImpuesto: f.TieneImpuesto,
             CuentaContable: f.CuentaContable,
             RetManual: f.RetManual,
-            Naturaleza: f.Naturaleza
+            Naturaleza: f.Naturaleza,
+            AplicarAutomatico : f.AplicarAutomatico
           });
 
           i++;

@@ -1997,7 +1997,7 @@ export class ChequesSaldoComponent {
        {
         panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
         disableClose: true,
-        data: [Datos, item.Documento]
+        data: [Datos, item.Documento, this.IdMoneda]
        }
      );
  
@@ -2032,7 +2032,8 @@ export class ChequesSaldoComponent {
              TieneImpuesto: f.TieneImpuesto,
              CuentaContable: f.CuentaContable,
              RetManual : f.RetManual,
-             Naturaleza : f.Naturaleza
+             Naturaleza : f.Naturaleza,
+             AplicarAutomatico : f.AplicarAutomatico
            });
  
            i++;
@@ -2070,7 +2071,8 @@ export class ChequesSaldoComponent {
             TieneImpuesto: f.TieneImpuesto,
             CuentaContable: f.CuentaContable,
             RetManual: f.RetManual,
-            Naturaleza: f.Naturaleza
+            Naturaleza: f.Naturaleza,
+            AplicarAutomatico : f.AplicarAutomatico
           });
 
           i++;

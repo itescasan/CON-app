@@ -28,6 +28,7 @@ export interface iRet {
   CuentaContable : string;
   RetManual : boolean;
   Naturaleza : string;
+  AplicarAutomatico : boolean;
 }
 
 
@@ -41,6 +42,7 @@ export class RetencionComponent {
   public val = new Validacion();
   public lstRetencion = new MatTableDataSource<iRet>;
   displayedColumns: string[] = ["col1"];
+  private MonedaPago : string = "";
 
 
   public Doc: any[];
@@ -51,6 +53,8 @@ export class RetencionComponent {
     public cFunciones: Funciones, private GET: getTransferencia, @Inject(MAT_DIALOG_DATA) public data: any[],) {
     this.Doc = data[0];
     this.NoDocumento = data[1];
+    this.NoDocumento = data[1];
+    this.MonedaPago = data[2];
 
   }
 
@@ -128,6 +132,7 @@ export class RetencionComponent {
                 let r: iRet = {} as iRet;
   
                 r.IdDetRetencion = "00000000-0000-0000-0000-000000000000";
+                r.AplicarAutomatico = f.AplicarAutomatico;
                 r.Seleccionar = f.AplicarAutomatico;
                 r.Index = i;
                 r.IdRetencion = f.IdRetencion;
@@ -136,16 +141,21 @@ export class RetencionComponent {
                 r.Documento = doc.NoDocOrigen;
                 r.TipoDocumento = doc.TipoDocumentoOrigen;
                 r.Serie = doc.SerieOrigen;
-                r.SubTotal = doc.SubTotal;
+                r.SubTotal = ( this.cFunciones.MonedaLocal == this.MonedaPago ? doc.SubTotalCordoba : doc.SubTotalDolar);
                 r.SubTotalMS = doc.SubTotalDolar;
                 r.SubTotalML = doc.SubTotalCordoba;
                 r.Monto = "0";
                 r.TieneImpuesto = doc.Impuesto == 0 ? false : true;
                 r.PorcImpuesto = 0;
-                if(r.TieneImpuesto) r.PorcImpuesto = this.cFunciones.Redondeo( doc.Impuesto / doc.SubTotal, "2");
+                if(r.TieneImpuesto) r.PorcImpuesto = this.cFunciones.Redondeo( doc.Impuesto / r.SubTotal, "2");
                 r.CuentaContable = f.CuentaContable;
                 r.RetManual = false;
                 r.Naturaleza = f.Naturaleza;
+                if(doc.Impuesto  == 0)
+                {
+                  r.AplicarAutomatico = false;
+                  r.Seleccionar = false;
+                }
                
                 this.lstRetencion.data.push(r);
 
@@ -233,6 +243,7 @@ export class RetencionComponent {
           }
           else {
 
+        
 
             f.RetManual = RetManual == undefined ? f.RetManual : RetManual;
             let Importe: number = Number(doc.Importe.replaceAll(",", ""));
@@ -240,6 +251,8 @@ export class RetencionComponent {
             let SubTotal: number = f.SubTotal; //this.cFunciones.Redondeo(Importe / Porc, "2");
             let Retencion: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((f.Porcentaje / 100), "4"), "2");
             if(!f.RetManual) f.Monto = this.cFunciones.NumFormat(Retencion, "2");
+
+        
            
           }
   

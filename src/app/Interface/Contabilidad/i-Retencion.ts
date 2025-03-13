@@ -21,4 +21,5 @@ export interface iRetencion{
     CuentaContable : string;
     RetManual : boolean;
     Naturaleza : string;
+    AplicarAutomatico : boolean;
 }
