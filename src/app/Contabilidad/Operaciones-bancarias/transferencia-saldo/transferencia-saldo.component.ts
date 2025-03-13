@@ -2168,6 +2168,7 @@ export class TransferenciaSaldoComponent {
         r.CuentaContable = f.CuentaContable;
         r.RetManual = f.RetManual;
         r.Naturaleza = f.Naturaleza;
+        r.AplicarAutomatico = f.AplicarAutomatico
 
 
 
