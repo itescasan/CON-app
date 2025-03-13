@@ -1155,7 +1155,7 @@ export class TransferenciaSaldoComponent {
 
     this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), this.val.GetValue("txtConcepto") + " " + i_Banco.CuentaBancaria, "", "", "C", "");
     this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), this.val.GetValue("txtConcepto") + " " +  i_Banco.CuentaBancaria, "", "", "C", "");
-    this.Nueva_Linea_Asiento(Comision, this.CuentaComision, "COMISION BANCARIA Doc:" + this.Asiento.NoDocOrigen, this.val.GetValue("txtConcepto") + " " + this.Asiento.NoDocOrigen, "", "D", "");
+    this.Nueva_Linea_Asiento(Comision, this.CuentaComision, this.val.GetValue("txtConcepto") + " " + "COMISION BANCARIA Doc:" + this.Asiento.NoDocOrigen,  this.Asiento.NoDocOrigen, "", "D", "");
 
 
     this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
@@ -1334,10 +1334,10 @@ export class TransferenciaSaldoComponent {
         
 
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
         }
         else {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
         }
 
