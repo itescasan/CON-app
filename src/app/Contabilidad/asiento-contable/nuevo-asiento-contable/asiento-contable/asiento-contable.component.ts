@@ -1058,12 +1058,12 @@ export class AsientoContableComponent {
     dialogRef.afterClosed().subscribe(s => {
 
       if (dialogRef.componentInstance.retorno == "0") {
-        this.V_ImprimirDoc(Exportar, "", dialogRef.componentInstance.Consolidado);
+        this.V_ImprimirDoc(Exportar, "", dialogRef.componentInstance.Consolidado, dialogRef.componentInstance.Unificado);
       }
 
       if (dialogRef.componentInstance.retorno == "1") {
      
-        this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal, dialogRef.componentInstance.Consolidado);
+        this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal, dialogRef.componentInstance.Consolidado, dialogRef.componentInstance.Unificado);
       }
 
     });
@@ -1078,7 +1078,7 @@ export class AsientoContableComponent {
   
   
 
-  private V_ImprimirDoc(Exportar: boolean, Moneda : string, Consolidado : boolean): void {
+  private V_ImprimirDoc(Exportar: boolean, Moneda : string, Consolidado : boolean, Unificado : boolean): void {
 
 
 
@@ -1102,7 +1102,7 @@ export class AsientoContableComponent {
 
 
 
-  this.GET.GetReporte(this.FILA.IdAsiento, Moneda, Exportar, Consolidado).subscribe(
+  this.GET.GetReporte(this.FILA.IdAsiento, Moneda, Exportar, Consolidado, Unificado).subscribe(
       {
           next: (data) => {
 

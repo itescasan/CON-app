@@ -20,12 +20,31 @@
 
         
         <div class="contenedor">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="txtImpirmir-asiento-dialog" formControlName="txtImpirmir-asiento-dialog" [ngModel]="Consolidado" (click)="v_Consolidado()">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input check-escasan" type="checkbox" value="" id="txtImpirmir-asiento-dialog" formControlName="txtImpirmir-asiento-dialog" [ngModel]="Consolidado" (click)="v_Consolidado()">
                 <label class="form-check-label" for="txtImpirmir-asiento-dialog">
                   Consolidado
                 </label>
               </div>
+
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input check-escasan" type="checkbox" value="" id="txtImpirmir-asiento-dialog" formControlName="txtImpirmir-asiento-dialog" [ngModel]="Unificado" (click)="v_Unificado()">
+                  <label class="form-check-label" for="txtImpirmir-asiento-dialog">
+                    Unificado
+                  </label>
+                </div>
+              </div>
+
+
+            </div>
+
+          </div>
+           
+
+             
         </div>
 
         

@@ -19,6 +19,7 @@ export class ImprimirAsientoComponent {
     public mensaje: any;
   public retorno: string = "0";
   public Consolidado : boolean = false;
+  public Unificado : boolean = false;
 
   constructor(private sanitizer: DomSanitizer, public dialogRef: MatDialogRef<ImprimirAsientoComponent>) { }
 
@@ -27,6 +28,12 @@ export class ImprimirAsientoComponent {
   {
     this.Consolidado = !this.Consolidado;
   }
+
+  public v_Unificado()
+  {
+    this.Unificado = !this.Unificado;
+  }
+
   public v_Confirmar(){
     this.dialogRef.close();
     this.retorno="1";
