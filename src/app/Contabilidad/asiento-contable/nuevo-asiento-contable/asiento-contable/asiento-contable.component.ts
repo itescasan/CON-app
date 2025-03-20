@@ -55,6 +55,7 @@ export class AsientoContableComponent {
   public Estado: string = "Solicitado";
   public load: boolean = false;
   public Clonar: boolean = false
+  public Revisado : boolean = false;
 
   public overlaySettings: OverlaySettings = {};
 
@@ -75,6 +76,7 @@ export class AsientoContableComponent {
     this.val.add("txtObservaciones", "1", "LEN>", "0", "Observaciones", "Ingrese una observacion.");
     this.val.add("cmbMoneda", "1", "LEN>", "0", "Moneda", "Seleccione una moneda.");
     this.val.add("TxtTC", "1", "NUM>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
+    this.val.add("chk-asiento-revisado", "1", "LEN>=", "0", "", "");
 
     this.v_Evento("Iniciar");
   }
@@ -92,6 +94,7 @@ export class AsientoContableComponent {
 
       case "Limpiar":
 
+        this.Revisado = false;
         this.Estado = "Solicitado";
         this.FILA.IdAsiento = -1;
         this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
@@ -124,6 +127,79 @@ export class AsientoContableComponent {
     }
   }
 
+
+  public V_Revisado()
+  {
+    this.Revisado = !this.Revisado;
+
+
+    if (this.cFunciones.DIALOG.getDialogById("wait") == undefined) 
+    {
+      this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+    }
+   
+
+    document.getElementById("chk-asiento-revisado")?.setAttribute("disabled", "disabled");
+
+    this.FILA.Revisado = this.Revisado;
+
+    this.POST.RevisarAsiento(this.FILA).subscribe(
+      {
+        next: (data) => {
+
+          this.cFunciones.DIALOG.getDialogById("wait")?.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+
+            this.Revisado = false
+
+
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+
+           
+          }
+          else {
+
+
+            let Datos: iDatos = _json["d"];
+            this.Revisado = Boolean(Datos.d);
+
+          }
+
+        },
+        error: (err) => {
+          this.cFunciones.DIALOG.getDialogById("wait")?.close();
+
+          document.getElementById("chk-asiento-revisado")?.removeAttribute("disabled");
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+        },
+        complete: () => {
+          document.getElementById("chk-asiento-revisado")?.removeAttribute("disabled");
+        }
+      }
+    );
+
+
+
+  }
 
   @ViewChild("cmbSerie", { static: false })
   public cmbSerie: IgxComboComponent;
@@ -472,6 +548,8 @@ export class AsientoContableComponent {
     this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
     this.TC = this.FILA.TasaCambio;
     this.Estado = this.FILA.Estado;
+    this.Revisado = this.FILA.Revisado;
+
 
     this.val.Get("cmbSerie").disable();
     this.val.Get("txtNoAsiento").disable();

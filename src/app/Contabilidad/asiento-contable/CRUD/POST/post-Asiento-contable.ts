@@ -34,4 +34,11 @@ export class postAsientoContable {
 
     }
 
+    
+    RevisarAsiento(d: iAsiento): Observable<string> {
+
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/RevisarAsiento", JSON.stringify(d), { headers: { 'content-type': 'application/json' } }).pipe(timeout(this._Cnx.Timeout));
+
+    }
+
 }

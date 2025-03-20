@@ -20,7 +20,9 @@ export interface iAsiento{
     TotalML: number;
     TotalMS: number;
     FechaReg: Date;
-    UsuarioReg: string;    
+    UsuarioReg: string;
+    Automatico : boolean;
+    Revisado : boolean;    
 
     AsientosContablesDetalle : iAsientoDetalle[]
 }

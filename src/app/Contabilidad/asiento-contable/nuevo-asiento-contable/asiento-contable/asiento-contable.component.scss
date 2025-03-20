@@ -27,7 +27,14 @@
     textarea {
         height: 120px;
 
+
+        @include Tamano_Menor(lg) {
+            height: 186px;
+        }
+
     }
+
+    
 
 
 }
@@ -36,6 +43,27 @@
     color: var(--escan-fondo);
     text-align: center;
 }
+
+.contenedor-revisado{
+    display: flex;
+    justify-content: flex-end;
+    justify-items: left;
+    
+}
+
+
+.check-escasan {
+    width: 20px;  /* Ancho */
+    height: 20px; /* Alto */
+    transform: scale(1.2); /* Escalar tamaño */
+    margin-right: 5px; /* Espaciado opcional */
+  }
+
+  .form-check-label {
+    font-size: 1.5em; /* Tamaño de la fuente */
+    font-weight: bold; /* Opcional: Negrita */
+    color: #333; /* Color del texto */
+  }
 
 
 /*

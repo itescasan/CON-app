@@ -158,9 +158,12 @@
                         <div class="row">
 
                             <div class="contenedor-edicion">
+
                                 <button type="button" class="btn" (click)="v_Editar(det, false)"><i
-                                        class="fa-solid fa-eye fa-beat-fade fa-lg primario"></i>
+                                      [ngClass]="det.Revisado? 'fa-solid fa-check  fa-beat-fade fa-lg primario' : 'fa-solid fa-eye fa-beat-fade fa-lg primario'"   ></i>
                                 </button>
+
+                   
 
                                 <button type="button" class="btn"><i class="fa-solid fa-ban fa-beat-fade fa-lg"
                                         (click)="V_Anular(det)"
