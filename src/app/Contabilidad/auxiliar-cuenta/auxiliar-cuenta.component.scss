@@ -24,9 +24,17 @@
 
 .contenedor-botones-accion{
     text-align: right;
-    button:first-child{
+    button{
         margin-right: 10px;
     }
+
+    @include Tamano_Menor(md) {
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+        margin-right: 0px;
+    }
+
 }
 
 

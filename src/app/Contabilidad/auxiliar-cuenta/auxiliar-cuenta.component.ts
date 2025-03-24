@@ -36,6 +36,7 @@ export class AuxiliarCuentaComponent {
   public TotalHABER: number = 0;
   private ReporteAuxiliar: any;
   private ReporteConsolidado: any;
+  private ReporteExcel: any;
   private CuentaContable : string;
   private TipoCuenta : string;
 
@@ -321,6 +322,14 @@ export class AuxiliarCuentaComponent {
             this.ReporteConsolidado = undefined;
             if(this.TipoCuenta == "D")this.ReporteConsolidado = datos[4].d;
 
+            if(this.TipoCuenta == "D")
+            {
+              this.ReporteExcel = datos[5].d;
+            }
+            else
+            {
+              this.ReporteExcel = datos[4].d;
+            }
 
           }
 
@@ -356,58 +365,82 @@ export class AuxiliarCuentaComponent {
 
 
 
+  public V_Exportar()
+    {
+  
+      let byteArray = new Uint8Array(atob(this.ReporteExcel).split('').map(char => char.charCodeAt(0)));
+
+      var file = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  
+  
+      let url = URL.createObjectURL(file);
+  
+     
+      var fileLink = document.createElement('a');
+      fileLink.href = url;
+      fileLink.download = "AUXILIAR";
+  
+  
+        var fileLink = document.createElement('a');
+        fileLink.href = url;
+        fileLink.download = "AUXILIAR";
+        fileLink.click();
+        document.body.removeChild(fileLink);
+    }
+ 
+
+
   public async V_Imprimir() {
 
-
     if(this.TipoCuenta == "D")
-    {
-      let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
-        DialogoConfirmarComponent,
-        {
-          panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
-          disableClose: true
-        }
-      );
-  
-  
-  
-      dialogRef.afterOpened().subscribe(s => {
-        dialogRef.componentInstance.textBoton1 = "CONSOLIDADO";
-        dialogRef.componentInstance.textBoton2 = "DETALLE";
-        dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
-        dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
-        dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>IMPRIMIR</b></p><p style='text-align: center'><b style='color: blue'>"+this.CuentaContable+"</b></p>")
-
-      });
-
-
-       
-    dialogRef.afterClosed().subscribe(s => {
-
-      this.V_Reporte(dialogRef.componentInstance.retorno == "1" ? false :  true);
-      
-      if(dialogRef.componentInstance.retorno == "1")
       {
-
+        let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+          DialogoConfirmarComponent,
+          {
+            panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+            disableClose: true
+          }
+        );
+    
+    
+    
+        dialogRef.afterOpened().subscribe(s => {
+          dialogRef.componentInstance.textBoton1 = "CONSOLIDADO";
+          dialogRef.componentInstance.textBoton2 = "DETALLE";
+          dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
+          dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
+          dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>IMPRIMIR</b></p><p style='text-align: center'><b style='color: blue'>"+this.CuentaContable+"</b></p>")
+  
+        });
+  
+  
+         
+      dialogRef.afterClosed().subscribe(s => {
+  
+        this.V_Reporte(dialogRef.componentInstance.retorno == "1" ? false :  true);
+        
+        if(dialogRef.componentInstance.retorno == "1")
+        {
+  
+        }
+        else
+        {
+          this.V_Reporte(true);
+        }
+  
+      });
+  
+  
+  
+        
+    
       }
       else
       {
         this.V_Reporte(true);
       }
 
-    });
 
-
-
-      
-  
-    }
-    else
-    {
-      this.V_Reporte(true);
-    }
-
-   
 
 
 

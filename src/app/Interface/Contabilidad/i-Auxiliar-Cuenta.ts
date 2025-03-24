@@ -5,6 +5,7 @@ export interface iAuxiliarCuenta{
     Serie : string,
     NoDoc : string,
     Cuenta : string,
+    NombreCuenta : string,
     Concepto : string,
     Referencia : string,
     DEBE_ML : number,
