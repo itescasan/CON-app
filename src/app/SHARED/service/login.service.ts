@@ -100,7 +100,7 @@ export class LoginService {
   }
 
 
-  public isLogin(MostrarConfirmar: boolean) {
+  public async isLogin(MostrarConfirmar: boolean) {
 
     let s: string = localStorage.getItem("CON_login")!;
 
@@ -114,8 +114,12 @@ export class LoginService {
         this.cFunciones.Nombre = l.Nombre;
         this.cFunciones.Rol = l.Rol;
         //this.cFunciones.FechaServidor(new Date(l.FechaServer));
-        this.cFunciones.SetTiempoDesconexion(l.TimeOut);
+        //this.cFunciones.SetTiempoDesconexion(l.TimeOut);
       }
+
+
+     await this.cFunciones.GetDatosServidor();
+
 
       if(this.cFunciones.FechaServer != undefined)
       {
