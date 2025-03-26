@@ -655,7 +655,7 @@ export class SidebarComponent {
         } else {
           let Datos: iDatos[] = _json["d"];
 
-          this.cFunciones.FechaServidor(Datos[0].d);
+          //this.cFunciones.FechaServidor(Datos[0].d);
           this.cFunciones.SetTiempoDesconexion(Number(Datos[1].d));
           this._SrvLogin.UpdFecha(String(Datos[0].d));
           if(Datos[2].d != undefined)this.cFunciones.MonedaLocal = Datos[2].d;

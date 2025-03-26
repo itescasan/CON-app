@@ -58,7 +58,7 @@ export class LoginService {
             this.cFunciones.User = l.User;
             this.cFunciones.Nombre = l.Nombre;
             this.cFunciones.Rol = l.Rol;
-            this.cFunciones.FechaServidor(datos[1].d);
+            //this.cFunciones.FechaServidor(datos[1].d);
             this.cFunciones.SetTiempoDesconexion(Number(datos[2].d));
             l.FechaServer = datos[1].d;
             l.TimeOut = Number(datos[2].d);
@@ -113,8 +113,16 @@ export class LoginService {
         this.cFunciones.User = l.User;
         this.cFunciones.Nombre = l.Nombre;
         this.cFunciones.Rol = l.Rol;
-        this.cFunciones.FechaServidor(new Date(l.FechaServer));
+        //this.cFunciones.FechaServidor(new Date(l.FechaServer));
         this.cFunciones.SetTiempoDesconexion(l.TimeOut);
+      }
+
+      if(this.cFunciones.FechaServer != undefined)
+      {
+
+        localStorage.removeItem("CON_login");
+        this._Router.navigate(['/Login'], { skipLocationChange: false });
+        return;
       }
 
 
