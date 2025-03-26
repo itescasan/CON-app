@@ -121,7 +121,7 @@ export class LoginService {
      await this.cFunciones.GetDatosServidor();
 
 
-      if(this.cFunciones.FechaServer != undefined)
+      if(this.cFunciones.FechaServer == undefined)
       {
 
         localStorage.removeItem("CON_login");
