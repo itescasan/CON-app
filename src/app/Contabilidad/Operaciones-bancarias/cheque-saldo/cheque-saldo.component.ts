@@ -1737,7 +1737,8 @@ export class ChequesSaldoComponent {
   
               if (!this.esModal) {
                 //this.V_GenerarDoc(Datos[0], false);
-                this.v_Evento("Limpiar");
+                this.v_Evento("Iniciar");
+              //this.v_Evento("Limpiar");
               }
   
             }
