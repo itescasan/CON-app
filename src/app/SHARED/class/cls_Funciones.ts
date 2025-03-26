@@ -4,6 +4,7 @@ import { getServidor } from '../GET/get-servidor';
 import { MatDialog } from '@angular/material/dialog';
 import { iPerfil } from '../interface/i-Perfiles';
 import { DialogErrorComponent } from '../componente/dialog-error/dialog-error.component';
+import { iDatos } from '../interface/i-Datos';
 
 @Injectable({
   providedIn: 'root',
@@ -143,12 +144,36 @@ export class Funciones {
 
 
 
-  public FechaServidor(f  : Date) {
-    this.FechaServer = new Date(
-      this.DateFormat(f, 'yyyy-MM-dd hh:mm:ss')
-    );
-  }
+
+
+  public async GetDatosServidor(): Promise<Date> {
+    return new Promise((resolve, reject) => {
+      this.GET.DatosServidor(this.User).subscribe({
+        next: (data) => {
+          let _json: any = data;
   
+          if (_json["esError"] == 1) 
+          {
+            this.DIALOG.open(DialogErrorComponent, {
+              data: _json["msj"].Mensaje,
+            });
+      
+          }
+            else{
+            let datos: iDatos[] = _json["d"];
+            this.FechaServer = new Date(datos[0].d);
+            this.SetTiempoDesconexion(datos[1].d);
+            resolve(this.FechaServer);
+          } 
+        },
+        error: (err) => {
+          this.handleError(err.message, "error-servidor")
+        },
+      });
+    });
+  }
+   
+ 
 
   public ShortFechaServidor() : string {
     return this.DateFormat(this.FechaServer, 'yyyy-MM-dd')
