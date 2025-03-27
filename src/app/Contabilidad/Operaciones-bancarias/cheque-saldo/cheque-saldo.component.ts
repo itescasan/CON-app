@@ -109,6 +109,7 @@ export class ChequesSaldoComponent {
     this.val.add("txtFecha", "1", "LEN>", "0", "Fecha", "Ingrese una fecha valida.");
     this.val.add("cmbProveedor", "1", "LEN>", "0", "Proveedor", "Seleccione un proveedor.");
     this.val.add("txtMoneda", "1", "LEN>", "0", "Moneda", "No se ha especificado la moneda de la cuenta.");
+    this.val.add("txtBeneficiario", "1", "LEN>", "0", "Beneficiario", "No se ha especificado al Beneficiario.");
     this.val.add("TxtTC", "1", "NUM>", "0", "Tasa Cambio", "No se ha configurado el tipo de cambio.");
     this.val.add("txtComision", "1", "NUM>=", "0", "Banco", "Revisar la comisión bancaria.");
     this.val.add("txtConcepto", "1", "LEN>", "0", "Concepto", "Ingrese un concepto.");
@@ -159,6 +160,7 @@ export class ChequesSaldoComponent {
         this.val.Get("cmbProveedor").setValue("");
         this.val.Get("txtMoneda").setValue("");
         this.val.Get("txtConcepto").setValue("");
+        this.val.Get("txtBeneficiario").setValue("");
         this.val.Get("txtTotalDolar").setValue("0.00");
         this.val.Get("txtTotalCordoba").setValue("0.00");
         this.val.Get("txtComision").setValue("0.00");
@@ -302,8 +304,11 @@ export class ChequesSaldoComponent {
 
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
 
-
       this.val.Get("cmbProveedor").setValue(event.newValue);
+      let cmb: any = this.cmbProveedor.dropdown;
+      let _Item: iProveedor = cmb._focusedItem.value;
+      this.cmbProveedor.setSelectedItem(_Item.Codigo);
+      this.val.Get("txtBeneficiario").setValue( _Item.Proveedor);
 
       this.cmbProveedor.close();
     }
@@ -1643,7 +1648,7 @@ export class ChequesSaldoComponent {
       this.FILA.IdSerie = "CK"
       this.FILA.NoCheque = this.val.Get("txtNoDoc").value;
       this.FILA.Fecha = this.val.Get("txtFecha").value;
-      this.FILA.Beneficiario = this.cmbProveedor.displayValue;
+      this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;//this.cmbProveedor.displayValue;
       this.FILA.CodProveedor = this.val.Get("cmbProveedor").value[0];
       this.FILA.TasaCambio = this.val.Get("TxtTC").value;
       this.FILA.Concepto = this.val.Get("txtConcepto").value;
@@ -1775,6 +1780,8 @@ export class ChequesSaldoComponent {
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.FILA.Fecha, "yyyy-MM-dd"));
     this.val.Get("TxtTC").setValue(this.FILA.TasaCambio);
     this.val.Get("txtConcepto").setValue(this.FILA.Concepto);
+    this.val.Get("txtBeneficiario").setValue(this.FILA.Beneficiario);
+    this.val.Get("txtBeneficiario").setValue(this.FILA.Beneficiario);
     this.val.Get("txtTotalDolar").setValue(this.cFunciones.NumFormat(this.FILA.TotalDolar, "2"));
     this.val.Get("txtTotalCordoba").setValue(this.cFunciones.NumFormat(this.FILA.TotalCordoba, "2"));
     this.val.Get("txtComision").setValue(this.cFunciones.NumFormat(this.FILA.Comision, "2"));
