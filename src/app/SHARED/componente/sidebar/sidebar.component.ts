@@ -149,7 +149,8 @@ export class SidebarComponent {
     
     if (id == "aInicio"){
       this.ErrorServidor = false;
-      $("#btnMenu").trigger("click");
+      //$("#btnMenu").trigger("click");
+      $("#btnMenu").addClass("start");
       this.cFunciones.DIALOG.closeAll();
       this.DynamicFrom.viewContainerRef.clear();
     //  this.DynamicFrom.viewContainerRef.clear();
