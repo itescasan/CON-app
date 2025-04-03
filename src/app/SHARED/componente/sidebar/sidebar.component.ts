@@ -137,6 +137,8 @@ export class SidebarComponent {
     if(this.V_TieneHijos(id) != -1) return;
 
 
+
+
     if(this.ErrorServidor && id != "aSalir"){
       this.cFunciones.DIALOG.closeAll();
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -145,14 +147,16 @@ export class SidebarComponent {
       return;
     }
     
-    if(id == "aNewInicio"){
+    if (id == "aInicio"){
+      this.ErrorServidor = false;
       $("#btnMenu").trigger("click");
       this.cFunciones.DIALOG.closeAll();
       this.DynamicFrom.viewContainerRef.clear();
+    //  this.DynamicFrom.viewContainerRef.clear();
+    //  let chats: ComponentRef<SidebarChatsComponent> = this.DynamicFrom.viewContainerRef.createComponent(SidebarChatsComponent);
 
-      //this.DynamicFrom.viewContainerRef.createComponent(SidebarComponent);
-
-    }
+      return;
+    };
 
     if(id == "aNewEjercicio"){
       $("#btnMenu").trigger("click");
