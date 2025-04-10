@@ -304,11 +304,12 @@ export class ChequesSaldoComponent {
 
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
 
+      // this.val.Get("cmbProveedor").setValue(event.newValue);
+      // let cmb: any = this.cmbProveedor.dropdown;
+      // let _Item: iProveedor = cmb._focusedItem.value;
+      // this.cmbProveedor.setSelectedItem(_Item.Codigo);
+      // this.val.Get("txtBeneficiario").setValue( _Item.Proveedor);
       this.val.Get("cmbProveedor").setValue(event.newValue);
-      let cmb: any = this.cmbProveedor.dropdown;
-      let _Item: iProveedor = cmb._focusedItem.value;
-      this.cmbProveedor.setSelectedItem(_Item.Codigo);
-      this.val.Get("txtBeneficiario").setValue( _Item.Proveedor);
 
       this.cmbProveedor.close();
     }
@@ -1177,10 +1178,10 @@ export class ChequesSaldoComponent {
 
 
           if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, this.cmbProveedor.displayValue  + " " +f.Documento, f.Documento, f.TipoDocumento, "D", "");
           }
           else {
-            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, this.cmbProveedor.displayValue  + " " +f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
           }
 
@@ -1217,7 +1218,7 @@ export class ChequesSaldoComponent {
 
 
           if (Anticipo != 0) {
-            det = this.Nueva_Linea_Asiento(Anticipo, Cuenta, "Anticipo. " + f.Documento, f.Documento, f.TipoDocumento, "C", "");
+            det = this.Nueva_Linea_Asiento(Anticipo, Cuenta, this.cmbProveedor.displayValue  + " " + "Anticipo. " + f.Documento, f.Documento, f.TipoDocumento, "C", "");
           }
 
 
@@ -1328,10 +1329,10 @@ export class ChequesSaldoComponent {
         
 
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto,Cuenta ,this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
         }
         else {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
         }
 
@@ -1648,7 +1649,7 @@ export class ChequesSaldoComponent {
       this.FILA.IdSerie = "CK"
       this.FILA.NoCheque = this.val.Get("txtNoDoc").value;
       this.FILA.Fecha = this.val.Get("txtFecha").value;
-      this.FILA.Beneficiario = this.val.Get("txtBeneficiario").value;//this.cmbProveedor.displayValue;
+      this.FILA.Beneficiario = this.cmbProveedor.displayValue;//this.val.Get("txtBeneficiario").value;//this.cmbProveedor.displayValue;
       this.FILA.CodProveedor = this.val.Get("cmbProveedor").value[0];
       this.FILA.TasaCambio = this.val.Get("TxtTC").value;
       this.FILA.Concepto = this.val.Get("txtConcepto").value;
