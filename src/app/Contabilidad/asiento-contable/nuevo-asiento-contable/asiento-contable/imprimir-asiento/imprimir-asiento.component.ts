@@ -20,6 +20,7 @@ export class ImprimirAsientoComponent {
   public retorno: string = "0";
   public Consolidado : boolean = false;
   public Unificado : boolean = false;
+  public Modulo : boolean = false;
 
   constructor(private sanitizer: DomSanitizer, public dialogRef: MatDialogRef<ImprimirAsientoComponent>) { }
 
@@ -32,6 +33,11 @@ export class ImprimirAsientoComponent {
   public v_Unificado()
   {
     this.Unificado = !this.Unificado;
+  }
+
+    public v_Modulo()
+  {
+    this.Modulo = !this.Modulo;
   }
 
   public v_Confirmar(){
