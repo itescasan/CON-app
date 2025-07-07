@@ -1,10 +1,11 @@
 import { DatePipe, formatNumber } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { getServidor } from '../GET/get-servidor';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { iPerfil } from '../interface/i-Perfiles';
 import { DialogErrorComponent } from '../componente/dialog-error/dialog-error.component';
 import { iDatos } from '../interface/i-Datos';
+import { WaitComponent } from '../componente/wait/wait.component';
 
 @Injectable({
   providedIn: 'root',
