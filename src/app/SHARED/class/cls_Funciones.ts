@@ -370,6 +370,43 @@ export class Funciones {
   }
 
 
+
+  public Open_Wait(id: string) {
+
+    if (this.DIALOG.getDialogById("error-servidor") == undefined) {
+      if (id == "") id = "wait";
+
+      if (this.DIALOG.getDialogById(id) == undefined) {
+    
+        let dialogRef: MatDialogRef<WaitComponent> = this.DIALOG.open(
+          WaitComponent,
+          {
+            panelClass: "escasan-dialog-full-blur",
+            data: "",
+            id: id
+          }
+        );
+      }
+
+    }
+
+
+
+
+
+  }
+
+  public Close_Wait(id: string) {
+
+    if (id == "") id = "wait";
+
+
+    if (this.DIALOG.getDialogById("error-servidor") == undefined) {
+      this.DIALOG.getDialogById(id)?.close();
+    }
+  }
+
+
   public handleError(message: string, id: string = "error-servidor") {
     if (this.DIALOG.getDialogById(id) == undefined) {
       this.DIALOG.open(DialogErrorComponent, {
