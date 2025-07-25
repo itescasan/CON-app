@@ -24,7 +24,7 @@ import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 import { iChequePOST } from '../../../Interface/Contabilidad/i-Cheque-POST';
 import { iOrderBy } from 'src/app/SHARED/interface/i-OrderBy';
 import { PDFDocument } from 'pdf-lib';
-import * as printJS from 'print-js';
+import printJS from 'print-js';
 import { RetencionComponent } from '../../retencion/retencion.component';
 import { iRetencion } from 'src/app/Interface/Contabilidad/i-Retencion';
 import { MatMenuTrigger } from '@angular/material/menu';

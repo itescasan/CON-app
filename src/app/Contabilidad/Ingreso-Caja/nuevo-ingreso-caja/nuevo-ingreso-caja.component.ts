@@ -13,7 +13,7 @@ import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-con
 import { iCentroCosto } from 'src/app/Interface/Contabilidad/i-Centro-Costo';
 import { iOrderBy } from 'src/app/SHARED/interface/i-OrderBy';
 import { PDFDocument } from 'pdf-lib';
-import * as printJS from 'print-js';
+import printJS from 'print-js';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { getIngresoCaja } from '../CRUD/GET/getIngresoCaja';
 import { postIngresoCaja } from '../CRUD/POST/postIngresoCaja';

@@ -9,7 +9,7 @@ export class Conexion {
           return "https://"+this.IP+":"+this.PORT+"/api/"; 
       }*/
  
-      private IP : string = "165.98.96.131";
+     private IP : string = "165.98.96.131";
       private PORT : String =  "160";
       public Timeout : number = 30000;
 

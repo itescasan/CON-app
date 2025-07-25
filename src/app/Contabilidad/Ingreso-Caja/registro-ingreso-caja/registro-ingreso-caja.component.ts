@@ -9,7 +9,7 @@ import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dia
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { iIngCaja } from 'src/app/Interface/Contabilidad/i-IngresoCaja';
 import { getIngresoCaja } from '../CRUD/GET/getIngresoCaja';
-import * as printJS from 'print-js';
+import printJS from 'print-js';
 import { PDFDocument } from 'pdf-lib';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 import { postIngresoCaja } from '../CRUD/POST/postIngresoCaja';

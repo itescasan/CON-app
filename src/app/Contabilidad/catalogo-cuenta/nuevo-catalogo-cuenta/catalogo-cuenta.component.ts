@@ -120,7 +120,7 @@ export class CatalogoCuentaComponent {
   public v_Nivel(value: any): void {
 
 
-    if(value.value != undefined) value = Number(value.value);
+    if(value?.value != undefined) value = Number(value?.value);
 
 
     this.Prefix = "";
@@ -129,7 +129,7 @@ export class CatalogoCuentaComponent {
     this.val.Get("txtCuentaPadre").setValue("");
     this.val.Get("txtDescripcionPadre").setValue("");
 
-    this.v_Filtrar_Cuentas(value, this.val.Get("cmbGrupo").value);
+    this.v_Filtrar_Cuentas(value, this.val.Get("cmbGrupo")?.value);
 
 
     switch (value) {
@@ -187,6 +187,7 @@ export class CatalogoCuentaComponent {
 
 
     let Reg: iCuenta[] = this.iDatos.find(f => f.Nombre == "CUENTAS")?.d;
+    if(Reg == undefined) return;
     this.lstCuentaPadre = Reg.filter(f => f.Nivel == (Number(nivel) - 1) && f.ClaseCuenta == "G" && f.IdGrupo == Number(grupo));
 
 
@@ -371,6 +372,7 @@ export class CatalogoCuentaComponent {
 
     let Fila : iCuenta = {} as iCuenta;
 
+
     Fila.CuentaContable =  this.val.Get("txtCuenta").value;
     Fila.NombreCuenta = String(this.val.Get("txtDescripcion").value).toUpperCase();
     Fila.Nivel = this.val.Get("cmbNivel").value;
@@ -378,7 +380,7 @@ export class CatalogoCuentaComponent {
     Fila.ClaseCuenta = this.val.Get("cmbClase").value;
     Fila.CuentaPadre = this.val.Get("txtCuentaPadre").value;
     Fila.Naturaleza = this.val.Get("cmbNaturaleza").value;
-    Fila.Bloqueada = this.val.Get("chkCuentaBloqueada").value  == "on" ? true : false;
+    Fila.Bloqueada = this.val.Get("chkCuentaBloqueada").value;
     Fila.UsuarioModifica = this.cFunciones.User;
  
 

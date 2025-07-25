@@ -2,7 +2,7 @@ import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { MatTableDataSource } from '@angular/material/table';
-import { GlobalPositionStrategy, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
+import { GlobalPositionStrategy, IComboFilteringOptions, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 import { iCuentaBancaria } from 'src/app/Interface/Contabilidad/i-Cuenta-Bancaria';
@@ -588,6 +588,18 @@ export class TransferenciaCuentaComponent {
 
   }
 
+
+   public FiltroCuentaSinGuion = (collection: iCuenta[], searchValue: string, filteringOptions: IComboFilteringOptions): any[] => {
+    if (!searchValue) {
+      return collection;
+    }
+  
+    return collection.filter(item =>
+      item.NombreCuenta.replaceAll("-", "").toLowerCase().includes(searchValue.toLowerCase())
+    );
+  };
+  
+  
 
   public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
 

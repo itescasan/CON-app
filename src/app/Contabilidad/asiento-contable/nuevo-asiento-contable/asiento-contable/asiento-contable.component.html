@@ -305,7 +305,7 @@
                                         @if(!esModal || det.Editar)
                                         {
                                             <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable"
-                                            valueKey="CuentaContable" displayKey="NombreCuenta"
+                                            valueKey="CuentaContable" displayKey="NombreCuenta" [filterFunction]="FiltroCuentaSinGuion" 
                                             id="txtCuenta-asiento{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
                                             [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
                                             (selectionChanging)="v_Select_Cuenta($event, det)"

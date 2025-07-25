@@ -323,7 +323,7 @@
 
                                         <form autocomplete="off">
                                             <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable"
-                                                [ngModelOptions]="{standalone: true}" valueKey="CuentaContable"
+                                                [ngModelOptions]="{standalone: true}" valueKey="CuentaContable" [filterFunction]="FiltroCuentaSinGuion" 
                                                 displayKey="NombreCuenta" id="txtCuenta{{det.NoLinea}}"
                                                 [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
                                                 (selectionChanging)="v_Select_Cuenta($event, det)"

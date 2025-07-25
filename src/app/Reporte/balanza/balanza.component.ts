@@ -6,7 +6,7 @@ import { WaitComponent } from 'src/app/SHARED/componente/wait/wait.component';
 import { DialogErrorComponent } from 'src/app/SHARED/componente/dialog-error/dialog-error.component';
 import { iDatos } from 'src/app/SHARED/interface/i-Datos';
 import { PDFDocument } from 'pdf-lib';
-import * as printJS from 'print-js';
+import printJS from 'print-js';
 
 
 

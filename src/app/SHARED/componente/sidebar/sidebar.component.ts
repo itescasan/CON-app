@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, Inject, Renderer2, ViewChild, ComponentRef, DOCUMENT } from '@angular/core';
 import { DynamicFormDirective } from '../../directive/dynamic-form.directive';
-import * as $ from 'jquery';
+import $ from 'jquery';
 
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
