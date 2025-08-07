@@ -105,4 +105,13 @@ export class getReporteFinanciero{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/EstadoCambioPatrimonio?FechaInicial=" + Fecha1 + "&FechaFinal=" + Fecha2 + "&Moneda=" + EsMonedaLocal).pipe(timeout(this._Cnx.Timeout));
     }
 
+    public DatosGC() : Observable<string>{
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/GruposCuentas/Get").pipe(timeout(this._Cnx.Timeout));
+     }
+
+     public GetCatalogoCuentas(IdGrupoCuentas: Int16Array, Estado: Int16Array): Observable<string> {
+  
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/CatalogoCuentas?IdGrupoCuentas=" + IdGrupoCuentas + "&Estado=" + Estado).pipe(timeout(this._Cnx.Timeout));
+    }
+
 }

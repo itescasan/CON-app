@@ -115,6 +115,7 @@ export class Funciones {
      {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aVentasImpuestos", Caption: "Ventas Con Impuesto" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aComparativoGastosMensual", Caption: "Comparativo Gastos Mensual" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
      {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aBalanceGeneralComparativo", Caption: "Balance General Comparativo" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
+     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aReporteCatalogoCuentas", Caption: "Reporte Catalogo Cuentas" , MenuPadre: "IdNavReporte", Clase : "fa-solid fa-scale-balanced", Modulo: "CON", Usuario : ""},
     /**************************************ACCESO CAJA CHICA ************************************* */ 
 
     {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavAccesoCaja", Caption: "Caja Chica" , MenuPadre: "", Clase : "fa-solid fa-shop fa-lg", Modulo: "CON", Usuario : ""},

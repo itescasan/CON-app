@@ -75,6 +75,7 @@ import { RetencionesAlcaldiasForaneasComponent } from './Reporte/retenciones-alc
 import { ReporteIntegracionGastosAcumuladosComponent } from './Reporte/reporte-integracion-gastos-acumulados/reporte-integracion-gastos-acumulados.component';
 import { ComparativoGastosMensualComponent } from './Reporte/comparativo-gastos-mensual/comparativo-gastos-mensual.component';
 import { BalanceGeneralComparativoComponent } from './Reporte/balance-general-comparativo/balance-general-comparativo.component';
+import { ReporteCatalogoCuentaComponent } from './Reporte/reporte-catalogo-cuenta/reporte-catalogo-cuenta.component';
 
 import { ReporteDiferenciasCXPvsContabilidadComponent } from './Reporte/reporte-diferencias-cxpvs-contabilidad/reporte-diferencias-cxpvs-contabilidad.component';
 import { ReporteIntegracionGastosAcumuladosVentasComponent } from './Reporte/reporte-integracion-gastos-acumulados-ventas/reporte-integracion-gastos-acumulados-ventas.component';
@@ -137,7 +138,8 @@ import { AplicarCajaChicaComponent } from './Contabilidad/Ingreso-Caja/aplicar-c
     ReporteDiferenciasCXPvsContabilidadComponent,
     ReporteIntegracionGastosAcumuladosVentasComponent,
     ReporteEstadoCambioPatrominioComponent,
-    AplicarCajaChicaComponent
+    AplicarCajaChicaComponent,
+    ReporteCatalogoCuentaComponent
   ],
   imports: [
     BrowserModule,

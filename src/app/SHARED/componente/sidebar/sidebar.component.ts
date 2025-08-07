@@ -58,6 +58,7 @@ import { BalanceGeneralComparativoComponent } from 'src/app/Reporte/balance-gene
 import { ReporteIntegracionGastosAcumuladosVentasComponent } from 'src/app/Reporte/reporte-integracion-gastos-acumulados-ventas/reporte-integracion-gastos-acumulados-ventas.component';
 import { ReporteEstadoCambioPatrominioComponent } from 'src/app/Reporte/reporte-estado-cambio-patrominio/reporte-estado-cambio-patrominio.component';
 import { AplicarCajaChicaComponent } from 'src/app/Contabilidad/Ingreso-Caja/aplicar-caja-chica/aplicar-caja-chica.component';
+import { ReporteCatalogoCuentaComponent } from 'src/app/Reporte/reporte-catalogo-cuenta/reporte-catalogo-cuenta.component';
 
 const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
 declare let gapi: any;
@@ -511,6 +512,15 @@ export class SidebarComponent {
       this.DynamicFrom.viewContainerRef.clear();
 
       let BalanceGeneralComparativo: ComponentRef<BalanceGeneralComparativoComponent> = this.DynamicFrom.viewContainerRef.createComponent(BalanceGeneralComparativoComponent);
+
+    }
+
+    if(id == "aReporteCatalogoCuentas"){
+      $("#btnMenu").trigger("click");
+      this.cFunciones.DIALOG.closeAll();
+      this.DynamicFrom.viewContainerRef.clear();
+
+      let ReporteCatalogoCuentas: ComponentRef<ReporteCatalogoCuentaComponent> = this.DynamicFrom.viewContainerRef.createComponent(ReporteCatalogoCuentaComponent);
 
     }
 
