@@ -30,8 +30,8 @@ export class ReporteCatalogoCuentaComponent {
     this.val.add("cmbGrupoC", "1", "LEN>", "0", "Grupo", "Seleccione un Grupo.");    
     this.val.add("cmbEstado", "1", "LEN>", "0", "Estado", "Seleccione un Estado.");
 
-    this.val.Get("cmbGrupoC").setValue(0);
-    this.val.Get("cmbEstado").setValue(1);
+    this.val.Get("cmbGrupoC").setValue(-1);
+    this.val.Get("cmbEstado").setValue(3);
 
     this.v_CargarDatos();
 
