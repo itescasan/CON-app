@@ -373,7 +373,7 @@ export class CatalogoCuentaComponent {
     let Fila : iCuenta = {} as iCuenta;
 
 
-    Fila.CuentaContable =  this.val.Get("txtCuenta").value;
+    Fila.CuentaContable =   this.val.Get("txtCuenta").value;
     Fila.NombreCuenta = String(this.val.Get("txtDescripcion").value).toUpperCase();
     Fila.Nivel = this.val.Get("cmbNivel").value;
     Fila.IdGrupo = this.val.Get("cmbGrupo").value;
