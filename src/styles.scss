@@ -50,8 +50,9 @@ $custom-drop-down-theme: drop-down-theme($background-color: #d9f5d6,
     );
 
 
-$custom-datepicker-theme: calendar-theme($content-background: var(--escan-fondo),
-        $content-foreground: var(--escan-fondo),
+$custom-datepicker-theme: calendar-theme(
+        $content-background: var(--escan-fondo),
+        /*$content-foreground: var(--escan-fondo),*/
         $header-background: var(--escan-primario),
         $header-foreground: var(--escan-fondo),
         /*$date-selected-text-color: var(--escan-fondo),*/
