@@ -13,7 +13,7 @@ export class AppComponent {
   title = 'Escasan';
 
   public constructor(private _SrvLogin: LoginService, private Disable : DisableService){
-    this._SrvLogin.isLogin(false);
+    //this._SrvLogin.isLogin(false);
   }
 
 

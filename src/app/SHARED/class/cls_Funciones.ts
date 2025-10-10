@@ -148,7 +148,7 @@ export class Funciones {
 
 
 
-  public async GetDatosServidor(): Promise<Date> {
+  public async GetDatosServidor(): Promise<iDatos[]> {
     return new Promise((resolve, reject) => {
       this.GET.DatosServidor(this.User).subscribe({
         next: (data) => {
@@ -165,7 +165,7 @@ export class Funciones {
             let datos: iDatos[] = _json["d"];
             this.FechaServer = new Date(datos[0].d);
             this.SetTiempoDesconexion(datos[1].d);
-            resolve(this.FechaServer);
+            resolve(datos);
           } 
         },
         error: (err) => {

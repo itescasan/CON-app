@@ -60,8 +60,7 @@ import { ReporteEstadoCambioPatrominioComponent } from 'src/app/Reporte/reporte-
 import { AplicarCajaChicaComponent } from 'src/app/Contabilidad/Ingreso-Caja/aplicar-caja-chica/aplicar-caja-chica.component';
 import { ReporteCatalogoCuentaComponent } from 'src/app/Reporte/reporte-catalogo-cuenta/reporte-catalogo-cuenta.component';
 
-const SCRIPT_PATH = 'ttps://cdn.jsdelivr.net/npm/bootstrap5-toggle@5.0.4/css/bootstrap5-toggle.min.css';
-declare let gapi: any;
+
 
 @Component({
     selector: 'app-sidebar',
@@ -74,6 +73,7 @@ export class SidebarComponent {
   @ViewChild(DynamicFormDirective, { static: true }) DynamicFrom!: DynamicFormDirective;
   public ErrorServidor : boolean = false;
   private Perfil : iPerfil[] = [];
+   public Datos : iDatos[] = [];
   
   subscription: Subscription = {} as Subscription;
 
@@ -84,13 +84,33 @@ export class SidebarComponent {
     private Conexion: getServidor,
     private cFunciones : Funciones
   ) {
-    this.ActualizarDatosServidor();
+    this.V_Inicio();
 
     /*this.cFunciones.ACCESO.forEach(f => {
 
       console.log("SELECT NULL," + f.EsMenu + ", '" + f.Id + "','" + f.Caption + "','" + f.MenuPadre + "','" + f.Clase + "', 'jmg', 'CON', 1 UNION ALL");
     })*/
 }
+
+ private async V_Inicio()
+  {
+
+
+
+      this.Datos = await this._SrvLogin.isLogin(false);
+     
+      if(this.Datos.length == 0)
+      {
+        this.ErrorServidor = false;
+       this._SrvLogin.CerrarSession();
+        return
+      }
+
+
+      this.ActualizarDatosServidor();
+ 
+  }
+
   
 
   @Input() public href: string | undefined;
@@ -649,33 +669,11 @@ export class SidebarComponent {
   
 
   private ActualizarDatosServidor() : void{
-    this.ErrorServidor = false;
-
-
-    this.Conexion.DatosServidor(this.cFunciones.User).subscribe(
-      {
-        next : (data) => {
-          
-          let _json : any = data;
-
-        if (_json["esError"] == 1) {
-
-          if(this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined){
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              id: "error-servidor-msj",
-              data: _json["msj"].Mensaje,
-            });
-          }
+    //this.cFunciones.FechaServidor(Datos[0].d);
+          this.cFunciones.SetTiempoDesconexion(Number(this.Datos[1].d));
+          if(this.Datos[2].d != undefined)this.cFunciones.MonedaLocal = this.Datos[2].d;
          
-        } else {
-          let Datos: iDatos[] = _json["d"];
-
-          //this.cFunciones.FechaServidor(Datos[0].d);
-          this.cFunciones.SetTiempoDesconexion(Number(Datos[1].d));
-          this._SrvLogin.UpdFecha(String(Datos[0].d));
-          if(Datos[2].d != undefined)this.cFunciones.MonedaLocal = Datos[2].d;
-         
-          let Perfil : iPerfil[] = Datos[3].d;
+          let Perfil : iPerfil[] = this.Datos[3].d;
           let index : number = -1;
 
           this.Perfil.splice(0, this.Perfil.length);
@@ -689,42 +687,7 @@ export class SidebarComponent {
           });
 
 
-          this.cFunciones.TC = Datos[4].d;
-
-
-
-          
-
-        }
-
-          if(this.cFunciones.DIALOG.getDialogById("error-servidor") != undefined) 
-          {
-            this.cFunciones.DIALOG.getDialogById("error-servidor")?.close();
-          }
-
-
-        },
-        error: (err) => {
-         
-          this.ErrorServidor = true;
-        
-    
-          
-          /*if(this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) 
-          {
-            this.cFunciones.DIALOG.open(DialogErrorComponent, {
-              id : "error-servidor",
-              data: "<b class='error'>" + err.message + "</b>",
-            });
-          }*/
-       
-
-        },
-        complete : ( ) => { 
-
-        }
-      }
-    );
+          this.cFunciones.TC = this.Datos[4].d;
     
   }
 

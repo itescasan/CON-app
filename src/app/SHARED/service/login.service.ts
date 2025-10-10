@@ -100,7 +100,10 @@ export class LoginService {
   }
 
 
-  public async isLogin(MostrarConfirmar: boolean) {
+  public async isLogin(MostrarConfirmar: boolean) : Promise<iDatos[]>{
+
+    let datos : iDatos[] = [];
+
 
     let s: string = localStorage.getItem("CON_login")!;
 
@@ -118,7 +121,7 @@ export class LoginService {
       }
 
 
-     await this.cFunciones.GetDatosServidor();
+     datos =  await this.cFunciones.GetDatosServidor();
 
 
       if(this.cFunciones.FechaServer == undefined)
@@ -126,7 +129,7 @@ export class LoginService {
 
         localStorage.removeItem("CON_login");
         this._Router.navigate(['/Login'], { skipLocationChange: false });
-        return;
+        return datos;
       }
 
 
@@ -209,13 +212,16 @@ export class LoginService {
 
         }
 
-        return;
+        return datos;
       }
 
     }
 
     localStorage.removeItem("CON_login");
     this._Router.navigate(['/Login'], { skipLocationChange: false });
+ 
+    return datos;
+  
   }
 
 
@@ -304,7 +310,7 @@ export class LoginService {
     return Segundos;
   }
 
-
+/*
   public UpdFecha(f: string) {
 
     let s: string = localStorage.getItem("CON_login")!;
@@ -320,7 +326,7 @@ export class LoginService {
     }
 
   }
-
+*/
   public CerrarSession() {
 
 
