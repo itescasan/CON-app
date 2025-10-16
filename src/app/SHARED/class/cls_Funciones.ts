@@ -282,6 +282,12 @@ export class Funciones {
       }
       else{
 
+         if (event.key == ".") {
+            event.preventDefault();
+            return;
+          }
+
+
         if(event.key != "." && (String(event.target.value) == ""  && !isFinite(event.key) || String(event.target.value) != "" && isNaN(parseFloat(event.key)))){
           event.preventDefault();
           return;

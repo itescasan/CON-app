@@ -836,6 +836,70 @@ export class Validacion {
 
           break;
 
+           case "ENTERO":
+          if (!((Number(str_cadena.replaceAll(",", "")) % 1) === 0)) errores = "1";
+
+            if (errores != "1") {
+              if([",", "0"].includes(errores)) errores = "1";
+            }
+
+
+          break;
+
+
+        case "ENTERO>":
+
+
+          if (!(Number(str_cadena.replaceAll(",", "")) > Number(element.valor))) errores = "1";
+
+          if (errores != "1") {
+            if (!((Number(str_cadena.replaceAll(",", "")) % 1) === 0)) errores = "1";
+          }
+
+          break;
+
+        case "ENTERO<":
+          if (!(Number(str_cadena.replaceAll(",", "")) < Number(element.valor))) errores = "1";
+
+          if (errores != "1") {
+            if (!((Number(str_cadena.replaceAll(",", "")) % 1) === 0)) errores = "1";
+          }
+
+          break;
+
+
+        case "ENTERO>=":
+
+
+          if (!(Number(str_cadena.replaceAll(",", "")) >= Number(element.valor))) errores = "1";
+
+
+          if (errores != "1") {
+            if (!((Number(str_cadena.replaceAll(",", "")) % 1) === 0)) errores = "1";
+          }
+
+          break;
+
+        case "ENTERO<=":
+          if (!(Number(str_cadena.replaceAll(",", "")) <= Number(element.valor))) errores = "1";
+
+          if (errores != "1") {
+            if (!((Number(str_cadena.replaceAll(",", "")) % 1) === 0)) errores = "1";
+          }
+
+
+          break;
+
+        case "ENTERO==":
+          if (!(Number(str_cadena.replaceAll(",", "")) == Number(element.valor))) errores = "1";
+
+          if (errores != "1") {
+            if (!((Number(str_cadena.replaceAll(",", "")) % 1) === 0)) errores = "1";
+          }
+
+
+          break;
+
         case "DATE":
           if (str_cadena == "") {
             errores = "1";
