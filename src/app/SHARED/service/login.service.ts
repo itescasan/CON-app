@@ -170,6 +170,16 @@ export class LoginService {
 
 
 
+              
+              if (this.DIALOG.getDialogById("dialog-wait") != undefined) {
+
+                this.DIALOG.getDialogById("dialog-wait")?.close();
+
+              }
+
+
+
+
 
               //if (MostrarConfirmar) dialogRef.componentInstance.value = l.CON_CodMail;
               dialogRef.componentInstance.SetMensajeHtml("<b>Ingrese el codigo que se le envio al correo.</b>");
