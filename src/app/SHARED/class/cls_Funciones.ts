@@ -181,6 +181,9 @@ export class Funciones {
               });
 
             }
+            else{
+              this._Router.navigate(['/Login'], { skipLocationChange: false });
+            }
 
 
 
