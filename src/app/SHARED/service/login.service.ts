@@ -81,11 +81,24 @@ export class LoginService {
 
           dialogRef.close();
 
-          if (this.DIALOG.getDialogById("error-servidor") == undefined) {
-            this.DIALOG.open(DialogErrorComponent, {
-              id: "error-servidor",
-              data: "<b class='error'>" + err.message + "</b>",
-            });
+          if (err.status === 0) {
+
+
+            this.cFunciones.handleError("Token Expirado.", "error-servidor")?.afterClosed().subscribe(s =>{
+
+            
+
+                this._Router.navigate(['/Login'], { skipLocationChange: false });
+
+             });
+
+
+          }
+          else
+          {
+
+            this.cFunciones.handleError("<b class='error'>" + err.message + "</b>", "error-servidor")
+          
           }
 
         },
