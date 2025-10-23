@@ -6,6 +6,7 @@ import { iPerfil } from '../interface/i-Perfiles';
 import { DialogErrorComponent } from '../componente/dialog-error/dialog-error.component';
 import { iDatos } from '../interface/i-Datos';
 import { WaitComponent } from '../componente/wait/wait.component';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -140,7 +141,7 @@ export class Funciones {
 
 
 
-  constructor(public GET: getServidor, public DIALOG: MatDialog) {
+  constructor(public GET: getServidor, public DIALOG: MatDialog, private _Router: Router,) {
 
   }
 
@@ -169,7 +170,36 @@ export class Funciones {
           } 
         },
         error: (err) => {
-          this.handleError(err.message, "error-servidor")
+          if (err.status === 0) {
+
+
+            if (this._Router.url == "/Menu") {
+              this.handleError("Token Expirado.", "error-servidor")?.afterClosed().subscribe(s => {
+
+                this._Router.navigate(['/Login'], { skipLocationChange: false });
+
+              });
+
+            }
+
+
+
+
+            // this.handleError("No se pudo conectar con el servidor. Revisa CORS o HTTPS.", "error-servidor");
+
+
+
+          } else {
+            /*const json = typeof err.error === 'string' ? JSON.parse(err.error) : err.error;
+            if (json?.esError === 1) {
+              this.DIALOG.open(DialogErrorComponent, { data: json.msj?.Mensaje });
+            } else {
+              this.handleError(err.message, "error-servidor");
+            }*/
+
+            this.handleError(err.message, "error-servidor")
+          }
+
         },
       });
     });
@@ -415,13 +445,15 @@ export class Funciones {
   }
 
 
-  public handleError(message: string, id: string = "error-servidor") {
+  public handleError(message: string, id: string = "error-servidor"): MatDialogRef<DialogErrorComponent> | undefined {
     if (this.DIALOG.getDialogById(id) == undefined) {
       this.DIALOG.open(DialogErrorComponent, {
         id: id,
         data: "<b class='error'>" + message + "</b>",
       });
     }
+
+    return this.DIALOG.getDialogById(id);
   }
 
 }
