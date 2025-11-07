@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { Conexion } from "../class/Cadena_Conexion";
 import { timeout } from "rxjs";
+import { IdAcceso } from "../interface/i-Acceso";
 
 
 @Injectable({
@@ -27,7 +28,15 @@ export class getServidor{
    }
     
    public Login(user: string, pass : string) : Observable<any>{
-    return this.http.get<any>(this._Cnx.Url() + "Sistema/Login?user=" + user + "&pass=" + pass + "&Modulo=CON").pipe(timeout(this._Cnx.Timeout));
+
+     let u : IdAcceso = {} as IdAcceso;
+      u.user = user;
+      u.pass = pass;
+      u.Modulo = "CON";
+
+
+
+    return this.http.post<any>(this._Cnx.Url() + "Sistema/Login", JSON.stringify(u), { headers: { 'content-type': 'application/json' } }).pipe(timeout(this._Cnx.Timeout));
  }
 
  public ValidarCodigo(user: string, cod : string) : Observable<any>{
