@@ -514,7 +514,7 @@ export class TransferenciaCuentaComponent {
           } else {
 
             let datos: iDatos = _json["d"];
-            if (!this.esModal) this.val.Get("txtNoDoc").setValue(String(datos.d).replaceAll("$", this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "YYYYMM")));
+            if (!this.esModal) this.val.Get("txtNoDoc").setValue(String(datos.d).replaceAll("$", this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyyMM")));
 
 
           }
