@@ -284,64 +284,64 @@ export class Funciones {
 
 
 
-  public v_Prevent_IsNumber(event : any, tipo : string) : void{
+ public v_Prevent_IsNumber(event: any, tipo: string): void {
 
-    if(event.key === "Backspace" || event.key === "Enter" || event.key === "ArrowRight" || event.key === "ArrowLeft" || event.key === "ArrowUp" || event.key == "ArrowDown" ||
-    event.key === "F1" || event.key === "F2" || event.key === "F3" || event.key === "F4" || event.key === "F5" || event.key === "F6" || event.key === "F7" ||
-    event.key === "F8" || event.key === "F9" || event.key === "F10" || event.key === "F11" || event.key === "F12") return;
+    if (event.key === "Backspace" || event.key === "Enter" || event.key === "ArrowRight" || event.key === "ArrowLeft" || event.key === "ArrowUp" || event.key == "ArrowDown" ||
+      event.key === "F1" || event.key === "F2" || event.key === "F3" || event.key === "F4" || event.key === "F5" || event.key === "F6" || event.key === "F7" ||
+      event.key === "F8" || event.key === "F9" || event.key === "F10" || event.key === "F11" || event.key === "F12") return;
 
-    if(event.key == ",") {
+    if (event.key == ",") {
       event.preventDefault();
       return;
     }
-    
 
-    if(tipo == "Decimal")
-    {
-      if((String(event.target.value).includes(".") && event.key == ".")  || ( event.key == "." && event.target.value == "")) {
+    if (event.key == "." && tipo != "Decimal") {
+      event.preventDefault();
+      return;
+    }
+
+
+
+
+    if (tipo == "Decimal") {
+      if ((String(event.target.value).includes(".") && event.key == ".") || (event.key == "." && event.target.value == "")) {
         event.preventDefault();
         return;
       }
-      
-      if(String(event.target.value).includes("."))
-      {
-        let decimal : string[] = String(event.target.value).split(".");
-  
-        if(isNaN(parseFloat(event.key)) && !isFinite(event.key)){
-          event.preventDefault();
-          return;
-        }
-  
-      }
-      else{
 
-         if (event.key == ".") {
-            event.preventDefault();
-            return;
-          }
+      if (String(event.target.value).includes(".")) {
+        let decimal: string[] = String(event.target.value).split(".");
 
-
-        if(event.key != "." && (String(event.target.value) == ""  && !isFinite(event.key) || String(event.target.value) != "" && isNaN(parseFloat(event.key)))){
+        if (isNaN(parseFloat(event.key)) && !isFinite(event.key)) {
           event.preventDefault();
           return;
         }
 
+      }
+      else {
 
-       
+
+        if (event.key != "." && (String(event.target.value) == "" && !isFinite(event.key) || String(event.target.value) != "" && isNaN(parseFloat(event.key)))) {
+          event.preventDefault();
+          return;
+        }
+
+
+
       }
 
-     
+
 
     }
 
-    if(tipo == "Entero"){
-      if(isNaN(parseFloat(event.key)) && !isFinite(event.key)){
+    if (tipo == "Entero") {
+      if (isNaN(parseFloat(event.key)) && !isFinite(event.key)) {
         event.preventDefault();
         return;
       }
     }
 
-   
+
   }
 
 
