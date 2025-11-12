@@ -117,12 +117,12 @@
                             <div class="col-12 contenedor-botones-accion mb-3">
 
                                 <button type="button" class="btn btn-primario"
-                                id="btnReporte-auxiliar" (click)="V_Imprimir();"><i
+                                id="btnReporte-auxiliar" (click)="V_GetReporte('PDF');"><i
                                     class="fa-solid fa-print fa-beat-fade fa-xl"></i>
                                 Imprimir</button>
 
                                 <button type="button" class="btn btn-secundario"
-                                id="btnReporte-auxiliar-excel" (click)="V_Exportar();"><i
+                                id="btnReporte-auxiliar-excel" (click)="V_GetReporte('EXCEL');"><i
                                     class="fa-solid fa-file-excel fa-beat-fade fa-xl"></i>
                                 Exportar</button>
 

@@ -316,20 +316,20 @@ export class AuxiliarCuentaComponent {
             this.SaldoFinal = (this.SaldoInicial + this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.DEBE_ML, 0)) - this.lstAuxiliar.data.reduce((acc, cur) => acc + cur.HABER_ML, 0);
             this.lstAuxiliar.paginator = this.paginator;
 
-            this.ReporteAuxiliar = datos[1].d;
-            this.CuentaContable = datos[2].d;
-            this.TipoCuenta = datos[3].d;
+            //this.ReporteAuxiliar = datos[1].d;
+            this.CuentaContable = datos[1].d;
+            this.TipoCuenta = datos[2].d;
             this.ReporteConsolidado = undefined;
-            if(this.TipoCuenta == "D")this.ReporteConsolidado = datos[4].d;
+           // if(this.TipoCuenta == "D")this.ReporteConsolidado = datos[4].d;
 
-            if(this.TipoCuenta == "D")
+            /*if(this.TipoCuenta == "D")
             {
               this.ReporteExcel = datos[5].d;
             }
             else
             {
               this.ReporteExcel = datos[4].d;
-            }
+            }*/
 
           }
 
@@ -364,8 +364,102 @@ export class AuxiliarCuentaComponent {
   }
 
 
+    
+  public V_GetReporte(Tipo : string): void {
 
-  public V_Exportar()
+    document.getElementById("btnRefrescar-Auxiliar")?.setAttribute("disabled", "disabled");
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
+      );
+
+    }
+
+
+    let Fecha1 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd");
+    let Fecha2 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha2").value, "yyyy-MM-dd");
+
+
+    this.GET.GetReporte(Fecha1, Fecha2, this.val.Get("txtBodega-auxiliar").value, this.val.Get("txtCuenta-Asiento").value, Tipo).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          } else {
+
+         
+            let datos: iDatos[] = _json["d"];
+
+     
+          // this.ReporteConsolidado = datos[1].d;
+           //this.ReporteExcel = datos[2].d;
+
+
+           if(Tipo == "PDF")
+           {
+             this.ReporteAuxiliar  = datos[0].d;
+             this.ReporteConsolidado = datos[1]?.d;
+             this.V_Imprimir();
+           }
+           else
+           {
+             this.ReporteExcel  = datos[0].d;
+             this.ReporteConsolidado = datos[1]?.d;
+            this.V_Exportar();
+           }
+
+
+
+          }
+
+        },
+        error: (err) => {
+
+          document.getElementById("btnRefrescar-Auxiliar")?.removeAttribute("disabled");
+
+          dialogRef.close();
+
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnRefrescar-Auxiliar")?.removeAttribute("disabled");
+
+        }
+      }
+    );
+
+
+  }
+
+
+
+
+  private V_Exportar()
     {
   
       let byteArray = new Uint8Array(atob(this.ReporteExcel).split('').map(char => char.charCodeAt(0)));
@@ -390,7 +484,7 @@ export class AuxiliarCuentaComponent {
  
 
 
-  public async V_Imprimir() {
+  private async V_Imprimir() {
 
     if(this.TipoCuenta == "D")
       {
@@ -413,19 +507,17 @@ export class AuxiliarCuentaComponent {
   
         });
   
-  
-         
-      dialogRef.afterClosed().subscribe(s => {
-  
-        this.V_Reporte(dialogRef.componentInstance.retorno == "1" ? false :  true);
+
         
+        dialogRef.afterClosed().subscribe(s => {
+  
         if(dialogRef.componentInstance.retorno == "1")
         {
-  
+          this.V_ReporteConsolidado();
         }
         else
         {
-          this.V_Reporte(true);
+          this.V_ReporteDetalle();
         }
   
       });
@@ -437,7 +529,7 @@ export class AuxiliarCuentaComponent {
       }
       else
       {
-        this.V_Reporte(true);
+        this.V_ReporteDetalle();
       }
 
 
@@ -447,13 +539,11 @@ export class AuxiliarCuentaComponent {
   }
 
 
-  private V_Reporte(esDetalle : boolean)
+  private V_ReporteConsolidado()
   {
 
-    if (this.ReporteAuxiliar == undefined && esDetalle) return;
-    if (this.ReporteConsolidado == undefined && !esDetalle) return;
 
-    let byteArray = new Uint8Array(atob( esDetalle ? this.ReporteAuxiliar : this.ReporteConsolidado).split('').map(char => char.charCodeAt(0)));
+    let byteArray = new Uint8Array(atob( this.ReporteConsolidado).split('').map(char => char.charCodeAt(0)));
 
     var file = new Blob([byteArray], { type: 'application/pdf' });
 
@@ -463,6 +553,21 @@ export class AuxiliarCuentaComponent {
     tabOrWindow.focus();
   }
 
+
+   private V_ReporteDetalle()
+  {
+
+    if (this.ReporteAuxiliar == undefined) return;
+
+    let byteArray = new Uint8Array(atob(this.ReporteAuxiliar).split('').map(char => char.charCodeAt(0)));
+
+    var file = new Blob([byteArray], { type: 'application/pdf' });
+
+    let url = URL.createObjectURL(file);
+
+    let tabOrWindow: any = window.open(url, '_blank');
+    tabOrWindow.focus();
+  }
 
 
   ngOnInit(): void {

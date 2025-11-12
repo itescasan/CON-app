@@ -1250,7 +1250,7 @@ export class TransferenciaSaldoComponent {
 
             Importe_MS = g.SubTotalDolar;
             Importe_ML = g.SubTotalCordoba;
-
+            
 
 
             Importe = this.cFunciones.Redondeo(((Importe - Impuesto) * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
@@ -1332,7 +1332,7 @@ export class TransferenciaSaldoComponent {
 
 
         
-
+    
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
           det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
         }

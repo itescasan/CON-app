@@ -24,6 +24,11 @@ export class getAuxiliarCuenta {
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&CodBodega=" + CodBodega + "&Cuenta=" + Cuenta).pipe(timeout(this._Cnx.Timeout));
     }
 
+     public GetReporte(Fecha1: string, Fecha2: string, CodBodega: string, Cuenta: string, Tipo : string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/GetReporte?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&CodBodega=" + CodBodega + "&Cuenta=" + Cuenta + "&Tipo=" + Tipo).pipe(timeout(this._Cnx.Timeout));
+    }
+
+
 
     public GetAsiento(IdAsiento: number, NoDoc : string): Observable<string> {
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/GetAsiento?IdAsiento=" + IdAsiento + "&NoDoc=" + NoDoc).pipe(timeout(this._Cnx.Timeout));
