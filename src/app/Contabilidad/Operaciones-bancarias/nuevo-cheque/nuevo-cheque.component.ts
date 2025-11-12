@@ -368,13 +368,13 @@ public v_Select_Reembolso(event: any) {
      if (this.SumIVA > 0) {
       let i : number  = this.V_Agregar(false);
         let det = this.lstDetalle.data.find(y => y.NoLinea == i);
-        det!.CuentaContable = ['2102-01-01-01'];
+        det!.CuentaContable = ['2102-01-01-0001'];
         det!.CentroCosto = "";
         det!.Referencia =  "IVA";
         det!.Debito = this.cFunciones.NumFormat(this.SumIVA, "2");
         det!.Naturaleza = "D";
 
-        this.valTabla.Get( "txtCuenta" + i).setValue(['2102-01-01-01']);
+        this.valTabla.Get( "txtCuenta" + i).setValue(['2102-01-01-0001']);
         this.valTabla.Get( "txtCentroCosto" + i).setValue("");
         this.V_Calcular();
     }

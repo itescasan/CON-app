@@ -118,6 +118,7 @@ export class ConfCajaChicaComponent {
           } else {
 
             let Datos: iDatos[] = _json["d"];
+
             this.lstValorCaja = Datos[0].d;
             this.lstCuentasCaja = Datos[1].d;
             this.LlenarDatos();
@@ -141,43 +142,76 @@ export class ConfCajaChicaComponent {
 
   }
 
-  private LlenarDatos()
-  {
-    this.lstConfCaja = new MatTableDataSource(this.lstValorCaja);
+  // private LlenarDatos()
+  // {
+  //   this.lstConfCaja = new MatTableDataSource(this.lstValorCaja);
     
-    let Acc : any[] = Object.assign([], this.lstCuentasCaja);
+  //   let Acc : any[] = Object.assign([], this.lstCuentasCaja);
 
-    Acc.forEach(f =>{
+  //   Acc.forEach(f =>{
               
-      let i = this.lstValorCaja.findIndex((w : any) => w.CuentaContable == f.CuentaContable );
-      f.Estado = "ABIERTO";
-      // f.IdAcceso = -1;     
-      if(i != -1) 
-      {
-        f.Estado = this.lstValorCaja[i].Estado;
-        f.IdTecho = this.lstValorCaja[i].IdTecho;
-        f.Valor = this.cFunciones.NumFormat(this.lstValorCaja[i].Valor, "2");
-        f.Serie = this.lstValorCaja[i].Serie;
-        f.Consecutivo =  this.lstValorCaja[i].Consecutivo;
-      }     
+  //     let i = this.lstValorCaja.findIndex((w : any) => w.CuentaContable == f.CuentaContable && w.NombreCuenta == f.NombreCuenta);
+  //     f.Estado = "ABIERTO";
+  //     // f.IdAcceso = -1;     
+  //     if(i != -1) 
+  //     {
+  //       f.Estado = this.lstValorCaja[i].Estado;
+  //       f.IdTecho = this.lstValorCaja[i].IdTecho;
+  //       f.Valor = this.cFunciones.NumFormat(this.lstValorCaja[i].Valor, "2");
+  //       f.Serie = this.lstValorCaja[i].Serie;
+  //       f.Consecutivo =  this.lstValorCaja[i].Consecutivo;
+  //     }     
 
-      if (f.Valor == 0) 
-      {
-        f.Valor = "0.0";
-      }
-      if (f.Serie == undefined)
-      {
-        f.Serie = "S/S";
-      }
-      if (f.Consecutivo == undefined) {
-        f.Consecutivo = 0;
-      }
-    });
+  //     if (f.Valor == 0) 
+  //     {
+  //       f.Valor = "0.0";
+  //     }
+  //     if (f.Serie == undefined)
+  //     {
+  //       f.Serie = "S/S";
+  //     }
+  //     if (f.Consecutivo == undefined) {
+  //       f.Consecutivo = 0;
+  //     }
+  //   });
 
 
-      this.lstConfCaja = new MatTableDataSource(Acc);
-      this.lstConfCaja._updateChangeSubscription();      
+  //     this.lstConfCaja = new MatTableDataSource(Acc);
+  //     this.lstConfCaja._updateChangeSubscription();      
+  // }
+private LlenarDatos(): void {
+  if (!this.lstValorCaja || !this.lstCuentasCaja) {
+    this.lstConfCaja = new MatTableDataSource<iConfCaja, MatPaginator>([]);
+    return;
   }
+
+  const cuentasActualizadas: iConfCaja[] = this.lstCuentasCaja.map((cuenta: iConfCaja) => {
+    const encontrado = this.lstValorCaja.find(v =>
+      v.CuentaContable === cuenta.CuentaContable &&
+      v.Nombre === cuenta.NombreCuenta
+    );
+
+    const nuevaCuenta: iConfCaja = { ...cuenta };
+
+    if (encontrado) {
+      nuevaCuenta.Estado = encontrado.Estado ?? "ABIERTO";
+      nuevaCuenta.IdTecho = encontrado.IdTecho ?? 0;
+      nuevaCuenta.Valor = this.cFunciones.NumFormat(encontrado.Valor, "2");
+      nuevaCuenta.Serie = encontrado.Serie ?? "S/S";
+      nuevaCuenta.Consecutivo = encontrado.Consecutivo ?? 0;
+    } else {
+      nuevaCuenta.Estado = "ABIERTO";
+      nuevaCuenta.Valor = "0.0";
+      nuevaCuenta.Serie = "S/S";
+      nuevaCuenta.Consecutivo = 0;
+    }
+
+    return nuevaCuenta;
+  });
+
+  this.lstConfCaja = new MatTableDataSource<iConfCaja, MatPaginator>(cuentasActualizadas);
+  this.lstConfCaja._updateChangeSubscription();
+}
 
   public E_ditar(det: iConfCaja) {
     let dialogRef: MatDialogRef<SerieCajaComponent> =  this.cFunciones.DIALOG.open(

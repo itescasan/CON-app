@@ -253,7 +253,7 @@ export class AccesoCajaComponent {
       Acc.forEach(f =>{
         
         let u : string = this.val.Get("cmbUsuario").value;
-        let i = this.lstDatosPerfil.findIndex((w : any) => w.Usuario == u && w.CuentaContable == f.CuentaContable && w.Activo == 1 );
+        let i = this.lstDatosPerfil.findIndex((w : any) => w.Usuario == u && w.CuentaContable == f.CuentaContable && w.Activo == 1 && w.NombreCuenta == f.NombreCuenta);
         let x = this.lstDatosPerfil.findIndex((w : any) => w.Usuario == u && w.CuentaContable == f.CuentaContable);
         f.Activo = false;
         //f.IdAcceso = -1;
