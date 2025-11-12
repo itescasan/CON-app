@@ -65,8 +65,7 @@ public ConsecutivoContabilidad(Serie : string, Fecha : string) : Observable<any>
   return this.http.get<any>(this._Cnx.Url() + "Sistema/ConsecutivoContabilidad?Serie="+ Serie + "&Fecha=" + Fecha).pipe(timeout(this._Cnx.Timeout));
 }
   
- 
-public AccesoWeb(user : string) : Observable<any>{
+ public AccesoWeb(user : string) : Observable<any>{
   return this.http.get<any>(this._Cnx.Url() + "Sistema/AccesoWeb?user=" + user).pipe(timeout(this._Cnx.Timeout));
 }
 
