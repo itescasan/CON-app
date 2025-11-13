@@ -32,13 +32,13 @@ export class CatalogoGastoInternoComponent {
 
   public constructor(private cFunciones: Funciones, private POST : postGastoInterno, private GET: getGastoInterno,){
 
-    this.val.add("txt_Gast_Codigo", "1", "LEN>=", "0", "Gastos Internos", "");
-    this.val.add("cmb_Gast_Estado", "1", "LEN>", "0", "Gastos Internos", "Seleccione un estado.");
-    this.val.add("cmb_Gast_Prov", "1", "LEN>", "0", "Gastos Internos", "Seleccione un proveedor.");
-    this.val.add("txt_Gast_Descripcion", "1", "LEN>", "0", "Gastos Internos", "Ingrese una descripción.");
-    this.val.add("cmb_Gast_Cuenta", "1", "LEN>", "0", "Gastos Internos", "Ingrese una cuenta.");
-    this.val.add("cmb_Gast_Aplica", "1", "LEN>", "0", "Gastos Internos", "Seleccione una opción de aplicación.");
-    this.val.add("cmb_Gast_Tipo", "1", "LEN>", "0", "Gastos Internos", "Seleccione un tipo.");
+    this.val.add("txt_Gast_Codigo", "1", "LEN>=", "0", "Costo de Internacion", "");
+    this.val.add("cmb_Gast_Estado", "1", "LEN>", "0", "Costo de Internacion", "Seleccione un estado.");
+    this.val.add("cmb_Gast_Prov", "1", "LEN>", "0", "Costo de Internacion", "Seleccione un proveedor.");
+    this.val.add("txt_Gast_Descripcion", "1", "LEN>", "0", "Costo de Internacion", "Ingrese una descripción.");
+    this.val.add("cmb_Gast_Cuenta", "1", "LEN>", "0", "Costo de Internacion", "Ingrese una cuenta.");
+    this.val.add("cmb_Gast_Aplica", "1", "LEN>", "0", "Costo de Internacion", "Seleccione una opción de aplicación.");
+    this.val.add("cmb_Gast_Tipo", "1", "LEN>", "0", "Costo de Internacion", "Seleccione un tipo.");
     this.V_Evento("Iniciar");
   }
   
@@ -195,7 +195,16 @@ export class CatalogoGastoInternoComponent {
 
   public V_Guardar(): void {
 
-   
+
+    this.val.add("cmb_Gast_Prov", "1", "LEN>", "0", "Costo de Internacion", "Seleccione un proveedor.");
+    
+    if(this.val.GetValue("cmb_Gast_Aplica") == "C")
+    {
+      this.val.replace("cmb_Gast_Prov", "1", "LEN>=", "Costo de Internacion", "");
+
+    }
+
+
     this.val.EsValido();
 
     if (this.val.Errores != "") {
