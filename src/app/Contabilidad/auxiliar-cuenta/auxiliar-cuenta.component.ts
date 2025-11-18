@@ -60,9 +60,12 @@ export class AuxiliarCuentaComponent {
     this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
     this.val.add("txtBodega-auxiliar", "1", "LEN>=", "0", "Bodega", "");
     this.val.add("txtCuenta-Asiento", "1", "LEN>=", "0", "Cuenta", "");
+     this.val.add("txtBuscar-cuenta", "1", "LEN>=", "0", "Cuenta", "");
 
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
+
+    
 
     this.v_BODEGA();
 
@@ -322,6 +325,12 @@ export class AuxiliarCuentaComponent {
             this.ReporteConsolidado = undefined;
            // if(this.TipoCuenta == "D")this.ReporteConsolidado = datos[4].d;
 
+
+
+           if(this.val.GetValue("txtBuscar-cuenta") != undefined) this.lstAuxiliar.filter = this.val.GetValue("txtBuscar-cuenta")
+
+alert(this.val.GetValue("txtBuscar-cuenta"))
+           
             /*if(this.TipoCuenta == "D")
             {
               this.ReporteExcel = datos[5].d;
