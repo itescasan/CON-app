@@ -262,7 +262,7 @@ export class AccesoCajaComponent {
         if(i != -1) 
         {
           f.Activo = true;
-          f.IdAcceso = this.lstDatosPerfil[i].IdAcceso; 
+          f.IdAcceso = this.lstDatosPerfil[i].IdAcceso;
         } 
         // if (x != -1) {
          
@@ -280,7 +280,7 @@ export class AccesoCajaComponent {
 
   V_Activar(checked: any, element : any): void {    
     
-    let i : number = this.lstAccesoCajachica.data.findIndex(f => f.CuentaContable == element.CuentaContable );   
+    let i : number = this.lstAccesoCajachica.data.findIndex(f => f.CuentaContable == element.CuentaContable && f.NombreCuenta == element.NombreCuenta);   
     this.lstAccesoCajachica.data[i].Activo = element.Activo;  
 
   }
