@@ -36,7 +36,6 @@ export class AuxiliarCuentaComponent {
   public TotalHABER: number = 0;
   private ReporteAuxiliar: any;
   private ReporteConsolidado: any;
-  private ReporteExcel: any;
   private CuentaContable : string;
   private TipoCuenta : string;
 
@@ -154,6 +153,7 @@ export class AuxiliarCuentaComponent {
             );
             dialogAsiento.componentInstance.esModal = true;
             dialogAsiento.componentInstance.FILA = Asiento;
+             dialogAsiento.componentInstance.NoDocumento = e.NoDoc;
             dialogAsiento.componentInstance.Editar = (e.Editar == 1 ? true : false);
 
 
@@ -414,16 +414,15 @@ export class AuxiliarCuentaComponent {
            //this.ReporteExcel = datos[2].d;
 
 
+            this.ReporteAuxiliar  = datos[0].d;
+             this.ReporteConsolidado = datos[1]?.d;
+
            if(Tipo == "PDF")
            {
-             this.ReporteAuxiliar  = datos[0].d;
-             this.ReporteConsolidado = datos[1]?.d;
              this.V_Imprimir();
            }
            else
            {
-             this.ReporteExcel  = datos[0].d;
-             this.ReporteConsolidado = datos[1]?.d;
             this.V_Exportar();
            }
 
@@ -462,24 +461,57 @@ export class AuxiliarCuentaComponent {
   private V_Exportar()
     {
   
-      let byteArray = new Uint8Array(atob(this.ReporteExcel).split('').map(char => char.charCodeAt(0)));
 
-      var file = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+
+       if(this.TipoCuenta == "D")
+      {
+        let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+          DialogoConfirmarComponent,
+          {
+            panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+            disableClose: true
+          }
+        );
+    
+    
+    
+        dialogRef.afterOpened().subscribe(s => {
+          dialogRef.componentInstance.textBoton1 = "CONSOLIDADO";
+          dialogRef.componentInstance.textBoton2 = "DETALLE";
+          dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
+          dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
+          dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>IMPRIMIR</b></p><p style='text-align: center'><b style='color: blue'>"+this.CuentaContable+"</b></p>")
+  
+        });
+  
+
+        
+        dialogRef.afterClosed().subscribe(s => {
+  
+        if(dialogRef.componentInstance.retorno == "1")
+        {
+          this.V_ReporteConsolidado(true);
+        }
+        else
+        {
+          this.V_ReporteDetalle(true);
+        }
+  
+      });
   
   
-      let url = URL.createObjectURL(file);
   
-     
-      var fileLink = document.createElement('a');
-      fileLink.href = url;
-      fileLink.download = "AUXILIAR";
-  
-  
-        var fileLink = document.createElement('a');
-        fileLink.href = url;
-        fileLink.download = "AUXILIAR";
-        fileLink.click();
-        document.body.removeChild(fileLink);
+        
+    
+      }
+      else
+      {
+        this.V_ReporteDetalle(true);
+      }
+
+
+
     }
  
 
@@ -513,11 +545,11 @@ export class AuxiliarCuentaComponent {
   
         if(dialogRef.componentInstance.retorno == "1")
         {
-          this.V_ReporteConsolidado();
+          this.V_ReporteConsolidado(false);
         }
         else
         {
-          this.V_ReporteDetalle();
+          this.V_ReporteDetalle(false);
         }
   
       });
@@ -529,7 +561,7 @@ export class AuxiliarCuentaComponent {
       }
       else
       {
-        this.V_ReporteDetalle();
+        this.V_ReporteDetalle(false);
       }
 
 
@@ -539,34 +571,84 @@ export class AuxiliarCuentaComponent {
   }
 
 
-  private V_ReporteConsolidado()
+  private V_ReporteConsolidado(exportar : boolean)
   {
 
 
-    let byteArray = new Uint8Array(atob( this.ReporteConsolidado).split('').map(char => char.charCodeAt(0)));
+    if(exportar)
+    {
+       
+      let byteArray = new Uint8Array(atob(this.ReporteConsolidado).split('').map(char => char.charCodeAt(0)));
 
-    var file = new Blob([byteArray], { type: 'application/pdf' });
+      var file = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  
+  
+      let url = URL.createObjectURL(file);
+  
+     
+      var fileLink = document.createElement('a');
+      fileLink.href = url;
+      fileLink.download = "AUXILIAR";
+  
+        fileLink.click();
+        document.body.removeChild(fileLink);
+        
+    }
+    else
+    {
+      let byteArray = new Uint8Array(atob( this.ReporteConsolidado).split('').map(char => char.charCodeAt(0)));
 
-    let url = URL.createObjectURL(file);
+      var file = new Blob([byteArray], { type: 'application/pdf' });
 
-    let tabOrWindow: any = window.open(url, '_blank');
-    tabOrWindow.focus();
+      let url = URL.createObjectURL(file);
+
+      let tabOrWindow: any = window.open(url, '_blank');
+      tabOrWindow.focus();
+    }
+
+
+   
   }
 
 
-   private V_ReporteDetalle()
+   private V_ReporteDetalle(exportar : boolean)
   {
 
     if (this.ReporteAuxiliar == undefined) return;
 
-    let byteArray = new Uint8Array(atob(this.ReporteAuxiliar).split('').map(char => char.charCodeAt(0)));
 
-    var file = new Blob([byteArray], { type: 'application/pdf' });
+     if(exportar){
 
-    let url = URL.createObjectURL(file);
+       let byteArray = new Uint8Array(atob(this.ReporteAuxiliar).split('').map(char => char.charCodeAt(0)));
 
-    let tabOrWindow: any = window.open(url, '_blank');
-    tabOrWindow.focus();
+      var file = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  
+  
+      let url = URL.createObjectURL(file);
+  
+     
+      var fileLink = document.createElement('a');
+      fileLink.href = url;
+      fileLink.download = "AUXILIAR";
+  
+        fileLink.click();
+        document.body.removeChild(fileLink);
+
+
+     }
+     else
+     {
+        let byteArray = new Uint8Array(atob(this.ReporteAuxiliar).split('').map(char => char.charCodeAt(0)));
+
+        var file = new Blob([byteArray], { type: 'application/pdf' });
+
+        let url = URL.createObjectURL(file);
+
+        let tabOrWindow: any = window.open(url, '_blank');
+        tabOrWindow.focus();
+     }
+
+  
   }
 
 
