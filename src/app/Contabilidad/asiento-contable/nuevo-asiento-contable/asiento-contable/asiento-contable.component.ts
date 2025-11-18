@@ -33,6 +33,7 @@ export class AsientoContableComponent {
   public valTabla = new Validacion();
 
   public FILA: iAsiento = {} as iAsiento;
+  public NoDocumento : string = "";
 
   @ViewChildren(IgxComboComponent)
   public lstCmb: QueryList<IgxComboComponent>;
@@ -1188,7 +1189,7 @@ export class AsientoContableComponent {
 
 
 
-  this.GET.GetReporte(this.FILA.IdAsiento, Moneda, Exportar, Consolidado, Unificado, Modulo).subscribe(
+  this.GET.GetReporte(this.FILA.IdAsiento, this.NoDocumento, Moneda, Exportar, Consolidado, Unificado, Modulo).subscribe(
       {
           next: (data) => {
 

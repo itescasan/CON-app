@@ -127,8 +127,8 @@ export class Funciones {
     {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aAplicaCaja", Caption: "Aplicar Caja Chica" , MenuPadre: "IdNavAccesoCaja", Clase : "fa-solid fa-cash-register", Modulo: "CON", Usuario : ""},
 
   /**************************************CUENTAS POR PAGAR ************************************* */ 
-  {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavGastInt", Caption: "Gastos Interno" , MenuPadre: "", Clase : "fa-solid fa-gear fa-lg", Modulo: "CON", Usuario : ""},
-  {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aGastInt", Caption: "Gastos Interno" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
+  {IdAcceso:0,  Activo: false, EsMenu: true,  EsSubMenu: false, Id:"IdNavGastInt", Caption: "Costo de Internacion" , MenuPadre: "", Clase : "fa-solid fa-gear fa-lg", Modulo: "CON", Usuario : ""},
+  {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aGastInt", Caption: "Nuevo" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
   {IdAcceso:0,  Activo: false, EsMenu: false, EsSubMenu: false, Id:"aRegGastInt", Caption: "Registros" , MenuPadre: "IdNavGastInt", Clase : "", Modulo: "CON", Usuario : ""},
      
     /**************************************ACCESO WEB**************************************/ 
