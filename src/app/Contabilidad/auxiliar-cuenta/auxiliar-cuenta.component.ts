@@ -329,7 +329,7 @@ export class AuxiliarCuentaComponent {
 
            if(this.val.GetValue("txtBuscar-cuenta") != undefined) this.lstAuxiliar.filter = this.val.GetValue("txtBuscar-cuenta")
 
-alert(this.val.GetValue("txtBuscar-cuenta"))
+
            
             /*if(this.TipoCuenta == "D")
             {
