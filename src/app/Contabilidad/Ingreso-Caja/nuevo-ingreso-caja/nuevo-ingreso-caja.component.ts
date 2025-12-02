@@ -66,6 +66,7 @@ export class NuevoIngresoCajaComponent {
   public gas_Caja: number = 0; 
   public sal_Disponible: number = 0; 
   public mont_Caja: number = 0;
+  public Serie: string = "";
   public IdCaja: number = 0; 
   private Eliminar : boolean = true;
   
@@ -87,7 +88,7 @@ export class NuevoIngresoCajaComponent {
     this.val.add("cmbBodega", "1", "LEN>", "0", "Bodega", "Seleccione una Bodega.");
     this.val.add("cmbRubro", "1", "LEN>", "0", "Centro Costo", "No se ha definido el Rubro.");
     this.val.add("cmbCentroCosto", "1", "LEN>", "0", "Centro Costo", "Seleccione un centro costo.");
-    this.val.add("cmbEmpleado", "1", "LEN>", "0", "Empleado", "Ingrese el Empleado.");    
+    this.val.add("cmbEmpleado", "1", "LEN>", "0", "Empleado", "Ingrese el Empleado.");
     this.val.add("txtConsecutivo", "1", "LEN>", "0", "Consecutivo", "No se ha definido el número de consecutivo.");
     this.val.add("txtReferencia", "1", "LEN>", "0", "Referencia", "Ingrese la Referencia.");
     this.val.add("txtProveedor", "1", "LEN>", "0", "Proveedor", "Ingrese el Proveedor.");
@@ -400,6 +401,7 @@ export class NuevoIngresoCajaComponent {
             this.lstInfoCaja = datos[1].d;
             this.lstEmpleado = datos[2].d;            
             if (!this.esModal) this.val.Get("txtConsecutivo").setValue(this.lstInfoCaja[0].Consecutivo);
+            this.Serie = this.lstInfoCaja[0].Serie;
             this.mont_Caja = this.cFunciones.Redondeo(this.lstInfoCaja[0].Valor, "2");
             this.v_llenarDatos(this.lstInfoCaja[0].Consecutivo,this.cFunciones.User,this.lstInfoCaja[0].CuentaContable);
             
@@ -507,6 +509,7 @@ export class NuevoIngresoCajaComponent {
       this.FILA.Aplicado = false;
       this.FILA.Contabilizado = false;
       this.FILA.Corregir = "";
+      this.FILA.Serie = "";
       
 
       let det: iIngCajaDetalle  = {} as iIngCajaDetalle;
