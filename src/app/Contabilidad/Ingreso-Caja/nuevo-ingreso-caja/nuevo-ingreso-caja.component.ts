@@ -67,7 +67,7 @@ export class NuevoIngresoCajaComponent {
   public sal_Disponible: number = 0; 
   public mont_Caja: number = 0;
   public IdCaja: number = 0; 
-  private Eliminar : boolean = false;
+  private Eliminar : boolean = true;
   
 
   public orderby: iOrderBy[] = [
