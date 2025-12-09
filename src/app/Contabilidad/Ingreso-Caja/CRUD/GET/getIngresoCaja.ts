@@ -25,8 +25,8 @@ export class getIngresoCaja{
       return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Datos?User=" + Usuario).pipe(timeout(this._Cnx.Timeout));
    }
 
-   public Rubro(CuentaPadre : string) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Rubro?CuentaPadre=" + CuentaPadre).pipe(timeout(this._Cnx.Timeout));
+   public Rubro(CuentaPadre : string,Usuario : string) : Observable<string>{
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/IngresoCajaChica/Rubro?CuentaPadre=" + CuentaPadre + '&Usuario=' + Usuario).pipe(timeout(this._Cnx.Timeout));
  }
 
    public Get(Consecutivo : number ,Usuario :string, CuentaBodega : string ) : Observable<string>{

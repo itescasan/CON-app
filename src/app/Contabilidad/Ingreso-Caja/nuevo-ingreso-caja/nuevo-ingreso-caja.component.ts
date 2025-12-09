@@ -26,6 +26,7 @@ import { usaCa } from '@igniteui/material-icons-extended';
 import { iIngresoCajaPost } from 'src/app/Interface/Contabilidad/i-IngresoCaja-POST';
 import { iValCaja } from 'src/app/Interface/Contabilidad/i-Validacion-Caja';
 import { faShopSlash } from '@fortawesome/free-solid-svg-icons';
+import { iEmpleado } from 'src/app/Interface/Contabilidad/i-Empleado';
 
 @Component({
     selector: 'app-nuevo-ingreso-caja',
@@ -43,7 +44,7 @@ export class NuevoIngresoCajaComponent {
   lstBodega: iAccesoCaja[] = [];
   lstRubros: iAccesoCaja[] = [];
   lstCentroCosto: iCentroCosto[] = [];
-  lstEmpleado : iAccesoCaja[] = [];
+  lstEmpleado : iEmpleado[] = [];
   lstInfoCaja : iConfC[] = [];
   
 
@@ -261,9 +262,18 @@ export class NuevoIngresoCajaComponent {
 
   public v_Select_Empleado(event: any) {
 
+
     if (event.added.length == 1) {
       if(event.newValue.length > 1) event.newValue.splice(0, 1);
       this.val.Get("cmbEmpleado").setValue(event.newValue);
+      this.val.Get("txtProveedor").setValue("");
+      let cmb: any = this.cmbEmpleado.dropdown;
+      let _Item: iEmpleado = cmb._focusedItem?.value;
+      if (this.val.Get("txtProveedor").value.length == 0 ) {
+        
+        this.val.Get("txtProveedor").setValue([_Item?.NombreEmpleado]);
+      }     
+
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbEmpleado.close();
       this.cmbEmpleado.close();
     }
@@ -272,10 +282,12 @@ export class NuevoIngresoCajaComponent {
   public v_Enter_Empleado(event: any) {
     if (event.key == "Enter") {
       let cmb: any = this.cmbEmpleado.dropdown;
-      let _Item: iAccesoCaja = cmb._focusedItem?.value;
-      this.cmbEmpleado.setSelectedItem(_Item?.CuentaContable);
-      this.val.Get("cmbEmpleado").setValue([_Item?.CuentaContable]);
-
+      let _Item: iEmpleado = cmb._focusedItem?.value;
+      this.cmbEmpleado.setSelectedItem(_Item?.Numero);
+      this.val.Get("cmbEmpleado").setValue([_Item?.NombreEmpleado]);
+      
+      
+      this.cmbEmpleado.close();
     }
   }
 
@@ -381,7 +393,7 @@ export class NuevoIngresoCajaComponent {
     if (this.cmbBodega.selection.length == 0) return;
 
 
-    this.GET.Rubro(this.val.Get("cmbBodega").value).subscribe(
+    this.GET.Rubro(this.val.Get("cmbBodega").value, this.cFunciones.User).subscribe(
       {
         next: (data) => {
 
@@ -399,7 +411,7 @@ export class NuevoIngresoCajaComponent {
             let datos: iDatos[] = _json["d"];
             this.lstRubros = datos[0].d;
             this.lstInfoCaja = datos[1].d;
-            this.lstEmpleado = datos[2].d;            
+            this.lstEmpleado = datos[2].d;
             if (!this.esModal) this.val.Get("txtConsecutivo").setValue(this.lstInfoCaja[0].Consecutivo);
             this.Serie = this.lstInfoCaja[0].Serie;
             this.mont_Caja = this.cFunciones.Redondeo(this.lstInfoCaja[0].Valor, "2");
@@ -459,14 +471,14 @@ export class NuevoIngresoCajaComponent {
         this.IdCaja = f.IdIngresoCajaC
         if (f.IdIngresoCajaC == undefined) f.IdIngresoCajaC = 0;
   
-        this.gas_Caja += f.SubTotal
-        this.sal_Disponible = this.mont_Caja - this.gas_Caja
-  
+        this.gas_Caja += f.SubTotal       
+       
       });
-    }else{
+       this.sal_Disponible = this.mont_Caja - this.gas_Caja - Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""))
+    }else{     
       this.sal_Disponible = this.mont_Caja - Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""))
     }
-    this.sal_Disponible = this.sal_Disponible - Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""))
+    //this.sal_Disponible = this.sal_Disponible - Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""))
     if (this.sal_Disponible < 0) {
       document.getElementById("btnGuardar-IngCaja")?.removeAttribute("enabled");
       document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
@@ -477,8 +489,9 @@ export class NuevoIngresoCajaComponent {
 
   }
 
-  public v_Guardar(): void {   
- 
+  public v_Guardar(X : number): void {   
+
+    if (X == 1) {
       this.val.EsValido();
       this.valTabla.EsValido();
   
@@ -500,6 +513,9 @@ export class NuevoIngresoCajaComponent {
   
         return;
       }
+    }
+ 
+      
   
       this.FILA.IdIngresoCajaChica = this.IdCaja;
       this.FILA.Cuenta = this.val.Get("cmbBodega").value[0];
@@ -509,7 +525,7 @@ export class NuevoIngresoCajaComponent {
       this.FILA.Aplicado = false;
       this.FILA.Contabilizado = false;
       this.FILA.Corregir = "";
-      this.FILA.Serie = "";
+      this.FILA.Serie = this.Serie;
       
 
       let det: iIngCajaDetalle  = {} as iIngCajaDetalle;
@@ -520,14 +536,14 @@ export class NuevoIngresoCajaComponent {
       det.Concepto = this.val.Get("txtConcepto").value;
       det.Referencia = this.val.Get("txtReferencia").value;
       det.Proveedor = this.val.Get("txtProveedor").value;
-      det.Cuenta = this.val.Get("cmbRubro").value[0];
-      det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
+      det.Cuenta = X == 2 ? this.val.Get("cmbRubro").value[0] == undefined ? "" : this.val.Get("cmbRubro").value[0] : this.val.Get("cmbRubro").value[0];
+      det.CentroCosto = X == 2 ? this.val.Get("cmbCentroCosto").value[0] == undefined  ? "" : this.val.Get("cmbCentroCosto").value[0] : this.val.Get("cmbCentroCosto").value[0];
       det.SubTotal = Number(String(this.val.Get("txtSubTotal").value).replaceAll(",", ""));
       det.Iva = Number(String(this.val.Get("txtIVA").value).replaceAll(",", ""));
       det.Total = Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""));
 
-      det.CuentaEmpleado = this.val.Get("cmbEmpleado").value == undefined ?  "" : this.val.Get("cmbEmpleado").value[0]; 
-      
+      det.CuentaEmpleado = X == 2 ? this.val.Get("cmbEmpleado").value == undefined ?  "" : this.val.Get("cmbEmpleado").value[0] : this.val.Get("cmbEmpleado").value; 
+      if (det.CuentaEmpleado == undefined) det.CuentaEmpleado = "";
   
       if (!this.esModal) {      
   
@@ -735,22 +751,34 @@ export class NuevoIngresoCajaComponent {
             if (this.LstValCaja.data.length > 0) {
               if (this.LstValCaja.data[0].Enviado == true && this.LstValCaja.data[0].Corregir == "Pendiente") {
                 document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+                document.getElementById("btnGuardar-IngCajaAnulado")?.removeAttribute("disabled");
                 document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
+
                 document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+                document.getElementById("btnGuardar-IngCajaAnulado")?.setAttribute("enabled", "enabled");
+
                 document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
                 this.Eliminar = true;
               }else            
               {
                 if (this.LstValCaja.data[0].Enviado == false && this.LstValCaja.data[0].Corregir == "") {
                   document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+                  document.getElementById("btnGuardar-IngCajaAnulado")?.removeAttribute("disabled");
                   document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
+
+
                   document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+                  document.getElementById("btnGuardar-IngCajaAnulado")?.setAttribute("enabled", "enabled");
+
                   document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
                   this.Eliminar = true;
                 }else{
                   document.getElementById("btnGuardar-IngCaja")?.removeAttribute("enabled");
+                  document.getElementById("btnGuardar-IngCajaAnulado")?.removeAttribute("enabled");
+
                   document.getElementById("btnImprimir-IngCaja")?.removeAttribute("enabled");
                   document.getElementById("btnGuardar-IngCaja")?.setAttribute("disabled", "disabled");
+                  document.getElementById("btnGuardar-IngCajaAnulado")?.setAttribute("disabled", "disabled");
                   document.getElementById("btnImprimir-IngCaja")?.setAttribute("disabled", "disabled");
                   this.Eliminar = false;
                 }
@@ -758,8 +786,10 @@ export class NuevoIngresoCajaComponent {
               }
             } else {
                   document.getElementById("btnGuardar-IngCaja")?.removeAttribute("disabled");
+                  document.getElementById("btnGuardar-IngCajaAnulado")?.removeAttribute("disabled");
                   document.getElementById("btnImprimir-IngCaja")?.removeAttribute("disabled");
                   document.getElementById("btnGuardar-IngCaja")?.setAttribute("enabled", "enabled");
+                  document.getElementById("btnGuardar-IngCajaAnulado")?.setAttribute("enabled", "enabled");
                   document.getElementById("btnImprimir-IngCaja")?.setAttribute("enabled", "enabled");
                   this.Eliminar = true;
             }
