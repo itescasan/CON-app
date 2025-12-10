@@ -542,7 +542,10 @@ export class NuevoIngresoCajaComponent {
       det.Iva = Number(String(this.val.Get("txtIVA").value).replaceAll(",", ""));
       det.Total = Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""));
 
-      det.NEmpleado = X == 2 ? this.val.Get("cmbEmpleado").value == undefined ?  "" : this.val.Get("cmbEmpleado").value[0] : this.val.Get("cmbEmpleado").value[0]; 
+      //det.NEmpleado = X == 2 ? this.val.Get("cmbEmpleado").value == undefined ?  "" : this.val.Get("cmbEmpleado").value[0] : this.val.Get("cmbEmpleado").value[0]; 
+      det.NEmpleado = X == 2 
+    ? (this.val.Get("cmbEmpleado").value?.[0] ?? "")
+    : (this.val.Get("cmbEmpleado").value?.[0] ?? "");
       if (det.NEmpleado == undefined) det.NEmpleado = "";
   
       if (!this.esModal) {      
