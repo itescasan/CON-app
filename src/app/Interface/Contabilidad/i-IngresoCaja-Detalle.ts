@@ -10,7 +10,7 @@ export interface iIngCajaDetalle {
     SubTotal : number;
     Iva : number;
     Total : number;
-    CuentaEmpleado: any; 
+    NEmpleado: string; 
 }
 
 

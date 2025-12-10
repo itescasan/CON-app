@@ -1,4 +1,4 @@
 export interface iEmpleado{
-    Numero: string;
+    NEmpleado: string;
     NombreEmpleado: string;
 }

@@ -271,7 +271,7 @@ export class NuevoIngresoCajaComponent {
       let _Item: iEmpleado = cmb._focusedItem?.value;
       if (this.val.Get("txtProveedor").value.length == 0 ) {
         
-        this.val.Get("txtProveedor").setValue([_Item?.NombreEmpleado]);
+        this.val.Get("txtProveedor").setValue([_Item?.NombreEmpleado][0]);
       }     
 
       if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbEmpleado.close();
@@ -283,7 +283,7 @@ export class NuevoIngresoCajaComponent {
     if (event.key == "Enter") {
       let cmb: any = this.cmbEmpleado.dropdown;
       let _Item: iEmpleado = cmb._focusedItem?.value;
-      this.cmbEmpleado.setSelectedItem(_Item?.Numero);
+      this.cmbEmpleado.setSelectedItem(_Item?.NEmpleado);
       this.val.Get("cmbEmpleado").setValue([_Item?.NombreEmpleado]);
       
       
@@ -542,8 +542,8 @@ export class NuevoIngresoCajaComponent {
       det.Iva = Number(String(this.val.Get("txtIVA").value).replaceAll(",", ""));
       det.Total = Number(String(this.val.Get("txtTotal").value).replaceAll(",", ""));
 
-      det.CuentaEmpleado = X == 2 ? this.val.Get("cmbEmpleado").value == undefined ?  "" : this.val.Get("cmbEmpleado").value[0] : this.val.Get("cmbEmpleado").value; 
-      if (det.CuentaEmpleado == undefined) det.CuentaEmpleado = "";
+      det.NEmpleado = X == 2 ? this.val.Get("cmbEmpleado").value == undefined ?  "" : this.val.Get("cmbEmpleado").value[0] : this.val.Get("cmbEmpleado").value[0]; 
+      if (det.NEmpleado == undefined) det.NEmpleado = "";
   
       if (!this.esModal) {      
   
