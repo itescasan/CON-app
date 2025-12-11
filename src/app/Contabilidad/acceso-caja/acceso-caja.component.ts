@@ -257,7 +257,7 @@ export class AccesoCajaComponent {
         let x = this.lstDatosPerfil.findIndex((w : any) => w.Usuario == u && w.CuentaContable == f.CuentaContable);
         f.Activo = false;
         //f.IdAcceso = -1;
-        
+        f.Serie = "";
         f.Usuario = u;
         if(i != -1) 
         {
