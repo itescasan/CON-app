@@ -12,53 +12,75 @@
                 <div class="row">
 
 
-                    <div class="col-12 col-md-12 col-lg-8">
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-4 mb-1">
-                                <div class="form-group">
-                                    <div class="form-time-picker">
-                                        <igx-date-picker #datepiker formControlName="txtFecha1" id="txtFecha1"
-                                            [inputFormat]="'dd/MM/yyyy'">
-                                            <label igxLabel>Desde</label>
-                
-                                            <igx-picker-toggle igxPrefix>
-                                                <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
-                                            </igx-picker-toggle>
-                
-                                            <igx-picker-clear igxSuffix>
-                                                <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
-                                            </igx-picker-clear>
-                
-                                        </igx-date-picker>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-4 px-1 mb-1">
-                                <div class="form-group">
-                                    <div class="form-time-picker">
-                                        <igx-date-picker #datepiker2 formControlName="txtFecha2" id="txtFecha2"
-                                            [inputFormat]="'dd/MM/yyyy'">
-                                            <label igxLabel>Hasta</label>
-                
-                                            <igx-picker-toggle igxPrefix>
-                                                <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
-                                            </igx-picker-toggle>
-                
-                                            <igx-picker-clear igxSuffix>
-                                                <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
-                                            </igx-picker-clear>
-                
-                                        </igx-date-picker>
-                                    </div>
-                                </div>
+                    <div class="col-12 col-md-12 col-lg-3 mb-1">
+                        <div class="form-group">
+                            <div class="form-time-picker">
+                                <igx-date-picker #datepiker formControlName="txtFecha1" id="txtFecha1"
+                                    [inputFormat]="'dd/MM/yyyy'">
+                                    <label igxLabel>Desde</label>
+
+                                    <igx-picker-toggle igxPrefix>
+                                        <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                    </igx-picker-toggle>
+
+                                    <igx-picker-clear igxSuffix>
+                                        <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                    </igx-picker-clear>
+
+                                </igx-date-picker>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-12 col-md-12 col-lg-3 mb-1">
+                        <div class="form-group">
+                            <div class="form-time-picker">
+                                <igx-date-picker #datepiker2 formControlName="txtFecha2" id="txtFecha2"
+                                    [inputFormat]="'dd/MM/yyyy'">
+                                    <label igxLabel>Hasta</label>
 
+                                    <igx-picker-toggle igxPrefix>
+                                        <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                    </igx-picker-toggle>
+
+                                    <igx-picker-clear igxSuffix>
+                                        <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                    </igx-picker-clear>
+
+                                </igx-date-picker>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-12 col-lg-3 mb-1">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
+                            <div class="form-floating">
+                                <select class="form-select form-select-lg" aria-label="Tipo" id="cmbAsientoTipo"
+                                    formControlName="cmbAsientoTipo">
+                                    <option value="CAJ">CAJ</option>
+                                    <option value="CD">CD</option>
+                                    <option value="CK">CK</option>
+                                    <option value="CXP">CXP</option>
+                                    <option value="DV">DV</option>
+                                    <option value="DVC">DVC</option>
+                                    <option value="EG">EG</option>
+                                    <option value="IG">IG</option>
+                                    <option value="ING">ING</option>
+                                    <option value="INI">INI</option>
+                                    <option value="NC">NC</option>
+                                    <option value="ND">ND</option>
+                                    <option value="NOM">NOM</option>
+                                    <option value="NTC">NTC</option>
+                                    <option value="NTD">NTD</option>
+                                </select>
+                                <label for="cmbAsientoTipo">Tipo</label>
+                            </div>
+                        </div>
                     </div>
 
 
 
-                    <div class="col-12 col-md-12 col-lg-4 mb-1">
+                    <div class="col-12 col-md-12 col-lg-3 mb-1">
 
                         <div class="input-group">
                             <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
@@ -160,10 +182,10 @@
                             <div class="contenedor-edicion">
 
                                 <button type="button" class="btn" (click)="v_Editar(det, false)"><i
-                                      [ngClass]="det.Revisado? 'fa-solid fa-check  fa-beat-fade fa-lg primario' : 'fa-solid fa-eye fa-beat-fade fa-lg primario'"   ></i>
+                                        [ngClass]="det.Revisado? 'fa-solid fa-check  fa-beat-fade fa-lg primario' : 'fa-solid fa-eye fa-beat-fade fa-lg primario'"></i>
                                 </button>
 
-                   
+
 
                                 <button type="button" class="btn"><i class="fa-solid fa-ban fa-beat-fade fa-lg"
                                         (click)="V_Anular(det)"
@@ -200,8 +222,7 @@
                         class="fas fa-plus fa-lg"></i> Autorizar</button>
 
 
-                <button mat-menu-item (click)="V_Clonar(item)"
-                *ngIf="item.NoDocOrigen == null"><i
+                <button mat-menu-item (click)="V_Clonar(item)" *ngIf="item.NoDocOrigen == null"><i
                         class="fa-solid fa-clone fa-lg primario"></i> Clonar</button>
 
                 <button mat-menu-item><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>

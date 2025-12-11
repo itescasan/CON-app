@@ -1,7 +1,7 @@
 import { Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { GlobalPositionStrategy, IComboSelectionChangingEventArgs, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
+import { GlobalPositionStrategy, IComboFilteringOptions, IComboSelectionChangingEventArgs, IgxComboComponent, OverlaySettings } from 'igniteui-angular';
 import { scaleInCenter, scaleOutCenter } from 'igniteui-angular/animations';
 import { iAuxiliarCuenta } from 'src/app/Interface/Contabilidad/i-Auxiliar-Cuenta';
 import { iBodega } from 'src/app/Interface/Inventario/i-Bodega';
@@ -16,6 +16,7 @@ import { AsientoContableComponent } from '../asiento-contable/nuevo-asiento-cont
 import { iAsiento } from 'src/app/Interface/Contabilidad/i-Asiento';
 import { getBodega } from 'src/app/Inventario/Bodega/CRUD/GET/get-Bodega';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
+import { iCuenta } from 'src/app/Interface/Contabilidad/i-Cuenta';
 
 @Component({
     selector: 'app-auxiliar-cuenta',
@@ -29,6 +30,7 @@ export class AuxiliarCuentaComponent {
   @ViewChild(MatPaginator, { static: true })
   paginator: MatPaginator;
 
+  lstCuenta: iCuenta[] = [];
   public lstAuxiliar: MatTableDataSource<iAuxiliarCuenta>;
   public SaldoInicial: number = 0;
   public SaldoFinal: number = 0;
@@ -53,13 +55,20 @@ export class AuxiliarCuentaComponent {
   public datepiker2: any;
 
 
-  constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta, private GET_BODEGA: getBodega
+
+
+    @ViewChild("cmbCuenta", { static: false })
+    public cmbCuenta: IgxComboComponent;
+
+
+
+  constructor(private cFunciones: Funciones, private GET: getAuxiliarCuenta
   ) {
 
     this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
     this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
     this.val.add("txtBodega-auxiliar", "1", "LEN>=", "0", "Bodega", "");
-    this.val.add("txtCuenta-Asiento", "1", "LEN>=", "0", "Cuenta", "");
+    this.val.add("cmbCuenta", "1", "LEN>=", "0", "Cuenta", "");
      this.val.add("txtBuscar-cuenta", "1", "LEN>=", "0", "Cuenta", "");
 
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
@@ -67,7 +76,7 @@ export class AuxiliarCuentaComponent {
 
     
 
-    this.v_BODEGA();
+    this.V_Datos();
 
   }
 
@@ -200,7 +209,7 @@ export class AuxiliarCuentaComponent {
 
   }
 
-  public v_BODEGA(): void {
+  public V_Datos(): void {
 
 
     let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
@@ -220,7 +229,7 @@ export class AuxiliarCuentaComponent {
 
 
 
-    this.GET_BODEGA.Get().subscribe(
+    this.GET.GetOtrosDatos().subscribe(
       {
         next: (data) => {
 
@@ -240,7 +249,8 @@ export class AuxiliarCuentaComponent {
             let datos: iDatos[] = _json["d"];
 
             this.lstBodega = datos[0].d;
-            this.v_CargarDatos();
+            this.lstCuenta = datos[1].d;
+
 
 
           }
@@ -267,6 +277,44 @@ export class AuxiliarCuentaComponent {
   }
 
 
+  
+  public v_Select_Cuenta(event: any): void {
+
+    this.val.Get("cmbCuenta").setValue("");
+    if (event.added.length == 1) {
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
+      this.val.Get("cmbCuenta").setValue(event.newValue);
+      this.cmbCuenta.close();
+    }
+
+
+  }
+  public v_Enter_Cuenta(event: any,) {
+
+    if (event.key == "Enter") {
+      let cmb: any = this.cmbCuenta.dropdown;
+      let _Item: iCuenta = cmb._focusedItem.value;
+      this.cmbCuenta.setSelectedItem(_Item.CuentaContable);
+      this.val.Get("cmbCuenta").setValue([_Item.CuentaContable]);
+
+    }
+
+  }
+
+
+  public FiltroCuentaSinGuion = (collection: iCuenta[], searchValue: string, filteringOptions: IComboFilteringOptions): any[] => {
+    if (!searchValue) {
+      return collection;
+    }
+
+    return collection.filter(item =>
+      item.NombreCuenta.replaceAll("-", "").toLowerCase().includes(searchValue.toLowerCase())
+    );
+  };
+
+
+  
+
   public v_CargarDatos(): void {
 
     document.getElementById("btnRefrescar-Auxiliar")?.setAttribute("disabled", "disabled");
@@ -291,7 +339,7 @@ export class AuxiliarCuentaComponent {
     let Fecha2 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha2").value, "yyyy-MM-dd");
 
 
-    this.GET.Get(Fecha1, Fecha2, this.val.Get("txtBodega-auxiliar").value, this.val.Get("txtCuenta-Asiento").value).subscribe(
+    this.GET.Get(Fecha1, Fecha2, this.val.Get("txtBodega-auxiliar").value, this.val.GetValue("cmbCuenta")).subscribe(
       {
         next: (data) => {
 
@@ -682,8 +730,8 @@ export class AuxiliarCuentaComponent {
     this.val.Combo(this.cmbCombo);
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBodega-auxiliar", undefined);
-    this.val.addFocus("txtBodega-auxiliar", "txtCuenta-Asiento", undefined);
-    this.val.addFocus("txtCuenta-Asiento", "btnRefrescar-Auxiliar", "click");
+    this.val.addFocus("txtBodega-auxiliar", "cmbCuenta", undefined);
+    this.val.addFocus("cmbCuenta", "btnRefrescar-Auxiliar", "click");
 
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
