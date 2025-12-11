@@ -35,4 +35,9 @@ export class getAuxiliarCuenta {
     }
 
 
+    public GetOtrosDatos(): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AuxiliarContable/GetOtrosDatos").pipe(timeout(this._Cnx.Timeout));
+    }
+
+
 }
