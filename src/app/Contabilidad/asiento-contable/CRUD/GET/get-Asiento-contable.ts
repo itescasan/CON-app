@@ -25,8 +25,8 @@ export class getAsientoContable{
       return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Datos").pipe(timeout(this._Cnx.Timeout));
    }
 
-   public Get(Fecha1 : string, Fecha2 : string) : Observable<string>{
-    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2).pipe(timeout(this._Cnx.Timeout));
+   public Get(Fecha1 : string, Fecha2 : string, Serie : string) : Observable<string>{
+    return this.http.get<any>(this._Cnx.Url() + "Contabilidad/AsientoContable/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&Serie=" +Serie).pipe(timeout(this._Cnx.Timeout));
  }
    
  public GetDetalle(IdAsiento : number) : Observable<string>{

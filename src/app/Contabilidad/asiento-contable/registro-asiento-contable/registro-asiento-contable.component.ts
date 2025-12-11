@@ -41,19 +41,35 @@ export class RegistroAsientoContableComponent {
   constructor(private GET: getAsientoContable, private cFunciones : Funciones, private POST: postAsientoContable
   ) {
 
-    this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
-    this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
-    this.val.add("txtBuscar-Asiento", "1", "LEN>=", "0", "Buscar", "");
+    this.val.add("txtFecha1", "1", "LEN>", "0", "Registro", "Seleccione una fecha de inicio.");
+    this.val.add("txtFecha2", "1", "LEN>", "0", "Registro", "Seleccione una fecha final.");
+    this.val.add("cmbAsientoTipo", "1", "LEN>", "0", "Registro", "Seleccione un tipo de Asiento.");
+    this.val.add("txtBuscar-Asiento", "1", "LEN>=", "0", "Registro", "");
 
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
 
-    this.v_CargarDatos();
+
 
   }
 
 
   public v_CargarDatos(): void {
+
+
+    this.val.EsValido();
+
+
+    if (this.val.Errores != "") {
+      this.cFunciones.DIALOG.open(DialogErrorComponent, {
+        data: this.val.Errores,
+      });
+
+      return;
+    }
+
+
+
 
     document.getElementById("btnRefrescar-RegAsiento")?.setAttribute("disabled", "disabled");
 
@@ -69,7 +85,7 @@ export class RegistroAsientoContableComponent {
     let Fecha2 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha2").value, "yyyy-MM-dd");
 
 
-    this.GET.Get(Fecha1, Fecha2).subscribe(
+    this.GET.Get(Fecha1, Fecha2, this.val.Get("cmbAsientoTipo")).subscribe(
       {
         next: (data) => {
 
@@ -373,7 +389,8 @@ export class RegistroAsientoContableComponent {
   ngDoCheck(): void{
     ///CAMBIO DE FOCO
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
-    this.val.addFocus("txtFecha2", "txtBuscar-Asiento", undefined);
+    this.val.addFocus("txtFecha2", "cmbAsientoTipo", undefined);
+     this.val.addFocus("cmbAsientoTipo", "txtBuscar-Asiento", undefined);
     this.val.addFocus("txtBuscar-Asiento", "btnRefrescar-RegAsiento", "click");
 
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
