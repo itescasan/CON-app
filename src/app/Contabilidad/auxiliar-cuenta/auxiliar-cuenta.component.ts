@@ -731,7 +731,7 @@ export class AuxiliarCuentaComponent {
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBodega-auxiliar", undefined);
     this.val.addFocus("txtBodega-auxiliar", "cmbCuenta", undefined);
-    this.val.addFocus("txtCuenta-Asiento", "btnRefrescar-Auxiliar", "click");
+    this.val.addFocus("cmbCuenta", "btnRefrescar-Auxiliar", "click");
 
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
     if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
