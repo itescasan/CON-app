@@ -128,7 +128,7 @@ export class AplicarCajaChicaComponent {
       }
   
   
-      this.GET.GetRptIngCaja(item.IdIngresoCajaChica).subscribe(
+      this.GET.GetRptIngCaja(item.IdIngresoCajaChica,this.cFunciones.User).subscribe(
         {
           next: (data) => {
   

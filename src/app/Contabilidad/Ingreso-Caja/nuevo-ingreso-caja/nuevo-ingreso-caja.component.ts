@@ -952,7 +952,7 @@ export class NuevoIngresoCajaComponent {
     }
 
 
-    this.GET.GetRptIngCaja(this.IdCaja).subscribe(
+    this.GET.GetRptIngCaja(this.IdCaja, this.cFunciones.User).subscribe(
       {
         next: (data) => {
 
