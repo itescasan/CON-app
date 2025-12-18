@@ -250,7 +250,9 @@ export class AuxiliarCuentaComponent {
 
             this.lstBodega = datos[0].d;
             this.lstCuenta = datos[1].d;
+            
 
+            console.log(this.lstCuenta.filter(w => w.CuentaContable == "1102-01-01-0004"));
 
 
           }

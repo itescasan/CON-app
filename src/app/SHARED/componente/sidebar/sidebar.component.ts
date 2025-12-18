@@ -151,6 +151,9 @@ export class SidebarComponent {
   
   public v_Abrir_Form(id : string) : void{
 
+  
+   var bod: any = document.getElementById("body");
+  if (bod != undefined) bod.style.overflow = "";
     
 
     if(id == "") return;

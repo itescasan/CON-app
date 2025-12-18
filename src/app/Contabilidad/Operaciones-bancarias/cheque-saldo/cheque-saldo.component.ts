@@ -1158,9 +1158,11 @@ export class ChequesSaldoComponent {
   
        let OrdComp : iOrdenCompraCentroGasto[] =   this.lstOrdenCompraCentroGasto.filter( g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
 
-       let TipoDo: string[] = ["GASTO_ANT", "GASTO_REN", "GASTO_VIA"];
+       let TipoDo: string[] = ["GASTO_ANT", "GASTO_REN", "GASTO_VIA", "GASTO_CRE"];
      
        let Cuenta : string = i_Prov.CUENTAXPAGAR;
+       let CuentaAux : string = "";
+
 
        if(TipoDo.includes( f.TipoDocumento ))
        {
@@ -1171,10 +1173,14 @@ export class ChequesSaldoComponent {
         }
        }
 
+      
 
-       if (f.TipoDocumento == "GASTO_ANT") {
+
+       if (f.TipoDocumento == "GASTO_ANT" || f.TipoDocumento == "GASTO_CRE") {
 
         if (f.Operacion == "Abono") {
+
+           if(f.TipoDocumento == "GASTO_CRE") Cuenta = i_Prov.CUENTAANTICIPO
 
 
           if (this.IdMoneda == this.cFunciones.MonedaLocal) {
@@ -1217,9 +1223,14 @@ export class ChequesSaldoComponent {
           }
 
 
+           CuentaAux = Cuenta;
+          if(f.TipoDocumento == "GASTO_CRE") Cuenta = i_Prov.CUENTAANTICIPO
+
           if (Anticipo != 0) {
             det = this.Nueva_Linea_Asiento(Anticipo, Cuenta, this.cmbProveedor.displayValue  + " " + "Anticipo. " + f.Documento, f.Documento, f.TipoDocumento, "C", "");
           }
+
+          Cuenta = CuentaAux;
 
 
 
@@ -1248,13 +1259,18 @@ export class ChequesSaldoComponent {
 
 
 
-            Importe = this.cFunciones.Redondeo(((Importe - Impuesto) * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
+            //Importe = this.cFunciones.Redondeo(((Importe - Impuesto) * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
+            Importe = this.cFunciones.Redondeo(g.Participacion2, "2");
+
+            let Cuentagasto = g.CuentaContable;
+            if(f.TipoDocumento == "GASTO_CRE") Cuentagasto = i_Prov.CUENTAANTICIPO
+
 
             if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento, f.Documento, f.TipoDocumento, "D", "");
             }
             else {
-              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
             }
 
@@ -1445,6 +1461,11 @@ export class ChequesSaldoComponent {
     }
   
 
+
+    //ORDENANDO PRIMERO DEBITOS
+    this.lstDetalleAsiento.sort((a, b) => b.DebitoML - a.DebitoML).forEach((item, index) => {
+      item.NoLinea = index + 1;
+     });
 
 
 

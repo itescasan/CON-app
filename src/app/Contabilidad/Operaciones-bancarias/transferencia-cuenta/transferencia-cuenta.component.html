@@ -1,15 +1,20 @@
-<div class="app-transferencia-cuenta">
+<div class="app-transferencia-cuenta {{esModal ? 'modal-activo' : ''}}">
     <div class="contenedor-padre">
 
         <div class="contenedor-transferencia">
 
-            <div class="escasan-dialog" *ngIf="esModal">
+            @if(esModal)
+            {
+
+            <div class="escasan-dialog">
                 <div class="btn-contenedor-custom">
                     <button class="close-button custom-cerrar" [mat-dialog-close]="true">
                         <mat-icon class="close-icon" color="warn">close</mat-icon>
                     </button>
                 </div>
             </div>
+            }
+          
 
             <form autocomplete="off" [formGroup]="val.ValForm">
 

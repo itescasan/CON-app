@@ -97,7 +97,7 @@
 
                                     <div class="col-12 col-md-12 col-lg-6 mb-1">
                                        <igx-combo #cmbCuenta [data]="lstCuenta" valueKey="CuentaContable"
-                                                displayKey="Filtro" [filterFunction]="FiltroCuentaSinGuion"
+                                                displayKey="Filtro"
                                                 id="cmbCuenta" formControlName="cmbCuenta" placeholder="Cuenta"
                                                 [autoFocusSearch]="true" [overlaySettings]="overlaySettings"
                                                 (selectionChanging)="v_Select_Cuenta($event)"
@@ -187,13 +187,7 @@
                             <td mat-cell *matCellDef="let det" class="mobile-col">
                                 <div class="texto">
                                     <div class="mobile-label">Cuenta:</div>
-                                    @if(det.Concepto == '')
-                                    {
                                     <div>{{det.Cuenta}} - {{det.NombreCuenta}}</div>
-                                    }
-                                    @else {
-                                    <div>{{det.Cuenta}} - {{det.Concepto}}</div>
-                                    }
 
 
                                 </div>
