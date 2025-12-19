@@ -1465,6 +1465,14 @@ export class ChequesSaldoComponent {
     //ORDENANDO PRIMERO DEBITOS
     this.lstDetalleAsiento.sort((a, b) => b.DebitoML - a.DebitoML).forEach((item, index) => {
       item.NoLinea = index + 1;
+      if(this.cFunciones.MonedaLocal == this.IdMoneda){
+        item.Debito = String(item.DebitoML);
+        item.Credito = String(item.CreditoML);
+      }
+      else{
+        item.Debito = String(item.DebitoMS);
+        item.Credito = String(item.CreditoMS);
+      }
      });
 
 

@@ -1018,7 +1018,6 @@ export class TransferenciaSaldoComponent {
     }
 
 
-
     if (!this.esModal) this.V_Contabilizacion();
 
     let Asiento: iAsiento = JSON.parse(JSON.stringify(this.Asiento));
@@ -1114,6 +1113,9 @@ export class TransferenciaSaldoComponent {
     this.lstDetalleAsiento.splice(0, this.lstDetalleAsiento.length);
 
 
+
+    this.Asiento = {} as iAsiento;
+    this.Asiento.AsientosContablesDetalle = this.lstDetalleAsiento;
 
     let i_Prov: iProveedor = this.lstProveedor.find(f => f.Codigo == this.val.Get("cmbProveedor").value[0])!;
     let i_Banco: any = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.val.Get("cmbCuentaBancaria").value[0])!;
@@ -1537,6 +1539,14 @@ export class TransferenciaSaldoComponent {
     //ORDENANDO PRIMERO DEBITOS
     this.lstDetalleAsiento.sort((a, b) => b.DebitoML - a.DebitoML).forEach((item, index) => {
       item.NoLinea = index + 1;
+      if(this.cFunciones.MonedaLocal == this.IdMoneda){
+        item.Debito = String(item.DebitoML);
+        item.Credito = String(item.CreditoML);
+      }
+      else{
+        item.Debito = String(item.DebitoMS);
+        item.Credito = String(item.CreditoMS);
+      }
      });
 
 
