@@ -1266,7 +1266,7 @@ export class ChequesSaldoComponent {
             Importe = this.cFunciones.Redondeo(g.Participacion2, "2");
 
             
-              if(g.TipoDocOrigen.includes("GASTO")){
+              if(g.TipoDocOrigen.includes("GASTO") && f.Operacion != "Abono"){
 
                 if(this.cFunciones.MonedaLocal == this.IdMoneda)
                 {
