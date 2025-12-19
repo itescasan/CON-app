@@ -1266,18 +1266,19 @@ export class ChequesSaldoComponent {
             Importe = this.cFunciones.Redondeo(g.Participacion2, "2");
 
             
-              if(g.TipoDocOrigen.includes("GASTO") && f.Operacion != "Abono"){
+               if(g.TipoDocOrigen.includes("GASTO") && f.Operacion != "Abono"){
 
                 if(this.cFunciones.MonedaLocal == this.IdMoneda)
                 {
                   Importe+= g.ImpuestoCordoba;
-                  Importe_ML += g.ImpuestoCordoba;
                 }
                 else
                 {
                   Importe+= g.ImpuestoDolar;
-                  Importe_MS += g.ImpuestoDolar;
                 }
+
+                Importe_MS += g.ImpuestoDolar;
+                Importe_ML += g.ImpuestoCordoba;
                 
               
               }
