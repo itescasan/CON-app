@@ -1254,6 +1254,9 @@ export class ChequesSaldoComponent {
               Importe = g.SubTotalDolar;
             }
 
+
+
+
             Importe_MS = g.SubTotalDolar;
             Importe_ML = g.SubTotalCordoba;
 
@@ -1261,6 +1264,23 @@ export class ChequesSaldoComponent {
 
             //Importe = this.cFunciones.Redondeo(((Importe - Impuesto) * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
             Importe = this.cFunciones.Redondeo(g.Participacion2, "2");
+
+            
+              if(g.TipoDocOrigen.includes("GASTO")){
+
+                if(this.cFunciones.MonedaLocal == this.IdMoneda)
+                {
+                  Importe+= g.ImpuestoCordoba;
+                  Importe_ML += g.ImpuestoCordoba;
+                }
+                else
+                {
+                  Importe+= g.ImpuestoDolar;
+                  Importe_MS += g.ImpuestoDolar;
+                }
+                
+              
+              }
 
             let Cuentagasto = g.CuentaContable;
             if(f.TipoDocumento == "GASTO_CRE") Cuentagasto = i_Prov.CUENTAANTICIPO

@@ -1259,6 +1259,8 @@ export class TransferenciaSaldoComponent {
               Importe = g.SubTotalDolar;
             }
 
+              
+
             Importe_MS = g.SubTotalDolar;
             Importe_ML = g.SubTotalCordoba;
             
@@ -1266,6 +1268,25 @@ export class TransferenciaSaldoComponent {
 
             //Importe = this.cFunciones.Redondeo(((Importe - Impuesto) * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
             Importe = this.cFunciones.Redondeo(g.Participacion1 , "2");
+
+            
+              if(g.TipoDocOrigen.includes("GASTO")){
+
+                if(this.cFunciones.MonedaLocal == this.IdMoneda)
+                {
+                  Importe+= g.ImpuestoCordoba;
+                  Importe_ML += g.ImpuestoCordoba;
+                }
+                else
+                {
+                  Importe+= g.ImpuestoDolar;
+                  Importe_MS += g.ImpuestoDolar;
+                }
+                
+              
+              }
+
+
 
              let Cuentagasto = g.CuentaContable;
             if(f.TipoDocumento == "GASTO_CRE") Cuentagasto = i_Prov.CUENTAANTICIPO
@@ -1346,7 +1367,7 @@ export class TransferenciaSaldoComponent {
        
 
 
-        
+      
     
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
           det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
