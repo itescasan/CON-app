@@ -124,6 +124,9 @@ export class AsientoContableComponent {
 
         this.V_Agregar();
 
+        var bod: any = document.getElementById("body");
+        if (bod != undefined) bod.style.overflow = "";
+
         break;
     }
   }
