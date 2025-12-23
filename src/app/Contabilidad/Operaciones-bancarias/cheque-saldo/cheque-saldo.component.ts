@@ -181,6 +181,8 @@ export class ChequesSaldoComponent {
 
         this.V_TasaCambios();
 
+        var bod: any = document.getElementById("body");
+        if (bod != undefined) bod.style.overflow = "";
 
 
         break;
