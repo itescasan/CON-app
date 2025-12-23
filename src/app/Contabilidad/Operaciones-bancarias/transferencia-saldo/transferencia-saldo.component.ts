@@ -476,9 +476,10 @@ export class TransferenciaSaldoComponent {
 
   public v_Consecutivo(): void {
 
+    let Fecha1 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd");
 
 
-    this.cFunciones.GET.ConsecutivoContabilidad("EG", this.val.Get("txtFecha").value).subscribe(
+    this.cFunciones.GET.ConsecutivoContabilidad("EG", Fecha1).subscribe(
       {
         next: (data) => {
 

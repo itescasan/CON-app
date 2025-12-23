@@ -252,8 +252,6 @@ export class AuxiliarCuentaComponent {
             this.lstCuenta = datos[1].d;
             
 
-            console.log(this.lstCuenta.filter(w => w.CuentaContable == "1102-01-01-0004"));
-
 
           }
 
@@ -447,7 +445,7 @@ export class AuxiliarCuentaComponent {
     let Fecha2 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha2").value, "yyyy-MM-dd");
 
 
-    this.GET.GetReporte(Fecha1, Fecha2, this.val.Get("txtBodega-auxiliar").value, this.val.GetValue("txtCuenta-Asiento"), Tipo).subscribe(
+    this.GET.GetReporte(Fecha1, Fecha2, this.val.Get("txtBodega-auxiliar").value, this.val.GetValue("cmbCuenta"), Tipo).subscribe(
       {
         next: (data) => {
 

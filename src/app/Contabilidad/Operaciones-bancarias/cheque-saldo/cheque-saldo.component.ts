@@ -480,7 +480,7 @@ export class ChequesSaldoComponent {
 
 // public v_Consecutivo(): void {
 
-
+// let Fecha1 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd");
 
 //     this.cFunciones.GET.Consecutivo("CK", this.val.Get("txtFecha").value).subscribe(
 //       {
