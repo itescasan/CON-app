@@ -1086,6 +1086,8 @@ export class ChequesSaldoComponent {
   
           
           dialogAsiento.componentInstance.Editar = false;
+          dialogAsiento.componentInstance.val.Get("chk-asiento-revisado").setValue(true);
+          dialogAsiento.componentInstance.val.Get("chk-asiento-revisado").disable();
   
         });
   

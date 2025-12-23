@@ -1091,6 +1091,11 @@ export class TransferenciaSaldoComponent {
 
         dialogAsiento.componentInstance.Editar = false;
 
+        dialogAsiento.componentInstance.val.Get("chk-asiento-revisado").setValue(true);
+        dialogAsiento.componentInstance.val.Get("chk-asiento-revisado").disable();
+        
+        
+
       });
 
       dialogAsiento.beforeClosed().subscribe(s => {
