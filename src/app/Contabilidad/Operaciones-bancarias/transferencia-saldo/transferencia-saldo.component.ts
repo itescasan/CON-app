@@ -153,6 +153,7 @@ export class TransferenciaSaldoComponent {
 
 
 
+
         this.val.Get("cmbCuentaBancaria").setValue("");
         this.val.Get("txtNombreCuenta").setValue("");
         this.val.Get("txtBanco").setValue("");
@@ -183,6 +184,8 @@ export class TransferenciaSaldoComponent {
         this.V_TasaCambios();
 
 
+        var bod: any = document.getElementById("body");
+       if (bod != undefined) bod.style.overflow = "";
 
         break;
     }
@@ -1881,6 +1884,8 @@ export class TransferenciaSaldoComponent {
               this.V_GenerarDoc(Datos[0], false);
               this.v_Evento("Limpiar");
             }
+
+             
 
           }
 
