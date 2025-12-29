@@ -1938,6 +1938,7 @@ export class TransferenciaSaldoComponent {
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.TransferenciaDocumento.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
     this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.TranferenciaRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
 
+  
 
 
     this.IdMoneda = this.FILA.IdMoneda;
@@ -2060,7 +2061,7 @@ export class TransferenciaSaldoComponent {
     this.val.ItemValido(["cmbCuentaBancaria", "cmbCentroCosto", "cmbProveedor"]);
 
 
-
+  
     if (this.val.Errores != "") {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
         data: this.val.Errores,

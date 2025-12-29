@@ -132,6 +132,7 @@ export class RetencionComponent {
                 let r: iRet = {} as iRet;
   
                 r.IdDetRetencion = "00000000-0000-0000-0000-000000000000";
+                r.IdRetencion = f.IdRetencion;
                 r.AplicarAutomatico = f.AplicarAutomatico;
                 r.Seleccionar = f.AplicarAutomatico;
                 r.Index = i;
@@ -220,7 +221,7 @@ export class RetencionComponent {
 
       this.lstRetencion.data.forEach(w =>{
 
-       if(ret.IdRetencion == w.IdRetencion && w.Index != i) {
+       if(ret?.IdRetencion == w?.IdRetencion && w.Index != i) {
         w.Seleccionar = ret.Seleccionar;
         w.RetManual = ret.RetManual;
         if(w.RetManual)
