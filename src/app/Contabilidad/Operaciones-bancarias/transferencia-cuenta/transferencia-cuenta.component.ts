@@ -148,6 +148,8 @@ export class TransferenciaCuentaComponent {
         this.V_Agregar(true);
         this.V_Agregar(false);
 
+          var bod: any = document.getElementById("body");
+       if (bod != undefined) bod.style.overflow = "";
 
         break;
     }

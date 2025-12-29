@@ -203,6 +203,9 @@ export class RegistroChequesComponent {
             let datos: iDatos[] = _json["d"];
 
             this.lstCheques = new MatTableDataSource(datos[0].d);
+
+            var bod: any = document.getElementById("body");
+            if (bod != undefined) bod.style.overflow = "";
      
 
           }

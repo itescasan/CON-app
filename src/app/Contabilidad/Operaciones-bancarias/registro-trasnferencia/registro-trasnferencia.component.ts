@@ -204,6 +204,9 @@ export class RegistroTrasnferenciaComponent {
             let datos: iDatos[] = _json["d"];
 
             this.lstTransferencia = new MatTableDataSource(datos[0].d);
+
+            var bod: any = document.getElementById("body");
+            if (bod != undefined) bod.style.overflow = "";
      
 
           }
