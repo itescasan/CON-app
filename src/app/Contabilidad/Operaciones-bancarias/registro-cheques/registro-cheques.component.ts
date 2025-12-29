@@ -206,7 +206,7 @@ export class RegistroChequesComponent {
             this.lstCheques = new MatTableDataSource(datos[0].d);
 
              this.lstCheques._updateChangeSubscription();
-            this.lstCheques.filter = this.val.GetValue(`txtBuscar_regTransferencia`).trim().toLowerCase();
+            this.lstCheques.filter = this.val.GetValue(`txtBuscar_regCheque`).trim().toLowerCase();
 
             var bod: any = document.getElementById("body");
             if (bod != undefined) bod.style.overflow = "";
