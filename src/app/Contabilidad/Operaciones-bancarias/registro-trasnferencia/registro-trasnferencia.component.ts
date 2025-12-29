@@ -387,6 +387,7 @@ export class RegistroTrasnferenciaComponent {
                     dialogTransf.componentInstance.FILA.TranferenciaRetencion = JSON.parse(JSON.stringify(datos[1].d));
                     dialogTransf.componentInstance.Asiento = JSON.parse(JSON.stringify(datos[2].d));
                     dialogTransf.componentInstance.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(datos[3].d));
+                    
     
     
                     dialogTransf.componentInstance.v_CargarDatos();

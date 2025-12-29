@@ -1026,6 +1026,7 @@ export class TransferenciaSaldoComponent {
     this.V_Contabilizacion();
 
     let Asiento: iAsiento = JSON.parse(JSON.stringify(this.Asiento));
+  
 
 
     let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
@@ -1090,6 +1091,7 @@ export class TransferenciaSaldoComponent {
       );
       dialogAsiento.componentInstance.esModal = true;
       dialogAsiento.componentInstance.FILA = Asiento;
+      dialogAsiento.componentInstance.NoDocumento = this.val.GetValue("txtNoDoc");
 
       dialogAsiento.afterOpened().subscribe(s => {
 
@@ -1124,7 +1126,12 @@ export class TransferenciaSaldoComponent {
 
 
 
-    this.Asiento = {} as iAsiento;
+
+    if(!this.esModal){
+      this.Asiento = {} as iAsiento;
+    }
+
+
     this.Asiento.AsientosContablesDetalle = this.lstDetalleAsiento;
 
     let i_Prov: iProveedor = this.lstProveedor.find(f => f.Codigo == this.val.Get("cmbProveedor").value[0])!;
@@ -1602,7 +1609,13 @@ export class TransferenciaSaldoComponent {
     if (this.lstDetalleAsiento.length > 0) i = Math.max(...this.lstDetalleAsiento.map(o => o.NoLinea)) + 1
 
 
-    det.IdAsiento = -1;
+    if(this.esModal){
+      det.IdAsiento = this.Asiento.IdAsiento;
+    }
+    else{
+      det.IdAsiento = -1;
+    }
+
     det.NoLinea = i;
     det.CuentaContable = Cuenta;
     det.Modulo = "CON";
@@ -1839,7 +1852,7 @@ export class TransferenciaSaldoComponent {
 
 
 
-console.log(this.Asiento.AsientosContablesDetalle);
+
 
     let dialogRef: MatDialogRef<WaitComponent> = this.cFunciones.DIALOG.open(
       WaitComponent,
