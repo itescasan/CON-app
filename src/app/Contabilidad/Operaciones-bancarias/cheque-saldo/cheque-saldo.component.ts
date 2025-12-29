@@ -1016,7 +1016,8 @@ export class ChequesSaldoComponent {
   
   
   
-      if (!this.esModal) this.V_Contabilizacion();
+      //if (!this.esModal) this.V_Contabilizacion();
+      this.V_Contabilizacion();
   
       let Asiento: iAsiento = JSON.parse(JSON.stringify(this.Asiento));
   

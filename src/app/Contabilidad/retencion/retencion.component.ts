@@ -220,6 +220,7 @@ export class RetencionComponent {
       if(RetManual != undefined) ret.RetManual = RetManual;
 
       this.lstRetencion.data.forEach(w =>{
+   
 
        if(ret?.IdRetencion == w?.IdRetencion && w.Index != i) {
         w.Seleccionar = ret.Seleccionar;
