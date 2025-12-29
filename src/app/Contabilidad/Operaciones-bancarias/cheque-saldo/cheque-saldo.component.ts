@@ -1084,6 +1084,7 @@ export class ChequesSaldoComponent {
         );
         dialogAsiento.componentInstance.esModal = true;
         dialogAsiento.componentInstance.FILA = Asiento;
+        dialogAsiento.componentInstance.NoDocumento = this.val.GetValue("txtNoDoc");
   
         dialogAsiento.afterOpened().subscribe(s => {
   
@@ -1113,6 +1114,11 @@ export class ChequesSaldoComponent {
     private V_Contabilizacion(): void {
       this.lstDetalleAsiento.splice(0, this.lstDetalleAsiento.length);
   
+
+      
+    if(!this.esModal){
+      this.Asiento = {} as iAsiento;
+    }
   
   
       let i_Prov: iProveedor = this.lstProveedor.find(f => f.Codigo == this.val.Get("cmbProveedor").value[0])!;
@@ -1523,7 +1529,14 @@ export class ChequesSaldoComponent {
       if (this.lstDetalleAsiento.length > 0) i = Math.max(...this.lstDetalleAsiento.map(o => o.NoLinea)) + 1
   
   
-      det.IdAsiento = -1;
+      if(this.esModal){
+      det.IdAsiento = this.Asiento.IdAsiento;
+      }
+      else{
+        det.IdAsiento = -1;
+      }
+
+
       det.NoLinea = i;
       det.CuentaContable = Cuenta;
       det.Modulo = "CON";
