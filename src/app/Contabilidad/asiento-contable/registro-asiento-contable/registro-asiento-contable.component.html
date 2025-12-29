@@ -1,57 +1,233 @@
 <div class="contenedor-tabla">
 
+    <form autocomplete="off" [formGroup]="val.ValForm">
 
-    <div class="row">
 
-        <div class="contenedor-filtro linea-bottom-primario">
-            <div class="row">
-                <p>Asiento Contables</p>
-            </div>
 
-            <form autocomplete="off" [formGroup]="val.ValForm">
+        <div class="row">
+
+            <div class="contenedor-filtro linea-bottom-primario">
+                <div class="row">
+                    <p>Asiento Contables</p>
+                </div>
+
+
                 <div class="row">
 
+                     <div class="col-12 col-md-6 col-lg-4 mb-1">
 
-                    <div class="col-12 col-md-12 col-lg-3 mb-1">
-                        <div class="form-group">
-                            <div class="form-time-picker">
-                                <igx-date-picker #datepiker formControlName="txtFecha1" id="txtFecha1"
-                                    [inputFormat]="'dd/MM/yyyy'">
-                                    <label igxLabel>Desde</label>
+                        
+                    <div class="input-group">
 
-                                    <igx-picker-toggle igxPrefix>
-                                        <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
-                                    </igx-picker-toggle>
-
-                                    <igx-picker-clear igxSuffix>
-                                        <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
-                                    </igx-picker-clear>
-
-                                </igx-date-picker>
+                            <div class="form-floating">
+                                <input type="text" id="txtBuscar-Asiento" class="form-control" placeholder="Buscar"
+                                    aria-label="Buscar" formControlName="txtBuscar-Asiento"
+                                    (keyup)="v_Filtrar($event)">
+                                <label for="txtBuscar-Asiento">Buscar</label>
                             </div>
+
+                            <span class="input-group-text">
+
+                                <button type="button" class="btn btn-opcional" id="btnRefrescar-RegAsiento"
+                                    data-bs-toggle="offcanvas" href="#offcanvasRegAsiento"
+                                    aria-controls="offcanvasRegAsiento"><i
+                                        class="fa-solid fa-magnifying-glass"></i>
+                                    Refrescar</button>
+
+
+                            </span>
+
                         </div>
-                    </div>
-                    <div class="col-12 col-md-12 col-lg-3 mb-1">
-                        <div class="form-group">
-                            <div class="form-time-picker">
-                                <igx-date-picker #datepiker2 formControlName="txtFecha2" id="txtFecha2"
-                                    [inputFormat]="'dd/MM/yyyy'">
-                                    <label igxLabel>Hasta</label>
 
-                                    <igx-picker-toggle igxPrefix>
-                                        <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
-                                    </igx-picker-toggle>
+                     </div>
 
-                                    <igx-picker-clear igxSuffix>
-                                        <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
-                                    </igx-picker-clear>
 
-                                </igx-date-picker>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="mat-elevation-z8  table-container">
+
+
+            <table class="table table-hover  table-sm tabla-layout mat-elevation-z8" mat-table
+                [dataSource]="lstAsiento">
+
+
+
+                <ng-container matColumnDef="col1">
+                    <td mat-cell *matCellDef="let det">
+                        <div class="row" (contextmenu)="V_Popup($event, det)">
+
+                            <div class="col-6 col-md-6 col-lg-4">
+                                <span><b>No Asiento:</b></span>
+                                <span>{{det.NoAsiento}}</span>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-12 col-md-12 col-lg-3 mb-1">
+
+                            <div class="col-lg-2 lg">
+                                <span><b>Total C$:</b></span>
+                                <span>{{det.TotalML}}</span>
+                            </div>
+
+                            <div class="col-lg-2 lg">
+                                <span><b>Total U$</b></span>
+                                <span>{{det.TotalMS}}</span>
+                            </div>
+
+                            <div class="col-lg-2 lg">
+                                <span><b>Bodega:</b></span>
+                                <span>{{det.Bodega}}</span>
+                            </div>
+
+
+
+
+                            <div class="col-6 col-md-6 col-lg-1 offset-lg-1">
+                                <span><b>Fecha</b></span>
+                                <span>{{det.Fecha | date : "dd/MM/yyyy"}}</span>
+                            </div>
+
+
+                            <div class="col-6 md">
+                                <span><b>Total C$:</b></span>
+                                <span>{{det.TotalML}}</span>
+                            </div>
+
+                            <div class="col-6 md">
+                                <span><b>Total U$</b></span>
+                                <span>{{det.TotalMS}}</span>
+                            </div>
+
+
+
+                            <div class="col-6">
+                                <span><b>Referencia</b></span>
+                                <span class="ref">{{det.Concepto}}</span>
+                            </div>
+
+                            <div class="col-6 col-lg-1 offset-lg-5">
+                                <span><b>Estado</b></span>
+                                <span>{{det.Estado}}</span>
+                            </div>
+
+
+
+
+                            <div class="row">
+
+                                <div class="contenedor-edicion">
+
+                                    <button type="button" class="btn" (click)="v_Editar(det, false)"><i
+                                            [ngClass]="det.Revisado? 'fa-solid fa-check  fa-beat-fade fa-lg primario' : 'fa-solid fa-eye fa-beat-fade fa-lg primario'"></i>
+                                    </button>
+
+
+
+                                    <button type="button" class="btn"><i class="fa-solid fa-ban fa-beat-fade fa-lg"
+                                            (click)="V_Anular(det)"
+                                            *ngIf="det.Estado !='ANULADO' && det.NoDocOrigen == null"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </td>
+                </ng-container>
+
+
+
+
+
+
+
+
+
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed">
+                </tr>
+
+
+            </table>
+            <mat-paginator [pageSizeOptions]="[100, 200]" class="mat-paginator-sticky"></mat-paginator>
+
+            <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+                [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+            </div>
+            <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
+                <ng-template matMenuContent let-item="item">
+                    <button mat-menu-item (click)="V_Autorizar(item)"
+                        *ngIf="!(['ANULADO', 'AUTORIZADO', 'DESCUADRADO']).includes(item.Estado)"><i
+                            class="fas fa-plus fa-lg"></i> Autorizar</button>
+
+
+                    <button mat-menu-item (click)="V_Clonar(item)" *ngIf="item.NoDocOrigen == null"><i
+                            class="fa-solid fa-clone fa-lg primario"></i> Clonar</button>
+
+                    <button mat-menu-item><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
+                </ng-template>
+            </mat-menu>
+
+
+        </div>
+
+
+
+           <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasRegAsiento">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Refrescar</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <div class="row mb-1">
+                     <div class="form-group">
+                                <div class="form-time-picker">
+                                    <igx-date-picker #datepiker formControlName="txtFecha1" id="txtFecha1"
+                                        [inputFormat]="'dd/MM/yyyy'">
+                                        <label igxLabel>Desde</label>
+
+                                        <igx-picker-toggle igxPrefix>
+                                            <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                        </igx-picker-toggle>
+
+                                        <igx-picker-clear igxSuffix>
+                                            <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                        </igx-picker-clear>
+
+                                    </igx-date-picker>
+                                </div>
+                            </div>
+            </div>
+
+            <div class="row mb-1">
+
+                <div class="form-group">
+                                <div class="form-time-picker">
+                                    <igx-date-picker #datepiker2 formControlName="txtFecha2" id="txtFecha2"
+                                        [inputFormat]="'dd/MM/yyyy'">
+                                        <label igxLabel>Hasta</label>
+
+                                        <igx-picker-toggle igxPrefix>
+                                            <igx-icon igxPrefix><i class="bi bi-calendar primario"></i></igx-icon>
+                                        </igx-picker-toggle>
+
+                                        <igx-picker-clear igxSuffix>
+                                            <igx-icon><i class="fa-solid fa-eraser"></i></igx-icon>
+                                        </igx-picker-clear>
+
+                                    </igx-date-picker>
+                                </div>
+                            </div>
+
+            </div>
+
+            <div class="row mb-1">
+
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                             <div class="form-floating">
@@ -77,160 +253,39 @@
                                 <label for="cmbAsientoTipo">Tipo</label>
                             </div>
                         </div>
+        
+
+            </div>
+
+
+            
+                    <div class="col-12 text-end">
+                        <button type="button" class="btn btn-primario" id="btnRefrescar-RegCheque"
+                            (click)="v_CargarDatos();"><i
+                                class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i>Refrescar</button>
                     </div>
 
+                    
 
 
-                    <div class="col-12 col-md-12 col-lg-3 mb-1">
 
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
-
-                            <div class="form-floating">
-                                <input type="text" id="txtBuscar-Asiento" class="form-control" placeholder="Buscar"
-                                    aria-label="Buscar" formControlName="txtBuscar-Asiento" (keyup)="v_Filtrar($event)">
-                                <label for="txtBuscar-Asiento">Buscar</label>
-
-                            </div>
-                            <span class="input-group-text"><button type="button" class="btn btn-secundario"
-                                    id="btnRefrescar-RegAsiento" (click)="v_CargarDatos();"><i
-                                        class="fa-solid fa-arrows-rotate fa-spin fa-lg"></i> Refrescar</button></span>
-
-                        </div>
-
-
-                    </div>
+        
 
 
 
 
-                </div>
-            </form>
+
 
         </div>
-
     </div>
 
 
-    <div class="mat-elevation-z8  table-container">
-
-
-        <table class="table table-hover  table-sm tabla-layout mat-elevation-z8" mat-table [dataSource]="lstAsiento">
 
 
 
-            <ng-container matColumnDef="col1">
-                <td mat-cell *matCellDef="let det">
-                    <div class="row" (contextmenu)="V_Popup($event, det)">
-
-                        <div class="col-6 col-md-6 col-lg-4">
-                            <span><b>No Asiento:</b></span>
-                            <span>{{det.NoAsiento}}</span>
-                        </div>
-
-
-                        <div class="col-lg-2 lg">
-                            <span><b>Total C$:</b></span>
-                            <span>{{det.TotalML}}</span>
-                        </div>
-
-                        <div class="col-lg-2 lg">
-                            <span><b>Total U$</b></span>
-                            <span>{{det.TotalMS}}</span>
-                        </div>
-
-                        <div class="col-lg-2 lg">
-                            <span><b>Bodega:</b></span>
-                            <span>{{det.Bodega}}</span>
-                        </div>
+    </form>
 
 
 
-
-                        <div class="col-6 col-md-6 col-lg-1 offset-lg-1">
-                            <span><b>Fecha</b></span>
-                            <span>{{det.Fecha | date : "dd/MM/yyyy"}}</span>
-                        </div>
-
-
-                        <div class="col-6 md">
-                            <span><b>Total C$:</b></span>
-                            <span>{{det.TotalML}}</span>
-                        </div>
-
-                        <div class="col-6 md">
-                            <span><b>Total U$</b></span>
-                            <span>{{det.TotalMS}}</span>
-                        </div>
-
-
-
-                        <div class="col-6">
-                            <span><b>Referencia</b></span>
-                            <span class="ref">{{det.Concepto}}</span>
-                        </div>
-
-                        <div class="col-6 col-lg-1 offset-lg-5">
-                            <span><b>Estado</b></span>
-                            <span>{{det.Estado}}</span>
-                        </div>
-
-
-
-
-                        <div class="row">
-
-                            <div class="contenedor-edicion">
-
-                                <button type="button" class="btn" (click)="v_Editar(det, false)"><i
-                                        [ngClass]="det.Revisado? 'fa-solid fa-check  fa-beat-fade fa-lg primario' : 'fa-solid fa-eye fa-beat-fade fa-lg primario'"></i>
-                                </button>
-
-
-
-                                <button type="button" class="btn"><i class="fa-solid fa-ban fa-beat-fade fa-lg"
-                                        (click)="V_Anular(det)"
-                                        *ngIf="det.Estado !='ANULADO' && det.NoDocOrigen == null"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                    </div>
-                </td>
-            </ng-container>
-
-
-
-
-
-
-
-
-
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="linea-bottom-secundario dashed"></tr>
-
-
-        </table>
-        <mat-paginator [pageSizeOptions]="[100, 200]" class="mat-paginator-sticky"></mat-paginator>
-
-        <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
-            [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
-        </div>
-        <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
-            <ng-template matMenuContent let-item="item">
-                <button mat-menu-item (click)="V_Autorizar(item)"
-                    *ngIf="!(['ANULADO', 'AUTORIZADO', 'DESCUADRADO']).includes(item.Estado)"><i
-                        class="fas fa-plus fa-lg"></i> Autorizar</button>
-
-
-                <button mat-menu-item (click)="V_Clonar(item)" *ngIf="item.NoDocOrigen == null"><i
-                        class="fa-solid fa-clone fa-lg primario"></i> Clonar</button>
-
-                <button mat-menu-item><i class="fa-solid fa-arrow-left fa-beat fa-lg"></i> Cancelar</button>
-            </ng-template>
-        </mat-menu>
-
-
-    </div>
 
 </div>

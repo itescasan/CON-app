@@ -106,6 +106,10 @@ export class RegistroAsientoContableComponent {
 
             this.lstAsiento = new MatTableDataSource(datos[0].d);
             this.lstAsiento.paginator = this.paginator;
+
+            this.lstAsiento._updateChangeSubscription();
+            this.lstAsiento.filter = this.val.GetValue(`txtBuscar-Asiento`).trim().toLowerCase();
+
          
 
           

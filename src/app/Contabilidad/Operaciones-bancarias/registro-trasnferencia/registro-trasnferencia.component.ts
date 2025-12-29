@@ -53,6 +53,9 @@ export class RegistroTrasnferenciaComponent {
     this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
     this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
     this.val.add("txtBodega", "1", "LEN>=", "0", "Bodega", "");
+    this.val.add("txtBuscar_regTransferencia", "1", "LEN>=", "0", "Buscar", "");
+
+    
 
 
     this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
@@ -204,6 +207,11 @@ export class RegistroTrasnferenciaComponent {
             let datos: iDatos[] = _json["d"];
 
             this.lstTransferencia = new MatTableDataSource(datos[0].d);
+
+             this.lstTransferencia._updateChangeSubscription();
+            this.lstTransferencia.filter = this.val.GetValue(`txtBuscar_regTransferencia`).trim().toLowerCase();
+
+
 
             var bod: any = document.getElementById("body");
             if (bod != undefined) bod.style.overflow = "";
@@ -468,6 +476,10 @@ export class RegistroTrasnferenciaComponent {
 
   }
 
+
+    public V_Filtrar(event: any) {
+    this.lstTransferencia.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
+  }
 
 
   ngDoCheck(): void {

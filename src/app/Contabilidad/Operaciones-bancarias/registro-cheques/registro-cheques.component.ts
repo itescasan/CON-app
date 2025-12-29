@@ -57,9 +57,10 @@ export class RegistroChequesComponent {
     this.val.add("txtFecha1", "1", "LEN>", "0", "Fecha Inicio", "Seleccione una fecha de inicio.");
     this.val.add("txtFecha2", "1", "LEN>", "0", "Fecha Final", "Seleccione una fecha final.");
     this.val.add("txtBodega", "1", "LEN>=", "0", "Bodega", "");
+    this.val.add("txtBuscar_regCheque", "1", "LEN>=", "0", "Buscar", "");
 
 
-    this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth() - 1, 1)), "yyyy-MM-dd"));
+   this.val.Get("txtFecha1").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     this.val.Get("txtFecha2").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
 
    this.v_BODEGA();
@@ -203,6 +204,9 @@ export class RegistroChequesComponent {
             let datos: iDatos[] = _json["d"];
 
             this.lstCheques = new MatTableDataSource(datos[0].d);
+
+             this.lstCheques._updateChangeSubscription();
+            this.lstCheques.filter = this.val.GetValue(`txtBuscar_regTransferencia`).trim().toLowerCase();
 
             var bod: any = document.getElementById("body");
             if (bod != undefined) bod.style.overflow = "";
@@ -467,6 +471,10 @@ export class RegistroChequesComponent {
       };
     }
 
+  }
+
+    public V_Filtrar(event: any) {
+    this.lstCheques.filter = (event.target as HTMLInputElement).value.trim().toLowerCase();
   }
 
 
