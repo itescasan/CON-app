@@ -46,7 +46,7 @@ export class CierreMensualComponent {
     document.getElementById("btnCiere-Mes")?.setAttribute("disabled", "disabled");
 
 
-    this.POST.Procesar( this.val.Get("cmbCierreMes").value, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd")).subscribe(
+    this.POST.Procesar( this.val.Get("cmbCierreMes").value, this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.cFunciones.User).subscribe(
       {
         next: (data) => {
 
