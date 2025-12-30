@@ -1037,7 +1037,7 @@ public v_Enter_Reembolso(event: any) {
 
     this.val.EsValido();
     this.valTabla.EsValido();
-
+    
 
     if (this.val.Errores != "") {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -1066,6 +1066,27 @@ public v_Enter_Reembolso(event: any) {
       return;
     }
 
+   if (this.ValorCheque == 0) {    
+
+   
+     let i_C = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.val.Get("cmbCuentaBancaria").value[0])
+
+    //const Cb = cuentaValue[0];
+
+  // let detBanco = this.lstDetalle.data.find(
+  //   item => item.CuentaContable[0] == i_C?.CuentaBancaria);
+  const item = this.lstDetalle.data.find(f => 
+  f.CuentaContable?.includes(i_C?.CuentaBancaria)
+);
+
+
+    if (item?.Credito != null) {
+      this.ValorCheque = Number(String(item.Credito).replaceAll(",", ""));
+    }
+  }
+
+ let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+    
     this.FILA.IdCuentaBanco = this.val.Get("cmbCuentaBancaria").value[0];
     this.FILA.CuentaContable = this.val.Get("cmbCuentaC").value[0];
     this.FILA.CuentaIngCaja = this.val.Get("cmbReembolsoC").value[0];
