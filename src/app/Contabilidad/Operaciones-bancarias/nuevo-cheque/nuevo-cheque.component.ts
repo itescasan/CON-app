@@ -27,7 +27,7 @@ import printJS from 'print-js';
 import { iProveedor } from 'src/app/Interface/Proveedor/i-proveedor';
 import { IReembolsosD } from 'src/app/Interface/Contabilidad/i-ReembolsoD';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
-import { getReporteContable } from 'src/app/Reporte/GET/get-Reporte-Contable';
+import { getReporteContable } from 'src/app/Reporte/GET/get-Reporte-Contable'; 
 
 @Component({
     selector: 'app-nuevo-cheque',
@@ -77,6 +77,12 @@ export class NuevoChequeComponent {
 //   @ViewChildren(IgxComboComponent)
 //  public cmbReembolsoC: IgxComboComponent;
 
+
+
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
+
+
  
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iAsientoDetalle>;
@@ -97,8 +103,7 @@ export class NuevoChequeComponent {
   public Anulado : boolean = false;
   private Visualizando : boolean = false;
 
-  @ViewChild("datepiker", { static: false }) 
-  public datepiker: any;
+  
 
   constructor(public cFunciones: Funciones, private GET: getCheques ,private POST : postCheque) {  
 
@@ -1810,7 +1815,6 @@ private V_GenerarDoc(Datos: iDatos, Exportar: boolean) {
   ngOnInit(): void {
 
     this.overlaySettings = {};
-    document.getElementById("btnContabilizar-Cheques")?.setAttribute("disabled", "disabled");
 
     if (window.innerWidth <= 992) {
       this.overlaySettings = {
@@ -1819,6 +1823,7 @@ private V_GenerarDoc(Datos: iDatos, Exportar: boolean) {
         closeOnOutsideClick: true
       };
     }
+
 
 
   }

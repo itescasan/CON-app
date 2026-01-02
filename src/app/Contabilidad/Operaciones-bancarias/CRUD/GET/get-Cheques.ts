@@ -26,7 +26,7 @@ export class getCheques{
       return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Cheques/Datos").pipe(timeout(this._Cnx.Timeout));
    }
 
-    public Get(Fecha1: Date, Fecha2: Date, CodBodega: string): Observable<string> {
+    public Get(Fecha1: string, Fecha2: string, CodBodega: string): Observable<string> {
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Cheques/Get?Fecha1=" + Fecha1 + "&Fecha2=" + Fecha2 + "&CodBodega=" + CodBodega).pipe(timeout(this._Cnx.Timeout));
     }
 

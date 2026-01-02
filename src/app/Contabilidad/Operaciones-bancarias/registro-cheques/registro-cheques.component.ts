@@ -44,6 +44,12 @@ export class RegistroChequesComponent {
 
   lstBodega: iBodega[] = [];
 
+  @ViewChild("datepiker", { static: false })
+  public datepiker: any;
+
+    @ViewChild("datepiker2", { static: false })
+  public datepiker2: any;
+
   public overlaySettings: OverlaySettings = {};
   public lstCheques :  MatTableDataSource<any> 
 
@@ -182,9 +188,10 @@ export class RegistroChequesComponent {
   
       }
 
+      let Fecha1 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha1").value, "yyyy-MM-dd");
+      let Fecha2 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha2").value, "yyyy-MM-dd");
 
-
-    this.GET.Get(this.val.Get("txtFecha1").value, this.val.Get("txtFecha2").value, this.val.Get("txtBodega").value).subscribe(
+    this.GET.Get(Fecha1, Fecha2, this.val.Get("txtBodega").value).subscribe(
       {
         next: (data) => {
 
@@ -273,7 +280,7 @@ export class RegistroChequesComponent {
               let _json: any = data;
     
               if (_json["esError"] == 1) {
-                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+                if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) { 
                   this.cFunciones.DIALOG.open(DialogErrorComponent, {
                     id: "error-servidor-msj",
                     data: _json["msj"].Mensaje,
@@ -485,6 +492,12 @@ export class RegistroChequesComponent {
     this.val.addFocus("txtFecha1", "txtFecha2", undefined);
     this.val.addFocus("txtFecha2", "txtBodega", undefined);
     this.val.addFocus("txtBodega", "btnRefrescar-RegCheque", "click");
+
+    
+    if(this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth):  "720") + "px";
+  
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
+    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker2 != undefined) this.datepiker2.mode="dialog";
 
 
   }
