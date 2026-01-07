@@ -32,7 +32,7 @@
 
                         </div>                        
 
-                        <div class="col-12 col-md-12 col-lg-2  mb-1">
+                        <!-- <div class="col-12 col-md-12 col-lg-2  mb-1">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-list fa-lg"></i></span>
                                 <div class="form-floating">
@@ -45,7 +45,7 @@
                                 </div>
                                 
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col-12 col-md-12 col-lg-2  mb-1">
                             <div class="input-group">
@@ -55,11 +55,24 @@
                                         id="cmbTipo" formControlName="cmbTipo" (change)="v_Select_Tipo()">
                                         <option *ngFor="let d of datos" [ngValue]="d">{{ d }}</option>        
                                     </select>
-                                    <label for="cmbTipo">Tipo</label>
+                                    <label for="cmbTipo">Niveles</label>
                                 </div>
                                
-                            </div>
-                        </div>
+                            </div>                            
+                        </div> 
+
+                        <div class="col-12 col-md-12 col-lg-1  mb-1">
+                            <div class="form-check mb-1">
+                                <input class="form-check-input"
+                                        type="checkbox"
+                                        formControlName="txtIncludeNiveles"
+                                        id="txtIncludeNiveles">
+                                <label class="form-check-label" for="txtIncludeNiveles">
+                                    Incluir Niveles Inferiores
+                                </label>
+                            </div>                            
+                        </div>                    
+                    
 
                         <div class="col-12 col-md-12 col-lg-3  mb-1">
                             <div class="input-group">
@@ -80,7 +93,7 @@
                         </div>
 
                     </div>
-                    <div class="row" *ngIf="SU">
+                    <!-- <div class="row" *ngIf="SU">
                         <div class="col-12 col-md-12 col-lg-3  mb-1">
                             <igx-combo #cmbSucursales [data]="lstBodega" valueKey="CuentaContable" displayKey="NombreCuenta" id="cmbSucursales"
                                 formControlName="cmbSucursales" placeholder="Bodega"
@@ -103,7 +116,7 @@
                                 <igx-prefix><i class="bi bi-shop fa-lg"></i></igx-prefix>
                             </igx-combo>
                         </div>
-                    </div>
+                    </div> -->
 
                 </form>
             </div>

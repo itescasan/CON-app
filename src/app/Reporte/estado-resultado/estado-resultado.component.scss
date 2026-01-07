@@ -1,6 +1,15 @@
 @use "/src/assets/scss/media.scss" as *;
 
+.form-check-label {
+    font-size: 1.2em;
+    font-weight: bold;
+}
 
+.form-check-input {
+  transform: scale(1.9);
+  cursor: pointer;
+  margin-top: 15%;
+}
 .contenedor-filtro {
     position: fixed;
     top: 0;

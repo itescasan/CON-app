@@ -34,8 +34,8 @@ export class getReporteContable{
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/BalanceGeneral?Fecha=" + Fecha + "&EsMonedaLocal=" + EsMonedaLocal);
     }
 
-    public GetEstadoResultado(Fecha: String, Estado: boolean, EsMonedaLocal : boolean, Sucursal: string, CCosto: string): Observable<string> {
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/EstadoResultado?Fecha=" + Fecha + "&Estado=" + Estado  + "&EsMonedaLocal=" + EsMonedaLocal + "&Sucursal=" + Sucursal + "&CCosto=" + CCosto).pipe(timeout(this._Cnx.Timeout));
+    public GetEstadoResultado(Fecha: String, EsMonedaLocal : boolean, Nivel: string): Observable<string> {
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/EstadoResultado?Fecha=" + Fecha + "&EsMonedaLocal=" + EsMonedaLocal + "&Nivel=" + Nivel ).pipe(timeout(this._Cnx.Timeout));
     }
 
     public GetGastosxCC(Fecha: String,  EsMonedaLocal : boolean, CCosto: string): Observable<string> {

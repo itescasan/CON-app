@@ -31,8 +31,8 @@ export class EstadoResultadoComponent {
   GE: boolean = true;
   SU: boolean = false;
   CC: boolean = false;
-  datos: string[] = ['GENERAL', 'SUCURSALES', 'C.COSTOS'];
-  default: string = 'GENERAL';
+  datos: string[] = ['NIVEL1', 'NIVEL2', 'NIVEL3', 'NIVEL4', 'NIVEL5', 'NIVEL6'];
+  default: string = 'NIVEL1';
 
   datosFormulario: FormGroup;
 
@@ -45,15 +45,20 @@ export class EstadoResultadoComponent {
     this.val.add("cmbTipo", "1", "LEN>", "0", "Tipo", "Selecione un tipo de reporte");
     this.val.add("cmbSucursales", "1", "LEN>=", "0", "Tipo", "Selecione una Sucursal");
     this.val.add("cmbCentroCosto", "1", "LEN>=", "0", "Tipo", "Selecione un Centro de Costo");
+    this.val.add("txtIncludeNiveles", "1", "LEN>=", "0", "IncludeNiveles", "Incluir Niveles.");
+    
 
 
     this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat((new Date(this.cFunciones.FechaServer.getFullYear(), this.cFunciones.FechaServer.getMonth(), 1)), "yyyy-MM-dd"));
     //this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));
     this.val.Get("cmbMoneda").setValue(true);
     this.val.Get("cmbOpcion").setValue(true); 
-    this.val.Get("cmbTipo").setValue('GENERAL');
+    this.val.Get("cmbTipo").setValue('NIVEL1');
     this.val.Get("cmbSucursales").setValue(true);
     this.val.Get("cmbCentroCosto").setValue(true);
+
+
+    
 
   //   this.datosFormulario = new FormGroup({
   //     datos: new FormControl(null)
@@ -74,26 +79,26 @@ export class EstadoResultadoComponent {
 
   public v_Select_Tipo() {    
     
-    let tipo = this.val.ValForm.get('cmbTipo')?.value
-    if (tipo == 'GENERAL') {
-      this.GE = true;
-      this.SU = false;
-      this.CC = false;
-      this.val.Get("cmbSucursales").setValue("");
-      this.val.Get("cmbCentroCosto").setValue("");
-    }
-    if (tipo == 'SUCURSALES') {
-      this.GE = false;
-      this.SU = true;
-      this.CC = false;
-      this.val.Get("cmbCentroCosto").setValue("");
-    } 
-    if (tipo == 'C.COSTOS') {
-      this.val.Get("cmbSucursales").setValue("");
-      this.GE = false;
-      this.SU = false;
-      this.CC = true;
-    }
+    // let tipo = this.val.ValForm.get('cmbTipo')?.value
+    // if (tipo == 'GENERAL') {
+    //   this.GE = true;
+    //   this.SU = false;
+    //   this.CC = false;
+    //   this.val.Get("cmbSucursales").setValue("");
+    //   this.val.Get("cmbCentroCosto").setValue("");
+    // }
+    // if (tipo == 'SUCURSALES') {
+    //   this.GE = false;
+    //   this.SU = true;
+    //   this.CC = false;
+    //   this.val.Get("cmbCentroCosto").setValue("");
+    // } 
+    // if (tipo == 'C.COSTOS') {
+    //   this.val.Get("cmbSucursales").setValue("");
+    //   this.GE = false;
+    //   this.SU = false;
+    //   this.CC = true;
+    // }
    
   }
   @ViewChild("cmbSucursales", { static: false })
@@ -162,9 +167,8 @@ export class EstadoResultadoComponent {
     }
 
     
-    this.GET.GetEstadoResultado(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbOpcion").value,this.val.Get("cmbMoneda").value[0],
-    this.val.Get("cmbSucursales").value[0] == undefined ? '' : this.val.Get("cmbSucursales").value[0],
-    this.val.Get("cmbCentroCosto").value[0] == undefined ? '' : this.val.Get("cmbCentroCosto").value[0]).subscribe(      
+    this.GET.GetEstadoResultado(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value[0],
+     this.val.Get("cmbTipo").value).subscribe(      
       {
         next: (data) => {
 
