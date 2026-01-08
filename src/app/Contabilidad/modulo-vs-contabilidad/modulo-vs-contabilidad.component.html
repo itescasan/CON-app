@@ -152,7 +152,19 @@
 
 
                             <div class="col-8 col-sm-4 col-md-3 col-lg-3 mb-2">
-                                <span>{{det.CuentaContable}} - {{det.NombreCuenta}}</span>
+                                <div class="row">
+                                    <span>{{det.CuentaContable}} - {{det.NombreCuenta}}</span>
+                                </div>
+
+                                 @if(Nivel == 4)
+                                 {
+                                    <div  class="row">
+                                        <span>{{det.TipoDoc}}</span>
+                                    
+                                    </div>
+                                 }
+                                 
+                                
                             </div>
 
 

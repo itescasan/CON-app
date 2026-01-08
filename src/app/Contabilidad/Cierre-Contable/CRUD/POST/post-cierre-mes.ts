@@ -23,7 +23,7 @@ export class postCierreMes {
 
     Procesar(Codigo: String, Fecha : String, Usuario : string): Observable<string> {
 
-        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/CierreMensual?Codigo=" + Codigo + "&Fecha=" + Fecha, "&Usuarios=" + Usuario, { headers: { 'content-type': 'text/plain' } }).pipe(timeout(660000));
+        return this.http.post<any>(this._Cnx.Url() + "Contabilidad/CierreMensual?Codigo=" + Codigo + "&Fecha=" + Fecha + "&Usuario=" + Usuario, { headers: { 'content-type': 'text/plain' } }).pipe(timeout(660000));
 
     }
 
