@@ -593,7 +593,7 @@ export class ChequesSaldoComponent {
     if (this.esModal) return;
 
 
-    this.val.ItemValido(["cmbProveedor", "cmbProveedor","TxtTC"]);
+    this.val.ItemValido(["cmbCuentaBancaria", "cmbProveedor", "TxtTC"]);
 
     if (this.val.Errores != "") {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -1000,7 +1000,7 @@ export class ChequesSaldoComponent {
 
   }
 
-  public V_Mostrar_Asiento() {
+  public V_Mostrar_Asiento() { 
   
       this.val.Combo(this.cmbCombo);
       this.val.ItemValido(["cmbCuentaBancaria", "cmbCentroCosto", "cmbProveedor"]);
@@ -1098,8 +1098,8 @@ export class ChequesSaldoComponent {
         dialogAsiento.beforeClosed().subscribe(s => {
   
           
-          $("#offcanvasBottom-tranf-saldo").removeAttr("show");
-          $("#btnMostrarPie-tranf-saldo").trigger("click"); 
+          $("#offcanvasBottom-cheque-saldo").removeAttr("show");
+          $("#btnMostrarPie-cheque-saldo").trigger("click"); 
   
         });
   
@@ -1110,95 +1110,95 @@ export class ChequesSaldoComponent {
   
   
     }
-  
-    private V_Contabilizacion(): void {
-      this.lstDetalleAsiento.splice(0, this.lstDetalleAsiento.length);
-  
 
-      
+ private V_Contabilizacion(): void {
+    this.lstDetalleAsiento.splice(0, this.lstDetalleAsiento.length);
+
+
+
+
     if(!this.esModal){
       this.Asiento = {} as iAsiento;
     }
-  
-  
-      let i_Prov: iProveedor = this.lstProveedor.find(f => f.Codigo == this.val.Get("cmbProveedor").value[0])!;
-      let i_Banco: any = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.val.Get("cmbCuentaBancaria").value[0])!;
-  
-      let TotalBanco: number = (this.IdMoneda == this.cFunciones.MonedaLocal ? Number(this.val.Get("txtTotalCordoba").value.replaceAll(",", "")) : Number(this.val.Get("txtTotalDolar").value.replaceAll(",", "")));
-      let Comision: number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
-  
-  
-      if (i_Banco == undefined) return;
-  
-  
-  
-      this.Asiento.NoDocOrigen = this.val.Get("txtNoDoc").value;
-      this.Asiento.IdSerieDocOrigen = i_Banco.IdSerie;
-      this.Asiento.TipoDocOrigen = "TRANSFERENCIA A CHEQUE";
-  
-      this.Asiento.IdSerie = this.Asiento.IdSerieDocOrigen;
-      this.Asiento.Bodega = this.val.Get("cmbBodega").value[0];
-      this.Asiento.Fecha = this.val.Get("txtFecha").value;
-      this.Asiento.Referencia = i_Banco.CuentaBancaria;
-      this.Asiento.Concepto = this.val.Get("txtConcepto").value;
-      this.Asiento.IdMoneda = this.IdMoneda;
-      this.Asiento.TasaCambio = this.TC;
-  
-      this.Asiento.Total = this.FILA.Total;
-      this.Asiento.TotalML = this.FILA.TotalCordoba;
-      this.Asiento.TotalMS = this.FILA.TotalDolar;
-      this.Asiento.UsuarioReg = this.FILA.UsuarioReg;
-      this.Asiento.FechaReg = new Date();
-      this.Asiento.Estado = "";
-  
-      this.Asiento.IdPeriodo = 0;
-      this.Asiento.Estado = "AUTORIZADO";
-      this.Asiento.TipoAsiento = "ASIENTO BASE";
-      this.Asiento.NoAsiento = ""; 
-  
-  
-  
-      this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), i_Banco.CuentaBancaria, "", "", "C", "");
-      this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), i_Banco.CuentaBancaria, "", "", "C", "");
-      this.Nueva_Linea_Asiento(Comision, this.CuentaComision, "COMISION BANCARIA Doc:" + this.Asiento.NoDocOrigen, this.Asiento.NoDocOrigen, "", "D", "");
-  
-  
-      this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
-  
-        let det: iAsientoDetalle = {} as iAsientoDetalle;
-  
-       let OrdComp : iOrdenCompraCentroGasto[] =   this.lstOrdenCompraCentroGasto.filter( g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
-
-       let TipoDo: string[] = ["GASTO_ANT", "GASTO_REN", "GASTO_VIA", "GASTO_CRE"];
-     
-       let Cuenta : string = i_Prov.CUENTAXPAGAR;
-       let CuentaAux : string = "";
 
 
-       if(TipoDo.includes( f.TipoDocumento ))
-       {
+    this.Asiento.AsientosContablesDetalle = this.lstDetalleAsiento;
+
+    let i_Prov: iProveedor = this.lstProveedor.find(f => f.Codigo == this.val.Get("cmbProveedor").value[0])!;
+    let i_Banco: any = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.val.Get("cmbCuentaBancaria").value[0])!;
+
+    let TotalBanco: number = (this.IdMoneda == this.cFunciones.MonedaLocal ? Number(this.val.Get("txtTotalCordoba").value.replaceAll(",", "")) : Number(this.val.Get("txtTotalDolar").value.replaceAll(",", "")));
+    let Comision: number = Number(this.val.Get("txtComision").value.replaceAll(",", ""));
+
+
+
+    if (i_Banco == undefined) return;
+
+
+
+    this.Asiento.NoDocOrigen = this.val.Get("txtNoDoc").value;
+    this.Asiento.IdSerieDocOrigen = i_Banco.IdSerie;
+    this.Asiento.TipoDocOrigen = "CHEQUE A DOCUMENTO";
+
+    this.Asiento.IdSerie = this.Asiento.IdSerieDocOrigen;
+    this.Asiento.Bodega = this.val.Get("cmbBodega").value[0];
+    this.Asiento.Fecha = this.val.Get("txtFecha").value;
+    this.Asiento.Referencia = i_Banco.CuentaBancaria;
+    this.Asiento.Concepto = this.val.Get("txtConcepto").value;
+    this.Asiento.IdMoneda = this.IdMoneda;
+    this.Asiento.TasaCambio = this.TC;
+
+    this.Asiento.Total = this.FILA.Total;
+    this.Asiento.TotalML = this.FILA.TotalCordoba;
+    this.Asiento.TotalMS = this.FILA.TotalDolar;
+    this.Asiento.UsuarioReg = this.FILA.UsuarioReg;
+    this.Asiento.FechaReg = new Date();
+    this.Asiento.Estado = "";
+
+    this.Asiento.IdPeriodo = 0;
+    this.Asiento.Estado = "AUTORIZADO";
+    this.Asiento.TipoAsiento = "ASIENTO BASE";
+    this.Asiento.NoAsiento = "";
+
+
+
+    this.Nueva_Linea_Asiento(TotalBanco, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), this.val.GetValue("txtConcepto") + " " + i_Banco.CuentaBancaria, "", "", "C", "");
+    this.Nueva_Linea_Asiento(Comision, (this.IdMoneda == this.cFunciones.MonedaLocal ? i_Banco.CuentaNuevaC : i_Banco.CuentaNuevaD), this.val.GetValue("txtConcepto") + " " +  i_Banco.CuentaBancaria, "", "", "C", "");
+    this.Nueva_Linea_Asiento(Comision, this.CuentaComision, this.val.GetValue("txtConcepto") + " " + "COMISION BANCARIA Doc:" + this.Asiento.NoDocOrigen,  this.Asiento.NoDocOrigen, "", "D", "");
+
+
+    this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
+
+      let det: iAsientoDetalle = {} as iAsientoDetalle;
+
+      let OrdComp: iOrdenCompraCentroGasto[] = this.lstOrdenCompraCentroGasto.filter(g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
+
+      let TipoDo: string[] = ["GASTO_ANT", "GASTO_REN", "GASTO_VIA", "GASTO_CRE"];
+
+      let Cuenta: string = i_Prov.CUENTAXPAGAR;
+      let CuentaAux : string = "";
+
+      if (TipoDo.includes(f.TipoDocumento)) {
         Cuenta = "";
-        if(OrdComp.length > 0) 
-        {
+        if (OrdComp.length > 0) {
           Cuenta = OrdComp[0].CuentaContableSolicitante;
         }
-       }
+      }
 
-      
+        if(f.TipoDocumento == "GASTO_CRE") Cuenta = i_Prov.CUENTAANTICIPO
 
 
-       if (f.TipoDocumento == "GASTO_ANT" || f.TipoDocumento == "GASTO_CRE") {
+      if (f.TipoDocumento == "GASTO_ANT" || f.TipoDocumento == "GASTO_CRE") {
 
         if (f.Operacion == "Abono") {
 
-           if(f.TipoDocumento == "GASTO_CRE") Cuenta = i_Prov.CUENTAANTICIPO
-
+          if(f.TipoDocumento == "GASTO_CRE") Cuenta = i_Prov.CUENTAANTICIPO
 
           if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, this.cmbProveedor.displayValue  + " " +f.Documento, f.Documento, f.TipoDocumento, "D", "");
+            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
           }
           else {
-            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, this.cmbProveedor.displayValue  + " " +f.Documento, f.Documento, f.TipoDocumento, "D", "");
+            det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
 
           }
 
@@ -1218,6 +1218,7 @@ export class ChequesSaldoComponent {
 
 
 
+        
 
 
           if (this.IdMoneda == this.cFunciones.MonedaLocal) {
@@ -1233,9 +1234,9 @@ export class ChequesSaldoComponent {
 
           }
 
-
-           CuentaAux = Cuenta;
+          CuentaAux = Cuenta;
           if(f.TipoDocumento == "GASTO_CRE") Cuenta = i_Prov.CUENTAANTICIPO
+
 
           if (Anticipo != 0) {
             det = this.Nueva_Linea_Asiento(Anticipo, Cuenta, this.cmbProveedor.displayValue  + " " + "Anticipo. " + f.Documento, f.Documento, f.TipoDocumento, "C", "");
@@ -1265,16 +1266,15 @@ export class ChequesSaldoComponent {
               Importe = g.SubTotalDolar;
             }
 
-
-
+              
 
             Importe_MS = g.SubTotalDolar;
             Importe_ML = g.SubTotalCordoba;
-
+            
 
 
             //Importe = this.cFunciones.Redondeo(((Importe - Impuesto) * (g.Participacion1 / 100.00)) * (g.Participacion2 / 100.00), "2");
-            Importe = this.cFunciones.Redondeo(g.Participacion2, "2");
+            Importe = this.cFunciones.Redondeo(g.Participacion1 , "2");
 
             
                if(g.TipoDocOrigen.includes("GASTO") && f.Operacion != "Abono"){
@@ -1294,9 +1294,10 @@ export class ChequesSaldoComponent {
               
               }
 
-            let Cuentagasto = g.CuentaContable;
-            if(f.TipoDocumento == "GASTO_CRE") Cuentagasto = i_Prov.CUENTAANTICIPO
 
+
+             let Cuentagasto = g.CuentaContable;
+            if(f.TipoDocumento == "GASTO_CRE") Cuentagasto = i_Prov.CUENTAANTICIPO
 
             if (this.IdMoneda == this.cFunciones.MonedaLocal) {
               det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento, f.Documento, f.TipoDocumento, "D", "");
@@ -1374,10 +1375,10 @@ export class ChequesSaldoComponent {
        
 
 
-        
-
+      
+    
         if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto,Cuenta ,this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
+          det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
         }
         else {
           det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "") ) - Impuesto, Cuenta, this.cmbProveedor.displayValue  + " " + f.Documento, f.Documento, f.TipoDocumento, "D", "");
@@ -1389,79 +1390,152 @@ export class ChequesSaldoComponent {
         det.DebitoMS += f.DiferencialMS;
       }
 
-     
-  
-     
-  
-  
-  if (f.DiferencialML != 0 && f.DiferencialML < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
-  if (f.DiferencialMS != 0 && f.DiferencialMS < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
-
-  if (f.DiferencialML != 0 && f.DiferencialML > 0) this.Nueva_Linea_Asiento(f.DiferencialML,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
-  if (f.DiferencialMS != 0 && f.DiferencialMS > 0) this.Nueva_Linea_Asiento(f.DiferencialMS,  this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
-
-  
-  
-  
-  
-        let RetML : number = 0;
-        let RetMS : number = 0;
-        
-        let l_retenciones: iRetencion[] = this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && Number(w.Monto.toString().replaceAll(",", "")) != 0);
 
 
 
-        if (l_retenciones.length == 0) l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && Number(w.Monto.toString().replaceAll(",", "")) != 0);
-  
-  
-        if(f.Operacion == "Cancelación")
-        {
-          l_retenciones.forEach(w => {
-            this.Nueva_Linea_Asiento(Number(w.Monto.toString().replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, w.Naturaleza, "");
-    
-    
-            RetML += w.MontoML;
-            RetMS += w.MontoMS;
-          });
-    
-        }
-  
-  
-           //AJUSTE
-        
-         let AjusteMS : number = 0;
-         let AjusteML : number = 0;
 
-         if (this.IdMoneda == this.cFunciones.MonedaLocal)
-        {
-          
-          AjusteMS = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteML - RetML, "2") / this.TC, "2");
-          AjusteMS = this.cFunciones.Redondeo(f.ImporteMS - (AjusteMS + RetMS), "2");
- 
- 
-        }
-        else
-        {
-          
-          AjusteML = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteMS - RetMS, "2") * this.TC, "2");
-          AjusteML = this.cFunciones.Redondeo(f.ImporteML - (AjusteML + RetML), "2");
- 
-        }
+
+      /*
+      
+      
+           if(OrdComp.length == 0 && !TipoDo.includes( det.TipoDocumento ) )
+           {
+            if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+              det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+            }
+            else {
+              det = this.Nueva_Linea_Asiento(Number(f.Importe.replaceAll(",", "")), i_Prov.CUENTAXPAGAR, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+      
+            }
+      
+            
+            det.DebitoML += f.DiferencialML;
+            det.DebitoMS += f.DiferencialMS;
        
+       
+           }
+           else{
+      
+      
+            let ImporteAuxML : number = 0;
+            let ImporteAuxMS : number = 0;
+            let DifML : number = 0;
+            let DifMS : number = 0;
+            OrdComp.forEach(g =>{
+      
+              let Importe = Number(f.Importe.replaceAll(",", ""));
+              
+              Importe = this.cFunciones.Redondeo((Importe * (g.Participacion1 / 100.00) ) * (g.Participacion2 / 100.00), "2");
+      
+              if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+                det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              }
+              else {
+                det = this.Nueva_Linea_Asiento(Importe, g.CuentaContable, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+        
+              }
+      
+              det.CentroCosto = g.CentroCosto;
+              DifML += f.DiferencialML;
+              DifMS += f.DiferencialMS;
+       
+              
+                  
+              ImporteAuxML += det.DebitoML;
+              ImporteAuxMS += det.DebitoMS;
+      
+      
+              
+      
+              
+            });
+      
+            det.DebitoML += this.cFunciones.Redondeo(f.ImporteML - ImporteAuxML, "2");
+            det.DebitoMS += this.cFunciones.Redondeo(f.ImporteMS - ImporteAuxMS, "2");
+      
+      
+      
+            f.DiferencialML = this.cFunciones.Redondeo(DifML, "2");
+            f.DiferencialMS = this.cFunciones.Redondeo(DifMS, "2");
+       
+      
+            det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
+            det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
+      
+      
+           }
+      
+         
+      */
 
-         if (AjusteML < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "DIF_ML");
-         if (AjusteMS < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "DIF_MS");
+      if (f.DiferencialML != 0 && f.DiferencialML < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialML), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "ML");
+      if (f.DiferencialMS != 0 && f.DiferencialMS < 0) this.Nueva_Linea_Asiento(Math.abs(f.DiferencialMS), this.CuentaDiferencialPerdida, "P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "MS");
 
-         if (AjusteML> 0) this.Nueva_Linea_Asiento(AjusteML,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "DIF_ML");
-         if (AjusteMS > 0) this.Nueva_Linea_Asiento(AjusteMS,  this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "DIF_MS");
-   
+      if (f.DiferencialML != 0 && f.DiferencialML > 0) this.Nueva_Linea_Asiento(f.DiferencialML, this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "ML");
+      if (f.DiferencialMS != 0 && f.DiferencialMS > 0) this.Nueva_Linea_Asiento(f.DiferencialMS, this.CuentaDiferencialGancia, "G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "MS");
 
+
+
+
+
+
+
+      let RetML: number = 0;
+      let RetMS: number = 0;
+
+      let l_retenciones: iRetencion[] = this.lstRetencion.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && Number(w.Monto.toString().replaceAll(",", "")) != 0);
+
+
+
+      if (l_retenciones.length == 0) l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento && Number(w.Monto.toString().replaceAll(",", "")) != 0);
+
+      if(f.Operacion == "Cancelación")
+      {
+        l_retenciones.forEach(w => {
+          this.Nueva_Linea_Asiento(Number(w.Monto.toString().replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, w.Naturaleza, "");
   
-           
-          
-      });
+  
+          RetML += w.MontoML;
+          RetMS += w.MontoMS;
+        });
+  
+      }
+     
 
-    
+
+      //AJUSTE
+
+      let AjusteMS: number = 0;
+      let AjusteML: number = 0;
+
+      if (this.IdMoneda == this.cFunciones.MonedaLocal) {
+
+        AjusteMS = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteML - RetML, "2") / this.TC, "2");
+        AjusteMS = this.cFunciones.Redondeo(f.ImporteMS - (AjusteMS + RetMS), "2");
+
+
+      }
+      else {
+
+        AjusteML = this.cFunciones.Redondeo(this.cFunciones.Redondeo(f.ImporteMS - RetMS, "2") * this.TC, "2");
+        AjusteML = this.cFunciones.Redondeo(f.ImporteML - (AjusteML + RetML), "2");
+
+      }
+
+
+      if (AjusteML < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "DIF_ML");
+      if (AjusteMS < 0) this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE P DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "D", "DIF_MS");
+
+      if (AjusteML > 0) this.Nueva_Linea_Asiento(AjusteML, this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "DIF_ML");
+      if (AjusteMS > 0) this.Nueva_Linea_Asiento(AjusteMS, this.CuentaDiferencialGancia, "AJUSTE G DIFERENCIAL Doc:" + f.Documento, f.Documento, f.TipoDocumento, "C", "DIF_MS");
+
+
+
+
+    });
+
+
+
     let TotalCreditoML: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.CreditoML), 0);
     let TotalCreditoMS: number = this.lstDetalleAsiento.reduce((acc, cur) => acc + Number(cur.CreditoMS), 0);
 
@@ -1488,10 +1562,7 @@ export class ChequesSaldoComponent {
 
     if (AjusteMS < 0) {
       this.Nueva_Linea_Asiento(AjusteMS, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
-  
-  
     }
-  
 
 
     //ORDENANDO PRIMERO DEBITOS
@@ -1508,152 +1579,152 @@ export class ChequesSaldoComponent {
      });
 
 
+    this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
 
-  this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
 
+  }
 
-}
-  
     private Nueva_Linea_Asiento(Monto: number, Cuenta: string, Referencia: string, Documento: string, TipoDocumento: string, Naturaleza: string, Columna: string): iAsientoDetalle {
-  
-      let det: iAsientoDetalle = {} as iAsientoDetalle;
-  
-      if (Monto == 0) return det;
-      Monto = this.cFunciones.Redondeo(Monto, "2");
-  
-  
-      let i: number = 1;
-  
-      let i_Cuenta = this.lstCuenta.find(f => f.CuentaContable == Cuenta);
-  
-      if (this.lstDetalleAsiento.length > 0) i = Math.max(...this.lstDetalleAsiento.map(o => o.NoLinea)) + 1
-  
-  
-      if(this.esModal){
+
+    let det: iAsientoDetalle = {} as iAsientoDetalle;
+
+    if (Monto == 0) return det;
+    Monto = this.cFunciones.Redondeo(Monto, "2");
+
+
+    let i: number = 1;
+
+    let i_Cuenta = this.lstCuenta.find(f => f.CuentaContable == Cuenta);
+
+    if (this.lstDetalleAsiento.length > 0) i = Math.max(...this.lstDetalleAsiento.map(o => o.NoLinea)) + 1
+
+
+    if(this.esModal){
       det.IdAsiento = this.Asiento.IdAsiento;
-      }
-      else{
-        det.IdAsiento = -1;
-      }
-
-
-      det.NoLinea = i;
-      det.CuentaContable = Cuenta;
-      det.Modulo = "CON";
-      det.Descripcion = i_Cuenta?.NombreCuenta!;
-      det.Referencia = Referencia;
-      det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
-      det.Naturaleza = i_Cuenta?.Naturaleza!;
-      det.NoDocumento = Documento
-      det.TipoDocumento = TipoDocumento;
-  
-  
-  
-      if (Naturaleza == "D") {
-  
-        switch (Columna) {
-          case "ML":
-            det.Debito = String(Monto);
-            det.DebitoML = Monto;
-            det.DebitoMS = 0;
-            break;
-          case "MS":
-            det.Debito = String(Monto);
-            det.DebitoMS = Monto;
-            det.DebitoML = 0;
-            break;
-            case "DIF_ML":
-              det.Debito = (this.IdMoneda == this.cFunciones.MonedaLocal, "0", String(Monto));
-              det.DebitoML = Monto;
-              det.DebitoMS = 0;
-              break;
-            case "DIF_MS":
-              det.Debito = (this.IdMoneda != this.cFunciones.MonedaLocal, String(Monto), "0");
-              det.DebitoMS = Monto;
-              det.DebitoML = 0;
-              break;
-
-          default:
-  
-            if (this.cFunciones.MonedaLocal == this.IdMoneda) {
-              det.Debito = String(Monto);
-              det.DebitoML = Monto;
-              det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
-            }
-            else {
-              det.Debito = String(Monto);
-              det.DebitoMS = Monto;
-              det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
-            }
-  
-  
-            break;
-  
-        }
-  
-  
-        det.Credito = "0";
-        det.CreditoML = 0;
-        det.CreditoMS = 0;
-  
-      }
-      else {
-        switch (Columna) {
-          case "ML":
-            det.Credito = String(Monto);
-            det.CreditoML = Monto;
-            det.CreditoMS = 0;
-            break;
-          case "MS":
-            det.Credito = String(Monto);
-            det.CreditoMS = Monto;
-            det.CreditoML = 0;
-            break;
-
-            case "DIF_ML":
-            det.Credito = (this.IdMoneda == this.cFunciones.MonedaLocal, "0",  String(Monto));
-            det.CreditoML = Monto;
-            det.CreditoMS = 0;
-            break;
-          case "DIF_MS":
-            det.Credito = (this.IdMoneda != this.cFunciones.MonedaLocal,  String(Monto), "0");
-            det.CreditoMS = Monto;
-            det.CreditoML = 0;
-            break;
-
-          default:
-  
-            if (this.cFunciones.MonedaLocal == this.IdMoneda) {
-              det.Credito = String(Monto);
-              det.CreditoML = Monto;
-              det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
-            }
-            else {
-              det.Credito = String(Monto);
-              det.CreditoMS = Monto;
-              det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
-            }
-  
-  
-            break;
-  
-        }
-  
-  
-        det.Debito = "0";
-        det.DebitoML = 0;
-        det.DebitoMS = 0;
-      }
-  
-  
-  
-  
-      this.lstDetalleAsiento.push(det);
-  
-      return det;
-  
+    }
+    else{
+      det.IdAsiento = -1;
     }
 
+    det.NoLinea = i;
+    det.CuentaContable = Cuenta;
+    det.Modulo = "CON";
+    det.Descripcion = i_Cuenta?.NombreCuenta!;
+    det.Referencia = Referencia;
+    det.CentroCosto = this.val.Get("cmbCentroCosto").value[0];
+    det.Naturaleza = i_Cuenta?.Naturaleza!;
+    det.NoDocumento = Documento
+    det.TipoDocumento = TipoDocumento;
+
+
+
+    if (Naturaleza == "D") {
+
+      switch (Columna) {
+        case "ML":
+          det.Debito = String(Monto);
+          det.DebitoML = Monto;
+          det.DebitoMS = 0;
+          break;
+        case "MS":
+          det.Debito = String(Monto);
+          det.DebitoMS = Monto;
+          det.DebitoML = 0;
+          break;
+
+
+        case "DIF_ML":
+          det.Debito = (this.IdMoneda == this.cFunciones.MonedaLocal, "0", String(Monto));
+          det.DebitoML = Monto;
+          det.DebitoMS = 0;
+          break;
+        case "DIF_MS":
+          det.Debito = (this.IdMoneda != this.cFunciones.MonedaLocal, String(Monto), "0");
+          det.DebitoMS = Monto;
+          det.DebitoML = 0;
+          break;
+
+
+        default:
+
+          if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+            det.Debito = String(Monto);
+            det.DebitoML = Monto;
+            det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+          }
+          else {
+            det.Debito = String(Monto);
+            det.DebitoMS = Monto;
+            det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+          }
+
+
+          break;
+
+      }
+
+
+      det.Credito = "0";
+      det.CreditoML = 0;
+      det.CreditoMS = 0;
+
+    }
+    else {
+      switch (Columna) {
+        case "ML":
+          det.Credito = String(Monto);
+          det.CreditoML = Monto;
+          det.CreditoMS = 0;
+          break;
+        case "MS":
+          det.Credito = String(Monto);
+          det.CreditoMS = Monto;
+          det.CreditoML = 0;
+          break;
+
+        case "DIF_ML":
+          det.Credito = (this.IdMoneda == this.cFunciones.MonedaLocal, "0", String(Monto));
+          det.CreditoML = Monto;
+          det.CreditoMS = 0;
+          break;
+        case "DIF_MS":
+          det.Credito = (this.IdMoneda != this.cFunciones.MonedaLocal, String(Monto), "0");
+          det.CreditoMS = Monto;
+          det.CreditoML = 0;
+          break;
+
+        default:
+
+          if (this.cFunciones.MonedaLocal == this.IdMoneda) {
+            det.Credito = String(Monto);
+            det.CreditoML = Monto;
+            det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+          }
+          else {
+            det.Credito = String(Monto);
+            det.CreditoMS = Monto;
+            det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+          }
+
+
+          break;
+
+      }
+
+
+      det.Debito = "0";
+      det.DebitoML = 0;
+      det.DebitoMS = 0;
+    }
+
+
+
+
+    this.lstDetalleAsiento.push(det);
+
+    return det;
+
+  }
 
     public v_Guardar(): void {
   

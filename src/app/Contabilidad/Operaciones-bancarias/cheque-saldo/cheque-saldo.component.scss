@@ -140,14 +140,31 @@ input.center {
 
 
 .contenedor-tabla {
-    margin-bottom: 250px;
+
 
 
     table {
 
-        textarea {
-            height: 31px;
+        margin-bottom: 150px;
+
+        input[type='checkbox']{
+            margin-left: 0px;
+            margin-right: 2px;
+            font-size: 1.2em;
+            background-color: var(--escan-opcional);
         }
+
+        .label-check{
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        input:disabled {
+            background-color: transparent;
+            border: 0;
+        }
+
+
 
         .header-cell {
 
@@ -207,7 +224,7 @@ input.center {
     left: 0;
     width: 100vw;*/
     z-index: 5;
-    background-color: var(--escan-fondo);
+    background-color: var(--escan-fondo); 
     padding: 10px;
 
     .totales,
