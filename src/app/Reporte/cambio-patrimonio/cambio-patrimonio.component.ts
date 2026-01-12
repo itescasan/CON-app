@@ -27,7 +27,7 @@ export class CambioPatrimonioComponent {
   
       this.val.Get("txtFecha").setValue(this.cFunciones.DateFormat(this.cFunciones.FechaServer, "yyyy-MM-dd"));    
       this.val.Get("cmbMoneda").setValue(1);
-    }
+  }
 
   V_Imprimir(): void {
  
@@ -90,7 +90,7 @@ export class CambioPatrimonioComponent {
     
   }
 
-    async printPDFS(datos: any) {  
+  async printPDFS(datos: any) {  
   
       let byteArray = new Uint8Array(atob(datos).split('').map(char => char.charCodeAt(0)));
   
@@ -101,13 +101,13 @@ export class CambioPatrimonioComponent {
       let tabOrWindow : any = window.open(url, '_blank');
       tabOrWindow.focus(); 
   
-    }  
+  }  
   
-    ngDoCheck(): void {
+  ngDoCheck(): void {
       ///CAMBIO DE FOCO  
       
       this.val.addFocus("txtFecha", "cmbMoneda", undefined);
       this.val.addFocus("cmbMoneda", "btnReporte-CambioPatrimonio", "click");
-    }
+  }
 
 }

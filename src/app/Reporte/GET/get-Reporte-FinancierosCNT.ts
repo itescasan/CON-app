@@ -23,9 +23,9 @@ export class getReporteFinanciero{
     }
     
 
-    public GetBalanceSituacionFinanciera(EsMonedaLocal : Int16Array, Fecha1: String, Fecha2: String): Observable<string> {
+    public GetBalanceSituacionFinanciera(EsMonedaLocal : Int16Array, Fecha1: String, Nivel: Int16Array, Nivel_Ant: boolean): Observable<string> {
   
-        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/BalanceSituacionFinanciera?Moneda=" + EsMonedaLocal + "&FechaInicial=" + Fecha1 + "&FechaFinal=" + Fecha2).pipe(timeout(this._Cnx.Timeout));
+        return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Reporte/BalanceSituacionFinanciera?Moneda=" + EsMonedaLocal + "&FechaInicial=" + Fecha1 + "&Nivel=" + Nivel+ "&Nivel_Ant=" + Nivel_Ant).pipe(timeout(this._Cnx.Timeout));
     }
 
 

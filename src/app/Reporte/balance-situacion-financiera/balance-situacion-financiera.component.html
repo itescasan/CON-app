@@ -32,7 +32,19 @@
                         </div>
 
                         <div class="col-12 col-md-12 col-lg-3 mb-1">
-                            <div class="form-group">
+                            <div class="form-floating">
+                                    <select class="form-select form-select-lg" aria-label="Nivel"
+                                    id="cmbNivel" formControlName="cmbNivel">
+                                        <option value="1">Nivel 1</option>
+                                        <option value="2">Nivel 2</option>
+                                        <option value="3">Nivel 3</option>
+                                        <option value="4">Nivel 4</option>
+                                        <option value="5">Nivel 5</option>
+                                        <option value="6">Nivel 6</option>
+                                    </select>
+                                    <label for="cmbNivel">Nivel</label>
+                                </div>
+                            <!--<div class="form-group">
                                 <div class="form-time-picker">
                                     <igx-date-picker #datepiker formControlName="txtFecha2" id="txtFecha2"
                                         [inputFormat]="'dd/MM/yyyy'">
@@ -48,8 +60,8 @@
             
                                     </igx-date-picker>
                                 </div>
-                            </div>
-                        </div>                        
+                            </div>--> 
+                        </div>                 
 
 
                         <div class="col-12 col-md-12 col-lg-3  mb-1">
