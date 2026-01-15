@@ -23,10 +23,10 @@ import { IReembolsos } from 'src/app/Interface/Contabilidad/i-Reembolsos';
 import { IReembolsosD } from 'src/app/Interface/Contabilidad/i-ReembolsoD';
 import { DialogoConfirmarComponent } from 'src/app/SHARED/componente/dialogo-confirmar/dialogo-confirmar.component';
 @Component({
-    selector: 'app-transferencia-cuenta',
-    templateUrl: './transferencia-cuenta.component.html',
-    styleUrls: ['./transferencia-cuenta.component.scss'],
-    standalone: false
+  selector: 'app-transferencia-cuenta',
+  templateUrl: './transferencia-cuenta.component.html',
+  styleUrls: ['./transferencia-cuenta.component.scss'],
+  standalone: false
 })
 export class TransferenciaCuentaComponent {
   public overlaySettings: OverlaySettings = {};
@@ -34,7 +34,7 @@ export class TransferenciaCuentaComponent {
   public valTabla = new Validacion();
 
   private IdMoneda: string = "";
-  private Visualizando : boolean = false;
+  private Visualizando: boolean = false;
 
   lstCuenta: iCuenta[] = [];
   public lstCuentabancaria: iCuentaBancaria[] = [];
@@ -42,6 +42,7 @@ export class TransferenciaCuentaComponent {
   lstCentroCosto: iCentroCosto[] = [];
   lstReembolsos: IReembolsos[] = [];
   lstReembolsoD = new MatTableDataSource<IReembolsosD>;
+  public Editar: boolean = false;
 
 
   @ViewChildren(IgxComboComponent)
@@ -86,7 +87,7 @@ export class TransferenciaCuentaComponent {
     this.val.add("txtTotalCordoba", "1", "LEN>=", "0", "Total Cordoba", "");
     this.val.add("txtTotalDolar", "1", "LEN>=", "0", "Total Dolar", "");
     this.val.add("cmbReembolsoC", "1", "LEN>=", "0", "Reebolsos", "");
-    
+
 
 
     this.v_Evento("Iniciar");
@@ -148,8 +149,8 @@ export class TransferenciaCuentaComponent {
         this.V_Agregar(true);
         this.V_Agregar(false);
 
-          var bod: any = document.getElementById("body");
-       if (bod != undefined) bod.style.overflow = "";
+        var bod: any = document.getElementById("body");
+        if (bod != undefined) bod.style.overflow = "";
 
         break;
     }
@@ -178,14 +179,14 @@ export class TransferenciaCuentaComponent {
 
 
       setTimeout(() => {
-       
-        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i);        
-        
-        txtCuenta.setSelectedItem((this.IdMoneda == this.cFunciones.MonedaLocal ? _Item?.CuentaNuevaC : _Item?.CuentaNuevaD));
+
+        let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + i);
+
+        txtCuenta?.setSelectedItem((this.IdMoneda == this.cFunciones.MonedaLocal ? _Item?.CuentaNuevaC : _Item?.CuentaNuevaD));
         let det = this.lstDetalle.data.find(y => y.NoLinea == i);
-          det!.Referencia = this.val.Get("txtNoDoc").value + ' ' + this.val.Get("txtBeneficiario").value;         
-          
-         
+        det!.Referencia = this.val.Get("txtNoDoc").value + ' ' + this.val.Get("txtBeneficiario").value;
+
+
       }, 250);
 
       this.cmbCuentaBancaria.close();
@@ -228,25 +229,25 @@ export class TransferenciaCuentaComponent {
 
   @ViewChild("cmbReembolsoC", { static: false })
   public cmbReembolsoC: IgxComboComponent;
-  
-  
+
+
   public v_Select_Reembolso(event: any) {
-   
-    let detBanco : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+
+    let detBanco: iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
 
     this.val.Get("cmbReembolsoC").setValue("");
     if (event.added.length == 1) {
-      if(event.newValue.length > 1) event.newValue.splice(0, 1);
-      let _Item  = this.lstReembolsos.find(f => f.key == event.newValue[0]);
-  
-      if(window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
+      if (event.newValue.length > 1) event.newValue.splice(0, 1);
+      let _Item = this.lstReembolsos.find(f => f.key == event.newValue[0]);
 
-      if(this.Visualizando ) return;
-    
-      
-     
+      if (window.innerWidth <= this.cFunciones.TamanoPantalla("md")) this.cmbReembolsoC.close();
 
-      this.lstDetalle.data.forEach(f =>{
+      if (this.Visualizando) return;
+
+
+
+
+      this.lstDetalle.data.forEach(f => {
 
         this.valTabla.del("txtCuenta" + f.NoLinea);
         this.valTabla.del("txtReferencia" + f.NoLinea);
@@ -261,91 +262,91 @@ export class TransferenciaCuentaComponent {
       this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
       this.valTabla.add("txtReferencia1", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
       this.valTabla.add("txtCentroCosto1", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
-  
+
 
       this.lstDetalle.data.push(detBanco);
 
       this.lstDetalle._updateChangeSubscription();
 
- 
-   
 
 
-      setTimeout(() => {        
+
+
+      setTimeout(() => {
         this.SumIVA = 0;
         _Item?.DetalleCaja.forEach(f => {
-          let i : number  = this.V_Agregar(false);
+          let i: number = this.V_Agregar(false);
           let det = this.lstDetalle.data.find(y => y.NoLinea == i);
           det!.CuentaContable = [f.Cuenta];
           det!.CentroCosto = [f.CentroCosto];
-          det!.Referencia =  String(f.Referencia);
+          det!.Referencia = String(f.Referencia);
           det!.Debito = this.cFunciones.NumFormat(f.SubTotal, "2");
           det!.Naturaleza = "D";
           this.SumValor += f.Total;
           this.SumIVA += f.Iva;
           detBanco!.Credito = this.cFunciones.NumFormat(this.SumValor, "2");
- 
-          this.valTabla.Get( "txtCuenta" + i).setValue([f.Cuenta]);
-         this.valTabla.Get( "txtCentroCosto" + i).setValue([f.CentroCosto]);
+
+          this.valTabla.Get("txtCuenta" + i).setValue([f.Cuenta]);
+          this.valTabla.Get("txtCentroCosto" + i).setValue([f.CentroCosto]);
 
 
-         this.V_Calcular();
-     
-       })
+          this.V_Calcular();
 
-       if (this.SumIVA > 0) {
-        let i : number  = this.V_Agregar(false);
+        })
+
+        if (this.SumIVA > 0) {
+          let i: number = this.V_Agregar(false);
           let det = this.lstDetalle.data.find(y => y.NoLinea == i);
           det!.CuentaContable = ['1105-01-01-0001'];
           det!.CentroCosto = "";
-          det!.Referencia =  "IVA";
+          det!.Referencia = "IVA";
           det!.Debito = this.cFunciones.NumFormat(this.SumIVA, "2");
           det!.Naturaleza = "D";
 
-          this.valTabla.Get( "txtCuenta" + i).setValue(['1105-01-01-0001']);
-          this.valTabla.Get( "txtCentroCosto" + i).setValue("");
+          this.valTabla.Get("txtCuenta" + i).setValue(['1105-01-01-0001']);
+          this.valTabla.Get("txtCentroCosto" + i).setValue("");
           this.V_Calcular();
-      }
-       
+        }
+
       });
 
 
 
 
-      
-     }
-     else{
 
-      if(this.Visualizando ) return;
+    }
+    else {
+
+      if (this.Visualizando) return;
 
       detBanco.Debito = "0";
       detBanco.Credito = "0";
 
-      let det : iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
+      let det: iAsientoDetalle = this.lstDetalle.data.find(f => f.NoLinea == 1)!;
 
       this.lstDetalle.data.splice(0, this.lstDetalle.data.length);
       this.valTabla = new Validacion();
       this.valTabla.add("txtCuenta1", "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
       this.valTabla.add("txtReferencia1", "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
       this.valTabla.add("txtCentroCosto1", "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
-  
+
 
       this.lstDetalle.data.push(det);
 
       this.lstDetalle._updateChangeSubscription();
 
-     }
+    }
   }
-  
+
   public v_Enter_Reembolso(event: any) {
-    if(this.Visualizando ) return;
+    if (this.Visualizando) return;
     if (event.key == "Enter") {
-      let cmb : any = this.cmbReembolsoC.dropdown;
-      let _Item: IReembolsos = cmb._focusedItem.value;    
-       
+      let cmb: any = this.cmbReembolsoC.dropdown;
+      let _Item: IReembolsos = cmb._focusedItem.value;
+
       this.cmbReembolsoC.setSelectedItem(_Item.Cuenta);
       this.val.Get("cmbReembolsoC").setValue([_Item.Cuenta]);
-    
+
     }
   }
 
@@ -353,10 +354,10 @@ export class TransferenciaCuentaComponent {
 
 
 
- 
 
 
-  
+
+
 
 
   //██████████████████████████████████████████CARGAR DATOS██████████████████████████████████████████████████████
@@ -497,7 +498,7 @@ export class TransferenciaCuentaComponent {
 
 
   public v_Consecutivo(): void {
-  let Fecha1 : string = this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd");
+    let Fecha1: string = this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd");
 
     this.cFunciones.GET.ConsecutivoContabilidad("EG", Fecha1).subscribe(
       {
@@ -541,7 +542,7 @@ export class TransferenciaCuentaComponent {
   //██████████████████████████████████████████TABLA██████████████████████████████████████████████████████
 
   public v_Select_Cuenta(event: any, det: iAsientoDetalle): void {
-    
+
 
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
@@ -590,17 +591,17 @@ export class TransferenciaCuentaComponent {
   }
 
 
-   public FiltroCuentaSinGuion = (collection: iCuenta[], searchValue: string, filteringOptions: IComboFilteringOptions): any[] => {
+  public FiltroCuentaSinGuion = (collection: iCuenta[], searchValue: string, filteringOptions: IComboFilteringOptions): any[] => {
     if (!searchValue) {
       return collection;
     }
-  
+
     return collection.filter(item =>
       item.NombreCuenta.replaceAll("-", "").toLowerCase().includes(searchValue.toLowerCase())
     );
   };
-  
-  
+
+
 
   public v_Select_CentroCosto(event: any, det: iAsientoDetalle): void {
 
@@ -644,7 +645,7 @@ export class TransferenciaCuentaComponent {
 
       if (columna == "txtDebito") {
 
-        if (Number(det.Credito.replaceAll(",", ""))) { 
+        if (Number(det.Credito.replaceAll(",", ""))) {
           det.Credito = "0.00";
         }
 
@@ -671,12 +672,12 @@ export class TransferenciaCuentaComponent {
   }
 
 
-  
+
   public V_FocusOut(columna: string, det: iAsientoDetalle) {
 
 
     let vacio = ["0.00", "0", ""];
-    if (columna == "txtDebito" &&  !vacio.includes(det.Debito) ) {
+    if (columna == "txtDebito" && !vacio.includes(det.Debito)) {
 
       if (Number(det.Credito.replaceAll(",", ""))) {
         det.Credito = "0.00";
@@ -686,7 +687,7 @@ export class TransferenciaCuentaComponent {
 
 
 
-    if (columna == "txtCredito" &&  !vacio.includes(det.Credito))  {
+    if (columna == "txtCredito" && !vacio.includes(det.Credito)) {
 
       if (Number(det.Debito.replaceAll(",", ""))) {
         det.Debito = "0.00";
@@ -871,10 +872,17 @@ export class TransferenciaCuentaComponent {
 
 
 
-  public v_Guardar(): void {
+  public async v_Guardar(): Promise<any> {
 
-    this.val.EsValido();
+
+    if(this.esModal) await this.FormarActualizacionComponente(true);
+
+
+      this.val.EsValido();
     this.valTabla.EsValido();
+
+   
+
 
 
     if (this.val.Errores != "") {
@@ -882,6 +890,7 @@ export class TransferenciaCuentaComponent {
         data: this.val.Errores,
       });
 
+      if(this.esModal) await this.FormarActualizacionComponente(false);
       return;
     }
 
@@ -892,9 +901,12 @@ export class TransferenciaCuentaComponent {
         data: this.valTabla.Errores,
       });
 
+      if(this.esModal) await this.FormarActualizacionComponente(false);
       return;
     }
 
+    if(this.esModal) await this.FormarActualizacionComponente(false);
+    
 
     if (this.dec_Dif != 0) {
       this.cFunciones.DIALOG.open(DialogErrorComponent, {
@@ -933,7 +945,7 @@ export class TransferenciaCuentaComponent {
 
 
     let Asiento: iAsiento = {} as iAsiento;
-    if(this.esModal) Asiento.IdAsiento = -1;
+    if (this.esModal) Asiento.IdAsiento = -1;
     let CuentaBancaria = this.lstCuentabancaria.find(f => f.IdCuentaBanco == this.FILA.IdCuentaBanco);
 
 
@@ -957,7 +969,11 @@ export class TransferenciaCuentaComponent {
     Asiento.Estado = "";
 
     Asiento.AsientosContablesDetalle.forEach(f => {
-      f.CuentaContable = f.CuentaContable[0];
+
+       if(Array.isArray(f.CuentaContable)){
+        f.CuentaContable = f.CuentaContable[0];
+       }
+      
       if (f.CentroCosto != undefined) f.CentroCosto = f.CentroCosto[0];
     });
 
@@ -1010,14 +1026,13 @@ export class TransferenciaCuentaComponent {
 
 
 
-            if (!this.esModal)
-              {
-                this.V_GenerarDoc(Datos[0], false);
-                this.v_Evento("Limpiar");
-              }
+            if (!this.esModal) {
+              this.V_GenerarDoc(Datos[0], false);
+              this.v_Evento("Limpiar");
+            }
 
-            
-    
+
+
 
           }
 
@@ -1059,7 +1074,7 @@ export class TransferenciaCuentaComponent {
     this.val.Get("cmbReembolsoC").disable();
     this.IdMoneda = this.FILA.IdMoneda;
 
-    let rem : IReembolsos = {} as IReembolsos;
+    let rem: IReembolsos = {} as IReembolsos;
     rem.IdIngresoCajaChica = this.FILA.IdIngresoCajaChica;
     rem.Cuenta = this.FILA.CuentaCaja;
     rem.key = this.FILA.CuentaCaja;
@@ -1089,22 +1104,22 @@ export class TransferenciaCuentaComponent {
         f.Credito = this.cFunciones.NumFormat(Number(String(f.Credito).replaceAll(",", "")), "2");
 
         let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
-        txtCuenta.select([f.CuentaContable]);
+        txtCuenta?.select([f.CuentaContable]);
 
 
-       // if (!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable);
+        // if (!txtCuenta.selection[0]?.CuentaContable.includes(f.CuentaContable[0])) txtCuenta.setSelectedItem(f.CuentaContable);
 
 
 
 
         this.valTabla.Get("txtCuenta" + f.NoLinea).setValue(f.CuentaContable);
         this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
-       
+
 
 
         let txtCentro: any = this.cmbCombo.find(y => y.id == "txtCentroCosto" + f.NoLinea);
         //if (!txtCentro.selection[0]?.Codigo.includes(f.CentroCosto[0]) && f.CentroCosto != undefined) txtCentro.setSelectedItem(f.CentroCosto);
-        txtCentro.select([f.CentroCosto]);
+        txtCentro?.select([f.CentroCosto]);
 
 
         document.getElementById("txtCentroCosto" + f.NoLinea)?.setAttribute("disabled", "disabled");
@@ -1126,166 +1141,166 @@ export class TransferenciaCuentaComponent {
 
 
 
-  
-  
-    public V_Imprimir(Exportar : boolean) {
-  
-      let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
-        DialogoConfirmarComponent,
-        {
-          panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
-          disableClose: true
-        }
-      );
-  
-  
-  
-      dialogRef.afterOpened().subscribe(s => {
-
-        dialogRef.componentInstance.textBoton1 = "CORDOBA";
-        dialogRef.componentInstance.textBoton2 = "DOLARES";
-        dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
-        dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
-        dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>"+ (Exportar ? "EXPORTAR" : "IMPRIMIR") +"</b></p><p style='text-align: center'><b style='color: blue'>" + this.val.Get("txtNoDoc").value + "</b></p>")
-  
-      });
-  
-  
-      dialogRef.afterClosed().subscribe(s => {
-  
-        if (dialogRef.componentInstance.retorno == "0") {
-          this.V_ImprimirDoc(Exportar, "",);
-        }
-  
-        if (dialogRef.componentInstance.retorno == "1") {
-       
-          this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal);
-        }
-  
-      });
-  
-  
-  
-    }
-  
 
 
-    
-      private V_ImprimirDoc(Exportar: boolean, Moneda : string): void {
-    
-    
-    
-      document.getElementById("btnImprimir-asiento-transferencia")?.setAttribute("disabled", "disabled");
-    
-      let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
-    
-    
-      if (dialogRef == undefined) {
-          dialogRef = this.cFunciones.DIALOG.open(
-              WaitComponent,
-              {
-                  panelClass: "escasan-dialog-full-blur",
-                  data: "",
-                  id: "wait"
-              }
-          );
-    
+  public V_Imprimir(Exportar: boolean) {
+
+    let dialogRef: MatDialogRef<DialogoConfirmarComponent> = this.cFunciones.DIALOG.open(
+      DialogoConfirmarComponent,
+      {
+        panelClass: window.innerWidth < 992 ? "escasan-dialog-full" : "escasan-dialog",
+        disableClose: true
       }
-    
-    
-    
-    
-      this.GET.GetReporteAsiento(this.FILA.IdTransferencia, Moneda, Exportar).subscribe(
-          {
-              next: (data) => {
-    
-    
-                  dialogRef.close();
-                  let _json: any = data;
-        
-                  if (_json["esError"] == 1) {
-                    if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
-                      this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                        id: "error-servidor-msj",
-                        data: _json["msj"].Mensaje,
-                      });
-                    }
-                  }
-                  else {
-        
-                    this.V_GenerarDoc(_json["d"], Exportar);
-    
-                  }
-    
-                  
-    
-              },
-              error: (err) => {
-    
-                  document.getElementById("btnImprimir-asiento-transferencia")?.removeAttribute("disabled");
-    
-                  dialogRef.close();
-    
-                  if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
-                      this.cFunciones.DIALOG.open(DialogErrorComponent, {
-                          id: "error-servidor",
-                          data: "<b class='error'>" + err.message + "</b>",
-                      });
-                  }
-    
-              },
-              complete: () => {
-                  document.getElementById("btnImprimir-asiento-transferencia")?.removeAttribute("disabled");
-    
-              }
-          }
+    );
+
+
+
+    dialogRef.afterOpened().subscribe(s => {
+
+      dialogRef.componentInstance.textBoton1 = "CORDOBA";
+      dialogRef.componentInstance.textBoton2 = "DOLARES";
+      dialogRef.componentInstance.Set_StyleBtn1("width: 150px");
+      dialogRef.componentInstance.Set_StyleBtn2("width: 150px");
+      dialogRef.componentInstance.SetMensajeHtml("<p style='text-align: center;'><b>" + (Exportar ? "EXPORTAR" : "IMPRIMIR") + "</b></p><p style='text-align: center'><b style='color: blue'>" + this.val.Get("txtNoDoc").value + "</b></p>")
+
+    });
+
+
+    dialogRef.afterClosed().subscribe(s => {
+
+      if (dialogRef.componentInstance.retorno == "0") {
+        this.V_ImprimirDoc(Exportar, "",);
+      }
+
+      if (dialogRef.componentInstance.retorno == "1") {
+
+        this.V_ImprimirDoc(Exportar, this.cFunciones.MonedaLocal);
+      }
+
+    });
+
+
+
+  }
+
+
+
+
+  private V_ImprimirDoc(Exportar: boolean, Moneda: string): void {
+
+
+
+    document.getElementById("btnImprimir-asiento-transferencia")?.setAttribute("disabled", "disabled");
+
+    let dialogRef: any = this.cFunciones.DIALOG.getDialogById("wait");
+
+
+    if (dialogRef == undefined) {
+      dialogRef = this.cFunciones.DIALOG.open(
+        WaitComponent,
+        {
+          panelClass: "escasan-dialog-full-blur",
+          data: "",
+          id: "wait"
+        }
       );
-    
-    
+
     }
-    
-  
+
+
+
+
+    this.GET.GetReporteAsiento(this.FILA.IdTransferencia, Moneda, Exportar).subscribe(
+      {
+        next: (data) => {
+
+
+          dialogRef.close();
+          let _json: any = data;
+
+          if (_json["esError"] == 1) {
+            if (this.cFunciones.DIALOG.getDialogById("error-servidor-msj") == undefined) {
+              this.cFunciones.DIALOG.open(DialogErrorComponent, {
+                id: "error-servidor-msj",
+                data: _json["msj"].Mensaje,
+              });
+            }
+          }
+          else {
+
+            this.V_GenerarDoc(_json["d"], Exportar);
+
+          }
+
+
+
+        },
+        error: (err) => {
+
+          document.getElementById("btnImprimir-asiento-transferencia")?.removeAttribute("disabled");
+
+          dialogRef.close();
+
+          if (this.cFunciones.DIALOG.getDialogById("error-servidor") == undefined) {
+            this.cFunciones.DIALOG.open(DialogErrorComponent, {
+              id: "error-servidor",
+              data: "<b class='error'>" + err.message + "</b>",
+            });
+          }
+
+        },
+        complete: () => {
+          document.getElementById("btnImprimir-asiento-transferencia")?.removeAttribute("disabled");
+
+        }
+      }
+    );
+
+
+  }
+
+
 
   private V_GenerarDoc(Datos: iDatos, Exportar: boolean) {
 
 
     let byteArray = new Uint8Array(atob(Datos.d).split('').map(char => char.charCodeAt(0)));
-  
+
     var file = new Blob([byteArray], { type: (Exportar ? 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' : 'application/pdf') });
-  
-  
+
+
     let url = URL.createObjectURL(file);
-  
-   
+
+
     var fileLink = document.createElement('a');
     fileLink.href = url;
     fileLink.download = Datos.Nombre;
-  
-  
+
+
     if (Exportar) {
-  
-        var fileLink = document.createElement('a');
-        fileLink.href = url;
-        fileLink.download = Datos.Nombre;
-        fileLink.click();
-        document.body.removeChild(fileLink);
+
+      var fileLink = document.createElement('a');
+      fileLink.href = url;
+      fileLink.download = Datos.Nombre;
+      fileLink.click();
+      document.body.removeChild(fileLink);
     }
     else {
-        let tabOrWindow: any = window.open('',  '_blank');
-        tabOrWindow.document.body.appendChild(fileLink);
-  
-        tabOrWindow.document.write("<html><head><title>"+Datos.Nombre+"</title></head><body>"
-            + '<embed width="100%" height="100%" name="plugin" src="'+ url+ '" '
-            + 'type="application/pdf" internalinstanceid="21"></body></html>');
-  
-        tabOrWindow.focus();
+      let tabOrWindow: any = window.open('', '_blank');
+      tabOrWindow.document.body.appendChild(fileLink);
+
+      tabOrWindow.document.write("<html><head><title>" + Datos.Nombre + "</title></head><body>"
+        + '<embed width="100%" height="100%" name="plugin" src="' + url + '" '
+        + 'type="application/pdf" internalinstanceid="21"></body></html>');
+
+      tabOrWindow.focus();
     }
-  
-  
-  
+
+
+
   }
 
-  
+
   ngOnInit(): void {
 
 
@@ -1308,6 +1323,46 @@ export class TransferenciaCuentaComponent {
 
 
 
+  public async FormarActualizacionComponente(estado : boolean): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+
+      this.valTabla = new Validacion();
+
+      this.lstDetalle.data.forEach(f => {
+
+        f.Editar = estado;
+
+        this.valTabla = new Validacion();
+        this.valTabla.add("txtCuenta" + f.NoLinea, "1", "LEN>", "0", "Cuenta", "Seleccione un numero de cuenta.");
+        this.valTabla.add("txtReferencia" + f.NoLinea, "1", "LEN>", "0", "Referencia", "Ingrese una referencia.");
+        this.valTabla.add("txtCentroCosto" + f.NoLinea, "1", "LEN>=", "0", "Centro Costo", "Seleccione un centro de costo.");
+        this.valTabla.Get("txtCuenta" + f.NoLinea).setValue([f.CuentaContable]);
+        this.valTabla.Get("txtReferencia" + f.NoLinea).setValue(f.Referencia);
+        this.valTabla.Get("txtCentroCosto" + f.NoLinea).setValue([f.CentroCosto]);
+
+
+      });
+
+
+
+        setTimeout(() => {
+
+        resolve(true);
+
+
+
+      }, 250);
+
+
+
+      
+    
+    });
+  }
+   
+ 
+
+
 
   ngDoCheck() {
 
@@ -1324,25 +1379,24 @@ export class TransferenciaCuentaComponent {
 
     if (this.cmbCuentaBancaria != undefined) this.cmbCuentaBancaria.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
     if (this.cmbBodega != undefined) this.cmbBodega.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
-    if(window.innerWidth < this.cFunciones.TamanoPantalla("md")) if(this.datepiker != undefined) this.datepiker.mode="dialog";
-     
-   
+    if (window.innerWidth < this.cFunciones.TamanoPantalla("md")) if (this.datepiker != undefined) this.datepiker.mode = "dialog";
+
+
 
 
 
     this.lstDetalle.data.forEach(f => {
-
-
       if (this.cmbCuenta != undefined) {
+
         let txtCuenta: any = this.cmbCuenta.find(y => y.id == "txtCuenta" + f.NoLinea);
         if (txtCuenta != undefined) txtCuenta.itemsWidth = (window.innerWidth <= 768 ? String(window.innerWidth) : "720") + "px";
 
-        if(f.NoLinea == 1)
-        {
+        if (f.NoLinea == 1) {
 
-          let cBanco : any = this.lstCuentabancaria.find(w => w.IdCuentaBanco == this.cmbCuentaBancaria?.value[0]);
+          let cBanco: any = this.lstCuentabancaria.find(w => w.IdCuentaBanco == this.cmbCuentaBancaria?.value[0]);
 
-          txtCuenta.setSelectedItem(cBanco?.IdMoneda == this.cFunciones.MonedaLocal? cBanco?.CuentaNuevaC : cBanco?.CuentaNuevaD);
+          txtCuenta?.setSelectedItem(cBanco?.IdMoneda == this.cFunciones.MonedaLocal ? cBanco?.CuentaNuevaC : cBanco?.CuentaNuevaD);
+
 
           document.getElementById("txtCuenta" + f.NoLinea)?.setAttribute("disabled", "disabled");
 
@@ -1370,10 +1424,66 @@ export class TransferenciaCuentaComponent {
 
   }
 
+  public V_EditarFila(det: any) {
+    det.Editar = !det.Editar;
+
+    if (det.Editar) {
+      setTimeout(() => {
+
+        let Cuenta: any = det.CuentaContable;
+        let Centro: any = det.CentroCosto;
+
+
+        if (Cuenta instanceof Array) {
+          Cuenta = det.CuentaContable[0]
+        }
+
+
+
+        if (Centro instanceof Array) {
+          Centro = det.CentroCosto[0]
+        }
+
+
+
+        let txtCuenta: any = this.cmbCombo.find(y => y.id == "txtCuenta" + det.NoLinea);
+        // txtCuenta.deselectAllItems();
+        txtCuenta.select([Cuenta]);
+
+
+
+        let txtCentro: any = this.cmbCombo.find(y => y.id == "txtCentroCosto" + det.NoLinea);
+        //  txtCentro.deselectAllItems();
+        txtCentro.select([Centro]);
+
+
+
+
+        if (!this.Editar) {
+          txtCuenta.disabled = true;
+          txtCentro.disabled = true;
+
+          document.getElementById("txtCuenta" + det.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtReferencia" + det.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCentroCosto" + det.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtDebito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+          document.getElementById("txtCredito" + det.NoLinea)?.setAttribute("disabled", "disabled");
+
+        }
+
+
+
+      }, 250);
+
+    }
+
+
+
+  }
 
   ngAfterViewInit(): void {
     $("#offcanvasBottom-trans-cuenta").removeAttr("show");
-    $("#btnMostrarPie-trans-cuenta").trigger("click"); 
+    $("#btnMostrarPie-trans-cuenta").trigger("click");
 
   }
 
