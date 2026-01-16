@@ -63,7 +63,7 @@ export class TransferenciaSaldoComponent {
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iTransferenciaDocumento>;
   private lstDetalleAsiento: iAsientoDetalle[] = [];
-  private lstOrdenCompraCentroGasto: iOrdenCompraCentroGasto[] = [];
+  public lstOrdenCompraCentroGasto: iOrdenCompraCentroGasto[] = [];
   private lstAnticipo: iAnticipoDoc[] = [];
 
 
@@ -1126,7 +1126,6 @@ export class TransferenciaSaldoComponent {
 
 
 
-
     if(!this.esModal){
       this.Asiento = {} as iAsiento;
     }
@@ -1942,7 +1941,6 @@ export class TransferenciaSaldoComponent {
     this.val.Get("txtComision").setValue(this.cFunciones.NumFormat(this.FILA.Comision, "2"));
 
 
-
     // Ascending
     //this.lstDetalle.data.sort((a,b) => 0 - (a > b ? -1 : 1));
 
@@ -1951,6 +1949,8 @@ export class TransferenciaSaldoComponent {
 
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.TransferenciaDocumento.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
     this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.TranferenciaRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
+    this.lstOrdenCompraCentroGasto = JSON.parse(JSON.stringify(this.FILA.OrdenCompraCentroGasto));
+
 
   
 

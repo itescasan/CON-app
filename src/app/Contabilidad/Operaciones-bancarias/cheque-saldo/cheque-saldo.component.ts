@@ -1929,6 +1929,7 @@ export class ChequesSaldoComponent {
 
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
     this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.ChequeRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
+    this.lstOrdenCompraCentroGasto = JSON.parse(JSON.stringify(this.FILA.OrdenCompraCentroGasto));
 
     // this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento));
     // this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.ChequeRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));

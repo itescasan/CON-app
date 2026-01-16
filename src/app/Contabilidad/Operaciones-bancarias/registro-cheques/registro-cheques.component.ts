@@ -390,6 +390,8 @@ export class RegistroChequesComponent {
                     dialogCheque.componentInstance.FILA.ChequeRetencion = JSON.parse(JSON.stringify(datos[1].d));
                     dialogCheque.componentInstance.Asiento = JSON.parse(JSON.stringify(datos[2].d));
                     dialogCheque.componentInstance.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(datos[3].d));
+                    dialogCheque.componentInstance.FILA.OrdenCompraCentroGasto = JSON.parse(JSON.stringify(datos[4].d));
+
     
     
                     dialogCheque.componentInstance.v_CargarDatos();
