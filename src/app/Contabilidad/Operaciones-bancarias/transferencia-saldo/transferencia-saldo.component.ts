@@ -1178,7 +1178,7 @@ export class TransferenciaSaldoComponent {
 
 
     this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
-
+console.log("sd")
       let det: iAsientoDetalle = {} as iAsientoDetalle;
 
       let OrdComp: iOrdenCompraCentroGasto[] = this.lstOrdenCompraCentroGasto.filter(g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
@@ -1505,8 +1505,8 @@ export class TransferenciaSaldoComponent {
           this.Nueva_Linea_Asiento(Number(w.Monto.toString().replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, w.Naturaleza, "");
   
   
-          RetML += w.MontoML;
-          RetMS += w.MontoMS;
+          RetML += this.cFunciones.Redondeo(w.MontoML, "2");
+          RetMS += this.cFunciones.Redondeo(w.MontoMS, "2");
         });
   
       }
@@ -1560,7 +1560,7 @@ export class TransferenciaSaldoComponent {
     }
 
     if (AjusteML < 0) {
-      this.Nueva_Linea_Asiento(AjusteML, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
+      this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
     }
 
 
@@ -1571,7 +1571,7 @@ export class TransferenciaSaldoComponent {
     }
 
     if (AjusteMS < 0) {
-      this.Nueva_Linea_Asiento(AjusteMS, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
+      this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
     }
 
 
