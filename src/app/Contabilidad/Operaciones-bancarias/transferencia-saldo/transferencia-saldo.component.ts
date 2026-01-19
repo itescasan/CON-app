@@ -849,7 +849,7 @@ export class TransferenciaSaldoComponent {
       if (l_retenciones.length == 0 && f.Operacion == "Cancelación") l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
 
 
-
+ 
 
       l_retenciones.forEach(r => {
 
@@ -857,27 +857,28 @@ export class TransferenciaSaldoComponent {
           let Porc: number = 1 + r.PorcImpuesto;
           let SubTotal: number = r.SubTotal; //this.cFunciones.Redondeo(Importe / Porc, "2");
           //let SubTotal: number = Importe;
-          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "2");
-          if (!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "2");
+          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "4");
+          if (!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "4");
         }
 
 
         if (Importe == 0) r.Monto = "0";
-        r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "2");
+        r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "4");
 
 
         let Retencion: number = Number(String(r.Monto).replaceAll(",", ""));
         this.dec_Retencion += Retencion;
 
+       
 
         if (this.cFunciones.MonedaLocal == this.IdMoneda) {
-          r.MontoML = this.cFunciones.Redondeo(Retencion, "2");
-          r.MontoMS = this.cFunciones.Redondeo(r.MontoML / this.TC, "2");
+          r.MontoML = this.cFunciones.Redondeo(Retencion, "4");
+          r.MontoMS = this.cFunciones.Redondeo(r.MontoML / this.TC, "4");
 
         }
         else {
-          r.MontoMS = this.cFunciones.Redondeo(Retencion, "2");
-          r.MontoML = this.cFunciones.Redondeo(r.MontoMS * this.TC, "2");
+          r.MontoMS = this.cFunciones.Redondeo(Retencion, "4");
+          r.MontoML = this.cFunciones.Redondeo(r.MontoMS * this.TC, "4");
         }
 
         if (Retencion != 0) f.Retenido = true;
@@ -1590,6 +1591,7 @@ export class TransferenciaSaldoComponent {
 
     this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
 
+    console.log(this.Asiento.AsientosContablesDetalle); 
 
   }
 
@@ -1598,7 +1600,7 @@ export class TransferenciaSaldoComponent {
     let det: iAsientoDetalle = {} as iAsientoDetalle;
 
     if (Monto == 0) return det;
-    Monto = this.cFunciones.Redondeo(Monto, "2");
+    Monto = this.cFunciones.Redondeo(Monto, "4");
 
 
     let i: number = 1;
@@ -1659,12 +1661,12 @@ export class TransferenciaSaldoComponent {
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
             det.Debito = String(Monto);
             det.DebitoML = Monto;
-            det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+            det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "4");
           }
           else {
             det.Debito = String(Monto);
             det.DebitoMS = Monto;
-            det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+            det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "4");
           }
 
 
@@ -1707,12 +1709,12 @@ export class TransferenciaSaldoComponent {
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
             det.Credito = String(Monto);
             det.CreditoML = Monto;
-            det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+            det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "4");
           }
           else {
             det.Credito = String(Monto);
             det.CreditoMS = Monto;
-            det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+            det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "4");
           }
 
 
@@ -1727,6 +1729,10 @@ export class TransferenciaSaldoComponent {
     }
 
 
+    det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
+    det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
+    det.CreditoML = this.cFunciones.Redondeo(det.CreditoML, "2");
+    det.CreditoMS = this.cFunciones.Redondeo(det.CreditoMS, "2");
 
 
     this.lstDetalleAsiento.push(det);
