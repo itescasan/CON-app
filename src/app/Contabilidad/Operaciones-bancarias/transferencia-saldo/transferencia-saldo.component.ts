@@ -1309,10 +1309,10 @@ export class TransferenciaSaldoComponent {
             if(f.TipoDocumento == "GASTO_CRE") Cuentagasto = i_Prov.CUENTAANTICIPO
 
             if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento + this.val.GetValue("txtConcepto"), f.Documento, f.TipoDocumento, "D", "");
             }
             else {
-              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento + this.val.GetValue("txtConcepto"), f.Documento, f.TipoDocumento, "D", "");
 
             }
 
