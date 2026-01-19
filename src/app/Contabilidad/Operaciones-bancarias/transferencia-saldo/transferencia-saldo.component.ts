@@ -1178,7 +1178,8 @@ export class TransferenciaSaldoComponent {
 
 
     this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
-console.log("sd")
+
+      
       let det: iAsientoDetalle = {} as iAsientoDetalle;
 
       let OrdComp: iOrdenCompraCentroGasto[] = this.lstOrdenCompraCentroGasto.filter(g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
@@ -1591,7 +1592,6 @@ console.log("sd")
 
     this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
 
-    console.log(this.Asiento.AsientosContablesDetalle); 
 
   }
 

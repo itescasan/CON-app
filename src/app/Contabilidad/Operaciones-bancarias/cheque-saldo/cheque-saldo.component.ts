@@ -1550,7 +1550,7 @@ export class ChequesSaldoComponent {
     }
 
     if (AjusteML < 0) {
-      this.Nueva_Linea_Asiento(AjusteML, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
+      this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
     }
 
 
@@ -1561,7 +1561,7 @@ export class ChequesSaldoComponent {
     }
 
     if (AjusteMS < 0) {
-      this.Nueva_Linea_Asiento(AjusteMS, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
+      this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
     }
 
 
