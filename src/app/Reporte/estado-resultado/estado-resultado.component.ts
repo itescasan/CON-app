@@ -167,7 +167,7 @@ export class EstadoResultadoComponent {
     }
 
     
-    this.GET.GetEstadoResultado(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value[0],
+    this.GET.GetEstadoResultado(this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "yyyy-MM-dd"), this.val.Get("cmbMoneda").value,
      this.val.Get("cmbTipo").value).subscribe(      
       {
         next: (data) => {
