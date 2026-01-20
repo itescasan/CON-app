@@ -54,7 +54,8 @@ export class getTransferencia {
 
 
     
-    public GetReporteAsiento(IdTransferencia : string, Moneda : string, Exportar : boolean): Observable<string> {
+    public GetReporteAsiento(IdTransferencia : any, Moneda : string, Exportar : boolean): Observable<string> {
+        console.log(this._Cnx.Url() + "Contabilidad/Transferencia/GetReporteAsiento?IdTransferencia=" + IdTransferencia + "&Moneda=" + Moneda + "&Exportar=" + Exportar)
         return this.http.get<any>(this._Cnx.Url() + "Contabilidad/Transferencia/GetReporteAsiento?IdTransferencia=" + IdTransferencia + "&Moneda=" + Moneda + "&Exportar=" + Exportar).pipe(timeout(this._Cnx.Timeout));
     }
 

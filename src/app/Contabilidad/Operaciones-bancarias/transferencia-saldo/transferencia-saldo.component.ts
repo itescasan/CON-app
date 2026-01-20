@@ -63,7 +63,7 @@ export class TransferenciaSaldoComponent {
   displayedColumns: string[] = ["col1"];
   public lstDetalle = new MatTableDataSource<iTransferenciaDocumento>;
   private lstDetalleAsiento: iAsientoDetalle[] = [];
-  private lstOrdenCompraCentroGasto: iOrdenCompraCentroGasto[] = [];
+  public lstOrdenCompraCentroGasto: iOrdenCompraCentroGasto[] = [];
   private lstAnticipo: iAnticipoDoc[] = [];
 
 
@@ -849,7 +849,7 @@ export class TransferenciaSaldoComponent {
       if (l_retenciones.length == 0 && f.Operacion == "Cancelación") l_retenciones = this.lstRetencionAutomatica.filter(w => w.Documento == f.Documento && w.TipoDocumento == f.TipoDocumento);
 
 
-
+ 
 
       l_retenciones.forEach(r => {
 
@@ -857,27 +857,28 @@ export class TransferenciaSaldoComponent {
           let Porc: number = 1 + r.PorcImpuesto;
           let SubTotal: number = r.SubTotal; //this.cFunciones.Redondeo(Importe / Porc, "2");
           //let SubTotal: number = Importe;
-          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "2");
-          if (!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "2");
+          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "4");
+          if (!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "4");
         }
 
 
         if (Importe == 0) r.Monto = "0";
-        r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "2");
+        r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "4");
 
 
         let Retencion: number = Number(String(r.Monto).replaceAll(",", ""));
         this.dec_Retencion += Retencion;
 
+       
 
         if (this.cFunciones.MonedaLocal == this.IdMoneda) {
-          r.MontoML = this.cFunciones.Redondeo(Retencion, "2");
-          r.MontoMS = this.cFunciones.Redondeo(r.MontoML / this.TC, "2");
+          r.MontoML = this.cFunciones.Redondeo(Retencion, "4");
+          r.MontoMS = this.cFunciones.Redondeo(r.MontoML / this.TC, "4");
 
         }
         else {
-          r.MontoMS = this.cFunciones.Redondeo(Retencion, "2");
-          r.MontoML = this.cFunciones.Redondeo(r.MontoMS * this.TC, "2");
+          r.MontoMS = this.cFunciones.Redondeo(Retencion, "4");
+          r.MontoML = this.cFunciones.Redondeo(r.MontoMS * this.TC, "4");
         }
 
         if (Retencion != 0) f.Retenido = true;
@@ -1126,7 +1127,6 @@ export class TransferenciaSaldoComponent {
 
 
 
-
     if(!this.esModal){
       this.Asiento = {} as iAsiento;
     }
@@ -1179,6 +1179,7 @@ export class TransferenciaSaldoComponent {
 
     this.lstDetalle.data.filter(f => Number(f.Importe.replaceAll(",", "")) > 0).forEach(f => {
 
+      
       let det: iAsientoDetalle = {} as iAsientoDetalle;
 
       let OrdComp: iOrdenCompraCentroGasto[] = this.lstOrdenCompraCentroGasto.filter(g => g.NoDocOrigen == f.Documento && g.TipoDocOrigen == f.TipoDocumento)
@@ -1310,10 +1311,10 @@ export class TransferenciaSaldoComponent {
             if(f.TipoDocumento == "GASTO_CRE") Cuentagasto = i_Prov.CUENTAANTICIPO
 
             if (this.IdMoneda == this.cFunciones.MonedaLocal) {
-              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento + this.val.GetValue("txtConcepto"), f.Documento, f.TipoDocumento, "D", "");
             }
             else {
-              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento, f.Documento, f.TipoDocumento, "D", "");
+              det = this.Nueva_Linea_Asiento((Importe - Impuesto) , Cuentagasto, f.Documento + this.val.GetValue("txtConcepto"), f.Documento, f.TipoDocumento, "D", "");
 
             }
 
@@ -1505,8 +1506,8 @@ export class TransferenciaSaldoComponent {
           this.Nueva_Linea_Asiento(Number(w.Monto.toString().replaceAll(",", "")), w.CuentaContable, w.Retencion + " Doc:" + f.Documento, f.Documento, f.TipoDocumento, w.Naturaleza, "");
   
   
-          RetML += w.MontoML;
-          RetMS += w.MontoMS;
+          RetML += this.cFunciones.Redondeo(w.MontoML, "2");
+          RetMS += this.cFunciones.Redondeo(w.MontoMS, "2");
         });
   
       }
@@ -1560,7 +1561,7 @@ export class TransferenciaSaldoComponent {
     }
 
     if (AjusteML < 0) {
-      this.Nueva_Linea_Asiento(AjusteML, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
+      this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
     }
 
 
@@ -1571,7 +1572,7 @@ export class TransferenciaSaldoComponent {
     }
 
     if (AjusteMS < 0) {
-      this.Nueva_Linea_Asiento(AjusteMS, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
+      this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
     }
 
 
@@ -1599,7 +1600,7 @@ export class TransferenciaSaldoComponent {
     let det: iAsientoDetalle = {} as iAsientoDetalle;
 
     if (Monto == 0) return det;
-    Monto = this.cFunciones.Redondeo(Monto, "2");
+    Monto = this.cFunciones.Redondeo(Monto, "4");
 
 
     let i: number = 1;
@@ -1660,12 +1661,12 @@ export class TransferenciaSaldoComponent {
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
             det.Debito = String(Monto);
             det.DebitoML = Monto;
-            det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+            det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "4");
           }
           else {
             det.Debito = String(Monto);
             det.DebitoMS = Monto;
-            det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+            det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "4");
           }
 
 
@@ -1708,12 +1709,12 @@ export class TransferenciaSaldoComponent {
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
             det.Credito = String(Monto);
             det.CreditoML = Monto;
-            det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+            det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "4");
           }
           else {
             det.Credito = String(Monto);
             det.CreditoMS = Monto;
-            det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+            det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "4");
           }
 
 
@@ -1728,6 +1729,10 @@ export class TransferenciaSaldoComponent {
     }
 
 
+    det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
+    det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
+    det.CreditoML = this.cFunciones.Redondeo(det.CreditoML, "2");
+    det.CreditoMS = this.cFunciones.Redondeo(det.CreditoMS, "2");
 
 
     this.lstDetalleAsiento.push(det);
@@ -1942,7 +1947,6 @@ export class TransferenciaSaldoComponent {
     this.val.Get("txtComision").setValue(this.cFunciones.NumFormat(this.FILA.Comision, "2"));
 
 
-
     // Ascending
     //this.lstDetalle.data.sort((a,b) => 0 - (a > b ? -1 : 1));
 
@@ -1951,6 +1955,8 @@ export class TransferenciaSaldoComponent {
 
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.TransferenciaDocumento.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
     this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.TranferenciaRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
+    this.lstOrdenCompraCentroGasto = JSON.parse(JSON.stringify(this.FILA.OrdenCompraCentroGasto));
+
 
   
 

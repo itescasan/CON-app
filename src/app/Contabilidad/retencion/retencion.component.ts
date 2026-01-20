@@ -148,7 +148,7 @@ export class RetencionComponent {
                 r.Monto = "0";
                 r.TieneImpuesto = doc.Impuesto == 0 ? false : true;
                 r.PorcImpuesto = 0;
-                if(r.TieneImpuesto) r.PorcImpuesto = this.cFunciones.Redondeo( doc.Impuesto / r.SubTotal, "2");
+                if(r.TieneImpuesto) r.PorcImpuesto = this.cFunciones.Redondeo( doc.Impuesto / r.SubTotal, "4");
                 r.CuentaContable = f.CuentaContable;
                 r.RetManual = false;
                 r.Naturaleza = f.Naturaleza;
@@ -251,8 +251,8 @@ export class RetencionComponent {
             let Importe: number = Number(doc.Importe.replaceAll(",", ""));
             let Porc: number = 1 + f.PorcImpuesto;
             let SubTotal: number = f.SubTotal; //this.cFunciones.Redondeo(Importe / Porc, "2");
-            let Retencion: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((f.Porcentaje / 100), "4"), "2");
-            if(!f.RetManual) f.Monto = this.cFunciones.NumFormat(Retencion, "2");
+            let Retencion: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo((f.Porcentaje / 100), "4"), "4");
+            if(!f.RetManual) f.Monto = this.cFunciones.NumFormat(Retencion, "4");
 
         
            
@@ -287,7 +287,7 @@ export class RetencionComponent {
   ngDoCheck() {
 
     this.lstRetencion.data.forEach(f => {
-      this.val.addNumberFocus("txtRerImporte" + f.Index, 2);
+      this.val.addNumberFocus("txtRerImporte" + f.Index, 4);
       this.val.addFocus("txtRerImporte" + f.Index, "txtRerImporte" + (f.Index + 1), undefined);
     });
 

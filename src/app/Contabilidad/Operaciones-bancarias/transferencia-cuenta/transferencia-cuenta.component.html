@@ -320,6 +320,10 @@
                         <td mat-cell *matCellDef="let det" (contextmenu)="V_Popup($event, det)">
                             <div class="row">
 
+                                 
+                                    
+
+
                                 <div class="col-12 col-lg-4">
                                     <div class="row">
                                         <div class="header-cell"><span>Cuenta</span></div>
@@ -327,7 +331,19 @@
                                     <div class="row">
 
 
-                                        <form autocomplete="off">
+                                         @if(esModal)
+                                        {
+                                            <span>
+                                                <a  id="btn-editar-fila" (click)="V_EditarFila(det)"><i class="fa-solid fa-pen-to-square"></i></a>
+                                            </span>
+    
+                                        }
+
+                                        
+
+                                        @if(!esModal || det.Editar)
+                                        {
+                                             <form autocomplete="off">
                                             <igx-combo [data]="lstCuenta" [(ngModel)]="det.CuentaContable"
                                                 [ngModelOptions]="{standalone: true}" valueKey="CuentaContable" [filterFunction]="FiltroCuentaSinGuion" 
                                                 displayKey="NombreCuenta" id="txtCuenta{{det.NoLinea}}"
@@ -336,7 +352,16 @@
                                                 (keyup)="v_Enter_Cuenta($event, det);">
 
                                             </igx-combo>
-                                        </form>
+                                            </form>
+
+                                            
+                                        }
+                                        @else{
+
+                                       {{det.CuentaContable}}
+
+                                        }
+
 
 
                                     </div>
@@ -353,10 +378,17 @@
                                         <div class="header-cell"><span>Referencia</span></div>
                                     </div>
                                     <div class="row">
+
+                                         @if(!esModal || det.Editar){
                                         <form autocomplete="off">
                                             <input type="text" class="form-control" id="txtReferencia{{det.NoLinea}}"
                                                 [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Referencia">
                                         </form>
+                                         }
+                                         @else {
+                                            {{det.Referencia}}
+                                         }
+                                        
 
 
                                     </div>
@@ -370,8 +402,8 @@
                                     </div>
                                     <div class="row">
 
-
-                                        <form autocomplete="off">
+                                        @if(!esModal || det.Editar){
+                                            <form autocomplete="off">
                                             <igx-combo [data]="lstCentroCosto" [(ngModel)]="det.CentroCosto"
                                                 valueKey="Codigo" displayKey="CentroCosto"
                                                 id="txtCentroCosto{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
@@ -381,6 +413,12 @@
 
                                             </igx-combo>
                                         </form>
+                                        }
+                                        @else {
+                                            {{det.CentroCosto}}
+                                        }
+
+                                       
 
                                     </div>
 
@@ -393,7 +431,9 @@
                                     </div>
                                     <div class="row">
 
-                                        <form autocomplete="off">
+                                        @if(!esModal || det.Editar)
+                                        {
+                                            <form autocomplete="off">
                                             <input type="text" class="form-control numero" id="txtDebito{{det.NoLinea}}"
                                                 [ngModelOptions]="{standalone: true}" [(ngModel)]="det.Debito"
                                                 (keydown)="this.cFunciones.v_Prevent_IsNumber($event,  'Decimal')"
@@ -401,6 +441,11 @@
                                                 (focusout)="V_FocusOut('txtDebito', det);" (change)="V_Calcular();"
                                                 autocomplete="off">
                                         </form>
+                                        }
+                                        @else {
+                                            {{det.Debito}}
+                                        }
+                                        
 
 
                                     </div>
@@ -415,7 +460,8 @@
                                     </div>
                                     <div class="row">
 
-                                        <form autocomplete="off">
+                                        @if(!esModal || det.Editar){
+                                            <form autocomplete="off">
                                             <input type="text" class="form-control numero"
                                                 id="txtCredito{{det.NoLinea}}" [ngModelOptions]="{standalone: true}"
                                                 [(ngModel)]="det.Credito"
@@ -423,7 +469,15 @@
                                                 (keydown.Enter)="V_Focus('NuevaFila', det);"
                                                 (focusout)="V_FocusOut('txtCredito', det);" (change)="V_Calcular();"
                                                 autocomplete="off">
-                                        </form>
+                                            </form>
+                                        }
+                                        @else {
+
+                                            {{det.Credito}}
+
+                                        }
+
+                                        
 
 
                                     </div>

@@ -1,5 +1,6 @@
 import { iRetencion } from "./i-Retencion";
 import { iChequeDocumento } from "./i-Cheque-Documento";
+import { iOrdenCompraCentroGasto } from "../Proveedor/i-OrdenCompra-CentroGasto";
 
 export interface iCheque {
     IdCheque: any;
@@ -29,4 +30,5 @@ export interface iCheque {
     ValorCheque: number;
     ChequeDocumento: iChequeDocumento[];
     ChequeRetencion: iRetencion[];
+    OrdenCompraCentroGasto : iOrdenCompraCentroGasto[];
 }

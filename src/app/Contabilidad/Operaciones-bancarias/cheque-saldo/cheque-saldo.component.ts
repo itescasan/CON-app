@@ -850,13 +850,13 @@ export class ChequesSaldoComponent {
           let Porc: number = 1 + r.PorcImpuesto;
           let SubTotal: number = r.SubTotal; //this.cFunciones.Redondeo(Importe / Porc, "2");
           //let SubTotal: number = Importe;
-          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "2");
+          let Ret: number = this.cFunciones.Redondeo(SubTotal * this.cFunciones.Redondeo(r.Porcentaje / 100, "2"), "4");
           if (!r.RetManual) r.Monto = this.cFunciones.NumFormat(Ret, "2");
         }
 
 
         if (Importe == 0) r.Monto = "0";
-        r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "2");
+        r.Monto = this.cFunciones.NumFormat(Number(String(r.Monto).replaceAll(",", "")), "4");
 
 
         let Retencion: number = Number(String(r.Monto).replaceAll(",", ""));
@@ -864,13 +864,13 @@ export class ChequesSaldoComponent {
 
 
         if (this.cFunciones.MonedaLocal == this.IdMoneda) {
-          r.MontoML = this.cFunciones.Redondeo(Retencion, "2");
-          r.MontoMS = this.cFunciones.Redondeo(r.MontoML / this.TC, "2");
+          r.MontoML = this.cFunciones.Redondeo(Retencion, "4");
+          r.MontoMS = this.cFunciones.Redondeo(r.MontoML / this.TC, "4");
 
         }
         else {
-          r.MontoMS = this.cFunciones.Redondeo(Retencion, "2");
-          r.MontoML = this.cFunciones.Redondeo(r.MontoMS * this.TC, "2");
+          r.MontoMS = this.cFunciones.Redondeo(Retencion, "4");
+          r.MontoML = this.cFunciones.Redondeo(r.MontoMS * this.TC, "4");
         }
 
         if (Retencion != 0) f.Retenido = true;
@@ -1550,7 +1550,7 @@ export class ChequesSaldoComponent {
     }
 
     if (AjusteML < 0) {
-      this.Nueva_Linea_Asiento(AjusteML, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
+      this.Nueva_Linea_Asiento(Math.abs(AjusteML), this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_ML");
     }
 
 
@@ -1561,7 +1561,7 @@ export class ChequesSaldoComponent {
     }
 
     if (AjusteMS < 0) {
-      this.Nueva_Linea_Asiento(AjusteMS, this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
+      this.Nueva_Linea_Asiento(Math.abs(AjusteMS), this.CuentaDiferencialPerdida, "AJUSTE DIFERENCIAL", "", "", "C", "DIF_MS");
     }
 
 
@@ -1582,6 +1582,7 @@ export class ChequesSaldoComponent {
     this.Asiento.AsientosContablesDetalle = JSON.parse(JSON.stringify(this.lstDetalleAsiento));
 
 
+    
   }
 
     private Nueva_Linea_Asiento(Monto: number, Cuenta: string, Referencia: string, Documento: string, TipoDocumento: string, Naturaleza: string, Columna: string): iAsientoDetalle {
@@ -1589,7 +1590,7 @@ export class ChequesSaldoComponent {
     let det: iAsientoDetalle = {} as iAsientoDetalle;
 
     if (Monto == 0) return det;
-    Monto = this.cFunciones.Redondeo(Monto, "2");
+    Monto = this.cFunciones.Redondeo(Monto, "4");
 
 
     let i: number = 1;
@@ -1650,12 +1651,12 @@ export class ChequesSaldoComponent {
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
             det.Debito = String(Monto);
             det.DebitoML = Monto;
-            det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+            det.DebitoMS = this.cFunciones.Redondeo(Monto / this.TC, "4");
           }
           else {
             det.Debito = String(Monto);
             det.DebitoMS = Monto;
-            det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+            det.DebitoML = this.cFunciones.Redondeo(Monto * this.TC, "4");
           }
 
 
@@ -1698,12 +1699,12 @@ export class ChequesSaldoComponent {
           if (this.cFunciones.MonedaLocal == this.IdMoneda) {
             det.Credito = String(Monto);
             det.CreditoML = Monto;
-            det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "2");
+            det.CreditoMS = this.cFunciones.Redondeo(Monto / this.TC, "4");
           }
           else {
             det.Credito = String(Monto);
             det.CreditoMS = Monto;
-            det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "2");
+            det.CreditoML = this.cFunciones.Redondeo(Monto * this.TC, "4");
           }
 
 
@@ -1721,6 +1722,12 @@ export class ChequesSaldoComponent {
 
 
     this.lstDetalleAsiento.push(det);
+
+
+     det.DebitoML = this.cFunciones.Redondeo(det.DebitoML, "2");
+    det.DebitoMS = this.cFunciones.Redondeo(det.DebitoMS, "2");
+    det.CreditoML = this.cFunciones.Redondeo(det.CreditoML, "2");
+    det.CreditoMS = this.cFunciones.Redondeo(det.CreditoMS, "2");
 
     return det;
 
@@ -1929,6 +1936,7 @@ export class ChequesSaldoComponent {
 
     this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
     this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.ChequeRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));
+    this.lstOrdenCompraCentroGasto = JSON.parse(JSON.stringify(this.FILA.OrdenCompraCentroGasto));
 
     // this.lstDetalle.data = JSON.parse(JSON.stringify(this.FILA.ChequeDocumento));
     // this.lstRetencion = JSON.parse(JSON.stringify(this.FILA.ChequeRetencion.sort((a, b) => 0 - (a.Index < b.Index ? 1 : -1))));

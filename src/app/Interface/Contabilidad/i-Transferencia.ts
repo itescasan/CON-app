@@ -1,3 +1,4 @@
+import { iOrdenCompraCentroGasto } from "../Proveedor/i-OrdenCompra-CentroGasto";
 import { iRetencion } from "./i-Retencion";
 import { iTransferenciaDocumento } from "./i-Transferencia-Documento";
 
@@ -26,5 +27,6 @@ export interface iTransferencia{
     Anulado : boolean;
     UsuarioReg : string;  
     TransferenciaDocumento: iTransferenciaDocumento[];
-    TranferenciaRetencion: iRetencion[];    
+    TranferenciaRetencion: iRetencion[];   
+    OrdenCompraCentroGasto : iOrdenCompraCentroGasto[]; 
 }
