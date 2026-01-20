@@ -1,4 +1,5 @@
 @use "/src/assets/scss/media.scss" as *;
+
 .contenedor-tabla {
     background: var(--escan-fondo);
 }
@@ -27,19 +28,19 @@
     }
 
 
-    .contenedor-boton{
+    .contenedor-boton {
         text-align: right;
     }
 
 
-    
-@include Tamano_Menor(lg) {
 
-    button{
-        width: 100%;
+    @include Tamano_Menor(lg) {
+
+        button {
+            width: 100%;
+        }
+
     }
-    
-}
 }
 
 
@@ -55,13 +56,15 @@ table,
     bottom: 0px;
     position: sticky;
     z-index: 10;
-  }
-  
+}
+
 
 
 table {
 
     margin-top: 85px;
+
+
 
 
 
@@ -99,6 +102,18 @@ table {
         }
     }
 
+
+    .hide {
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .concepto:active .hide{
+        white-space :initial;
+
+    }
 
 
 }
@@ -144,17 +159,16 @@ table {
         }
 
         div:nth-child(1),
-        div:nth-child(2)
-        {
+        div:nth-child(2) {
             text-align: center;
         }
 
     }
 
-    .edicion{
+    .edicion {
         text-align: right;
 
-        button:first-child{
+        button:first-child {
             margin-right: 50px;
         }
     }
@@ -180,13 +194,13 @@ table {
 
     .mobile-col.dolar {
 
-        .numero{
-            div:last-child{
-                visibility:visible;
+        .numero {
+            div:last-child {
+                visibility: visible;
             }
         }
 
-       
+
     }
 
 

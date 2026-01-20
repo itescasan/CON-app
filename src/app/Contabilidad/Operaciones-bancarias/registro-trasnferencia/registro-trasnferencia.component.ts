@@ -459,6 +459,11 @@ export class RegistroTrasnferenciaComponent {
     });
   }
 
+  public V_ConceptoText(s : string, start : number, end : number) : string{
+    if(end == -1) end = s.length;
+    return s.substring(start, end);
+  }
+
 
   
   ngOnInit(): void {

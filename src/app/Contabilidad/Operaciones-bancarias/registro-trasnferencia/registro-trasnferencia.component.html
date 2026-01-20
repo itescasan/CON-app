@@ -110,7 +110,7 @@
                     <td mat-cell *matCellDef="let det" class="mobile-col">
                         <div class="texto">
                             <span class="mobile-label">Concepto:</span>
-                            <div>{{det.Concepto}}</div>
+                            <div class="concepto">{{V_ConceptoText(det.Concepto, 0, 22)}}<span class="hide">{{V_ConceptoText(det.Concepto, 22, -1)}}</span></div>
                         </div>
                     </td>
                 </ng-container>
