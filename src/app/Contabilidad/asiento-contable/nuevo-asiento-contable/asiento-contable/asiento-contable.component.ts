@@ -217,7 +217,7 @@ export class AsientoContableComponent {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
 
       let i_Serie: iSerie = this.lstSerie.find(f => f?.IdSerie == event.newValue)!;
-      this.DescripcionSerie = i_Serie.DescripcionSerie;
+      this.DescripcionSerie = i_Serie?.DescripcionSerie;
 
 
       this.val.Get("cmbSerie").setValue(event.newValue);
@@ -573,8 +573,6 @@ export class AsientoContableComponent {
     this.val.Get("cmbSerie").disable();
     this.val.Get("txtNoAsiento").disable();
 
-    
-
 
 
     //this.changeDetectorRef.detach();
@@ -888,6 +886,11 @@ export class AsientoContableComponent {
 
             if(this.esModal){
                this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
+
+                let i_Serie: iSerie = this.lstSerie.find(f => f?.IdSerie == s)!;
+                this.DescripcionSerie = i_Serie?.DescripcionSerie;
+
+
                return;
             }
             this.v_Consecutivo();
