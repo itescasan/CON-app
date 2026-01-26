@@ -1093,6 +1093,7 @@ export class TransferenciaSaldoComponent {
       dialogAsiento.componentInstance.esModal = true;
       dialogAsiento.componentInstance.FILA = Asiento;
       dialogAsiento.componentInstance.NoDocumento = this.val.GetValue("txtNoDoc");
+      dialogAsiento.componentInstance.FILA.NoAsiento = this.val.GetValue("txtNoDoc");
 
       dialogAsiento.afterOpened().subscribe(s => {
 
@@ -1101,8 +1102,7 @@ export class TransferenciaSaldoComponent {
 
         dialogAsiento.componentInstance.val.Get("chk-asiento-revisado").setValue(true);
         dialogAsiento.componentInstance.val.Get("chk-asiento-revisado").disable();
-        
-        
+
 
       });
 

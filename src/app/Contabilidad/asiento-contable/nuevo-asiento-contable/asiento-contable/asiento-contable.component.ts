@@ -209,6 +209,8 @@ export class AsientoContableComponent {
   public cmbSerie: IgxComboComponent;
 
   public v_Select_Serie(event: any) {
+    
+
     this.val.Get("cmbSerie").setValue("");
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
@@ -549,7 +551,6 @@ export class AsientoContableComponent {
 
     this.load = true;
 
-
     this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
     this.cmbBodega.setSelectedItem(this.FILA.Bodega);
     this.val.Get("txtNoAsiento").setValue(this.FILA.NoAsiento);
@@ -566,8 +567,7 @@ export class AsientoContableComponent {
     this.val.Get("cmbSerie").disable();
     this.val.Get("txtNoAsiento").disable();
 
-
-
+    
 
 
 
@@ -775,8 +775,13 @@ export class AsientoContableComponent {
             if (this.cmbBodega.selection.length == 0) this.cmbBodega.setSelectedItem(this.lstBodega[0]?.Codigo);
 
             this.V_TasaCambios();
-            this.v_Serie();
-            if (this.esModal) this.v_Visualizar();
+             this.v_Serie();
+
+            if (this.esModal){
+              this.v_Visualizar();
+            }
+           
+
 
 
           }
@@ -851,10 +856,13 @@ export class AsientoContableComponent {
 
   public v_Serie(): void {
 
+
+    let s : string = "";
     if (this.cmbBodega.selection.length == 0) return;
 
+    if(this.esModal) s = this.FILA.IdSerie;
 
-    this.cFunciones.GET.Serie(this.val.Get("txtBodega-asiento").value, "Contabilidad").subscribe(
+    this.cFunciones.GET.Serie(this.val.Get("txtBodega-asiento").value, "Contabilidad", s).subscribe(
       {
         next: (data) => {
 
@@ -872,7 +880,12 @@ export class AsientoContableComponent {
             let datos: iDatos = _json["d"];
             this.lstSerie = datos.d;
 
+            if(this.esModal){
+               this.cmbSerie.setSelectedItem(this.FILA.IdSerie);
+               return;
+            }
             this.v_Consecutivo();
+
 
           }
 
@@ -895,6 +908,7 @@ export class AsientoContableComponent {
 
     if (this.cmbSerie.selection.length == 0) return;
 
+    if (this.esModal)  return;
 
     this.cFunciones.GET.ConsecutivoContabilidad(this.val.Get("cmbSerie").value, this.val.Get("txtFecha").value).subscribe(
       {
@@ -912,7 +926,7 @@ export class AsientoContableComponent {
           } else {
 
             let datos: iDatos = _json["d"];
-            if (!this.esModal) this.val.Get("txtNoAsiento").setValue(String(datos.d).replaceAll("$", this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "YYYYMM")));
+            this.val.Get("txtNoAsiento").setValue(String(datos.d).replaceAll("$", this.cFunciones.DateFormat(this.val.Get("txtFecha").value, "YYYYMM")));
 
 
           }

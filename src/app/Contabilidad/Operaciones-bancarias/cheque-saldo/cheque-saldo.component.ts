@@ -1085,6 +1085,7 @@ export class ChequesSaldoComponent {
         dialogAsiento.componentInstance.esModal = true;
         dialogAsiento.componentInstance.FILA = Asiento;
         dialogAsiento.componentInstance.NoDocumento = this.val.GetValue("txtNoDoc");
+        dialogAsiento.componentInstance.FILA.NoAsiento = this.val.GetValue("txtNoDoc");
   
         dialogAsiento.afterOpened().subscribe(s => {
   
