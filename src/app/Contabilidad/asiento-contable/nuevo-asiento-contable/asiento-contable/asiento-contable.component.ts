@@ -57,6 +57,7 @@ export class AsientoContableComponent {
   public load: boolean = false;
   public Clonar: boolean = false
   public Revisado : boolean = false;
+  public DescripcionSerie : string = "";
 
   public overlaySettings: OverlaySettings = {};
 
@@ -214,6 +215,11 @@ export class AsientoContableComponent {
     this.val.Get("cmbSerie").setValue("");
     if (event.added.length == 1) {
       if (event.newValue.length > 1) event.newValue.splice(0, 1);
+
+      let i_Serie: iSerie = this.lstSerie.find(f => f?.IdSerie == event.newValue)!;
+      this.DescripcionSerie = i_Serie.DescripcionSerie;
+
+
       this.val.Get("cmbSerie").setValue(event.newValue);
       this.v_Consecutivo();
       this.cmbSerie.close();
